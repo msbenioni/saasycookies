@@ -15,10 +15,22 @@ export const generatePDF = (
 ) => {
   const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.width;
+  const pageHeight = doc.internal.pageSize.height;
   const margin = 20;
 
   // Set font
   doc.setFont(style.fontFamily);
+  
+  // Add a subtle header background
+  doc.setFillColor(250, 250, 250);
+  doc.rect(0, 0, pageWidth, 60, 'F');
+  
+  // Add a colored accent line
+  const primaryColorRGB = hexToRgb(style.primaryColor);
+  if (primaryColorRGB) {
+    doc.setFillColor(primaryColorRGB.r, primaryColorRGB.g, primaryColorRGB.b);
+    doc.rect(0, 0, 8, pageHeight, 'F');
+  }
   
   // Company Logo
   if (company.logo) {
@@ -30,10 +42,11 @@ export const generatePDF = (
   }
 
   // Company Details
-  doc.setFontSize(20);
-  doc.text(company.name, margin, margin + 15);
+  doc.setFontSize(12);
+  doc.setTextColor(60, 60, 60);
+  doc.text(company.name, margin + 45, margin + 10);
   
-  doc.setFontSize(10);
+  doc.setFontSize(9);
   const companyDetails = [
     company.address,
     company.email,
@@ -41,25 +54,60 @@ export const generatePDF = (
     `Bank Account: ${company.bankAccount}`,
   ];
   
+  // Add GST number if provided
+  if (company.gstNumber) {
+    companyDetails.push(`GST Number: ${company.gstNumber}`);
+  }
+  
   companyDetails.forEach((detail, index) => {
-    doc.text(detail, margin, margin + 25 + (index * 5));
+    doc.text(detail, margin + 45, margin + 20 + (index * 5));
   });
 
-  // Invoice Details
-  doc.setFontSize(12);
-  doc.setTextColor(style.primaryColor);
-  doc.text('INVOICE', pageWidth - margin - 40, margin);
+  // Invoice Title and Details - Right Aligned
+  if (primaryColorRGB) {
+    doc.setTextColor(primaryColorRGB.r, primaryColorRGB.g, primaryColorRGB.b);
+  }
+  doc.setFontSize(24);
+  doc.setFont(style.fontFamily, 'bold');
+  doc.text('INVOICE', pageWidth - margin, margin + 15, { align: 'right' });
   
-  doc.setTextColor(0);
+  // Invoice Details - Right Aligned
+  doc.setTextColor(60, 60, 60);
   doc.setFontSize(10);
+  doc.setFont(style.fontFamily, 'normal');
   const invoiceDetails = [
     `Invoice Number: ${invoice.invoiceNumber}`,
-    `Date: ${invoice.date}`,
-    `Due Date: ${invoice.dueDate}`,
+    `Date: ${formatDate(invoice.date)}`,
+    `Due Date: ${formatDate(invoice.dueDate)}`,
   ];
   
   invoiceDetails.forEach((detail, index) => {
-    doc.text(detail, pageWidth - margin - 60, margin + 10 + (index * 5));
+    doc.text(detail, pageWidth - margin, margin + 30 + (index * 6), { align: 'right' });
+  });
+
+  // Client Details
+  doc.setFontSize(11);
+  doc.setFont(style.fontFamily, 'bold');
+  doc.text("Bill To:", margin, margin + 70);
+  
+  doc.setFontSize(10);
+  doc.setFont(style.fontFamily, 'normal');
+  const clientDetails = [
+    invoice.client.name,
+    invoice.client.address,
+    invoice.client.email,
+    invoice.client.phone,
+  ];
+  
+  // Add client GST number if provided
+  if (invoice.client.gstNumber) {
+    clientDetails.push(`GST Number: ${invoice.client.gstNumber}`);
+  }
+  
+  clientDetails.forEach((detail, index) => {
+    if (detail) { // Only display if the detail exists
+      doc.text(detail, margin, margin + 80 + (index * 6));
+    }
   });
 
   // Items Table
@@ -76,40 +124,119 @@ export const generatePDF = (
     ];
   });
 
+  // Add table
   doc.autoTable({
     head: tableHeaders,
     body: tableData,
-    startY: margin + 50,
+    startY: margin + 110,
     theme: 'grid',
     headStyles: {
       fillColor: style.primaryColor,
       textColor: '#FFFFFF',
+      fontStyle: 'bold',
+      halign: 'left',
+      fontSize: 10,
     },
     styles: {
       font: style.fontFamily,
+      fontSize: 9,
+      cellPadding: 6,
+    },
+    columnStyles: {
+      0: { cellWidth: 'auto' },
+      1: { cellWidth: 30, halign: 'center' },
+      2: { cellWidth: 40, halign: 'right' },
+      3: { cellWidth: 40, halign: 'right' },
     },
   });
 
   // Calculations
   const subtotal = invoice.items.reduce((sum, item) => sum + (Number(item.quantity) * Number(item.price)), 0);
-  const gst = (subtotal * invoice.gstRate) / 100;
+  const gst = invoice.isGstRegistered ? (subtotal * invoice.gstRate) / 100 : 0;
   const withholdingTax = (subtotal * invoice.withholdingTaxRate) / 100;
   const total = subtotal + gst - withholdingTax;
 
   const finalY = (doc as any).lastAutoTable.finalY + 10;
 
   // Summary
-  const summary = [
-    `Subtotal: $${subtotal.toFixed(2)}`,
-    `GST (${invoice.gstRate}%): $${gst.toFixed(2)}`,
-    `Withholding Tax (${invoice.withholdingTaxRate}%): $${withholdingTax.toFixed(2)}`,
-    `Total: $${total.toFixed(2)}`,
-  ];
-
-  summary.forEach((line, index) => {
-    doc.text(line, pageWidth - margin - 60, finalY + (index * 5));
-  });
+  const summaryX = pageWidth - margin - 80;
+  const summaryLabelX = summaryX;
+  const summaryValueX = pageWidth - margin;
+  
+  // Summary section with lines
+  doc.setDrawColor(220, 220, 220);
+  doc.setLineWidth(0.5);
+  doc.line(summaryX - 10, finalY, pageWidth - margin, finalY);
+  
+  // Subtotal
+  doc.setFont(style.fontFamily, 'normal');
+  doc.setFontSize(10);
+  doc.setTextColor(80, 80, 80);
+  doc.text("Subtotal:", summaryLabelX, finalY + 8, { align: 'left' });
+  doc.text(`$${subtotal.toFixed(2)}`, summaryValueX, finalY + 8, { align: 'right' });
+  
+  let currentY = finalY + 8;
+  
+  // GST if registered
+  if (invoice.isGstRegistered) {
+    currentY += 6;
+    doc.text(`GST (${invoice.gstRate}%):`, summaryLabelX, currentY, { align: 'left' });
+    doc.text(`$${gst.toFixed(2)}`, summaryValueX, currentY, { align: 'right' });
+  }
+  
+  // Withholding Tax
+  currentY += 6;
+  doc.text(`Withholding Tax (${invoice.withholdingTaxRate}%):`, summaryLabelX, currentY, { align: 'left' });
+  doc.text(`$${withholdingTax.toFixed(2)}`, summaryValueX, currentY, { align: 'right' });
+  
+  // Total with thicker line
+  doc.setLineWidth(1);
+  currentY += 4;
+  doc.line(summaryX - 10, currentY, pageWidth - margin, currentY);
+  currentY += 8;
+  
+  // Total amount
+  doc.setFont(style.fontFamily, 'bold');
+  doc.setFontSize(12);
+  if (primaryColorRGB) {
+    doc.setTextColor(primaryColorRGB.r, primaryColorRGB.g, primaryColorRGB.b);
+  }
+  doc.text("Total:", summaryLabelX, currentY, { align: 'left' });
+  doc.text(`$${total.toFixed(2)}`, summaryValueX, currentY, { align: 'right' });
+  
+  // Add footer
+  const footerY = pageHeight - 20;
+  doc.setFont(style.fontFamily, 'normal');
+  doc.setFontSize(8);
+  doc.setTextColor(150, 150, 150);
+  doc.text("Thank you for your business", pageWidth / 2, footerY, { align: 'center' });
 
   // Save the PDF
   doc.save(`invoice-${invoice.invoiceNumber}.pdf`);
 };
+
+// Helper function to convert hex color to RGB
+function hexToRgb(hex: string) {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  } : null;
+}
+
+// Helper function to format dates
+function formatDate(dateString: string): string {
+  if (!dateString) return '';
+  
+  try {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-NZ', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    });
+  } catch (e) {
+    return dateString;
+  }
+}

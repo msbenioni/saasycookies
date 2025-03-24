@@ -11,15 +11,26 @@ export interface CompanyDetails {
   phone: string;
   bankAccount: string;
   logo?: string;
+  gstNumber?: string;  // Optional GST number for the company
+}
+
+export interface ClientDetails {
+  name: string;
+  address: string;
+  email: string;
+  phone: string;
+  gstNumber?: string;  // Optional GST number for the client
 }
 
 export interface InvoiceDetails {
   invoiceNumber: string;
   date: string;
   dueDate: string;
+  client: ClientDetails;
   items: InvoiceItem[];
   gstRate: number;
   withholdingTaxRate: number;
+  isGstRegistered: boolean;
 }
 
 export interface StyleOptions {
