@@ -29,7 +29,7 @@ export const generatePDF = (
   const primaryColorRGB = hexToRgb(style.primaryColor);
   if (primaryColorRGB) {
     doc.setFillColor(primaryColorRGB.r, primaryColorRGB.g, primaryColorRGB.b);
-    doc.rect(0, 0, 8, pageHeight, 'F');
+    doc.rect(0, 0, 10, pageHeight, 'F');
   }
   
   // Company Logo

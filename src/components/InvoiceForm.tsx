@@ -118,7 +118,7 @@ const InvoiceForm: React.FC = () => {
             left: 0, 
             top: 0, 
             bottom: 0, 
-            width: '8px', 
+            width: '10px', 
             backgroundColor: primaryColor 
           }} 
         />
