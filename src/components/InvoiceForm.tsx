@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { Trash2, Plus, FileText, Eye } from 'lucide-react';
-import { generatePDF } from '../utils/generatePDF';
 import { CompanyDetails, InvoiceDetails, StyleOptions } from '../types';
 
 type InvoiceFormProps = {
@@ -14,40 +13,6 @@ type InvoiceFormProps = {
 
 const InvoiceForm: React.FC<InvoiceFormProps> = ({ onGenerate }) => {
   const [previewMode, setPreviewMode] = useState<boolean>(false);
-
-const handleClick = () => {
-  const exampleData = {
-    company: { 
-      name: 'Example Company', 
-      address: '123 Example St', 
-      email: 'example@example.com', 
-      phone: '123-456-7890',
-      bankName: 'Example Bank',
-      bankAccount: '123456789',
-      logo: '',
-      gstNumber: '123456789' 
-    },
-    invoice: { 
-      invoiceNumber: 'INV-12345', 
-      date: new Date().toISOString().split('T')[0], 
-      dueDate: '', 
-      client: { 
-        name: 'Client Name', 
-        address: '123 Client St', 
-        email: 'client@example.com', 
-        phone: '123-456-7890',
-        gstNumber: '123456789' 
-      }, 
-      items: [{ description: 'Item 1', quantity: 1, price: 100 }], 
-      gstRate: 15, 
-      withholdingTaxRate: 20, 
-      isGstRegistered: true 
-    }, 
-    style: { primaryColor: '#6366f1', fontFamily: 'arial' },
-  };
-
-  onGenerate(exampleData);
-};
 
   const { register, control, handleSubmit, watch, setValue } = useForm({
     defaultValues: {
@@ -120,7 +85,7 @@ const handleClick = () => {
   };
 
   const onSubmit = (data: any) => {
-    generatePDF(data.company, data.invoice, data.style);
+    onGenerate(data);
   };
 
   const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
