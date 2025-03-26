@@ -1,4 +1,3 @@
-import React from 'react';
 import { FileText } from 'lucide-react';
 import InvoiceForm from './components/InvoiceForm';
 import { generatePDF } from './utils/generatePDF';

@@ -2,9 +2,52 @@ import React, { useState } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { Trash2, Plus, FileText, Eye } from 'lucide-react';
 import { generatePDF } from '../utils/generatePDF';
+import { CompanyDetails, InvoiceDetails, StyleOptions } from '../types';
 
-const InvoiceForm: React.FC = () => {
+type InvoiceFormProps = {
+  onGenerate: (data: {
+    company: CompanyDetails;
+    invoice: InvoiceDetails;
+    style: StyleOptions;
+  }) => void;
+};
+
+const InvoiceForm: React.FC<InvoiceFormProps> = ({ onGenerate }) => {
   const [previewMode, setPreviewMode] = useState<boolean>(false);
+
+const handleClick = () => {
+  const exampleData = {
+    company: { 
+      name: 'Example Company', 
+      address: '123 Example St', 
+      email: 'example@example.com', 
+      phone: '123-456-7890',
+      bankName: 'Example Bank',
+      bankAccount: '123456789',
+      logo: '',
+      gstNumber: '123456789' 
+    },
+    invoice: { 
+      invoiceNumber: 'INV-12345', 
+      date: new Date().toISOString().split('T')[0], 
+      dueDate: '', 
+      client: { 
+        name: 'Client Name', 
+        address: '123 Client St', 
+        email: 'client@example.com', 
+        phone: '123-456-7890',
+        gstNumber: '123456789' 
+      }, 
+      items: [{ description: 'Item 1', quantity: 1, price: 100 }], 
+      gstRate: 15, 
+      withholdingTaxRate: 20, 
+      isGstRegistered: true 
+    }, 
+    style: { primaryColor: '#6366f1', fontFamily: 'arial' },
+  };
+
+  onGenerate(exampleData);
+};
 
   const { register, control, handleSubmit, watch, setValue } = useForm({
     defaultValues: {
@@ -13,6 +56,7 @@ const InvoiceForm: React.FC = () => {
         address: '', 
         email: '', 
         phone: '', 
+        bankName: '',
         bankAccount: '', 
         logo: '',
         gstNumber: '' 
@@ -33,7 +77,7 @@ const InvoiceForm: React.FC = () => {
         withholdingTaxRate: 20, 
         isGstRegistered: true 
       },
-      style: { primaryColor: '#6366f1', fontFamily: 'Calibri' },
+      style: { primaryColor: '#6366f1', fontFamily: 'arial' },
     },
   });
 
@@ -118,7 +162,7 @@ const InvoiceForm: React.FC = () => {
             left: 0, 
             top: 0, 
             bottom: 0, 
-            width: '10px', 
+            width: '8px', 
             backgroundColor: primaryColor 
           }} 
         />
@@ -136,7 +180,7 @@ const InvoiceForm: React.FC = () => {
         }}>
           <div style={{ display: 'flex' }}>
             {/* Logo */}
-            {watchCompany.logo && (
+            {watchCompany.logo ? (
               <div style={{ marginRight: '1rem' }}>
                 <img 
                   src={watchCompany.logo} 
@@ -144,7 +188,7 @@ const InvoiceForm: React.FC = () => {
                   style={{ maxWidth: '100px', maxHeight: '100px' }} 
                 />
               </div>
-            )}
+            ) : null}
             
             {/* Company Details */}
             <div>
@@ -152,6 +196,7 @@ const InvoiceForm: React.FC = () => {
               <p style={{ margin: '0 0 0.25rem 0', fontSize: '0.875rem' }}>{watchCompany.address}</p>
               <p style={{ margin: '0 0 0.25rem 0', fontSize: '0.875rem' }}>{watchCompany.email}</p>
               <p style={{ margin: '0 0 0.25rem 0', fontSize: '0.875rem' }}>{watchCompany.phone}</p>
+              <p style={{ margin: '0 0 0.25rem 0', fontSize: '0.875rem' }}>Bank Name: {watchCompany.bankName}</p>
               <p style={{ margin: '0 0 0.25rem 0', fontSize: '0.875rem' }}>Bank Account: {watchCompany.bankAccount}</p>
               {watchCompany.gstNumber && (
                 <p style={{ margin: '0', fontSize: '0.875rem' }}>GST Number: {watchCompany.gstNumber}</p>
@@ -163,7 +208,7 @@ const InvoiceForm: React.FC = () => {
           <div style={{ textAlign: 'right' }}>
             <h2 style={{ 
               color: primaryColor, 
-              margin: '0 0 1rem 0', 
+              margin: '0 0 0.5rem 0', 
               fontSize: '2rem', 
               fontWeight: 'bold' 
             }}>
@@ -279,9 +324,37 @@ const InvoiceForm: React.FC = () => {
           </div>
         </div>
         
-        {/* Footer */}
+        {/* Payment Details Section */}
         <div style={{ 
           marginTop: '3rem', 
+          borderTop: '1px solid #e5e7eb',
+          paddingTop: '1rem'
+        }}>
+          <h4 style={{ 
+            margin: '0 0 0.5rem 0',
+            fontSize: '1rem',
+            fontWeight: 'bold',
+            borderBottom: '1px solid #e5e7eb',
+            paddingBottom: '0.25rem',
+            width: '150px'
+          }}>
+            Payment Details
+          </h4>
+          <p style={{ margin: '0 0 0.25rem 0' }}>Bank Name: {watchCompany.bankName || 'N/A'}</p>
+          <p style={{ margin: '0 0 0.25rem 0' }}>Bank Account: {watchCompany.bankAccount || 'N/A'}</p>
+          <p style={{ margin: '0 0 0.25rem 0' }}>Payment Reference: {watchInvoice.invoiceNumber || 'N/A'}</p>
+          <p style={{ 
+            margin: '1rem 0 0 0', 
+            fontWeight: 'bold',
+            color: primaryColor
+          }}>
+            Please include the invoice number as reference when making payment
+          </p>
+        </div>
+        
+        {/* Footer */}
+        <div style={{ 
+          marginTop: '2rem', 
           textAlign: 'center',
           color: '#9ca3af',
           fontSize: '0.75rem'
@@ -353,6 +426,16 @@ const InvoiceForm: React.FC = () => {
               </label>
               <input
                 {...register('company.phone')}
+                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2"
+                style={{ color: watchPrimaryColor }}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Bank Name
+              </label>
+              <input
+                {...register('company.bankName')}
                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2"
                 style={{ color: watchPrimaryColor }}
               />
@@ -661,7 +744,7 @@ const InvoiceForm: React.FC = () => {
                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2"
                 style={{ color: watchPrimaryColor }}
               >
-                <option value="Calibri">Calibri</option>
+                <option value="arial">arial</option>
                 <option value="Arial">Arial</option>
                 <option value="Helvetica">Helvetica</option>
                 <option value="Times New Roman">Times New Roman</option>

@@ -9,6 +9,7 @@ export interface CompanyDetails {
   address: string;
   email: string;
   phone: string;
+  bankName: string;
   bankAccount: string;
   logo?: string;
   gstNumber?: string;  // Optional GST number for the company

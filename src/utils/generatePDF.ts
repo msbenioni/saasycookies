@@ -29,13 +29,15 @@ export const generatePDF = (
   const primaryColorRGB = hexToRgb(style.primaryColor);
   if (primaryColorRGB) {
     doc.setFillColor(primaryColorRGB.r, primaryColorRGB.g, primaryColorRGB.b);
-    doc.rect(0, 0, 10, pageHeight, 'F');
+    doc.rect(0, 0, 8, pageHeight, 'F');
   }
   
   // Company Logo
+  let logoOffset = 0;
   if (company.logo) {
     try {
       doc.addImage(company.logo, 'PNG', margin, margin, 40, 40);
+      logoOffset = 45;
     } catch (error) {
       console.error('Error loading logo:', error);
     }
@@ -44,14 +46,13 @@ export const generatePDF = (
   // Company Details
   doc.setFontSize(12);
   doc.setTextColor(60, 60, 60);
-  doc.text(company.name, margin + 45, margin + 10);
+  doc.text(company.name, margin + logoOffset, margin + 10);
   
   doc.setFontSize(9);
   const companyDetails = [
     company.address,
     company.email,
     company.phone,
-    `Bank Account: ${company.bankAccount}`,
   ];
   
   // Add GST number if provided
@@ -60,7 +61,7 @@ export const generatePDF = (
   }
   
   companyDetails.forEach((detail, index) => {
-    doc.text(detail, margin + 45, margin + 20 + (index * 5));
+    doc.text(detail, margin + logoOffset, margin + 20 + (index * 5));
   });
 
   // Invoice Title and Details - Right Aligned
@@ -69,7 +70,7 @@ export const generatePDF = (
   }
   doc.setFontSize(24);
   doc.setFont(style.fontFamily, 'bold');
-  doc.text('INVOICE', pageWidth - margin, margin + 15, { align: 'right' });
+  doc.text('INVOICE', pageWidth - margin, margin + 5, { align: 'right' });
   
   // Invoice Details - Right Aligned
   doc.setTextColor(60, 60, 60);
@@ -82,7 +83,7 @@ export const generatePDF = (
   ];
   
   invoiceDetails.forEach((detail, index) => {
-    doc.text(detail, pageWidth - margin, margin + 30 + (index * 6), { align: 'right' });
+    doc.text(detail, pageWidth - margin, margin + 15 + (index * 6), { align: 'right' });
   });
 
   // Client Details
@@ -204,12 +205,33 @@ export const generatePDF = (
   doc.text("Total:", summaryLabelX, currentY, { align: 'left' });
   doc.text(`$${total.toFixed(2)}`, summaryValueX, currentY, { align: 'right' });
   
-  // Add footer
-  const footerY = pageHeight - 20;
+  // Add payment details section
+  const paymentY = currentY + 30;
+  doc.setFont(style.fontFamily, 'bold');
+  doc.setFontSize(11);
+  doc.setTextColor(60, 60, 60);
+  doc.text("Payment Details", margin, paymentY);
+  
   doc.setFont(style.fontFamily, 'normal');
-  doc.setFontSize(8);
+  doc.setFontSize(10);
+  doc.setDrawColor(220, 220, 220);
+  doc.setLineWidth(0.5);
+  doc.line(margin, paymentY + 5, margin + 150, paymentY + 5);
+  
+  doc.text(`Bank Name: ${company.bankName || 'N/A'}`, margin, paymentY + 15);
+  doc.text(`Bank Account: ${company.bankAccount || 'N/A'}`, margin, paymentY + 25);
+  doc.text(`Payment Reference: ${invoice.invoiceNumber}`, margin, paymentY + 35);
+  
+  if (primaryColorRGB) {
+    doc.setTextColor(primaryColorRGB.r, primaryColorRGB.g, primaryColorRGB.b);
+  }
+  doc.setFont(style.fontFamily, 'bold');
+  doc.text("Please include the invoice number as reference when making payment", margin, paymentY + 45);
+
+  // Add thank you message
+  doc.setFont(style.fontFamily, 'normal');
   doc.setTextColor(150, 150, 150);
-  doc.text("Thank you for your business", pageWidth / 2, footerY, { align: 'center' });
+  doc.text("Thank you for your business", pageWidth / 2, paymentY + 55, { align: 'center' });
 
   // Save the PDF
   doc.save(`invoice-${invoice.invoiceNumber}.pdf`);
