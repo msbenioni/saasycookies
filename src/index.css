@@ -12,8 +12,38 @@
   input[type="number"] {
     -moz-appearance: textfield;
   }
+
+  body {
+    @apply bg-gray-900 text-white;
+  }
 }
 
-input, select, textarea {
+/* Light theme styles for the invoice tool */
+.invoice-tool input, 
+.invoice-tool select, 
+.invoice-tool textarea {
   @apply border-gray-300 rounded-md shadow-sm;
+}
+
+/* Dark theme styles */
+.dark-input {
+  @apply bg-gray-800 border-gray-700 text-white rounded-md shadow-sm;
+}
+
+/* Neon effects */
+.neon-text-cyan {
+  @apply text-[#00FFD1] transition-colors duration-300;
+}
+
+.neon-text-pink {
+  @apply text-[#FF3CAC] transition-colors duration-300;
+}
+
+.neon-border-hover:hover {
+  @apply border-[#00FFD1] transition-colors duration-300;
+}
+
+/* Gradient text */
+.gradient-text {
+  @apply bg-gradient-to-r from-[#00FFD1] to-[#FF3CAC] bg-clip-text text-transparent;
 }
