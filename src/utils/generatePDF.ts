@@ -89,7 +89,14 @@ export const generatePDF = (
   // Client Details
   doc.setFontSize(11);
   doc.setFont(style.fontFamily, 'bold');
-  doc.text("Bill To:", margin, margin + 70);
+  doc.text("Bill To:", margin, margin + 60);
+  
+  // Add a subtle underline for "Bill To:" with primary color
+  if (primaryColorRGB) {
+    doc.setDrawColor(primaryColorRGB.r, primaryColorRGB.g, primaryColorRGB.b);
+    doc.setLineWidth(0.5);
+    doc.line(margin, margin + 72, margin + 40, margin + 72);
+  }
   
   doc.setFontSize(10);
   doc.setFont(style.fontFamily, 'normal');
@@ -129,7 +136,7 @@ export const generatePDF = (
   doc.autoTable({
     head: tableHeaders,
     body: tableData,
-    startY: margin + 110,
+    startY: margin + 130, // Adjusted startY to match the preview layout
     theme: 'grid',
     headStyles: {
       fillColor: style.primaryColor,
@@ -154,7 +161,7 @@ export const generatePDF = (
   // Calculations
   const subtotal = invoice.items.reduce((sum, item) => sum + (Number(item.quantity) * Number(item.price)), 0);
   const gst = invoice.isGstRegistered ? (subtotal * invoice.gstRate) / 100 : 0;
-  const withholdingTax = (subtotal * invoice.withholdingTaxRate) / 100;
+  const withholdingTax = invoice.isWithholdingTaxEnabled ? (subtotal * invoice.withholdingTaxRate) / 100 : 0;
   const total = subtotal + gst - withholdingTax;
 
   const finalY = (doc as any).lastAutoTable.finalY + 10;
@@ -186,9 +193,11 @@ export const generatePDF = (
   }
   
   // Withholding Tax
-  currentY += 6;
-  doc.text(`Withholding Tax (${invoice.withholdingTaxRate}%):`, summaryLabelX, currentY, { align: 'left' });
-  doc.text(`$${withholdingTax.toFixed(2)}`, summaryValueX, currentY, { align: 'right' });
+  if (invoice.isWithholdingTaxEnabled) {
+    currentY += 6;
+    doc.text(`Withholding Tax (${invoice.withholdingTaxRate}%):`, summaryLabelX, currentY, { align: 'left' });
+    doc.text(`$${withholdingTax.toFixed(2)}`, summaryValueX, currentY, { align: 'right' });
+  }
   
   // Total with thicker line
   doc.setLineWidth(1);

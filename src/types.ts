@@ -32,6 +32,7 @@ export interface InvoiceDetails {
   gstRate: number;
   withholdingTaxRate: number;
   isGstRegistered: boolean;
+  isWithholdingTaxEnabled: boolean;
 }
 
 export interface StyleOptions {
