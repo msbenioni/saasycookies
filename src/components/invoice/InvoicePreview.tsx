@@ -60,10 +60,10 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({
         {/* Client Info */}
         <div className="mb-8">
           <h4 className="font-bold mb-2 pb-1" style={{ borderBottom: `1px solid ${watchPrimaryColor}` }}>Bill To:</h4>
-          <p className="text-sm">{watchInvoice.client.name || 'Client Name'}</p>
-          <p className="text-sm">{watchInvoice.client.address || 'Client Address'}</p>
-          <p className="text-sm">{watchInvoice.client.email || 'client@example.com'}</p>
-          <p className="text-sm">{watchInvoice.client.phone || '123-456-7890'}</p>
+          <p className="text-sm">{watchInvoice.client.name}</p>
+          <p className="text-sm">{watchInvoice.client.address}</p>
+          <p className="text-sm">{watchInvoice.client.email}</p>
+          <p className="text-sm">{watchInvoice.client.phone}</p>
           {watchInvoice.client.gstNumber && (
             <p className="text-sm">GST Number: {watchInvoice.client.gstNumber}</p>
           )}

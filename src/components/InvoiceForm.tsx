@@ -30,15 +30,10 @@ const defaultValues = {
     logo: '',
   },
   invoice: {
-    invoiceNumber: `INV-${new Date().getFullYear()}-${String(
-      new Date().getMonth() + 1
-    ).padStart(2, '0')}-${String(new Date().getDate()).padStart(2, '0')}-${String(
-      Math.floor(Math.random() * 1000)
-    ).padStart(3, '0')}`,
-    date: new Date().toISOString().split('T')[0],
+    invoiceNumber: '',
+    date: new Date().toLocaleDateString('en-GB'),
     dueDate: new Date(new Date().setDate(new Date().getDate() + 30))
-      .toISOString()
-      .split('T')[0],
+      .toLocaleDateString('en-GB'),
     isGstRegistered: false,
     gstRate: 15,
     isWithholdingTaxEnabled: false,

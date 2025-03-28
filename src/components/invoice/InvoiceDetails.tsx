@@ -22,6 +22,7 @@ const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({ register, watch }) => {
           </label>
           <input
             {...register('invoice.invoiceNumber')}
+            placeholder="e.g. INV-2025-001"
             className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2"
             style={{ color: watchPrimaryColor }}
           />
@@ -32,7 +33,8 @@ const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({ register, watch }) => {
           </label>
           <input
             {...register('invoice.date')}
-            type="date"
+            type="text"
+            placeholder="DD/MM/YYYY"
             className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2"
             style={{ color: watchPrimaryColor }}
           />
@@ -43,7 +45,8 @@ const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({ register, watch }) => {
           </label>
           <input
             {...register('invoice.dueDate')}
-            type="date"
+            type="text"
+            placeholder="DD/MM/YYYY"
             className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2"
             style={{ color: watchPrimaryColor }}
           />

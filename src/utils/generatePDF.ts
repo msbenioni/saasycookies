@@ -16,14 +16,14 @@ export const generatePDF = (
   const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.width;
   const pageHeight = doc.internal.pageSize.height;
-  const margin = 20;
+  const margin = 15;
 
   // Set font
   doc.setFont(style.fontFamily);
   
   // Add a subtle header background
   doc.setFillColor(250, 250, 250);
-  doc.rect(0, 0, pageWidth, 60, 'F');
+  doc.rect(0, 0, pageWidth, 45);
   
   // Add a colored accent line
   const primaryColorRGB = hexToRgb(style.primaryColor);
@@ -36,8 +36,8 @@ export const generatePDF = (
   let logoOffset = 0;
   if (company.logo) {
     try {
-      doc.addImage(company.logo, 'PNG', margin, margin, 40, 40);
-      logoOffset = 45;
+      doc.addImage(company.logo, 'PNG', margin, margin, 30, 30);
+      logoOffset = 35;
     } catch (error) {
       console.error('Error loading logo:', error);
     }
@@ -46,7 +46,7 @@ export const generatePDF = (
   // Company Details
   doc.setFontSize(12);
   doc.setTextColor(60, 60, 60);
-  doc.text(company.name, margin + logoOffset, margin + 10);
+  doc.text(company.name, margin + logoOffset, margin + 8);
   
   doc.setFontSize(9);
   const companyDetails = [
@@ -61,7 +61,7 @@ export const generatePDF = (
   }
   
   companyDetails.forEach((detail, index) => {
-    doc.text(detail, margin + logoOffset, margin + 20 + (index * 5));
+    doc.text(detail, margin + logoOffset, margin + 16 + (index * 4));
   });
 
   // Invoice Title and Details - Right Aligned
@@ -83,19 +83,19 @@ export const generatePDF = (
   ];
   
   invoiceDetails.forEach((detail, index) => {
-    doc.text(detail, pageWidth - margin, margin + 15 + (index * 6), { align: 'right' });
+    doc.text(detail, pageWidth - margin, margin + 15 + (index * 5), { align: 'right' });
   });
 
   // Client Details
   doc.setFontSize(11);
   doc.setFont(style.fontFamily, 'bold');
-  doc.text("Bill To:", margin, margin + 60);
+  doc.text("Bill To:", margin, margin + 50);
   
   // Add a subtle underline for "Bill To:" with primary color
   if (primaryColorRGB) {
     doc.setDrawColor(primaryColorRGB.r, primaryColorRGB.g, primaryColorRGB.b);
     doc.setLineWidth(0.5);
-    doc.line(margin, margin + 72, margin + 40, margin + 72);
+    doc.line(margin, margin + 54, margin + 40, margin + 54);
   }
   
   doc.setFontSize(10);
@@ -113,8 +113,8 @@ export const generatePDF = (
   }
   
   clientDetails.forEach((detail, index) => {
-    if (detail) { // Only display if the detail exists
-      doc.text(detail, margin, margin + 80 + (index * 6));
+    if (detail) { 
+      doc.text(detail, margin, margin + 60 + (index * 5));
     }
   });
 
@@ -136,7 +136,7 @@ export const generatePDF = (
   doc.autoTable({
     head: tableHeaders,
     body: tableData,
-    startY: margin + 130, // Adjusted startY to match the preview layout
+    startY: margin + 90,
     theme: 'grid',
     headStyles: {
       fillColor: style.primaryColor,
@@ -215,7 +215,7 @@ export const generatePDF = (
   doc.text(`$${total.toFixed(2)}`, summaryValueX, currentY, { align: 'right' });
   
   // Add payment details section
-  const paymentY = currentY + 30;
+  const paymentY = currentY + 20;
   doc.setFont(style.fontFamily, 'bold');
   doc.setFontSize(11);
   doc.setTextColor(60, 60, 60);
@@ -227,20 +227,24 @@ export const generatePDF = (
   doc.setLineWidth(0.5);
   doc.line(margin, paymentY + 5, margin + 150, paymentY + 5);
   
-  doc.text(`Bank Name: ${company.bankName || 'N/A'}`, margin, paymentY + 15);
-  doc.text(`Bank Account: ${company.bankAccount || 'N/A'}`, margin, paymentY + 25);
-  doc.text(`Payment Reference: ${invoice.invoiceNumber}`, margin, paymentY + 35);
+  doc.text(`Bank Name: ${company.bankName || 'N/A'}`, margin, paymentY + 12);
+  doc.text(`Bank Account: ${company.bankAccount || 'N/A'}`, margin, paymentY + 20);
+  
+  // Add payment reference if invoice number exists
+  if (invoice.invoiceNumber) {
+    doc.text(`Payment Reference: ${invoice.invoiceNumber}`, margin, paymentY + 28);
+  }
   
   if (primaryColorRGB) {
     doc.setTextColor(primaryColorRGB.r, primaryColorRGB.g, primaryColorRGB.b);
   }
   doc.setFont(style.fontFamily, 'bold');
-  doc.text("Please include the invoice number as reference when making payment", margin, paymentY + 45);
+  doc.text("Please include the invoice number as reference when making payment", margin, paymentY + 35);
 
   // Add thank you message
   doc.setFont(style.fontFamily, 'normal');
   doc.setTextColor(150, 150, 150);
-  doc.text("Thank you for your business", pageWidth / 2, paymentY + 55, { align: 'center' });
+  doc.text("Thank you for your business", pageWidth / 2, paymentY + 45, { align: 'center' });
 
   // Save the PDF
   doc.save(`invoice-${invoice.invoiceNumber}.pdf`);
@@ -260,9 +264,17 @@ function hexToRgb(hex: string) {
 function formatDate(dateString: string): string {
   if (!dateString) return '';
   
+  // If the date is already in DD/MM/YYYY format, just return it
+  if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString)) {
+    return dateString;
+  }
+  
   try {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-NZ', {
+    if (isNaN(date.getTime())) {
+      return dateString; // Return original string if date is invalid
+    }
+    return date.toLocaleDateString('en-GB', {
       year: 'numeric',
       month: '2-digit',
       day: '2-digit'
