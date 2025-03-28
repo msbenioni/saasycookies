@@ -1,14 +1,30 @@
 import React from 'react';
-import { UseFormRegister, UseFormWatch } from 'react-hook-form';
+import { UseFormRegister, UseFormWatch, UseFormSetValue } from 'react-hook-form';
 
 interface InvoiceDetailsProps {
   register: UseFormRegister<any>;
   watch: UseFormWatch<any>;
+  setValue: UseFormSetValue<any>;
 }
 
-const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({ register, watch }) => {
+const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({ register, watch, setValue }) => {
   const watchPrimaryColor = watch('style.primaryColor');
   const watchIsGstRegistered = watch('invoice.isGstRegistered');
+
+  const convertDateFormat = (dateString: string) => {
+    if (!dateString) return '';
+    const dateParts = dateString.split('/');
+    return `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+  };
+
+  const formatDateToDDMMYYYY = (dateString: string) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
 
   return (
     <div className="bg-white shadow-md rounded-md p-6">
@@ -31,25 +47,39 @@ const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({ register, watch }) => {
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Date
           </label>
-          <input
-            {...register('invoice.date')}
-            type="text"
-            placeholder="DD/MM/YYYY"
-            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2"
-            style={{ color: watchPrimaryColor }}
-          />
+          <div className="relative">
+            <input
+              type="date"
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2"
+              style={{ color: watchPrimaryColor }}
+              value={convertDateFormat(watch('invoice.date'))}
+              onChange={(e) => {
+                if (e.target.value) {
+                  const formattedDate = formatDateToDDMMYYYY(e.target.value);
+                  setValue('invoice.date', formattedDate);
+                }
+              }}
+            />
+          </div>
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Due Date
           </label>
-          <input
-            {...register('invoice.dueDate')}
-            type="text"
-            placeholder="DD/MM/YYYY"
-            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2"
-            style={{ color: watchPrimaryColor }}
-          />
+          <div className="relative">
+            <input
+              type="date"
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2"
+              style={{ color: watchPrimaryColor }}
+              value={convertDateFormat(watch('invoice.dueDate'))}
+              onChange={(e) => {
+                if (e.target.value) {
+                  const formattedDate = formatDateToDDMMYYYY(e.target.value);
+                  setValue('invoice.dueDate', formattedDate);
+                }
+              }}
+            />
+          </div>
         </div>
       </div>
 

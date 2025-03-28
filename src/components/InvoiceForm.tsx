@@ -197,6 +197,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onGenerate }) => {
           <InvoiceDetails
             register={register}
             watch={watch}
+            setValue={setValue}
           />
 
           <div className="bg-white shadow-md rounded-md p-6">
