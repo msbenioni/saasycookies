@@ -3,7 +3,7 @@ import React from 'react';
 const PrivacyPage: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto py-8 px-4">
-      <h1 className="text-3xl font-bold mb-8 bg-gradient-to-r from-[#00FFD1] to-[#FF3CAC] bg-clip-text text-transparent">Privacy Policy</h1>
+      <h1 className="text-3xl font-bold mb-8 bg-gradient-to-r from-[#00FFD1] to-[#FF3CAC] bg-clip-text text-transparent leading-relaxed pb-1">Privacy Policy</h1>
       
       <div className="prose prose-invert max-w-none">
         <p className="text-gray-300 mb-6">Last Updated: 28 March 2025</p>

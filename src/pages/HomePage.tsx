@@ -6,8 +6,14 @@ const HomePage: React.FC = () => {
   return (
     <div className="space-y-12">
       {/* Hero Section */}
-      <section className="text-center py-12 px-4">
-        <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-[#00FFD1] to-[#FF3CAC] bg-clip-text text-transparent">
+      <section className="text-center py-14 px-4">
+        <h1 className="text-5xl font-bold mb-4 text-transparent" style={{ 
+          background: 'linear-gradient(to right, #00FFD1, #FF3CAC)',
+          WebkitBackgroundClip: 'text',
+          backgroundClip: 'text',
+          paddingBottom: '4px',
+          lineHeight: '1.3'
+        }}>
           SaaSy Cookies
         </h1>
         <p className="text-2xl text-gray-300 mb-8">Sweet solutions for smart work.</p>
@@ -17,7 +23,7 @@ const HomePage: React.FC = () => {
         <div className="flex flex-wrap justify-center gap-4">
           <Link
             to="/tools"
-            className="px-6 py-3 bg-gradient-to-r from-[#00FFD1] to-[#00FFD1]/70 text-gray-900 font-medium rounded-lg hover:from-[#00FFD1]/90 hover:to-[#00FFD1]/60 transition-all duration-300"
+            className="px-6 py-3 bg-gradient-to-r from-[#00FFD1] via-[#00FFD1] to-[#00FFD1]/70 text-gray-900 font-medium rounded-lg hover:from-[#00FFD1]/90 hover:to-[#00FFD1]/60 transition-all duration-300"
           >
             Explore Tools
           </Link>

@@ -17,7 +17,7 @@ const MainLayout: React.FC = () => {
         {/* Centered Logo Image */}
         <div className="absolute left-1/2 transform -translate-x-1/2 -top-5">
           <Link to="/">
-            <img src={saasyLogo} alt="SaaSy Cookies Logo" className="h-32 w-32 sm:h-36 sm:w-36" />
+            <img src={saasyLogo} alt="SaaSy Cookies Logo" className="pt-3 h-32 w-32 sm:h-36 sm:w-36" />
           </Link>
         </div>
         
@@ -26,7 +26,7 @@ const MainLayout: React.FC = () => {
             {/* Logo Text */}
             <div className="flex items-center">
               <Link to="/" className="flex items-center">
-                <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-[#00FFD1] to-[#FF3CAC] bg-clip-text text-transparent">
+                <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-[#00FFD1] to-[#FF3CAC] bg-clip-text text-transparent leading-relaxed pb-1">
                   SaaSy Cookies
                 </span>
               </Link>

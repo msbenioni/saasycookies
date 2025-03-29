@@ -33,11 +33,8 @@ const AboutPage: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto">
       <div className="text-center mb-12">
-        <div className="inline-flex justify-center items-center h-20 w-20 rounded-full bg-gradient-to-br from-[#00FFD1] to-[#FF3CAC] p-1 mb-4">
           <div className="bg-gray-900 rounded-full h-full w-full flex items-center justify-center">
-            <Cookie className="h-10 w-10 text-white" />
           </div>
-        </div>
         <h1 className="text-4xl font-bold mb-2">About SaaSy Cookies</h1>
         <p className="text-xl text-gray-400">Sweet solutions.</p>
       </div>

@@ -3,7 +3,7 @@ import React from 'react';
 const TermsPage: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto py-8 px-4">
-      <h1 className="text-3xl font-bold mb-8 bg-gradient-to-r from-[#00FFD1] to-[#FF3CAC] bg-clip-text text-transparent">Terms of Service</h1>
+      <h1 className="text-3xl font-bold mb-8 bg-gradient-to-r from-[#00FFD1] to-[#FF3CAC] bg-clip-text text-transparent leading-relaxed pb-1">Terms of Service</h1>
       
       <div className="prose prose-invert max-w-none">
         <p className="text-gray-300 mb-6">Last Updated: 28 March 2025</p>
@@ -40,7 +40,7 @@ const TermsPage: React.FC = () => {
           <ul className="list-disc pl-6 mb-4">
             <li className="mb-2">Your computer may temporarily store copies of such materials in RAM incidental to your accessing and viewing those materials</li>
             <li className="mb-2">You may store files that are automatically cached by your Web browser for display enhancement purposes</li>
-            <li>You may print or download one copy of a reasonable number of pages of the Services for your own personal, non-commercial use and not for further reproduction, publication, or distribution</li>
+            <li className="mb-2">You may print or download one copy of a reasonable number of pages of the Services for your own personal, non-commercial use and not for further reproduction, publication, or distribution</li>
           </ul>
         </section>
         
