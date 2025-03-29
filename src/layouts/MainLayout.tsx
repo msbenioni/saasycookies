@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { Cookie } from 'lucide-react';
+import saasyLogo from '../assets/saasy_logo.png';
 
 const MainLayout: React.FC = () => {
   const location = useLocation();
@@ -13,13 +13,19 @@ const MainLayout: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gray-900 text-white">
       {/* Navigation Header */}
-      <header className="bg-gray-800 border-b border-gray-700">
+      <header className="bg-gray-800 border-b border-gray-700 relative">
+        {/* Centered Logo Image */}
+        <div className="absolute left-1/2 transform -translate-x-1/2 -top-5">
+          <Link to="/">
+            <img src={saasyLogo} alt="SaaSy Cookies Logo" className="h-32 w-32 sm:h-36 sm:w-36" />
+          </Link>
+        </div>
+        
         <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
           <div className="flex items-center justify-between h-16">
-            {/* Logo */}
+            {/* Logo Text */}
             <div className="flex items-center">
-              <Link to="/" className="flex items-center gap-2">
-                <Cookie className="h-7 w-7 sm:h-8 sm:w-8 text-[#00FFD1]" />
+              <Link to="/" className="flex items-center">
                 <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-[#00FFD1] to-[#FF3CAC] bg-clip-text text-transparent">
                   SaaSy Cookies
                 </span>
@@ -64,7 +70,7 @@ const MainLayout: React.FC = () => {
       </header>
       
       {/* Main Content */}
-      <main className="flex-grow w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-6 sm:py-8">
+      <main className="flex-grow w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-6 sm:py-8 mt-10">
         <Outlet />
       </main>
       
