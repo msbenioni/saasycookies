@@ -7,6 +7,8 @@ import HomePage from './pages/HomePage';
 import ToolsPage from './pages/tools/ToolsPage';
 import InvoicePage from './pages/tools/InvoicePage';
 import AboutPage from './pages/AboutPage';
+import TermsPage from './pages/TermsPage';
+import PrivacyPage from './pages/PrivacyPage';
 
 function App() {
   const handleGenerateInvoice = (data: {
@@ -25,6 +27,8 @@ function App() {
           <Route path="tools" element={<ToolsPage />} />
           <Route path="tools/invoice" element={<InvoicePage onGenerate={handleGenerateInvoice} />} />
           <Route path="about" element={<AboutPage />} />
+          <Route path="terms" element={<TermsPage />} />
+          <Route path="privacy" element={<PrivacyPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

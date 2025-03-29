@@ -141,33 +141,33 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onGenerate }) => {
   };
 
   return (
-    <div className="container mx-auto py-8 px-4">
-      <h1 className="text-3xl font-bold mb-8 text-center">Invoice Generator</h1>
+    <div className="w-full mx-auto py-4 sm:py-6">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center">Invoice Generator</h1>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-8 flex justify-end space-x-4">
+        <div className="mb-6 flex flex-wrap justify-end gap-2 sm:gap-4">
           <button
             type="button"
             onClick={togglePreview}
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white shadow-sm"
+            className="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-white shadow-sm"
             style={{ backgroundColor: watchPrimaryColor }}
           >
             {showPreview ? (
               <>
-                <EyeOff className="mr-2 h-5 w-5" /> Hide Preview
+                <EyeOff className="mr-1 sm:mr-2 h-4 w-4 sm:h-5 sm:w-5" /> Hide Preview
               </>
             ) : (
               <>
-                <Eye className="mr-2 h-5 w-5" /> Show Preview
+                <Eye className="mr-1 sm:mr-2 h-4 w-4 sm:h-5 sm:w-5" /> Show Preview
               </>
             )}
           </button>
           <button
             type="submit"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white shadow-sm"
+            className="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-white shadow-sm"
             style={{ backgroundColor: watchPrimaryColor }}
           >
-            <Download className="mr-2 h-5 w-5" /> Download PDF
+            <Download className="mr-1 sm:mr-2 h-4 w-4 sm:h-5 sm:w-5" /> Download PDF
           </button>
         </div>
 
@@ -181,7 +181,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onGenerate }) => {
           />
         )}
 
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           <CompanyDetails
             register={register}
             watch={watch}

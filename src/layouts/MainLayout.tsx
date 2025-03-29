@@ -11,26 +11,26 @@ const MainLayout: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="flex flex-col min-h-screen bg-gray-900 text-white">
       {/* Navigation Header */}
       <header className="bg-gray-800 border-b border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center">
               <Link to="/" className="flex items-center gap-2">
-                <Cookie className="h-8 w-8 text-[#00FFD1]" />
-                <span className="text-xl font-bold bg-gradient-to-r from-[#00FFD1] to-[#FF3CAC] bg-clip-text text-transparent">
+                <Cookie className="h-7 w-7 sm:h-8 sm:w-8 text-[#00FFD1]" />
+                <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-[#00FFD1] to-[#FF3CAC] bg-clip-text text-transparent">
                   SaaSy Cookies
                 </span>
               </Link>
             </div>
             
             {/* Navigation Links */}
-            <nav className="flex space-x-4">
+            <nav className="flex space-x-2 sm:space-x-4">
               <Link 
                 to="/" 
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
+                className={`px-2 sm:px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
                   isActive('/') 
                     ? 'bg-gray-700 text-white' 
                     : 'text-gray-300 hover:bg-gray-700 hover:text-[#00FFD1]'
@@ -40,7 +40,7 @@ const MainLayout: React.FC = () => {
               </Link>
               <Link 
                 to="/tools" 
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
+                className={`px-2 sm:px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
                   isActive('/tools') 
                     ? 'bg-gray-700 text-white' 
                     : 'text-gray-300 hover:bg-gray-700 hover:text-[#FF3CAC]'
@@ -50,7 +50,7 @@ const MainLayout: React.FC = () => {
               </Link>
               <Link 
                 to="/about" 
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
+                className={`px-2 sm:px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
                   isActive('/about') 
                     ? 'bg-gray-700 text-white' 
                     : 'text-gray-300 hover:bg-gray-700 hover:text-[#00FFD1]'
@@ -64,13 +64,13 @@ const MainLayout: React.FC = () => {
       </header>
       
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="flex-grow w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-6 sm:py-8">
         <Outlet />
       </main>
       
       {/* Footer */}
-      <footer className="bg-gray-800 border-t border-gray-700 py-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <footer className="bg-gray-800 border-t border-gray-700 py-4 sm:py-6 mt-auto">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
               <p className="text-sm text-gray-400">
@@ -78,12 +78,12 @@ const MainLayout: React.FC = () => {
               </p>
             </div>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-[#00FFD1] transition-colors duration-300">
+              <Link to="/terms" className="text-gray-400 hover:text-[#00FFD1] transition-colors duration-300">
                 Terms
-              </a>
-              <a href="#" className="text-gray-400 hover:text-[#FF3CAC] transition-colors duration-300">
+              </Link>
+              <Link to="/privacy" className="text-gray-400 hover:text-[#FF3CAC] transition-colors duration-300">
                 Privacy
-              </a>
+              </Link>
             </div>
           </div>
         </div>
