@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
+interface PageViewData {
+  name: string;
+  views: number;
+}
+
+interface DemographicData {
+  name: string;
+  value: number;
+}
+
 // Sample data - this would be replaced with actual data from your Google Analytics API
 const sampleData = {
   pageViews: [
@@ -9,31 +19,31 @@ const sampleData = {
     { name: 'About', views: 320 },
     { name: 'Terms', views: 110 },
     { name: 'Privacy', views: 95 },
-  ],
+  ] as PageViewData[],
   demographics: [
     { name: 'New Zealand', value: 65 },
     { name: 'Australia', value: 15 },
     { name: 'United States', value: 10 },
     { name: 'United Kingdom', value: 5 },
     { name: 'Other', value: 5 },
-  ],
+  ] as DemographicData[],
   ageGroups: [
     { name: '18-24', value: 10 },
     { name: '25-34', value: 35 },
     { name: '35-44', value: 30 },
     { name: '45-54', value: 15 },
     { name: '55+', value: 10 },
-  ],
+  ] as DemographicData[],
   gender: [
     { name: 'Male', value: 55 },
     { name: 'Female', value: 42 },
     { name: 'Other', value: 3 },
-  ],
+  ] as DemographicData[],
   toolUsage: [
     { name: 'Invoice Generator', value: 75 },
     { name: 'Time Tracker', value: 15 },
     { name: 'Tax Calculator', value: 10 },
-  ],
+  ] as DemographicData[],
 };
 
 // Colors for the charts
@@ -102,12 +112,12 @@ const AnalyticsPage: React.FC = () => {
                   cx="50%"
                   cy="50%"
                   labelLine={true}
-                  label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                  label={({ name, percent }: { name: string; percent: number }) => `${name}: ${(percent * 100).toFixed(0)}%`}
                   outerRadius={80}
                   fill="#8884d8"
                   dataKey="value"
                 >
-                  {sampleData.demographics.map((entry, index) => (
+                  {sampleData.demographics.map((_, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
@@ -131,12 +141,12 @@ const AnalyticsPage: React.FC = () => {
                   cx="50%"
                   cy="50%"
                   labelLine={true}
-                  label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                  label={({ name, percent }: { name: string; percent: number }) => `${name}: ${(percent * 100).toFixed(0)}%`}
                   outerRadius={80}
                   fill="#8884d8"
                   dataKey="value"
                 >
-                  {sampleData.ageGroups.map((entry, index) => (
+                  {sampleData.ageGroups.map((_, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
@@ -160,12 +170,12 @@ const AnalyticsPage: React.FC = () => {
                   cx="50%"
                   cy="50%"
                   labelLine={true}
-                  label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                  label={({ name, percent }: { name: string; percent: number }) => `${name}: ${(percent * 100).toFixed(0)}%`}
                   outerRadius={80}
                   fill="#8884d8"
                   dataKey="value"
                 >
-                  {sampleData.gender.map((entry, index) => (
+                  {sampleData.gender.map((_, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>

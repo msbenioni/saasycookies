@@ -6,7 +6,7 @@ const PrivacyPage: React.FC = () => {
       <h1 className="text-3xl font-bold mb-8 bg-gradient-to-r from-[#00FFD1] to-[#FF3CAC] bg-clip-text text-transparent leading-relaxed pb-1">Privacy Policy</h1>
       
       <div className="prose prose-invert max-w-none">
-        <p className="text-gray-300 mb-6">Last Updated: 28 March 2025</p>
+        <p className="text-gray-300 mb-6">Last Updated: 30 March 2025</p>
         
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4 text-white">1. Introduction</h2>
@@ -66,7 +66,7 @@ const PrivacyPage: React.FC = () => {
           <h2 className="text-2xl font-semibold mb-4 text-white">5. Data Storage and Security</h2>
           <p className="mb-4">We implement appropriate technical and organizational measures to protect the security of your personal information. However, please be aware that no method of transmission over the Internet or method of electronic storage is 100% secure.</p>
           <p className="mb-4">Your data may be stored and processed in New Zealand or any other country in which SaaSy Cookies, its affiliates, or service providers maintain facilities. If we transfer your personal information to countries outside New Zealand, we will ensure that an adequate level of protection is in place.</p>
-          <p>We will retain your personal information only for as long as is necessary for the purposes set out in this Privacy Policy.</p>
+          <p className="mb-4">We will retain your personal information only for as long as is necessary for the purposes set out in this Privacy Policy. For analytics data, we have configured a 14-month data retention period, after which the data is automatically deleted.</p>
         </section>
         
         <section className="mb-8">
@@ -85,21 +85,37 @@ const PrivacyPage: React.FC = () => {
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4 text-white">7. Cookies and Tracking Technologies</h2>
           <p className="mb-4">We use cookies and similar tracking technologies to track activity on our Services and hold certain information. Cookies are files with a small amount of data that may include an anonymous unique identifier.</p>
-          <p>You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our Services.</p>
+          <p className="mb-4">You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our Services.</p>
+          <p className="mb-4">When you first visit our website, you will be presented with a cookie consent banner that allows you to choose whether to accept or decline non-essential cookies. You can change your preferences at any time.</p>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4 text-white">8. Google Analytics</h2>
+          <p className="mb-4">We use Google Analytics 4 (GA4), a web analytics service provided by Google, Inc. ("Google"), to help us understand how users engage with our website. Google Analytics uses cookies to collect information about your use of our website, including your IP address.</p>
+          <p className="mb-4">We have implemented the following privacy measures for Google Analytics:</p>
+          <ul className="list-disc pl-6 mb-4">
+            <li className="mb-2"><strong>IP Anonymization:</strong> We have enabled IP anonymization, which means that your IP address will be truncated within member states of the European Union or other parties to the Agreement on the European Economic Area. Only in exceptional cases will the full IP address be sent to a Google server and truncated there.</li>
+            <li className="mb-2"><strong>Data Retention:</strong> We have set a 14-month data retention period in Google Analytics, after which your data is automatically deleted.</li>
+            <li className="mb-2"><strong>Consent-Based Tracking:</strong> We only activate Google Analytics tracking after obtaining your explicit consent through our cookie consent banner.</li>
+            <li className="mb-2"><strong>Data Processing Agreement:</strong> We have entered into a data processing agreement with Google to ensure that they process your data in accordance with applicable privacy laws.</li>
+            <li><strong>Transparency:</strong> We provide a public analytics dashboard that shows aggregated, anonymized statistics about our website visitors.</li>
+          </ul>
+          <p className="mb-4">Google will use this information on our behalf for the purpose of evaluating your use of the website, compiling reports on website activity, and providing other services relating to website activity and internet usage.</p>
+          <p>You can prevent Google Analytics from recognizing you on return visits to this site by disabling cookies in your browser or by using the Google Analytics Opt-out Browser Add-on available at <a href="https://tools.google.com/dlpage/gaoptout" className="text-[#00FFD1] hover:underline" target="_blank" rel="noopener noreferrer">https://tools.google.com/dlpage/gaoptout</a>.</p>
         </section>
         
         <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4 text-white">8. Children's Privacy</h2>
+          <h2 className="text-2xl font-semibold mb-4 text-white">9. Children's Privacy</h2>
           <p>Our Services are not intended for use by children under the age of 16. We do not knowingly collect personal information from children under 16. If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact us.</p>
         </section>
         
         <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4 text-white">9. Changes to This Privacy Policy</h2>
+          <h2 className="text-2xl font-semibold mb-4 text-white">10. Changes to This Privacy Policy</h2>
           <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date at the top of this Privacy Policy.</p>
         </section>
         
         <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4 text-white">10. Contact Us</h2>
+          <h2 className="text-2xl font-semibold mb-4 text-white">11. Contact Us</h2>
           <p className="mb-4">If you have any questions about this Privacy Policy, please contact us at:</p>
           <p className="mb-2">SaaSy Cookies Ltd</p>
           <p className="mb-2">Email: privacy@saasycookies.co.nz</p>

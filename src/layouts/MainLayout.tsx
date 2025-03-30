@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import saasyLogo from '../assets/saasy_logo.png';
+import CookieConsent from '../components/CookieConsent';
 
 const MainLayout: React.FC = () => {
   const location = useLocation();
@@ -178,10 +179,16 @@ const MainLayout: React.FC = () => {
               <Link to="/privacy" className="text-gray-400 hover:text-[#FF3CAC] transition-colors duration-300">
                 Privacy
               </Link>
+              <Link to="/analytics" className="text-gray-400 hover:text-[#00FFD1] transition-colors duration-300">
+                Analytics
+              </Link>
             </div>
           </div>
         </div>
       </footer>
+      
+      {/* Cookie Consent Banner */}
+      <CookieConsent />
     </div>
   );
 };

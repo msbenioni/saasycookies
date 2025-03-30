@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FileText, Clock, CreditCard } from 'lucide-react';
+import DownloadCounter from '../components/DownloadCounter';
 
 const HomePage: React.FC = () => {
   return (
@@ -42,8 +43,11 @@ const HomePage: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Invoice Generator */}
           <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-[#00FFD1] transition-colors duration-300">
-            <div className="h-12 w-12 bg-[#00FFD1]/20 rounded-lg flex items-center justify-center mb-4">
-              <FileText className="h-6 w-6 text-[#00FFD1]" />
+            <div className="flex justify-between mb-4">
+              <div className="h-12 w-12 bg-[#00FFD1]/20 rounded-lg flex items-center justify-center">
+                <FileText className="h-6 w-6 text-[#00FFD1]" />
+              </div>
+              <DownloadCounter className="scale-75 origin-right" />
             </div>
             <h3 className="text-xl font-semibold mb-2">Invoice Generator</h3>
             <p className="text-gray-400 mb-4">

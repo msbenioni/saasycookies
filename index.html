@@ -38,13 +38,29 @@
     <meta name="geo.region" content="NZ" />
     <meta name="geo.placename" content="New Zealand" />
     
-    <!-- Google Analytics (GA4) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <!-- Google Analytics (GA4) with Consent Mode -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3EBE5TGZMN"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
+      
+      // Default to requiring consent
+      gtag('consent', 'default', {
+        'analytics_storage': 'denied'
+      });
+      
+      // Check if user has already given consent
+      if (localStorage.getItem('cookieConsent') === 'true') {
+        gtag('consent', 'update', {
+          'analytics_storage': 'granted'
+        });
+      }
+      
+      gtag('config', 'G-3EBE5TGZMN', {
+        'anonymize_ip': true,
+        'cookie_flags': 'SameSite=None;Secure'
+      });
     </script>
   </head>
   <body>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { generatePDF } from '../utils/generatePDF';
 import { Eye, EyeOff, Download } from 'lucide-react';
+import { incrementDownloadCount } from '../services/analytics';
 
 // Import the separated components
 import {
@@ -118,10 +119,15 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onGenerate }) => {
   };
 
   const onSubmit = (data: any) => {
+    // Generate PDF
+    generatePDF(data.company, data.invoice, data.style);
+    
+    // Track the download
+    incrementDownloadCount();
+    
+    // Call the onGenerate callback if provided
     if (onGenerate) {
       onGenerate(data);
-    } else {
-      generatePDF(data.company, data.invoice, data.style);
     }
   };
 

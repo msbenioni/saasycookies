@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, FileText } from 'lucide-react';
 import InvoiceForm from '../../components/InvoiceForm';
+import DownloadCounter from '../../components/DownloadCounter';
 import { CompanyDetails, InvoiceDetails, StyleOptions } from '../../types';
 
 interface InvoicePageProps {
@@ -22,9 +23,12 @@ const InvoicePage: React.FC<InvoicePageProps> = ({ onGenerate }) => {
         >
           <ArrowLeft className="h-4 w-4 mr-1" /> Back to Tools
         </Link>
-        <div className="flex items-center gap-3 mb-4">
-          <FileText className="w-8 h-8 text-[#00FFD1]" />
-          <h1 className="text-3xl font-bold">NZ Invoice Generator</h1>
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-3">
+            <FileText className="w-8 h-8 text-[#00FFD1]" />
+            <h1 className="text-3xl font-bold">NZ Invoice Generator</h1>
+          </div>
+          <DownloadCounter />
         </div>
         <p className="text-gray-400">
           Generate professional invoices for your business. Include GST and withholding tax calculations,
