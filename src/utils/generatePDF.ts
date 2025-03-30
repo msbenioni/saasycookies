@@ -34,8 +34,8 @@ export const generatePDF = (
   const pageHeight = doc.internal.pageSize.getHeight();
   const margin = 15;
 
-  // Set font
-  doc.setFont(style.fontFamily);
+  // Always use Calibri font regardless of style options
+  doc.setFont('calibri');
   
   // Add a colored accent line on the left (like in the preview)
   const primaryColorRGB = hexToRgb(style.primaryColor);
@@ -56,10 +56,12 @@ export const generatePDF = (
   }
 
   // Company Details
+  doc.setFont('calibri', 'bold');
   doc.setFontSize(12);
   doc.setTextColor(60, 60, 60);
   doc.text(company.name, margin + logoOffset, margin + 8);
   
+  doc.setFont('calibri', 'normal');
   doc.setFontSize(9);
   doc.text(company.address, margin + logoOffset, margin + 16);
   doc.text(company.email, margin + logoOffset, margin + 22);
@@ -70,18 +72,19 @@ export const generatePDF = (
   }
   
   // Invoice Title and Number - Match the styling from the preview
-  doc.setFont(style.fontFamily, 'bold');
-  doc.setFontSize(20);
+  doc.setFont('calibri', 'bold');
+  doc.setFontSize(12);
   if (primaryColorRGB) {
     doc.setTextColor(primaryColorRGB.r, primaryColorRGB.g, primaryColorRGB.b);
   }
-  doc.text("INVOICE", pageWidth - margin, margin + 15, { align: 'right' });
+  doc.text("INVOICE", pageWidth - margin, margin + 8, { align: 'right' });
   
-  doc.setFontSize(10);
+  doc.setFont('calibri', 'normal');
+  doc.setFontSize(9);
   doc.setTextColor(100, 100, 100);
-  doc.text(`Invoice Number: ${invoice.invoiceNumber || 'N/A'}`, pageWidth - margin, margin + 25, { align: 'right' });
-  doc.text(`Date: ${formatDate(invoice.date)}`, pageWidth - margin, margin + 32, { align: 'right' });
-  doc.text(`Due Date: ${formatDate(invoice.dueDate)}`, pageWidth - margin, margin + 39, { align: 'right' });
+  doc.text(`Invoice Number: ${invoice.invoiceNumber || 'N/A'}`, pageWidth - margin, margin + 16, { align: 'right' });
+  doc.text(`Date: ${formatDate(invoice.date)}`, pageWidth - margin, margin + 22, { align: 'right' });
+  doc.text(`Due Date: ${formatDate(invoice.dueDate)}`, pageWidth - margin, margin + 28, { align: 'right' });
   
   // Draw a line after the header section - matches the border-bottom in the preview
   doc.setDrawColor(220, 220, 220);
@@ -89,7 +92,7 @@ export const generatePDF = (
   doc.line(margin, margin + 45, pageWidth - margin, margin + 45);
   
   // Client Details - Match the styling from the preview
-  doc.setFont(style.fontFamily, 'bold');
+  doc.setFont('calibri', 'bold');
   doc.setFontSize(11);
   doc.setTextColor(60, 60, 60);
   doc.text("Bill To:", margin, margin + 60);
@@ -100,7 +103,7 @@ export const generatePDF = (
     doc.line(margin, margin + 63, margin + 25, margin + 63);
   }
   
-  doc.setFont(style.fontFamily, 'normal');
+  doc.setFont('calibri', 'normal');
   doc.setFontSize(10);
   doc.text(invoice.client.name, margin, margin + 70);
   doc.text(invoice.client.address, margin, margin + 77);
@@ -131,7 +134,7 @@ export const generatePDF = (
     doc.rect(margin, tableStartY - 8, pageWidth - (margin * 2), 10, 'F');
   }
   
-  doc.setFont(style.fontFamily, 'bold');
+  doc.setFont('calibri', 'bold');
   doc.setFontSize(10);
   doc.setTextColor(255, 255, 255); // White text for headers
   
@@ -150,7 +153,7 @@ export const generatePDF = (
   doc.text("Amount", pageWidth - margin - 2, tableStartY - 2, { align: 'right' });
   
   // Table rows
-  doc.setFont(style.fontFamily, 'normal');
+  doc.setFont('calibri', 'normal');
   doc.setTextColor(60, 60, 60); // Reset text color
   let currentY = tableStartY + 10;
   let subtotal = 0;
@@ -205,7 +208,7 @@ export const generatePDF = (
   doc.line(summaryX, currentY, pageWidth - margin, currentY);
   
   // Subtotal
-  doc.setFont(style.fontFamily, 'normal');
+  doc.setFont('calibri', 'normal');
   doc.setFontSize(10);
   doc.setTextColor(60, 60, 60);
   doc.text("Subtotal:", summaryLabelX, currentY + 8, { align: 'left' });
@@ -235,7 +238,7 @@ export const generatePDF = (
   currentY += 8;
   
   // Total amount - match the colored text in the preview
-  doc.setFont(style.fontFamily, 'bold');
+  doc.setFont('calibri', 'bold');
   doc.setFontSize(11);
   if (primaryColorRGB) {
     doc.setTextColor(primaryColorRGB.r, primaryColorRGB.g, primaryColorRGB.b);
@@ -248,12 +251,12 @@ export const generatePDF = (
   doc.setDrawColor(220, 220, 220);
   doc.line(margin, paymentY, pageWidth - margin, paymentY);
   
-  doc.setFont(style.fontFamily, 'bold');
+  doc.setFont('calibri', 'bold');
   doc.setFontSize(11);
   doc.setTextColor(60, 60, 60);
   doc.text("Payment Details", margin, paymentY + 10);
   
-  doc.setFont(style.fontFamily, 'normal');
+  doc.setFont('calibri', 'normal');
   doc.setFontSize(10);
   doc.text(`Bank Name: ${company.bankName || 'N/A'}`, margin, paymentY + 20);
   doc.text(`Bank Account: ${company.bankAccount || 'N/A'}`, margin, paymentY + 28);
@@ -263,13 +266,13 @@ export const generatePDF = (
   if (primaryColorRGB) {
     doc.setTextColor(primaryColorRGB.r, primaryColorRGB.g, primaryColorRGB.b);
   }
-  doc.setFont(style.fontFamily, 'bold');
+  doc.setFont('calibri', 'bold');
   doc.text("Please include the invoice number as reference when making payment", 
     pageWidth / 2, paymentY + 48, { align: 'center' });
   
   // Thank you note
   doc.setTextColor(150, 150, 150);
-  doc.setFont(style.fontFamily, 'normal');
+  doc.setFont('calibri', 'normal');
   doc.text("Thank you for your business", pageWidth / 2, paymentY + 58, { align: 'center' });
   
   return doc;

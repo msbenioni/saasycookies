@@ -37,5 +37,4 @@ export interface InvoiceDetails {
 
 export interface StyleOptions {
   primaryColor: string;
-  fontFamily: string;
 }
