@@ -135,23 +135,20 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onGenerate }) => {
       // Add a delay before generating the PDF to ensure the UI updates
       setTimeout(() => {
         try {
-          // Generate PDF
-          const success = generatePDF(data.company, data.invoice, data.style);
+          // Generate PDF with the updated function signature (invoice, company, style)
+          const doc = generatePDF(data.invoice, data.company, data.style);
           
-          if (success) {
-            console.log('PDF generated successfully');
+          // Save the PDF
+          doc.save(`invoice-${data.invoice.invoiceNumber || 'new'}.pdf`);
+          console.log('PDF generated and saved successfully');
+          
+          // Track the download
+          incrementDownloadCount()
+            .then(() => console.log('Download tracked successfully'))
+            .catch(error => console.error('Error tracking download:', error));
             
-            // Track the download
-            incrementDownloadCount()
-              .then(() => console.log('Download tracked successfully'))
-              .catch(error => console.error('Error tracking download:', error));
-              
-            // Show a success message to the user
-            alert('PDF generated successfully!');
-          } else {
-            console.error('Failed to generate PDF');
-            alert('Failed to generate PDF. Please check the console for errors.');
-          }
+          // Show a success message to the user
+          alert('Invoice PDF downloaded successfully!');
         } catch (pdfError) {
           console.error('Error generating PDF:', pdfError);
           alert('Error generating PDF. Please check the console for details.');
