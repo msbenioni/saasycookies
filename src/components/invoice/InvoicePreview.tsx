@@ -40,32 +40,32 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({
               />
             )}
             <div>
-              <h3 className="text-base sm:text-lg font-bold">{watchCompany.name || 'Your Company'}</h3>
-              <p className="text-xs sm:text-sm">{watchCompany.address || 'Company Address'}</p>
-              <p className="text-xs sm:text-sm">{watchCompany.email || 'company@example.com'}</p>
-              <p className="text-xs sm:text-sm">{watchCompany.phone || '123-456-7890'}</p>
+              <h3 className="text-base font-bold">{watchCompany.name || 'Your Company'}</h3>
+              <p className="text-xs">{watchCompany.address || 'Company Address'}</p>
+              <p className="text-xs">{watchCompany.email || 'company@example.com'}</p>
+              <p className="text-xs">{watchCompany.phone || '123-456-7890'}</p>
               {watchCompany.gstNumber && (
-                <p className="text-xs sm:text-sm">GST Number: {watchCompany.gstNumber}</p>
+                <p className="text-xs">GST Number: {watchCompany.gstNumber}</p>
               )}
             </div>
           </div>
           <div className="text-left sm:text-right">
-            <h2 className="text-xl sm:text-2xl font-bold" style={{ color: watchPrimaryColor }}>INVOICE</h2>
-            <p className="text-xs sm:text-sm">Invoice #: {watchInvoice.invoiceNumber || 'INV-001'}</p>
-            <p className="text-xs sm:text-sm">Date: {watchInvoice.date || 'Current Date'}</p>
-            <p className="text-xs sm:text-sm">Due Date: {watchInvoice.dueDate || 'Due Date'}</p>
+            <h2 className="text-base font-bold" style={{ color: watchPrimaryColor }}>INVOICE</h2>
+            <p className="text-xs">Invoice #: {watchInvoice.invoiceNumber || 'INV-001'}</p>
+            <p className="text-xs">Date: {watchInvoice.date || 'Current Date'}</p>
+            <p className="text-xs">Due Date: {watchInvoice.dueDate || 'Due Date'}</p>
           </div>
         </div>
 
         {/* Client Info */}
         <div className="mb-4 sm:mb-8">
           <h4 className="font-bold mb-1 sm:mb-2 pb-1" style={{ borderBottom: `1px solid ${watchPrimaryColor}` }}>Bill To:</h4>
-          <p className="text-xs sm:text-sm">{watchInvoice.client.name}</p>
-          <p className="text-xs sm:text-sm">{watchInvoice.client.address}</p>
-          <p className="text-xs sm:text-sm">{watchInvoice.client.email}</p>
-          <p className="text-xs sm:text-sm">{watchInvoice.client.phone}</p>
+          <p className="text-xs">{watchInvoice.client.name}</p>
+          <p className="text-xs">{watchInvoice.client.address}</p>
+          <p className="text-xs">{watchInvoice.client.email}</p>
+          <p className="text-xs">{watchInvoice.client.phone}</p>
           {watchInvoice.client.gstNumber && (
-            <p className="text-xs sm:text-sm">GST Number: {watchInvoice.client.gstNumber}</p>
+            <p className="text-xs">GST Number: {watchInvoice.client.gstNumber}</p>
           )}
         </div>
 
@@ -74,19 +74,19 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({
           <table className="w-full mb-4 sm:mb-6 min-w-[400px]">
             <thead>
               <tr style={{ backgroundColor: watchPrimaryColor }}>
-                <th className="text-left p-1 sm:p-2 text-white text-xs sm:text-sm">Description</th>
-                <th className="text-center p-1 sm:p-2 text-white text-xs sm:text-sm">Quantity</th>
-                <th className="text-right p-1 sm:p-2 text-white text-xs sm:text-sm">Price</th>
-                <th className="text-right p-1 sm:p-2 text-white text-xs sm:text-sm">Amount</th>
+                <th className="text-left p-1 sm:p-2 text-white text-xs">Description</th>
+                <th className="text-center p-1 sm:p-2 text-white text-xs">Quantity</th>
+                <th className="text-right p-1 sm:p-2 text-white text-xs">Price</th>
+                <th className="text-right p-1 sm:p-2 text-white text-xs">Amount</th>
               </tr>
             </thead>
             <tbody>
               {watchItems.map((item: any, index: number) => (
                 <tr key={index} className="border-b">
-                  <td className="p-1 sm:p-2 text-xs sm:text-sm">{item.description || 'Item description'}</td>
-                  <td className="p-1 sm:p-2 text-center text-xs sm:text-sm">{item.quantity}</td>
-                  <td className="p-1 sm:p-2 text-right text-xs sm:text-sm">${Number(item.price).toFixed(2)}</td>
-                  <td className="p-1 sm:p-2 text-right text-xs sm:text-sm">
+                  <td className="p-1 sm:p-2 text-xs">{item.description || 'Item description'}</td>
+                  <td className="p-1 sm:p-2 text-center text-xs">{item.quantity}</td>
+                  <td className="p-1 sm:p-2 text-right text-xs">${Number(item.price).toFixed(2)}</td>
+                  <td className="p-1 sm:p-2 text-right text-xs">
                     ${(Number(item.quantity) * Number(item.price)).toFixed(2)}
                   </td>
                 </tr>
@@ -99,38 +99,38 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({
         <div className="flex justify-end mb-4 sm:mb-8">
           <div className="w-full sm:w-64">
             <div className="flex justify-between py-1 border-t">
-              <span className="text-xs sm:text-sm">Subtotal:</span>
-              <span className="text-xs sm:text-sm">${calculateSubtotal().toFixed(2)}</span>
+              <span className="text-xs">Subtotal:</span>
+              <span className="text-xs">${calculateSubtotal().toFixed(2)}</span>
             </div>
             
             {watchIsGstRegistered && (
               <div className="flex justify-between py-1">
-                <span className="text-xs sm:text-sm">GST ({watch('invoice.gstRate')}%):</span>
-                <span className="text-xs sm:text-sm">${calculateGST().toFixed(2)}</span>
+                <span className="text-xs">GST ({watch('invoice.gstRate')}%):</span>
+                <span className="text-xs">${calculateGST().toFixed(2)}</span>
               </div>
             )}
             
             {watch('invoice.isWithholdingTaxEnabled') && (
               <div className="flex justify-between py-1">
-                <span className="text-xs sm:text-sm">Withholding Tax ({watch('invoice.withholdingTaxRate')}%):</span>
-                <span className="text-xs sm:text-sm">${calculateWithholdingTax().toFixed(2)}</span>
+                <span className="text-xs">Withholding Tax ({watch('invoice.withholdingTaxRate')}%):</span>
+                <span className="text-xs">${calculateWithholdingTax().toFixed(2)}</span>
               </div>
             )}
             
             <div className="flex justify-between py-1 border-t mt-1 font-bold" style={{ color: watchPrimaryColor }}>
-              <span className="text-xs sm:text-sm">Total:</span>
-              <span className="text-xs sm:text-sm">${calculateTotal().toFixed(2)}</span>
+              <span className="text-xs">Total:</span>
+              <span className="text-xs">${calculateTotal().toFixed(2)}</span>
             </div>
           </div>
         </div>
 
         {/* Payment Details */}
         <div className="mt-4 sm:mt-8 pt-3 sm:pt-4 border-t">
-          <h4 className="font-bold mb-1 sm:mb-2 text-sm sm:text-base">Payment Details</h4>
-          <p className="text-xs sm:text-sm">Bank Name: {watchCompany.bankName || 'Bank Name'}</p>
-          <p className="text-xs sm:text-sm">Bank Account: {watchCompany.bankAccount || 'Account Number'}</p>
-          <p className="text-xs sm:text-sm">Payment Reference: {watchInvoice.invoiceNumber || 'INV-001'}</p>
-          <p className="text-xs sm:text-sm mt-3 sm:mt-4 font-medium" style={{ color: watchPrimaryColor }}>
+          <h4 className="font-bold mb-1 sm:mb-2 text-sm">Payment Details</h4>
+          <p className="text-xs">Bank Name: {watchCompany.bankName || 'Bank Name'}</p>
+          <p className="text-xs">Bank Account: {watchCompany.bankAccount || 'Account Number'}</p>
+          <p className="text-xs">Payment Reference: {watchInvoice.invoiceNumber || 'INV-001'}</p>
+          <p className="text-xs mt-3 sm:mt-4 font-medium" style={{ color: watchPrimaryColor }}>
             Please include the invoice number as reference when making payment
           </p>
           <p className="text-center text-gray-500 text-xs mt-4 sm:mt-6">Thank you for your business</p>
