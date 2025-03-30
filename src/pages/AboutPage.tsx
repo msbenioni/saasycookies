@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Cookie, X } from 'lucide-react';
+import { X } from 'lucide-react';
 
 const AboutPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
