@@ -1,8 +1,13 @@
 // Server-side implementation for Google Analytics Data API
-const express = require('express');
-const { BetaAnalyticsDataClient } = require('@google-analytics/data');
-const cors = require('cors');
-require('dotenv').config();
+import express from 'express';
+import { BetaAnalyticsDataClient } from '@google-analytics/data';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import { dirname, resolve } from 'path';
+
+// Initialize environment variables
+dotenv.config({ path: resolve(dirname(fileURLToPath(import.meta.url)), '.env') });
 
 const app = express();
 app.use(cors());
@@ -67,6 +72,5 @@ app.listen(PORT, () => {
 
 // To run this server with PowerShell:
 // 1. Install dependencies: npm install express @google-analytics/data cors dotenv
-// 2. Set environment variable for credentials:
-//    $env:GOOGLE_APPLICATION_CREDENTIALS="path\to\your-service-account-key.json"
+// 2. Set environment variable for credentials in .env file
 // 3. Start the server: node server/analytics-api.js

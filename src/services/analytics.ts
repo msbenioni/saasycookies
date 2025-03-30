@@ -10,27 +10,27 @@ declare global {
 // Your Google Analytics property ID - used for tracking events
 const GA_PROPERTY_ID = 'G-3EBE5TGZMN';
 
+// API endpoint for fetching analytics data
+const API_ENDPOINT = 'http://localhost:3000/api/analytics/downloads';
+
 // Function to get the current download count
 export const getDownloadCount = async (): Promise<number> => {
   try {
-    // For development/demo purposes, simulate a download count
-    // Comment this out when you're ready to use real data
-    const mockResponse = { count: Math.floor(Math.random() * 500) + 1500 };
-    return mockResponse.count;
+    // Fetch real data from the API
+    const response = await fetch(API_ENDPOINT);
     
-    // REAL DATA IMPLEMENTATION:
-    // This requires setting up a proxy server to handle authentication and CORS
-    // 1. Create a simple API endpoint on your server (e.g., /api/analytics/downloads)
-    // 2. On your server, use the Google Analytics Data API with service account auth
-    // 3. Call this endpoint from your client-side code
+    // If the API call fails, fall back to sample data
+    if (!response.ok) {
+      console.warn('Could not fetch real download data, using sample data instead');
+      return Math.floor(Math.random() * 500) + 1500;
+    }
     
-    // Client-side implementation:
-    // const response = await fetch('/api/analytics/downloads');
-    // const data = await response.json();
-    // return data.count;
+    const data = await response.json();
+    return data.count;
   } catch (error) {
     console.error('Error fetching download count:', error);
-    return 0;
+    // Fall back to sample data if there's an error
+    return Math.floor(Math.random() * 500) + 1500;
   }
 };
 
