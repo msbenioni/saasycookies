@@ -105,6 +105,16 @@ const MainLayout: React.FC = () => {
                 Tools
               </Link>
               <Link 
+                to="/analytics" 
+                className={`px-2 sm:px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
+                  isActive('/analytics') 
+                    ? 'bg-gray-700 text-white' 
+                    : 'text-gray-300 hover:bg-gray-700 hover:text-[#00FFD1]'
+                }`}
+              >
+                Analytics
+              </Link>
+              <Link 
                 to="/about" 
                 className={`px-2 sm:px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
                   isActive('/about') 
@@ -142,6 +152,17 @@ const MainLayout: React.FC = () => {
               onClick={() => setMobileMenuOpen(false)}
             >
               Tools
+            </Link>
+            <Link 
+              to="/analytics" 
+              className={`block px-3 py-2 rounded-md text-base font-medium ${
+                isActive('/analytics') 
+                  ? 'bg-gray-700 text-white' 
+                  : 'text-gray-300 hover:bg-gray-700 hover:text-[#00FFD1]'
+              }`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Analytics
             </Link>
             <Link 
               to="/about" 

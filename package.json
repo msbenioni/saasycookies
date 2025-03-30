@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "vite",
+    "start:analytics": "node server/analytics-api.js",
+    "start:all": "powershell -Command \"Start-Process powershell -ArgumentList '-NoExit', '-Command', 'cd $PWD; npm run start:analytics' ; npm start\""
   },
   "dependencies": {
     "@google-analytics/data": "^5.1.0",

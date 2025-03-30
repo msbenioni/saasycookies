@@ -7,9 +7,6 @@ declare global {
   }
 }
 
-// Your Google Analytics property ID - used for tracking events
-const GA_PROPERTY_ID = 'G-3EBE5TGZMN';
-
 // API endpoint for fetching analytics data
 const API_ENDPOINT = 'http://localhost:3000/api/analytics/downloads';
 
@@ -37,15 +34,40 @@ export const getDownloadCount = async (): Promise<number> => {
 // Function to track a download event in Google Analytics
 export const incrementDownloadCount = async (): Promise<void> => {
   try {
+    console.log('Tracking PDF download event...');
+    
     // Track the download event in Google Analytics
     if (window.gtag) {
+      // GA4 event tracking format - use 'invoice_download' to match the backend query
       window.gtag('event', 'invoice_download', {
-        'event_category': 'engagement',
-        'event_label': 'Invoice PDF',
-        'send_to': GA_PROPERTY_ID
+        'content_type': 'pdf',
+        'item_id': 'invoice-pdf'
       });
       
-      console.log('Download event tracked in Google Analytics');
+      console.log('Download event tracked in Google Analytics with event name: invoice_download');
+    } else {
+      console.warn('Google Analytics not available - gtag not found');
+    }
+    
+    // Also send the event to our backend API for reliable tracking
+    try {
+      console.log('Sending download event to backend API...');
+      const response = await fetch('http://localhost:3000/api/analytics/track-download', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ event: 'invoice_download' })
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Download tracked successfully in backend:', data);
+      } else {
+        console.error('Failed to track download in backend:', await response.text());
+      }
+    } catch (apiError) {
+      console.error('Error sending download event to API:', apiError);
     }
   } catch (error) {
     console.error('Error tracking download event:', error);

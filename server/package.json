@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Google Analytics Data API server for SaaSy Cookies",
   "main": "analytics-api.js",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "start": "node analytics-api.js"
   },

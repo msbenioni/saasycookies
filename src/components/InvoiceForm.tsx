@@ -73,6 +73,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onGenerate }) => {
     handleSubmit,
     watch,
     setValue,
+    getValues,
     formState: { /* errors */ },
   } = useForm({
     defaultValues,
@@ -119,15 +120,46 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onGenerate }) => {
   };
 
   const onSubmit = (data: any) => {
-    // Generate PDF
-    generatePDF(data.company, data.invoice, data.style);
-    
-    // Track the download
-    incrementDownloadCount();
-    
-    // Call the onGenerate callback if provided
+    // This function is now only used for the form submission
+    // The PDF generation is handled directly by the Download PDF button
     if (onGenerate) {
       onGenerate(data);
+    }
+  };
+
+  const handleDownloadPDF = () => {
+    try {
+      const data = getValues();
+      console.log('Generating PDF with data:', data);
+      
+      // Add a delay before generating the PDF to ensure the UI updates
+      setTimeout(() => {
+        try {
+          // Generate PDF
+          const success = generatePDF(data.company, data.invoice, data.style);
+          
+          if (success) {
+            console.log('PDF generated successfully');
+            
+            // Track the download
+            incrementDownloadCount()
+              .then(() => console.log('Download tracked successfully'))
+              .catch(error => console.error('Error tracking download:', error));
+              
+            // Show a success message to the user
+            alert('PDF generated successfully!');
+          } else {
+            console.error('Failed to generate PDF');
+            alert('Failed to generate PDF. Please check the console for errors.');
+          }
+        } catch (pdfError) {
+          console.error('Error generating PDF:', pdfError);
+          alert('Error generating PDF. Please check the console for details.');
+        }
+      }, 100);
+    } catch (error) {
+      console.error('Error in handleDownloadPDF:', error);
+      alert('Error preparing PDF data. Please check the console for details.');
     }
   };
 
@@ -169,9 +201,10 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onGenerate }) => {
             )}
           </button>
           <button
-            type="submit"
+            type="button"
             className="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-white shadow-sm"
             style={{ backgroundColor: watchPrimaryColor }}
+            onClick={handleDownloadPDF}
           >
             <Download className="mr-1 sm:mr-2 h-4 w-4 sm:h-5 sm:w-5" /> Download PDF
           </button>
