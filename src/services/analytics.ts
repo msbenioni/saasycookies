@@ -7,14 +7,42 @@ declare global {
   }
 }
 
+// Get the API base URL based on environment
+const getApiBaseUrl = () => {
+  // In production, use relative URLs or environment variables if configured
+  if (process.env.REACT_APP_API_URL) {
+    return process.env.REACT_APP_API_URL;
+  }
+  
+  // For local development, use localhost
+  if (window.location.hostname === 'localhost') {
+    return 'http://localhost:3000';
+  }
+  
+  // For production, use the Netlify function URL
+  return '/.netlify/functions/analytics-api';
+};
+
+// Determine if we're in production (Netlify) or development environment
+const isProduction = window.location.hostname !== 'localhost';
+
 // API endpoint for fetching analytics data
-const API_ENDPOINT = 'http://localhost:3000/api/analytics/downloads';
+const API_BASE_URL = getApiBaseUrl();
 
 // Function to get the current download count
 export const getDownloadCount = async (): Promise<number> => {
   try {
+    console.log('Fetching download count...');
+    
+    // Construct the appropriate URL based on environment
+    const url = isProduction 
+      ? `${API_BASE_URL}/api/analytics/downloads` 
+      : `${API_BASE_URL}/api/analytics/downloads`;
+    
+    console.log('Fetching from URL:', url);
+    
     // Fetch real data from the API
-    const response = await fetch(API_ENDPOINT);
+    const response = await fetch(url);
     
     // If the API call fails, fall back to sample data
     if (!response.ok) {
@@ -23,6 +51,7 @@ export const getDownloadCount = async (): Promise<number> => {
     }
     
     const data = await response.json();
+    console.log('Download count data received:', data);
     return data.count;
   } catch (error) {
     console.error('Error fetching download count:', error);
@@ -51,11 +80,18 @@ export const incrementDownloadCount = async (): Promise<void> => {
     
     // Also send the event to our backend API for reliable tracking
     try {
-      console.log('Sending download event to backend API...');
-      const response = await fetch('http://localhost:3000/api/analytics/track-download', {
+      // Construct the appropriate URL based on environment
+      const url = isProduction 
+        ? `${API_BASE_URL}/api/analytics/track-download` 
+        : `${API_BASE_URL}/api/analytics/track-download`;
+      
+      console.log('Sending download event to backend API at:', url);
+      
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
         },
         body: JSON.stringify({ event: 'invoice_download' })
       });

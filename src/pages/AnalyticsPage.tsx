@@ -44,6 +44,28 @@ interface AnalyticsData {
 // Colors for the charts
 const COLORS = ['#00FFD1', '#FF3CAC', '#784BA0', '#2B86C5', '#FF9E7A'];
 
+// Get the API base URL based on environment
+const getApiBaseUrl = () => {
+  // In production, use relative URLs or environment variables if configured
+  if (process.env.REACT_APP_API_URL) {
+    return process.env.REACT_APP_API_URL;
+  }
+  
+  // For local development, use localhost
+  if (window.location.hostname === 'localhost') {
+    return 'http://localhost:3000';
+  }
+  
+  // For production, use the Netlify function URL
+  return '/.netlify/functions/analytics-api';
+};
+
+// Determine if we're in production (Netlify) or development environment
+const isProduction = window.location.hostname !== 'localhost';
+
+// API endpoint for fetching analytics data
+const API_BASE_URL = getApiBaseUrl();
+
 const AnalyticsPage: React.FC = () => {
   const [analyticsData, setAnalyticsData] = useState<AnalyticsData | null>(null);
   const [lastUpdated, setLastUpdated] = useState<string>('');
@@ -53,11 +75,18 @@ const AnalyticsPage: React.FC = () => {
   const fetchAnalyticsData = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:3000/api/analytics/overview');
+      
+      // Construct the appropriate URL based on environment
+      const url = `${API_BASE_URL}/api/analytics/overview`;
+      console.log('Fetching analytics data from:', url);
+      
+      const response = await fetch(url);
       if (!response.ok) {
         throw new Error('Failed to fetch analytics data');
       }
       const data = await response.json();
+      console.log('Analytics data received:', data);
+      
       setAnalyticsData(data);
       setLastUpdated(new Date().toLocaleString());
       setError(null);
