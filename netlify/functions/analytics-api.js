@@ -59,10 +59,45 @@ const getSimulatedAnalyticsData = () => {
 // Helper function to properly format the private key
 const formatPrivateKey = (key) => {
   if (!key) return '';
-  // Remove any quotes at the beginning and end
-  const trimmedKey = key.trim().replace(/^["']|["']$/g, '');
+  
+  // Log key format for debugging (without exposing the actual key)
+  console.log('Private key type:', typeof key);
+  console.log('Private key length:', key.length);
+  console.log('Private key first 10 chars:', key.substring(0, 10));
+  console.log('Private key last 10 chars:', key.substring(key.length - 10));
+  console.log('Private key contains \\n:', key.includes('\\n'));
+  console.log('Private key contains BEGIN:', key.includes('BEGIN'));
+  
+  // Remove any quotes at the beginning and end if they exist
+  let trimmedKey = key.trim();
+  if ((trimmedKey.startsWith('"') && trimmedKey.endsWith('"')) || 
+      (trimmedKey.startsWith("'") && trimmedKey.endsWith("'"))) {
+    trimmedKey = trimmedKey.substring(1, trimmedKey.length - 1);
+  }
+  
+  // If the key doesn't contain "BEGIN PRIVATE KEY", it might be in a different format
+  if (!trimmedKey.includes('BEGIN PRIVATE KEY')) {
+    console.log('Key does not contain BEGIN PRIVATE KEY, might be in a different format');
+  }
+  
   // Replace literal \n with actual newlines if needed
-  return trimmedKey.includes('\\n') ? trimmedKey.replace(/\\n/g, '\n') : trimmedKey;
+  if (trimmedKey.includes('\\n')) {
+    console.log('Replacing \\n with newlines');
+    return trimmedKey.replace(/\\n/g, '\n');
+  }
+  
+  // If the key doesn't have \n but is a single line and has BEGIN/END markers,
+  // we need to add proper line breaks for PEM format
+  if (!trimmedKey.includes('\n') && trimmedKey.includes('BEGIN PRIVATE KEY')) {
+    console.log('Adding line breaks to PEM format key');
+    // This is a single-line PEM format key, add proper line breaks
+    return trimmedKey
+      .replace('-----BEGIN PRIVATE KEY-----', '-----BEGIN PRIVATE KEY-----\n')
+      .replace('-----END PRIVATE KEY-----', '\n-----END PRIVATE KEY-----')
+      .replace(/(.{64})/g, '$1\n');
+  }
+  
+  return trimmedKey;
 };
 
 // Main handler for the Netlify function
