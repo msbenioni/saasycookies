@@ -36,7 +36,7 @@ export const getDownloadCount = async (): Promise<number> => {
     
     // Construct the appropriate URL based on environment
     const url = isProduction 
-      ? `${API_BASE_URL}` 
+      ? `${API_BASE_URL}/downloads` 
       : `${API_BASE_URL}/api/analytics/downloads`;
     
     console.log('Fetching from URL:', url);
