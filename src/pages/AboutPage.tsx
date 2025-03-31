@@ -8,6 +8,7 @@ const AboutPage: React.FC = () => {
     email: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -19,15 +20,22 @@ const AboutPage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the form data to a server
-    console.log('Form submitted:', formData);
+    setIsSubmitting(true);
     
-    // Reset form and close modal
-    setFormData({ name: '', email: '', message: '' });
-    setIsModalOpen(false);
+    // Create mailto link with form data
+    const subject = `SaaSy Cookies Contact: ${formData.name}`;
+    const body = `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`;
+    const mailtoLink = `mailto:saasycookies@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     
-    // Show a success message (in a real app, you might use a toast notification)
-    alert('Thank you for your message! We will get back to you soon.');
+    // Open the mailto link
+    window.location.href = mailtoLink;
+    
+    // Reset form and close modal after a short delay
+    setTimeout(() => {
+      setFormData({ name: '', email: '', message: '' });
+      setIsModalOpen(false);
+      setIsSubmitting(false);
+    }, 1000);
   };
 
   return (
@@ -171,9 +179,12 @@ const AboutPage: React.FC = () => {
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full px-4 py-2 bg-gradient-to-r from-[#00FFD1] to-[#FF3CAC] text-gray-900 font-medium rounded-md hover:opacity-90 transition-opacity duration-300"
+                  disabled={isSubmitting}
+                  className={`w-full px-4 py-2 bg-gradient-to-r from-[#00FFD1] to-[#FF3CAC] text-gray-900 font-medium rounded-md transition-all duration-300 ${
+                    isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:opacity-90'
+                  }`}
                 >
-                  Send Message
+                  {isSubmitting ? 'Opening Email App...' : 'Send Message'}
                 </button>
               </div>
             </form>
