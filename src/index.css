@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import animations */
-@import './styles/animations.css';
-
 @layer base {
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
