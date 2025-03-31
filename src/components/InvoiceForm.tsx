@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { generatePDF } from '../utils/generatePDF';
 import { Eye, EyeOff, Download } from 'lucide-react';
-import { incrementDownloadCount } from '../services/analytics';
 import CompanyDetails from './invoice/CompanyDetails';
 import ClientDetails from './invoice/ClientDetails';
 import InvoiceDetails from './invoice/InvoiceDetails';
@@ -140,9 +139,9 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onGenerate }) => {
           console.log('PDF generated and saved successfully');
           
           // Track the download
-          incrementDownloadCount()
-            .then(() => console.log('Download tracked successfully'))
-            .catch(error => console.error('Error tracking download:', error));
+          // incrementDownloadCount()
+          //   .then(() => console.log('Download tracked successfully'))
+          //   .catch(error => console.error('Error tracking download:', error));
             
           // Show a success message to the user
           alert('Invoice PDF downloaded successfully!');

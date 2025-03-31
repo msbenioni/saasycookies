@@ -10,13 +10,6 @@
   publish = "dist"
   autoLaunch = true
 
-# Redirect all API requests to our Netlify function
-[[redirects]]
-  from = "/.netlify/functions/analytics-api/*"
-  to = "/.netlify/functions/analytics-api"
-  status = 200
-  force = true
-
 # For SPA routing - redirect all requests to index.html
 [[redirects]]
   from = "/*"
