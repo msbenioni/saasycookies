@@ -7,6 +7,7 @@ import ClientDetails from './invoice/ClientDetails';
 import InvoiceDetails from './invoice/InvoiceDetails';
 import InvoiceItems from './invoice/InvoiceItems';
 import InvoicePreview from './invoice/InvoicePreview';
+import { createSparkles } from '../utils/animationUtils';
 import { 
   calculateSubtotal as calculateSubtotalUtil, 
   calculateGST as calculateGSTUtil, 
@@ -173,14 +174,14 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onGenerate }) => {
 
   return (
     <div className="w-full mx-auto py-4 sm:py-6">
-      <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center">Invoice Generator</h1>
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center fade-in-up">Invoice Generator</h1>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-6 flex flex-wrap justify-end gap-2 sm:gap-4">
           <button
             type="button"
             onClick={togglePreview}
-            className="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-white shadow-sm"
+            className="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-white shadow-sm btn-bounce"
             style={{ backgroundColor: watchPrimaryColor }}
           >
             {showPreview ? (
@@ -196,7 +197,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onGenerate }) => {
         </div>
 
         {/* Style Options moved to the top */}
-        <div className="bg-white shadow-md rounded-md p-6 mb-6">
+        <div className="bg-white shadow-md rounded-md p-6 mb-6 soft-gradient-2 fade-in-up">
           <h2 className="text-xl font-semibold mb-4" style={{ borderBottom: `2px solid ${watchPrimaryColor}`, paddingBottom: '0.5rem' }}>
             Style Options
           </h2>
@@ -212,65 +213,68 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onGenerate }) => {
           </div>
         </div>
 
-        {showPreview && (
-          <InvoicePreview
-            watch={watch}
-            calculateSubtotal={calculateSubtotal}
-            calculateGST={calculateGST}
-            calculateWithholdingTax={calculateWithholdingTax}
-            calculateTotal={calculateTotal}
-          />
-        )}
-
-        <div className="space-y-4 sm:space-y-6">
-          <CompanyDetails
-            register={register}
-            watch={watch}
-            setValue={setValue}
-            handleLogoUpload={handleLogoUpload}
-          />
-
-          <ClientDetails
-            register={register}
-            watch={watch}
-          />
-
-          <InvoiceDetails
-            register={register}
-            watch={watch}
-            setValue={setValue}
-          />
-
-          <div className="bg-white shadow-md rounded-md p-6">
-            <h2 className="text-xl font-semibold mb-4" style={{ borderBottom: `2px solid ${watchPrimaryColor}`, paddingBottom: '0.5rem' }}>
-              Invoice Items
-            </h2>
-            <InvoiceItems
-              register={register}
-              watch={watch}
-              fields={fields}
-              append={append}
-              remove={remove}
-              calculateSubtotal={calculateSubtotal}
-              calculateGST={calculateGST}
-              calculateWithholdingTax={calculateWithholdingTax}
-              calculateTotal={calculateTotal}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="cookie-gradient-bg rounded-lg p-5 shadow-md fade-in-left">
+            <CompanyDetails 
+              register={register} 
+              handleLogoUpload={handleLogoUpload} 
+              watchPrimaryColor={watchPrimaryColor} 
             />
           </div>
           
-          {/* Download PDF button moved to the bottom */}
-          <div className="flex justify-center mt-8">
-            <button
-              type="button"
-              className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white shadow-sm"
-              style={{ backgroundColor: watchPrimaryColor }}
-              onClick={handleDownloadPDF}
-            >
-              <Download className="mr-2 h-5 w-5" /> Download PDF
-            </button>
+          <div className="cookie-gradient-bg rounded-lg p-5 shadow-md fade-in-right">
+            <ClientDetails 
+              register={register} 
+              watchPrimaryColor={watchPrimaryColor} 
+            />
           </div>
         </div>
+
+        <div className="mt-6 cookie-gradient-bg rounded-lg p-5 shadow-md fade-in-up">
+          <InvoiceDetails 
+            register={register} 
+            control={control} 
+            watchPrimaryColor={watchPrimaryColor}
+            watchIsGstRegistered={watchIsGstRegistered}
+          />
+        </div>
+
+        <div className="mt-6 cookie-gradient-bg rounded-lg p-5 shadow-md fade-in-up">
+          <InvoiceItems 
+            fields={fields} 
+            register={register} 
+            remove={remove} 
+            append={append} 
+            control={control}
+            watchPrimaryColor={watchPrimaryColor}
+          />
+        </div>
+
+        <div className="mt-6 flex justify-end">
+          <button 
+            type="submit" 
+            className="sparkle-btn inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-gradient-to-r from-[#00FFD1] to-[#FF3CAC] hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 btn-bounce"
+            onClick={createSparkles}
+          >
+            <Download className="mr-2 h-5 w-5" /> Generate Invoice
+          </button>
+        </div>
       </form>
+
+      {showPreview && (
+        <div className="mt-8 fade-in-up">
+          <h2 className="text-xl font-semibold mb-4 text-center">Invoice Preview</h2>
+          <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+            <InvoicePreview 
+              formData={getValues()} 
+              subtotal={calculateSubtotal()}
+              gst={calculateGST()}
+              withholdingTax={calculateWithholdingTax()}
+              total={calculateTotal()}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
