@@ -77,7 +77,10 @@ const AnalyticsPage: React.FC = () => {
       setLoading(true);
       
       // Construct the appropriate URL based on environment
-      const url = `${API_BASE_URL}/api/analytics/overview`;
+      const url = isProduction
+        ? `${API_BASE_URL}/overview`
+        : `${API_BASE_URL}/api/analytics/overview`;
+      
       console.log('Fetching analytics data from:', url);
       
       const response = await fetch(url);
