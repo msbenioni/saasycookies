@@ -84,6 +84,16 @@ exports.handler = async (event, context) => {
   
   // Check if we should use simulated data based on environment variable
   const useSimulatedData = process.env.USE_SIMULATED_DATA === 'true' || USE_SIMULATED_DATA;
+  console.log('Using simulated data:', useSimulatedData);
+  
+  // Helper function to properly format the private key
+  const formatPrivateKey = (key) => {
+    if (!key) return '';
+    // Remove any quotes at the beginning and end
+    const trimmedKey = key.trim().replace(/^["']|["']$/g, '');
+    // Replace literal \n with actual newlines if needed
+    return trimmedKey.includes('\\n') ? trimmedKey.replace(/\\n/g, '\n') : trimmedKey;
+  };
   
   // Handle different API endpoints based on the path
   if (event.httpMethod === 'GET' && (functionPath === '' || functionPath === '/' || functionPath === '/api/analytics/downloads' || functionPath === '/downloads')) {
@@ -102,12 +112,17 @@ exports.handler = async (event, context) => {
 
     try {
       console.log('Attempting to use real Google Analytics data');
+      console.log('Client email:', process.env.GOOGLE_CLIENT_EMAIL);
+      console.log('Property ID:', propertyId);
+      
+      // Format the private key properly
+      const privateKey = formatPrivateKey(process.env.GOOGLE_PRIVATE_KEY);
       
       // Create a Google Analytics Data API client using environment variables
       const analyticsDataClient = new BetaAnalyticsDataClient({
         credentials: {
           client_email: process.env.GOOGLE_CLIENT_EMAIL,
-          private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+          private_key: privateKey
         }
       });
 
@@ -200,11 +215,14 @@ exports.handler = async (event, context) => {
     try {
       console.log('Attempting to use real Google Analytics data for overview');
       
+      // Format the private key properly
+      const privateKey = formatPrivateKey(process.env.GOOGLE_PRIVATE_KEY);
+      
       // Create a Google Analytics Data API client using environment variables
       const analyticsDataClient = new BetaAnalyticsDataClient({
         credentials: {
           client_email: process.env.GOOGLE_CLIENT_EMAIL,
-          private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+          private_key: privateKey
         }
       });
 
