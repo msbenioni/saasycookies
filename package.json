@@ -10,7 +10,10 @@
     "preview": "vite preview",
     "start": "vite",
     "start:analytics": "node server/analytics-api.js",
-    "start:all": "powershell -Command \"Start-Process powershell -ArgumentList '-NoExit', '-Command', 'cd $PWD; npm run start:analytics' ; npm start\""
+    "start:all": "powershell -Command \"Start-Process powershell -ArgumentList '-NoExit', '-Command', 'cd $PWD; npm run start:analytics' ; npm start\"",
+    "netlify:dev": "netlify dev",
+    "netlify:build": "npm run build && npm run copy-functions",
+    "copy-functions": "powershell -Command \"Copy-Item -Path ./node_modules/@google-analytics -Destination ./netlify/functions/node_modules/@google-analytics -Recurse -Force\""
   },
   "dependencies": {
     "@google-analytics/data": "^5.1.0",
@@ -39,6 +42,7 @@
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.11",
     "globals": "^15.9.0",
+    "netlify-cli": "^16.4.2",
     "postcss": "^8.4.35",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.5.3",
