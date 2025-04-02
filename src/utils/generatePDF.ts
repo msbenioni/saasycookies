@@ -17,6 +17,11 @@ const hexToRgb = (hex: string): { r: number, g: number, b: number } | null => {
   } : null;
 };
 
+// Helper function to check if a string is empty or undefined
+const isNotEmpty = (str: string | undefined | null): boolean => {
+  return str !== undefined && str !== null && str.trim() !== '';
+};
+
 export const generatePDF = (
   invoice: InvoiceDetails,
   company: CompanyDetails,
@@ -56,71 +61,138 @@ export const generatePDF = (
   }
 
   // Company Details
+  let companyY = margin + 8;
+  const lineHeight = 6;
+  
   doc.setFont('calibri', 'bold');
   doc.setFontSize(12);
   doc.setTextColor(60, 60, 60);
-  doc.text(company.name, margin + logoOffset, margin + 8);
+  
+  if (isNotEmpty(company.name)) {
+    doc.text(company.name, margin + logoOffset, companyY);
+    companyY += lineHeight;
+  }
   
   doc.setFont('calibri', 'normal');
   doc.setFontSize(9);
-  doc.text(company.address, margin + logoOffset, margin + 16);
-  doc.text(company.email, margin + logoOffset, margin + 22);
-  doc.text(company.phone, margin + logoOffset, margin + 28);
   
-  if (company.gstNumber) {
-    doc.text(`GST Number: ${company.gstNumber}`, margin + logoOffset, margin + 34);
+  if (isNotEmpty(company.address)) {
+    doc.text(company.address, margin + logoOffset, companyY);
+    companyY += lineHeight;
+  }
+  
+  if (isNotEmpty(company.email)) {
+    doc.text(company.email, margin + logoOffset, companyY);
+    companyY += lineHeight;
+  }
+  
+  if (isNotEmpty(company.phone)) {
+    doc.text(company.phone, margin + logoOffset, companyY);
+    companyY += lineHeight;
+  }
+  
+  if (isNotEmpty(company.gstNumber)) {
+    doc.text(`GST Number: ${company.gstNumber}`, margin + logoOffset, companyY);
+    companyY += lineHeight;
   }
   
   // Invoice Title and Number - Match the styling from the preview
+  let invoiceY = margin + 8;
+  
   doc.setFont('calibri', 'bold');
   doc.setFontSize(12);
   if (primaryColorRGB) {
     doc.setTextColor(primaryColorRGB.r, primaryColorRGB.g, primaryColorRGB.b);
   }
-  doc.text("INVOICE", pageWidth - margin, margin + 8, { align: 'right' });
+  doc.text("INVOICE", pageWidth - margin, invoiceY, { align: 'right' });
+  invoiceY += lineHeight;
   
   doc.setFont('calibri', 'normal');
   doc.setFontSize(9);
   doc.setTextColor(100, 100, 100);
-  doc.text(`Invoice Number: ${invoice.invoiceNumber || 'N/A'}`, pageWidth - margin, margin + 16, { align: 'right' });
-  doc.text(`Date: ${formatDate(invoice.date)}`, pageWidth - margin, margin + 22, { align: 'right' });
-  doc.text(`Due Date: ${formatDate(invoice.dueDate)}`, pageWidth - margin, margin + 28, { align: 'right' });
+  
+  if (isNotEmpty(invoice.invoiceNumber)) {
+    doc.text(`Invoice Number: ${invoice.invoiceNumber}`, pageWidth - margin, invoiceY, { align: 'right' });
+    invoiceY += lineHeight;
+  }
+  
+  if (isNotEmpty(invoice.date)) {
+    doc.text(`Date: ${formatDate(invoice.date)}`, pageWidth - margin, invoiceY, { align: 'right' });
+    invoiceY += lineHeight;
+  }
+  
+  if (isNotEmpty(invoice.dueDate)) {
+    doc.text(`Due Date: ${formatDate(invoice.dueDate)}`, pageWidth - margin, invoiceY, { align: 'right' });
+    invoiceY += lineHeight;
+  }
+  
+  // Calculate the maximum Y position reached by either company or invoice details
+  const headerEndY = Math.max(companyY, invoiceY) + 10;
   
   // Draw a line after the header section - matches the border-bottom in the preview
   doc.setDrawColor(220, 220, 220);
   doc.setLineWidth(0.5);
-  doc.line(margin, margin + 45, pageWidth - margin, margin + 45);
+  doc.line(margin, headerEndY, pageWidth - margin, headerEndY);
   
   // Client Details - Match the styling from the preview
+  let clientY = headerEndY + 15;
+  
   doc.setFont('calibri', 'bold');
   doc.setFontSize(11);
   doc.setTextColor(60, 60, 60);
-  doc.text("Bill To:", margin, margin + 60);
   
-  // Add a small colored line under "Bill To:" like in the preview
-  if (primaryColorRGB) {
-    doc.setDrawColor(primaryColorRGB.r, primaryColorRGB.g, primaryColorRGB.b);
-    doc.line(margin, margin + 63, margin + 25, margin + 63);
-  }
-  
-  doc.setFont('calibri', 'normal');
-  doc.setFontSize(10);
-  doc.text(invoice.client.name, margin, margin + 70);
-  doc.text(invoice.client.address, margin, margin + 77);
-  doc.text(invoice.client.email, margin, margin + 84);
-  doc.text(invoice.client.phone, margin, margin + 91);
-  
-  if (invoice.client.gstNumber) {
-    doc.text(`GST Number: ${invoice.client.gstNumber}`, margin, margin + 98);
+  // Only show "Bill To:" if there's at least one client field filled in
+  if (isNotEmpty(invoice.client.name) || isNotEmpty(invoice.client.address) || 
+      isNotEmpty(invoice.client.email) || isNotEmpty(invoice.client.phone) || 
+      isNotEmpty(invoice.client.gstNumber)) {
+    
+    doc.text("Bill To:", margin, clientY);
+    
+    // Add a small colored line under "Bill To:" like in the preview
+    if (primaryColorRGB) {
+      doc.setDrawColor(primaryColorRGB.r, primaryColorRGB.g, primaryColorRGB.b);
+      doc.line(margin, clientY + 3, margin + 25, clientY + 3);
+    }
+    
+    clientY += 10;
+    doc.setFont('calibri', 'normal');
+    doc.setFontSize(10);
+    
+    if (isNotEmpty(invoice.client.name)) {
+      doc.text(invoice.client.name, margin, clientY);
+      clientY += 7;
+    }
+    
+    if (isNotEmpty(invoice.client.address)) {
+      doc.text(invoice.client.address, margin, clientY);
+      clientY += 7;
+    }
+    
+    if (isNotEmpty(invoice.client.email)) {
+      doc.text(invoice.client.email, margin, clientY);
+      clientY += 7;
+    }
+    
+    if (isNotEmpty(invoice.client.phone)) {
+      doc.text(invoice.client.phone, margin, clientY);
+      clientY += 7;
+    }
+    
+    if (isNotEmpty(invoice.client.gstNumber)) {
+      doc.text(`GST Number: ${invoice.client.gstNumber}`, margin, clientY);
+      clientY += 7;
+    }
+    
+    clientY += 5; // Add some space after client details
   }
   
   // Draw a line before the table
   doc.setDrawColor(220, 220, 220);
   doc.setLineWidth(0.5);
-  doc.line(margin, margin + 110, pageWidth - margin, margin + 110);
+  doc.line(margin, clientY, pageWidth - margin, clientY);
   
   // Table setup - match the table in the preview
-  const tableStartY = margin + 120;
+  const tableStartY = clientY + 10;
   const colWidths = [
     pageWidth * 0.5 - margin, // Description
     pageWidth * 0.15, // Quantity
@@ -247,33 +319,55 @@ export const generatePDF = (
   doc.text(`$${total.toFixed(2)}`, summaryValueX, currentY + 8, { align: 'right' });
   
   // Add payment details section - match the styling in the preview
-  const paymentY = currentY + 25;
-  doc.setDrawColor(220, 220, 220);
-  doc.line(margin, paymentY, pageWidth - margin, paymentY);
-  
-  doc.setFont('calibri', 'bold');
-  doc.setFontSize(11);
-  doc.setTextColor(60, 60, 60);
-  doc.text("Payment Details", margin, paymentY + 10);
-  
-  doc.setFont('calibri', 'normal');
-  doc.setFontSize(10);
-  doc.text(`Bank Name: ${company.bankName || 'N/A'}`, margin, paymentY + 20);
-  doc.text(`Bank Account: ${company.bankAccount || 'N/A'}`, margin, paymentY + 28);
-  doc.text(`Payment Reference: ${invoice.invoiceNumber || 'N/A'}`, margin, paymentY + 36);
-  
-  // Add a note with the primary color
-  if (primaryColorRGB) {
-    doc.setTextColor(primaryColorRGB.r, primaryColorRGB.g, primaryColorRGB.b);
+  // Only show payment details if at least one field is filled in
+  if (isNotEmpty(company.bankName) || isNotEmpty(company.bankAccount) || isNotEmpty(invoice.invoiceNumber)) {
+    const paymentY = currentY + 25;
+    doc.setDrawColor(220, 220, 220);
+    doc.line(margin, paymentY, pageWidth - margin, paymentY);
+    
+    doc.setFont('calibri', 'bold');
+    doc.setFontSize(11);
+    doc.setTextColor(60, 60, 60);
+    doc.text("Payment Details", margin, paymentY + 10);
+    
+    doc.setFont('calibri', 'normal');
+    doc.setFontSize(10);
+    
+    let paymentDetailsY = paymentY + 20;
+    
+    if (isNotEmpty(company.bankName)) {
+      doc.text(`Bank Name: ${company.bankName}`, margin, paymentDetailsY);
+      paymentDetailsY += 8;
+    }
+    
+    if (isNotEmpty(company.bankAccount)) {
+      doc.text(`Bank Account: ${company.bankAccount}`, margin, paymentDetailsY);
+      paymentDetailsY += 8;
+    }
+    
+    if (isNotEmpty(invoice.invoiceNumber)) {
+      doc.text(`Payment Reference: ${invoice.invoiceNumber}`, margin, paymentDetailsY);
+      paymentDetailsY += 8;
+    }
+    
+    // Add a note with the primary color
+    if (primaryColorRGB) {
+      doc.setTextColor(primaryColorRGB.r, primaryColorRGB.g, primaryColorRGB.b);
+    }
+    doc.setFont('calibri', 'bold');
+    doc.text("Please include the invoice number as reference when making payment", 
+      pageWidth / 2, paymentDetailsY + 10, { align: 'center' });
+    
+    // Thank you note
+    doc.setTextColor(150, 150, 150);
+    doc.setFont('calibri', 'normal');
+    doc.text("Thank you for your business", pageWidth / 2, paymentDetailsY + 20, { align: 'center' });
+  } else {
+    // If no payment details, just add the thank you note
+    doc.setTextColor(150, 150, 150);
+    doc.setFont('calibri', 'normal');
+    doc.text("Thank you for your business", pageWidth / 2, currentY + 30, { align: 'center' });
   }
-  doc.setFont('calibri', 'bold');
-  doc.text("Please include the invoice number as reference when making payment", 
-    pageWidth / 2, paymentY + 48, { align: 'center' });
-  
-  // Thank you note
-  doc.setTextColor(150, 150, 150);
-  doc.setFont('calibri', 'normal');
-  doc.text("Thank you for your business", pageWidth / 2, paymentY + 58, { align: 'center' });
   
   return doc;
 };
