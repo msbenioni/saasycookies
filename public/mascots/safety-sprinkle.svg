@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Cookie body -->
+  <circle cx="60" cy="60" r="40" fill="#E9D8A6"/>
+  <!-- Shield body -->
+  <path d="M60 30L80 40V60C80 70 70 80 60 80C50 80 40 70 40 60V40L60 30Z" fill="#6E40C9"/>
+  <path d="M60 35L75 43V60C75 68 68 75 60 75C52 75 45 68 45 60V43L60 35Z" fill="#8957E5"/>
+  <!-- Shield checkmark -->
+  <path d="M50 58L57 65L70 52" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Sprinkle spots -->
+  <circle cx="35" cy="45" r="3" fill="#F472B6"/>
+  <circle cx="85" cy="45" r="3" fill="#34D399"/>
+  <circle cx="35" cy="75" r="3" fill="#3B82F6"/>
+  <circle cx="85" cy="75" r="3" fill="#F59E0B"/>
+  <circle cx="50" cy="90" r="3" fill="#EC4899"/>
+  <circle cx="70" cy="90" r="3" fill="#8B5CF6"/>
+  <!-- Eyes -->
+  <circle cx="52" cy="55" r="4" fill="white"/>
+  <circle cx="52" cy="55" r="2" fill="#1E293B"/>
+  <circle cx="68" cy="55" r="4" fill="white"/>
+  <circle cx="68" cy="55" r="2" fill="#1E293B"/>
+  <!-- Smile -->
+  <path d="M55 65C57 67 63 67 65 65" stroke="white" stroke-width="2" stroke-linecap="round"/>
+</svg>

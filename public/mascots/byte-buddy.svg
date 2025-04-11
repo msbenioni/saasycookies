@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Cookie body -->
+  <circle cx="60" cy="60" r="40" fill="#C2A484"/>
+  <!-- Cookie spots -->
+  <circle cx="45" cy="45" r="5" fill="#8B5A2B"/>
+  <circle cx="75" cy="50" r="6" fill="#8B5A2B"/>
+  <circle cx="60" cy="75" r="7" fill="#8B5A2B"/>
+  <circle cx="40" cy="65" r="4" fill="#8B5A2B"/>
+  <!-- Glasses -->
+  <circle cx="48" cy="55" r="8" stroke="#6E40C9" stroke-width="2" fill="none"/>
+  <circle cx="72" cy="55" r="8" stroke="#6E40C9" stroke-width="2" fill="none"/>
+  <line x1="56" y1="55" x2="64" y2="55" stroke="#6E40C9" stroke-width="2"/>
+  <line x1="40" y1="55" x2="35" y2="50" stroke="#6E40C9" stroke-width="2"/>
+  <line x1="80" y1="55" x2="85" y2="50" stroke="#6E40C9" stroke-width="2"/>
+  <!-- Eyes -->
+  <circle cx="48" cy="55" r="4" fill="white"/>
+  <circle cx="48" cy="55" r="2" fill="#1E293B"/>
+  <circle cx="72" cy="55" r="4" fill="white"/>
+  <circle cx="72" cy="55" r="2" fill="#1E293B"/>
+  <!-- Smile -->
+  <path d="M52 65C56 68 64 68 68 65" stroke="#1E293B" stroke-width="2" stroke-linecap="round"/>
+  <!-- Laptop -->
+  <rect x="45" y="80" width="30" height="20" rx="2" fill="#6E40C9"/>
+  <rect x="45" y="78" width="30" height="2" rx="1" fill="#8957E5"/>
+  <rect x="55" y="85" width="10" height="10" rx="1" fill="#8957E5"/>
+</svg>

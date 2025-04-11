@@ -9,7 +9,7 @@ const ToolsPage: React.FC = () => {
       name: 'Invoice Generator',
       description: 'Create professional invoices with GST and withholding tax calculations for your NZ business.',
       icon: <FileText className="h-6 w-6" />,
-      color: '#00FFD1',
+      color: '#A78BFA', 
       available: true,
       path: '/tools/invoice'
     },
@@ -18,7 +18,7 @@ const ToolsPage: React.FC = () => {
       name: 'Time Tracker',
       description: 'Track your billable hours and generate reports for clients and projects.',
       icon: <Clock className="h-6 w-6" />,
-      color: '#FF3CAC',
+      color: '#F9A8D4', 
       available: false,
       path: '/tools/time-tracker'
     },
@@ -27,7 +27,7 @@ const ToolsPage: React.FC = () => {
       name: 'Expense Tracker',
       description: 'Log and categorize your business expenses for easy tax reporting.',
       icon: <CreditCard className="h-6 w-6" />,
-      color: '#00FFD1',
+      color: '#34D399', 
       available: false,
       path: '/tools/expense-tracker'
     }
@@ -36,8 +36,8 @@ const ToolsPage: React.FC = () => {
   return (
     <div>
       <div className="mb-8 text-center">
-        <h1 className="text-4xl font-bold mb-4">Tools</h1>
-        <p className="text-gray-400 max-w-2xl mx-auto">
+        <h1 className="text-4xl font-heading font-bold mb-4">Tools</h1>
+        <p className="text-text-secondary max-w-2xl mx-auto">
           Online tools designed to help New Zealand freelancers, contractors, and small businesses work smarter.
         </p>
       </div>
@@ -46,7 +46,7 @@ const ToolsPage: React.FC = () => {
         {tools.map((tool) => (
           <div 
             key={tool.id}
-            className={`bg-gray-800 rounded-xl p-6 border border-gray-700 ${
+            className={`brand-card ${
               tool.available ? `hover:border-[${tool.color}]` : 'opacity-70'
             } transition-colors duration-300`}
           >
@@ -56,8 +56,8 @@ const ToolsPage: React.FC = () => {
             >
               <div style={{ color: tool.color }}>{tool.icon}</div>
             </div>
-            <h3 className="text-xl font-semibold mb-2">{tool.name}</h3>
-            <p className="text-gray-400 mb-4">
+            <h3 className="text-xl font-heading font-semibold mb-2">{tool.name}</h3>
+            <p className="text-text-secondary mb-4">
               {tool.description}
             </p>
             {tool.available ? (
@@ -69,7 +69,7 @@ const ToolsPage: React.FC = () => {
                 Launch Tool <span className="ml-1">→</span>
               </Link>
             ) : (
-              <span className="inline-flex items-center text-gray-500">
+              <span className="inline-flex items-center text-text-secondary">
                 Coming Soon
               </span>
             )}

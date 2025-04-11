@@ -1,108 +1,388 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FileText, Clock, CreditCard } from 'lucide-react';
+import { FaCloud, FaLaptopCode, FaShieldAlt, FaUsers, FaChartLine, FaHeadset, FaGlobe, FaServer } from 'react-icons/fa';
 
 const HomePage: React.FC = () => {
   return (
-    <div className="space-y-12">
-      {/* Hero Section */}
-      <section className="text-center py-14 px-4">
-        <h1 className="text-5xl font-bold mb-4 text-transparent" style={{ 
-          background: 'linear-gradient(to right, #00FFD1, #FF3CAC)',
-          WebkitBackgroundClip: 'text',
-          backgroundClip: 'text',
-          paddingBottom: '4px',
-          lineHeight: '1.3'
-        }}>
-          SaaSy Cookies
-        </h1>
-        <p className="text-2xl text-gray-300 mb-8">Sweet solutions for smart work.</p>
-        <p className="max-w-3xl mx-auto text-gray-400 mb-8 text-lg">
-          A growing collection of online tools built for New Zealand sole traders, contractors, and creative freelancers.
-        </p>
-        <div className="flex flex-wrap justify-center gap-4">
-          <Link
-            to="/tools"
-            className="px-6 py-3 bg-gradient-to-r from-[#00FFD1] via-[#00FFD1] to-[#00FFD1]/70 text-gray-900 font-medium rounded-lg hover:from-[#00FFD1]/90 hover:to-[#00FFD1]/60 transition-all duration-300"
-          >
-            Explore Tools
-          </Link>
-          <Link
-            to="/about"
-            className="px-6 py-3 bg-gray-800 text-white font-medium rounded-lg border border-gray-700 hover:bg-gray-700 transition-all duration-300"
-          >
-            Learn More
-          </Link>
-        </div>
-      </section>
-
-      {/* Featured Tools Section */}
-      <section className="py-12">
-        <h2 className="text-3xl font-bold mb-8 text-center">Featured Tools</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Invoice Generator */}
-          <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-[#00FFD1] transition-colors duration-300">
-            <div className="flex justify-between mb-4">
-              <div className="h-12 w-12 bg-[#00FFD1]/20 rounded-lg flex items-center justify-center">
-                <FileText className="h-6 w-6 text-[#00FFD1]" />
+    <div className="space-y-0">
+      {/* Hero Section - GitHub Style */}
+      <section className="py-24 px-4 min-h-[90vh] flex items-center" id="hero-section">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h1 className="text-5xl font-heading font-bold mb-6 text-white leading-tight heading-primary">
+                Cloud services on a single, collaborative platform
+              </h1>
+              <p className="text-xl text-[var(--text-secondary)] mb-8 font-body">
+                SaaSy Cookies helps NZ small businesses get their cloud, software & licensing sorted — with real humans, plain English & good vibes.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Link
+                  to="/contact"
+                  className="saasy-button-primary px-6 py-3 font-medium rounded-md transition-colors duration-200"
+                >
+                  Talk to Us
+                </Link>
+                <Link
+                  to="/contact"
+                  className="saasy-button-secondary px-6 py-3 font-medium rounded-md transition-colors duration-200"
+                >
+                  Book a Free Cloud Chat
+                </Link>
               </div>
             </div>
-            <h3 className="text-xl font-semibold mb-2">Invoice Generator</h3>
-            <p className="text-gray-400 mb-4">
-              Create professional invoices with GST and withholding tax calculations for your NZ business.
+            <div className="hidden lg:block">
+              <div className="relative">
+                <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#6e40c9] opacity-10 rounded-full blur-3xl"></div>
+                <div className="saasy-card saasy-card-dark p-6 shadow-xl">
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="w-3 h-3 rounded-full bg-[#f85149]"></div>
+                    <div className="w-3 h-3 rounded-full bg-[#f0883e]"></div>
+                    <div className="w-3 h-3 rounded-full bg-[#3fb950]"></div>
+                  </div>
+                  <div className="font-mono text-sm text-[#8b949e]">
+                    <p><span className="text-[#6e40c9]">$</span> saasy-cookies init</p>
+                    <p className="text-[#c9d1d9]">✓ Initializing your cloud services...</p>
+                    <p className="text-[#c9d1d9]">✓ Setting up Microsoft 365...</p>
+                    <p className="text-[#c9d1d9]">✓ Configuring email protection...</p>
+                    <p className="text-[#c9d1d9]">✓ Adding cloud backups...</p>
+                    <p className="text-[#3fb950]">✓ All done! Your cloud is ready to use.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Mascot Section - New */}
+      <section className="py-24 px-4 min-h-[90vh] flex items-center" id="mascot-section">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-heading font-bold mb-8 text-center heading-primary">Meet Our Team</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="saasy-card saasy-card-light flex flex-col items-center text-center p-8">
+              <div className="mascot-container mascot-float mb-4">
+                <img src="/mascots/cookie-cloud.svg" alt="Cookie Cloud" className="w-full h-full" />
+              </div>
+              <h3 className="text-xl font-heading font-semibold text-[var(--card-text-light)] mb-2">Cookie Cloud</h3>
+              <p className="text-[var(--card-text-light)] opacity-80">
+                Your friendly cloud services guide. Cookie Cloud helps you navigate the world of cloud computing with ease.
+              </p>
+            </div>
+            
+            <div className="saasy-card saasy-card-light flex flex-col items-center text-center p-8">
+              <div className="mascot-container mascot-float mb-4">
+                <img src="/mascots/byte-buddy.svg" alt="Byte Buddy" className="w-full h-full" />
+              </div>
+              <h3 className="text-xl font-heading font-semibold text-[var(--card-text-light)] mb-2">Byte Buddy</h3>
+              <p className="text-[var(--card-text-light)] opacity-80">
+                Your tech-savvy assistant. Byte Buddy makes complex software solutions simple and accessible.
+              </p>
+            </div>
+            
+            <div className="saasy-card saasy-card-light flex flex-col items-center text-center p-8">
+              <div className="mascot-container mascot-float mb-4">
+                <img src="/mascots/safety-sprinkle.svg" alt="Safety Sprinkle" className="w-full h-full" />
+              </div>
+              <h3 className="text-xl font-heading font-semibold text-[var(--card-text-light)] mb-2">Safety Sprinkle</h3>
+              <p className="text-[var(--card-text-light)] opacity-80">
+                Your security specialist. Safety Sprinkle ensures your data stays protected with proper backups and security measures.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section - GitHub Style */}
+      <section className="py-24 px-4 min-h-[90vh] flex items-center" id="features-section">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-heading font-bold mb-4 text-center heading-primary">SaaSy Cookies Features</h2>
+          <p className="text-xl text-center text-[var(--text-secondary)] mb-12 max-w-3xl mx-auto font-body">
+            Get your cloud services sorted with a friendly, human touch. No technical jargon, just solutions that work.
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <FeatureCard 
+              icon={<FaCloud className="text-[var(--accent-primary)] text-4xl" />}
+              title="Accelerate performance"
+              description="Work smarter with optimized cloud solutions. Get your team up and running with the right tools, configured for your specific needs."
+            />
+            
+            <FeatureCard 
+              icon={<FaShieldAlt className="text-[var(--accent-primary)] text-4xl" />}
+              title="Built-in security"
+              description="Keep your business data safe with properly configured security settings, backups, and best practices for your cloud services."
+            />
+            
+            <FeatureCard 
+              icon={<FaUsers className="text-[var(--accent-primary)] text-4xl" />}
+              title="Work together, achieve more"
+              description="Collaborate seamlessly with properly configured Microsoft 365 or Google Workspace tools that help your team work better together."
+            />
+            
+            <FeatureCard 
+              icon={<FaGlobe className="text-[var(--accent-primary)] text-4xl" />}
+              title="Scale with your business"
+              description="From startups to established businesses, our cloud solutions grow with you. Add users, services, and features as you need them."
+            />
+            
+            <FeatureCard 
+              icon={<FaChartLine className="text-[var(--accent-primary)] text-4xl" />}
+              title="Analytics & Insights"
+              description="Make data-driven decisions with powerful analytics that provide actionable insights."
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* What We Do Section - GitHub Style */}
+      <section className="py-24 px-4 min-h-[90vh] flex items-center" id="what-we-do-section">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-heading font-bold mb-4 text-center heading-primary">What We Do</h2>
+          <p className="text-xl text-center text-[var(--text-secondary)] mb-12 max-w-3xl mx-auto font-body">
+            We help you get the right software, set it up, and support it — so you never have to talk to Microsoft or other vendors directly.
+          </p>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
+            <div className="saasy-card saasy-card-light flex flex-col items-center text-center p-6">
+              <div className="h-16 w-16 bg-[#6e40c920] rounded-lg flex items-center justify-center mb-4">
+                <FaCloud className="h-8 w-8 text-[var(--accent-primary)]" />
+              </div>
+              <h3 className="text-lg font-heading font-semibold text-[var(--card-text-light)] mb-2">Email & Cloud Setup</h3>
+              <p className="text-[var(--card-text-light)] opacity-80">
+                Professional email setup with spam protection
+              </p>
+            </div>
+            
+            <div className="saasy-card saasy-card-light flex flex-col items-center text-center p-6">
+              <div className="h-16 w-16 bg-[#6e40c920] rounded-lg flex items-center justify-center mb-4">
+                <FaLaptopCode className="h-8 w-8 text-[var(--accent-primary)]" />
+              </div>
+              <h3 className="text-lg font-heading font-semibold text-[var(--card-text-light)] mb-2">Microsoft 365 / Google</h3>
+              <p className="text-[var(--card-text-light)] opacity-80">
+                Complete workspace setup and management
+              </p>
+            </div>
+            
+            <div className="saasy-card saasy-card-light flex flex-col items-center text-center p-6">
+              <div className="h-16 w-16 bg-[#6e40c920] rounded-lg flex items-center justify-center mb-4">
+                <FaShieldAlt className="h-8 w-8 text-[var(--accent-primary)]" />
+              </div>
+              <h3 className="text-lg font-heading font-semibold text-[var(--card-text-light)] mb-2">Cloud Backups</h3>
+              <p className="text-[var(--card-text-light)] opacity-80">
+                Secure, automated data protection
+              </p>
+            </div>
+            
+            <div className="saasy-card saasy-card-light flex flex-col items-center text-center p-6">
+              <div className="h-16 w-16 bg-[#6e40c920] rounded-lg flex items-center justify-center mb-4">
+                <FaServer className="h-8 w-8 text-[var(--accent-primary)]" />
+              </div>
+              <h3 className="text-lg font-heading font-semibold text-[var(--card-text-light)] mb-2">VMware Licensing</h3>
+              <p className="text-[var(--card-text-light)] opacity-80">
+                Simplified virtualization licensing
+              </p>
+            </div>
+            
+            <div className="saasy-card saasy-card-light flex flex-col items-center text-center p-6">
+              <div className="h-16 w-16 bg-[#6e40c920] rounded-lg flex items-center justify-center mb-4">
+                <FaHeadset className="h-8 w-8 text-[var(--accent-primary)]" />
+              </div>
+              <h3 className="text-lg font-heading font-semibold text-[var(--card-text-light)] mb-2">Ongoing Support</h3>
+              <p className="text-[var(--card-text-light)] opacity-80">
+                Human tech support when you need it
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Saasy Cookies Exists - GitHub Style */}
+      <section className="py-24 px-4 min-h-[90vh] flex items-center" id="why-saasy-cookies-section">
+        <div className="max-w-6xl mx-auto">
+          <div className="saasy-card saasy-card-dark p-8 max-w-3xl mx-auto">
+            <h2 className="text-3xl font-heading font-bold mb-6 text-center heading-primary">Why SaaSy Cookies Exists</h2>
+            <p className="text-xl text-center text-[var(--text-secondary)] mb-4 font-body">
+              We're not a big corporate distributor. We're not a giant tech company.
             </p>
+            <p className="text-xl text-center text-[var(--text-secondary)] font-body">
+              We're just a small NZ business (like you) that wanted tech to feel friendlier.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Packages & Pricing - GitHub Style */}
+      <section className="py-24 px-4 min-h-[90vh] flex items-center relative" id="packages-pricing-section">
+        {/* Special background for pricing section */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg-light-purple)] to-[var(--bg-purple)] opacity-40"></div>
+        
+        <div className="max-w-6xl mx-auto relative z-10">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-heading font-bold mb-4 heading-primary">Packages & Pricing</h2>
+            <p className="text-xl text-[var(--text-secondary)] font-body max-w-2xl mx-auto">Clear & simple pricing for NZ businesses.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Starter Plan */}
+            <div className="saasy-card saasy-card-light pricing-card p-8 flex flex-col h-full">
+              <div className="flex-grow">
+                <h3 className="text-2xl font-heading font-bold mb-4 text-[var(--card-text-light)]">Starter</h3>
+                <p className="text-4xl font-bold mb-6 text-[var(--card-text-light)]">$99<span className="text-base font-normal text-gray-500">/month</span></p>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-start">
+                    <svg className="h-6 w-6 text-[#3fb950] mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Microsoft 365 Business Basic</span>
+                  </li>
+                  <li className="flex items-start">
+                    <svg className="h-6 w-6 text-[#3fb950] mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Email setup & configuration</span>
+                  </li>
+                  <li className="flex items-start">
+                    <svg className="h-6 w-6 text-[#3fb950] mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Basic spam protection</span>
+                  </li>
+                </ul>
+              </div>
+              <Link to="/contact" className="saasy-button-primary w-full text-center py-3 rounded-md">
+                Get Started
+              </Link>
+            </div>
+            
+            {/* Business Plan - Featured */}
+            <div className="saasy-card saasy-card-light pricing-card-featured p-8 flex flex-col h-full relative">
+              <div className="absolute -top-4 left-0 right-0 mx-auto w-max bg-[var(--accent-primary)] text-white px-6 py-1 rounded-full font-medium">
+                Most Popular
+              </div>
+              <div className="flex-grow">
+                <h3 className="text-2xl font-heading font-bold mb-4 text-[var(--card-text-light)]">Business</h3>
+                <p className="text-4xl font-bold mb-6 text-[var(--card-text-light)]">$199<span className="text-base font-normal text-gray-500">/month</span></p>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-start">
+                    <svg className="h-6 w-6 text-[#3fb950] mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Microsoft 365 Business Standard</span>
+                  </li>
+                  <li className="flex items-start">
+                    <svg className="h-6 w-6 text-[#3fb950] mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Advanced email security</span>
+                  </li>
+                  <li className="flex items-start">
+                    <svg className="h-6 w-6 text-[#3fb950] mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Cloud backup for critical data</span>
+                  </li>
+                  <li className="flex items-start">
+                    <svg className="h-6 w-6 text-[#3fb950] mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Monthly support hours</span>
+                  </li>
+                </ul>
+              </div>
+              <Link to="/contact" className="saasy-button-primary w-full text-center py-3 rounded-md bg-[var(--accent-primary)] hover:bg-[var(--accent-hover)]">
+                Get Started
+              </Link>
+            </div>
+            
+            {/* Enterprise Plan */}
+            <div className="saasy-card saasy-card-light pricing-card p-8 flex flex-col h-full">
+              <div className="flex-grow">
+                <h3 className="text-2xl font-heading font-bold mb-4 text-[var(--card-text-light)]">Enterprise</h3>
+                <p className="text-4xl font-bold mb-6 text-[var(--card-text-light)]">$399<span className="text-base font-normal text-gray-500">/month</span></p>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-start">
+                    <svg className="h-6 w-6 text-[#3fb950] mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Microsoft 365 Business Premium</span>
+                  </li>
+                  <li className="flex items-start">
+                    <svg className="h-6 w-6 text-[#3fb950] mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Enterprise-grade security</span>
+                  </li>
+                  <li className="flex items-start">
+                    <svg className="h-6 w-6 text-[#3fb950] mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Full cloud backup solution</span>
+                  </li>
+                  <li className="flex items-start">
+                    <svg className="h-6 w-6 text-[#3fb950] mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Priority support</span>
+                  </li>
+                  <li className="flex items-start">
+                    <svg className="h-6 w-6 text-[#3fb950] mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Quarterly strategy sessions</span>
+                  </li>
+                </ul>
+              </div>
+              <Link to="/contact" className="saasy-button-primary w-full text-center py-3 rounded-md">
+                Get Started
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action - GitHub Style */}
+      <section className="py-24 px-4 min-h-[50vh] flex items-center" id="call-to-action-section">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl font-heading font-bold mb-6 heading-primary">
+            Ready to get started?
+          </h2>
+          <p className="text-xl text-[var(--text-secondary)] mb-8">
+            Let's chat about your cloud needs and find the perfect solution for your business.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
             <Link
-              to="/tools/invoice"
-              className="inline-flex items-center text-[#00FFD1] hover:text-[#00FFD1]/80"
+              to="/contact"
+              className="saasy-button-primary px-8 py-4 text-lg font-medium rounded-md"
             >
-              Launch Tool <span className="ml-1">→</span>
+              Contact Us
+            </Link>
+            <Link
+              to="/tools"
+              className="saasy-button-secondary px-8 py-4 text-lg font-medium rounded-md"
+            >
+              Explore Our Tools
             </Link>
           </div>
-
-          {/* Time Tracker (Coming Soon) */}
-          <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 opacity-70">
-            <div className="h-12 w-12 bg-[#FF3CAC]/20 rounded-lg flex items-center justify-center mb-4">
-              <Clock className="h-6 w-6 text-[#FF3CAC]" />
-            </div>
-            <h3 className="text-xl font-semibold mb-2">Time Tracker</h3>
-            <p className="text-gray-400 mb-4">
-              Track your billable hours and generate reports for clients and projects.
-            </p>
-            <span className="inline-flex items-center text-gray-500">
-              Coming Soon
-            </span>
-          </div>
-
-          {/* Expense Tracker (Coming Soon) */}
-          <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 opacity-70">
-            <div className="h-12 w-12 bg-[#00FFD1]/20 rounded-lg flex items-center justify-center mb-4">
-              <CreditCard className="h-6 w-6 text-[#00FFD1]" />
-            </div>
-            <h3 className="text-xl font-semibold mb-2">Expense Tracker</h3>
-            <p className="text-gray-400 mb-4">
-              Log and categorize your business expenses for easy tax reporting.
-            </p>
-            <span className="inline-flex items-center text-gray-500">
-              Coming Soon
-            </span>
-          </div>
         </div>
       </section>
+    </div>
+  );
+};
 
-      {/* Testimonial Section */}
-      <section className="py-12 bg-gray-800 rounded-xl p-8">
-        <h2 className="text-3xl font-bold mb-8 text-center">Why Freelancers Love Us</h2>
-        <div className="max-w-4xl mx-auto">
-          <blockquote className="text-center">
-            <p className="text-xl text-gray-300 italic mb-4">
-              "SaaSy Cookies has simplified my invoicing process and saved me hours of admin work each month. Can't wait to see what other tools they develop!"
-            </p>
-            <footer className="text-gray-400">
-              — Sarah T., Freelance Designer
-            </footer>
-          </blockquote>
-        </div>
-      </section>
+// Reusable Feature Card Component
+const FeatureCard: React.FC<{
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}> = ({ icon, title, description }) => {
+  return (
+    <div className="saasy-card saasy-card-dark p-8 transition-colors duration-200">
+      <div className="flex items-center gap-4 mb-4">
+        {icon}
+        <h3 className="text-xl font-heading font-semibold heading-primary">{title}</h3>
+      </div>
+      <p className="text-[var(--text-secondary)]">{description}</p>
     </div>
   );
 };

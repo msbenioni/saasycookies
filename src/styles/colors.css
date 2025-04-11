@@ -1,0 +1,301 @@
+/* Global Color Palette for SaaSy Cookies */
+
+:root {
+  /* Background Gradient Colors */
+  --bg-deep-blue: #0c0c43;
+  --bg-royal-blue: #2a247a;
+  --bg-purple: #4337a5;
+  --bg-light-purple: #9e83ff;
+  
+  /* Text Colors */
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.85);
+  --text-tertiary: rgba(255, 255, 255, 0.7);
+  
+  /* Card Colors */
+  --card-bg-light: #f6f8fa;
+  --card-bg-dark: #161b22;
+  --card-border-light: #d0d7de;
+  --card-border-dark: #30363d;
+  --card-text-light: #24292f;
+  --card-text-dark: #c9d1d9;
+  
+  /* Accent Colors */
+  --accent-primary: #9e83ff;
+  --accent-secondary: #4337a5;
+  --accent-hover: #b39dff;
+  
+  /* Button Colors */
+  --button-primary-bg: #4337a5;
+  --button-primary-hover: #5447b5;
+  --button-secondary-bg: #21262d;
+  --button-secondary-hover: #30363d;
+}
+
+/* Typography Classes */
+.heading-primary {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.heading-secondary {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.text-body {
+  color: var(--text-tertiary);
+}
+
+/* Card Classes */
+.saasy-card {
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.saasy-card-light {
+  background-color: var(--card-bg-light);
+  border: 1px solid var(--card-border-light);
+  color: var(--card-text-light);
+}
+
+.saasy-card-light:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.18);
+  border: 3px solid var(--accent-primary);
+  padding: 1.5rem;
+}
+
+.saasy-card-dark {
+  background-color: var(--card-bg-dark);
+  border: 1px solid var(--card-border-dark);
+  color: var(--card-text-dark);
+}
+
+.saasy-card-dark:hover {
+  border: 3px solid var(--accent-primary);
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(67, 55, 165, 0.2);
+}
+
+/* Pricing card specific styles */
+.pricing-card {
+  border: 2px solid transparent;
+}
+
+.pricing-card:hover {
+  box-shadow: 0 4px 8px rgba(158, 131, 255, 0.3);
+  border-color: var(--accent-primary);
+}
+
+/* Featured pricing card */
+.pricing-card-featured {
+  border: 2px solid var(--accent-primary);
+  box-shadow: 0 4px 8px rgba(158, 131, 255, 0.2);
+  position: relative;
+  z-index: 10;
+}
+
+.pricing-card-featured:hover {
+  box-shadow: 0 6px 12px rgba(158, 131, 255, 0.4);
+}
+
+/* Theme-specific card variants */
+.github-theme .saasy-card-light {
+  background-color: #f6f8fa;
+  border-color: #d0d7de;
+  color: #24292f;
+}
+
+.github-theme .saasy-card-light:hover {
+  border-color: #6e40c9;
+}
+
+.github-theme .saasy-card-dark {
+  background-color: #161b22;
+  border-color: #30363d;
+  color: #c9d1d9;
+}
+
+.github-theme .saasy-card-dark:hover {
+  border-color: #6e40c9;
+  box-shadow: 0 4px 8px rgba(110, 64, 201, 0.2);
+}
+
+/* Mascot container styles */
+.mascot-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+}
+
+/* Button Classes */
+.saasy-button-primary {
+  background-color: var(--button-primary-bg);
+  color: var(--text-primary);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  border: 2px solid transparent;
+}
+
+.saasy-button-primary:hover {
+  background-color: var(--button-primary-hover);
+  border: 2px solid var(--accent-primary);
+  box-shadow: 0 0 8px rgba(158, 131, 255, 0.3);
+}
+
+.saasy-button-secondary {
+  background-color: var(--button-secondary-bg);
+  color: var(--text-secondary);
+  border: 1px solid var(--card-border-dark);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+}
+
+.saasy-button-secondary:hover {
+  background-color: var(--button-secondary-hover);
+  border: 1px solid var(--accent-primary);
+  box-shadow: 0 0 8px rgba(158, 131, 255, 0.3);
+}
+
+.saasy-button-outline {
+  background-color: transparent;
+  color: var(--card-text-light);
+  border: 1px solid var(--card-border-light);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+}
+
+.saasy-button-outline:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  box-shadow: 0 0 8px rgba(158, 131, 255, 0.2);
+}
+
+/* Theme-specific button variants */
+.github-theme .saasy-button-primary {
+  background-color: #6e40c9;
+}
+
+.github-theme .saasy-button-primary:hover {
+  background-color: #8957e5;
+  border-color: #a78bfa;
+}
+
+/* Gradient Background - Base Style */
+.saasy-gradient-bg {
+  background-attachment: fixed;
+  position: relative;
+}
+
+/* Section-specific gradient backgrounds */
+.section-gradient-1 {
+  background: linear-gradient(180deg, 
+    var(--bg-deep-blue) 0%, 
+    var(--bg-royal-blue) 50%, 
+    var(--bg-purple) 100%);
+}
+
+.section-gradient-2 {
+  background: linear-gradient(180deg, 
+    var(--bg-purple) 0%, 
+    var(--bg-light-purple) 100%);
+}
+
+/* Theme-specific gradient backgrounds */
+.github-gradient-bg {
+  background: linear-gradient(180deg, 
+    #0d1117 0%, 
+    #161b22 20%, 
+    #1c2331 40%, 
+    #2b2a4c 60%, 
+    #3b2a58 80%, 
+    #4c2a64 100%);
+  background-attachment: fixed;
+  background-size: 100% 600%;
+}
+
+/* Gradient animations */
+@keyframes gradientScroll {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+.animate-gradient {
+  animation: gradientScroll 60s ease infinite alternate;
+}
+
+/* Gradient overlay for smooth transitions */
+.gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  pointer-events: none;
+}
+
+/* Legacy text effect styles */
+.neon-text-cyan {
+  color: #34D399;
+  text-shadow: 0 0 5px rgba(52, 211, 153, 0.5);
+}
+
+.neon-text-purple {
+  color: #A78BFA;
+  text-shadow: 0 0 5px rgba(167, 139, 250, 0.5);
+}
+
+.neon-text-blue {
+  color: #60A5FA;
+  text-shadow: 0 0 5px rgba(96, 165, 250, 0.5);
+}
+
+.neon-text-pink {
+  color: #F472B6;
+  text-shadow: 0 0 5px rgba(244, 114, 182, 0.5);
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #A78BFA, #34D399);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Dark Mode Overrides */
+.dark {
+  color-scheme: dark;
+}
+
+.dark input, .dark select, .dark textarea {
+  background-color: #161b22;
+  border-color: #30363d;
+  color: #c9d1d9;
+}
+
+/* Scroll-based gradient animation */
+.scroll-gradient {
+  background: linear-gradient(180deg, 
+    var(--bg-deep-blue) 0%, 
+    var(--bg-royal-blue) 15%, 
+    var(--bg-purple) 30%, 
+    var(--bg-light-purple) 50%,
+    var(--bg-purple) 70%,
+    var(--bg-royal-blue) 85%,
+    var(--bg-deep-blue) 100%);
+  background-size: 100% 400%;
+  background-attachment: fixed;
+  background-position: var(--scroll-position, '0% 0%');
+  transition: background-position 0.3s ease-out;
+}

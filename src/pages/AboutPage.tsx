@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const AboutPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,75 +42,98 @@ const AboutPage: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto">
       <div className="text-center mb-12">
-          <div className="bg-gray-900 rounded-full h-full w-full flex items-center justify-center">
+          <div className="bg-[#0d1117] rounded-full h-full w-full flex items-center justify-center">
           </div>
-        <h1 className="text-4xl font-bold mb-2">About SaaSy Cookies</h1>
-        <p className="text-xl text-gray-400">Sweet solutions.</p>
+        <h1 className="text-4xl font-heading font-bold mb-2 text-[#c9d1d9]">About SaaSy Cookies</h1>
+        <p className="text-xl text-[#8b949e] font-body">Making tech feel friendlier.</p>
       </div>
 
-      <div className="space-y-8 text-gray-300">
-        <section>
-          <h2 className="text-2xl font-semibold mb-4 text-white">Our Story</h2>
-          <p className="mb-4">
-            SaaSy Cookies was born from the intersection of two worlds: the rich cultural heritage of the Pacific and the modern digital landscape of software-as-a-service (SaaS) solutions.
+      <div className="space-y-8 font-body">
+        <section className="bg-[#161b22] p-6 rounded-lg border border-[#30363d] shadow-md">
+          <h2 className="text-2xl font-heading font-semibold mb-4 text-[#c9d1d9]">Our Story</h2>
+          <p className="mb-4 text-[#8b949e]">
+            SaaSy Cookies was born from a simple frustration: why does dealing with IT distributors and software licensing have to be so complicated and impersonal?
           </p>
-          <p className="mb-4">
-            The name "SaaSy Cookies" is a playful nod to both our Kuki (Cook Islands) heritage and the digital tools we create. In the Cook Islands, community and resourcefulness are core values, and we bring that spirit to our platform by creating practical tools that help independent workers thrive.
+          <p className="mb-4 text-[#8b949e]">
+            The name "SaaSy Cookies" is a playful nod to both our Kuki (Cook Islands) heritage and the digital services we provide. In the Cook Islands, community and personal connection are core values, and we bring that spirit to our business by creating a friendly, approachable alternative to the big, corporate IT distributors.
           </p>
-          <p>
-            The "SaaSy" part represents our focus on creating software-as-a-service tools that are both sophisticated and accessible. Just like cookies are bite-sized treats that bring joy, our tools are designed to be easy to use while solving real problems for freelancers and small businesses.
-          </p>
-        </section>
-
-        <section>
-          <h2 className="text-2xl font-semibold mb-4 text-white">Our Mission</h2>
-          <p className="mb-4">
-            We're on a mission to support freelancers, contractors, and small business owners in New Zealand with sweet digital tools that simplify the administrative side of running a business.
-          </p>
-          <p>
-            We believe that independent workers should be able to focus on what they do best—creating value for their clients—without getting bogged down by paperwork, calculations, and administrative tasks. That's why we're building a collection of, user-friendly tools specifically designed for the New Zealand market.
+          <p className="text-[#8b949e]">
+            The "SaaSy" part represents our focus on Software-as-a-Service solutions that help small businesses thrive in the digital world. Just like cookies are a sweet treat that brings joy, we aim to make your tech experience sweeter and more enjoyable.
           </p>
         </section>
 
-        <section>
-          <h2 className="text-2xl font-semibold mb-4 text-white">Our Values</h2>
+        <section className="bg-[#161b22] p-6 rounded-lg border border-[#30363d] shadow-md">
+          <h2 className="text-2xl font-heading font-semibold mb-4 text-[#c9d1d9]">Our Mission</h2>
+          <p className="mb-4 text-[#8b949e]">
+            We're on a mission to support small businesses in New Zealand with friendly, jargon-free cloud services and software licensing that doesn't make your head spin.
+          </p>
+          <p className="text-[#8b949e]">
+            We believe that small business owners should be able to focus on what they do best—running their business—without getting bogged down by complicated tech decisions or dealing with faceless corporations. That's why we offer personalized service with real humans who speak plain English and genuinely care about your success.
+          </p>
+        </section>
+
+        <section className="bg-[#161b22] p-6 rounded-lg border border-[#30363d] shadow-md">
+          <h2 className="text-2xl font-heading font-semibold mb-4 text-[#c9d1d9]">Our Values</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-gray-800 p-6 rounded-lg border border-gray-700">
-              <h3 className="text-xl font-medium mb-2 text-[#00FFD1]">Simplicity</h3>
-              <p>
-                We believe in creating tools that are intuitive and easy to use, cutting through complexity to deliver solutions that just work.
+            <div className="bg-[#0d1117] p-4 rounded-lg border border-[#30363d] hover:border-[#6e40c9] transition-colors duration-300">
+              <h3 className="text-xl font-heading font-semibold mb-2 text-[#6e40c9]">Human Connection</h3>
+              <p className="text-[#8b949e]">
+                We believe in real relationships. When you call us, you'll talk to a real person who knows your name and understands your business.
               </p>
             </div>
-            <div className="bg-gray-800 p-6 rounded-lg border border-gray-700">
-              <h3 className="text-xl font-medium mb-2 text-[#FF3CAC]">Community</h3>
-              <p>
-                We're building for the community of independent workers who contribute so much to New Zealand's economy and culture.
+            <div className="bg-[#0d1117] p-4 rounded-lg border border-[#30363d] hover:border-[#6e40c9] transition-colors duration-300">
+              <h3 className="text-xl font-heading font-semibold mb-2 text-[#3fb950]">Plain English</h3>
+              <p className="text-[#8b949e]">
+                We explain tech without the jargon. You shouldn't need a computer science degree to understand your software licensing options.
               </p>
             </div>
-            <div className="bg-gray-800 p-6 rounded-lg border border-gray-700">
-              <h3 className="text-xl font-medium mb-2 text-[#00FFD1]">Accessibility</h3>
-              <p>
-                We're committed to making our tools available to everyone, which is why our core offerings will either be free or in some cases a small payment will be required to use.
+            <div className="bg-[#0d1117] p-4 rounded-lg border border-[#30363d] hover:border-[#6e40c9] transition-colors duration-300">
+              <h3 className="text-xl font-heading font-semibold mb-2 text-[#6e40c9]">Transparency</h3>
+              <p className="text-[#8b949e]">
+                No hidden fees, no confusing contracts. We're upfront about our pricing and what you're getting for your money.
               </p>
             </div>
-            <div className="bg-gray-800 p-6 rounded-lg border border-gray-700">
-              <h3 className="text-xl font-medium mb-2 text-[#FF3CAC]">Innovation</h3>
-              <p>
-                We're constantly looking for new ways to solve problems and make life easier for freelancers and small businesses.
+            <div className="bg-[#0d1117] p-4 rounded-lg border border-[#30363d] hover:border-[#6e40c9] transition-colors duration-300">
+              <h3 className="text-xl font-heading font-semibold mb-2 text-[#3fb950]">Small Business Spirit</h3>
+              <p className="text-[#8b949e]">
+                As a small business ourselves, we understand your challenges and are committed to helping you succeed with the right tech solutions.
               </p>
             </div>
           </div>
         </section>
 
-        <section>
-          <h2 className="text-2xl font-semibold mb-4 text-white">Looking Forward</h2>
-          <p className="mb-6">
-            SaaSy Cookies is just getting started. We're excited to continue building tools that address the unique needs of New Zealand's independent workers. If you have ideas for tools that would help you in your work, we'd love to hear from you!
+        <section className="bg-[#161b22] p-6 rounded-lg border border-[#30363d] shadow-md">
+          <h2 className="text-2xl font-heading font-semibold mb-4 text-[#c9d1d9]">Our Services</h2>
+          <p className="mb-4 text-[#8b949e]">
+            We offer a range of cloud services and software licensing options tailored to small NZ businesses:
+          </p>
+          <ul className="list-disc pl-6 mb-6 space-y-2 text-[#8b949e]">
+            <li>Microsoft 365 and Google Workspace licensing and setup</li>
+            <li>Email and cloud storage solutions</li>
+            <li>Cloud backup services</li>
+            <li>VMware licensing through Zettagrid</li>
+            <li>Ongoing tech support plans</li>
+            <li>Free business tools like our invoice generator</li>
+          </ul>
+          <div className="text-center">
+            <Link 
+              to="/contact"
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[#6e40c9] hover:bg-[#8957e5] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#6e40c9] transition-colors duration-300"
+            >
+              Get in Touch
+            </Link>
+          </div>
+        </section>
+
+        <section className="bg-[#161b22] p-6 rounded-lg border border-[#30363d] shadow-md">
+          <h2 className="text-2xl font-heading font-semibold mb-4 text-[#c9d1d9]">Looking Forward</h2>
+          <p className="mb-6 text-[#8b949e]">
+            SaaSy Cookies is just getting started. We're excited to continue growing our services to better support New Zealand's small business community. If you have ideas for how we can help your business with its tech needs, we'd love to hear from you!
           </p>
           <div className="text-center">
             <button 
               onClick={() => setIsModalOpen(true)}
-              className="px-6 py-3 bg-gradient-to-r from-[#00FFD1] to-[#00FFD1]/70 text-gray-900 font-medium rounded-lg hover:from-[#00FFD1]/90 hover:to-[#00FFD1]/60 transition-all duration-300"
+              className="inline-flex items-center px-4 py-2 border border-[#30363d] text-sm font-medium rounded-md shadow-sm text-[#c9d1d9] bg-[#0d1117] hover:bg-[#30363d] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#6e40c9] transition-colors duration-300"
             >
               Share Your Ideas
             </button>
@@ -120,19 +144,19 @@ const AboutPage: React.FC = () => {
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50">
-          <div className="bg-gray-800 rounded-lg p-6 w-full max-w-md border border-gray-700 relative">
+          <div className="bg-[#161b22] rounded-lg p-6 w-full max-w-md border border-[#30363d] shadow-lg relative">
             <button 
               onClick={() => setIsModalOpen(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-white"
+              className="absolute top-4 right-4 text-[#8b949e] hover:text-[#c9d1d9]"
             >
               <X size={24} />
             </button>
             
-            <h3 className="text-2xl font-bold mb-6 text-white">Share Your Ideas</h3>
+            <h3 className="text-2xl font-heading font-bold mb-6 text-[#c9d1d9]">Share Your Ideas</h3>
             
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-1">
+                <label htmlFor="name" className="block text-sm font-medium text-[#8b949e] mb-1">
                   Name
                 </label>
                 <input
@@ -142,12 +166,12 @@ const AboutPage: React.FC = () => {
                   value={formData.name}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-[#00FFD1] focus:border-transparent"
+                  className="w-full px-3 py-2 bg-[#0d1117] border border-[#30363d] rounded-md text-[#c9d1d9] focus:outline-none focus:ring-2 focus:ring-[#6e40c9] focus:border-transparent"
                 />
               </div>
               
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
+                <label htmlFor="email" className="block text-sm font-medium text-[#8b949e] mb-1">
                   Email
                 </label>
                 <input
@@ -157,12 +181,12 @@ const AboutPage: React.FC = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-[#00FFD1] focus:border-transparent"
+                  className="w-full px-3 py-2 bg-[#0d1117] border border-[#30363d] rounded-md text-[#c9d1d9] focus:outline-none focus:ring-2 focus:ring-[#6e40c9] focus:border-transparent"
                 />
               </div>
               
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-1">
+                <label htmlFor="message" className="block text-sm font-medium text-[#8b949e] mb-1">
                   Message
                 </label>
                 <textarea
@@ -172,19 +196,17 @@ const AboutPage: React.FC = () => {
                   onChange={handleInputChange}
                   required
                   rows={4}
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-[#00FFD1] focus:border-transparent"
+                  className="w-full px-3 py-2 bg-[#0d1117] border border-[#30363d] rounded-md text-[#c9d1d9] focus:outline-none focus:ring-2 focus:ring-[#6e40c9] focus:border-transparent"
                 ></textarea>
               </div>
               
-              <div className="pt-2">
+              <div className="flex justify-end">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`w-full px-4 py-2 bg-gradient-to-r from-[#00FFD1] to-[#FF3CAC] text-gray-900 font-medium rounded-md transition-all duration-300 ${
-                    isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:opacity-90'
-                  }`}
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[#6e40c9] hover:bg-[#8957e5] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#6e40c9] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isSubmitting ? 'Opening Email App...' : 'Send Message'}
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </button>
               </div>
             </form>

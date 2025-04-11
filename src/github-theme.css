@@ -1,0 +1,61 @@
+/* GitHub-inspired theme for SaaSy Cookies */
+
+/* Accent colors */
+.github-accent-purple {
+  color: #6e40c9;
+}
+
+.github-accent-blue {
+  color: #58a6ff;
+}
+
+.github-accent-green {
+  color: #3fb950;
+}
+
+/* GitHub-specific text styles */
+.github-heading {
+  color: #c9d1d9;
+  font-weight: 600;
+}
+
+.github-text {
+  color: #8b949e;
+}
+
+/* GitHub-specific utility classes */
+.github-border {
+  border: 1px solid #30363d;
+}
+
+.github-divider {
+  border-top: 1px solid #21262d;
+  margin: 1.5rem 0;
+}
+
+/* GitHub-specific badges */
+.github-badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 2rem;
+  background-color: #1f6feb;
+  color: white;
+}
+
+.github-badge-purple {
+  background-color: #8957e5;
+}
+
+.github-badge-green {
+  background-color: #2ea043;
+}
+
+.github-badge-yellow {
+  background-color: #d29922;
+}
+
+.github-badge-red {
+  background-color: #f85149;
+}
