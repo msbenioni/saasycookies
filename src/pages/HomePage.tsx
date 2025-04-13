@@ -5,7 +5,7 @@ import { FaCloud, FaLaptopCode, FaShieldAlt, FaUsers, FaChartLine, FaHeadset, Fa
 const HomePage: React.FC = () => {
   return (
     <div className="space-y-0">
-      {/* Hero Section - GitHub Style */}
+      {/* Hero Section */}
       <section className="py-24 px-4 min-h-[90vh] flex items-center" id="hero-section">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -19,13 +19,13 @@ const HomePage: React.FC = () => {
               <div className="flex flex-wrap gap-4">
                 <Link
                   to="/contact"
-                  className="saasy-button-primary px-6 py-3 font-medium rounded-md transition-colors duration-200"
+                  className="saasy-button-primary px-6 py-3 font-medium rounded-md"
                 >
                   Talk to Us
                 </Link>
                 <Link
                   to="/contact"
-                  className="saasy-button-secondary px-6 py-3 font-medium rounded-md transition-colors duration-200"
+                  className="saasy-button-secondary px-6 py-3 font-medium rounded-md"
                 >
                   Book a Free Cloud Chat
                 </Link>
@@ -33,20 +33,20 @@ const HomePage: React.FC = () => {
             </div>
             <div className="hidden lg:block">
               <div className="relative">
-                <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#6e40c9] opacity-10 rounded-full blur-3xl"></div>
+                <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[var(--terminal-purple)] opacity-10 rounded-full blur-3xl"></div>
                 <div className="saasy-card saasy-card-dark p-6 shadow-xl">
                   <div className="flex items-center gap-2 mb-4">
-                    <div className="w-3 h-3 rounded-full bg-[#f85149]"></div>
-                    <div className="w-3 h-3 rounded-full bg-[#f0883e]"></div>
-                    <div className="w-3 h-3 rounded-full bg-[#3fb950]"></div>
+                    <div className="terminal-dot terminal-dot-red"></div>
+                    <div className="terminal-dot terminal-dot-orange"></div>
+                    <div className="terminal-dot terminal-dot-green"></div>
                   </div>
-                  <div className="font-mono text-sm text-[#8b949e]">
-                    <p><span className="text-[#6e40c9]">$</span> saasy-cookies init</p>
-                    <p className="text-[#c9d1d9]">✓ Initializing your cloud services...</p>
-                    <p className="text-[#c9d1d9]">✓ Setting up Microsoft 365...</p>
-                    <p className="text-[#c9d1d9]">✓ Configuring email protection...</p>
-                    <p className="text-[#c9d1d9]">✓ Adding cloud backups...</p>
-                    <p className="text-[#3fb950]">✓ All done! Your cloud is ready to use.</p>
+                  <div className="terminal-text">
+                    <p><span className="terminal-command">$</span> saasy-cookies init</p>
+                    <p className="terminal-output">✓ Initializing your cloud services...</p>
+                    <p className="terminal-output">✓ Setting up Microsoft 365...</p>
+                    <p className="terminal-output">✓ Configuring email protection...</p>
+                    <p className="terminal-output">✓ Adding cloud backups...</p>
+                    <p className="terminal-success">✓ All done! Your cloud is ready to use.</p>
                   </div>
                 </div>
               </div>
@@ -93,7 +93,7 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Features Section - GitHub Style */}
+      {/* Features Section */}
       <section className="py-24 px-4 min-h-[90vh] flex items-center" id="features-section">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-heading font-bold mb-4 text-center heading-primary">SaaSy Cookies Features</h2>
@@ -103,31 +103,31 @@ const HomePage: React.FC = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <FeatureCard 
-              icon={<FaCloud className="text-[var(--accent-primary)] text-4xl" />}
+              icon={<FaCloud className="feature-icon" />}
               title="Accelerate performance"
               description="Work smarter with optimized cloud solutions. Get your team up and running with the right tools, configured for your specific needs."
             />
             
             <FeatureCard 
-              icon={<FaShieldAlt className="text-[var(--accent-primary)] text-4xl" />}
+              icon={<FaShieldAlt className="feature-icon" />}
               title="Built-in security"
               description="Keep your business data safe with properly configured security settings, backups, and best practices for your cloud services."
             />
             
             <FeatureCard 
-              icon={<FaUsers className="text-[var(--accent-primary)] text-4xl" />}
+              icon={<FaUsers className="feature-icon" />}
               title="Work together, achieve more"
               description="Collaborate seamlessly with properly configured Microsoft 365 or Google Workspace tools that help your team work better together."
             />
             
             <FeatureCard 
-              icon={<FaGlobe className="text-[var(--accent-primary)] text-4xl" />}
+              icon={<FaGlobe className="feature-icon" />}
               title="Scale with your business"
               description="From startups to established businesses, our cloud solutions grow with you. Add users, services, and features as you need them."
             />
             
             <FeatureCard 
-              icon={<FaChartLine className="text-[var(--accent-primary)] text-4xl" />}
+              icon={<FaChartLine className="feature-icon" />}
               title="Analytics & Insights"
               description="Make data-driven decisions with powerful analytics that provide actionable insights."
             />
@@ -135,7 +135,7 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* What We Do Section - GitHub Style */}
+      {/* What We Do Section */}
       <section className="py-24 px-4 min-h-[90vh] flex items-center" id="what-we-do-section">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-heading font-bold mb-4 text-center heading-primary">What We Do</h2>
@@ -145,8 +145,8 @@ const HomePage: React.FC = () => {
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
             <div className="saasy-card saasy-card-light flex flex-col items-center text-center p-6">
-              <div className="h-16 w-16 bg-[#6e40c920] rounded-lg flex items-center justify-center mb-4">
-                <FaCloud className="h-8 w-8 text-[var(--accent-primary)]" />
+              <div className="feature-icon-container">
+                <FaCloud className="feature-icon" />
               </div>
               <h3 className="text-lg font-heading font-semibold text-[var(--card-text-light)] mb-2">Email & Cloud Setup</h3>
               <p className="text-[var(--card-text-light)] opacity-80">
@@ -155,8 +155,8 @@ const HomePage: React.FC = () => {
             </div>
             
             <div className="saasy-card saasy-card-light flex flex-col items-center text-center p-6">
-              <div className="h-16 w-16 bg-[#6e40c920] rounded-lg flex items-center justify-center mb-4">
-                <FaLaptopCode className="h-8 w-8 text-[var(--accent-primary)]" />
+              <div className="feature-icon-container">
+                <FaLaptopCode className="feature-icon" />
               </div>
               <h3 className="text-lg font-heading font-semibold text-[var(--card-text-light)] mb-2">Microsoft 365 / Google</h3>
               <p className="text-[var(--card-text-light)] opacity-80">
@@ -165,8 +165,8 @@ const HomePage: React.FC = () => {
             </div>
             
             <div className="saasy-card saasy-card-light flex flex-col items-center text-center p-6">
-              <div className="h-16 w-16 bg-[#6e40c920] rounded-lg flex items-center justify-center mb-4">
-                <FaShieldAlt className="h-8 w-8 text-[var(--accent-primary)]" />
+              <div className="feature-icon-container">
+                <FaShieldAlt className="feature-icon" />
               </div>
               <h3 className="text-lg font-heading font-semibold text-[var(--card-text-light)] mb-2">Cloud Backups</h3>
               <p className="text-[var(--card-text-light)] opacity-80">
@@ -175,8 +175,8 @@ const HomePage: React.FC = () => {
             </div>
             
             <div className="saasy-card saasy-card-light flex flex-col items-center text-center p-6">
-              <div className="h-16 w-16 bg-[#6e40c920] rounded-lg flex items-center justify-center mb-4">
-                <FaServer className="h-8 w-8 text-[var(--accent-primary)]" />
+              <div className="feature-icon-container">
+                <FaServer className="feature-icon" />
               </div>
               <h3 className="text-lg font-heading font-semibold text-[var(--card-text-light)] mb-2">VMware Licensing</h3>
               <p className="text-[var(--card-text-light)] opacity-80">
@@ -185,8 +185,8 @@ const HomePage: React.FC = () => {
             </div>
             
             <div className="saasy-card saasy-card-light flex flex-col items-center text-center p-6">
-              <div className="h-16 w-16 bg-[#6e40c920] rounded-lg flex items-center justify-center mb-4">
-                <FaHeadset className="h-8 w-8 text-[var(--accent-primary)]" />
+              <div className="feature-icon-container">
+                <FaHeadset className="feature-icon" />
               </div>
               <h3 className="text-lg font-heading font-semibold text-[var(--card-text-light)] mb-2">Ongoing Support</h3>
               <p className="text-[var(--card-text-light)] opacity-80">
@@ -197,7 +197,7 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Why Saasy Cookies Exists - GitHub Style */}
+      {/* Why Saasy Cookies Exists */}
       <section className="py-24 px-4 min-h-[90vh] flex items-center" id="why-saasy-cookies-section">
         <div className="max-w-6xl mx-auto">
           <div className="saasy-card saasy-card-dark p-8 max-w-3xl mx-auto">
@@ -212,7 +212,7 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Packages & Pricing - GitHub Style */}
+      {/* Packages & Pricing */}
       <section className="py-24 px-4 min-h-[90vh] flex items-center relative" id="packages-pricing-section">
         {/* Special background for pricing section */}
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg-light-purple)] to-[var(--bg-purple)] opacity-40"></div>
@@ -341,7 +341,7 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Call to Action - GitHub Style */}
+      {/* Call to Action */}
       <section className="py-24 px-4 min-h-[50vh] flex items-center" id="call-to-action-section">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-heading font-bold mb-6 heading-primary">

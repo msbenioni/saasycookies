@@ -30,6 +30,29 @@
   --button-primary-hover: #5447b5;
   --button-secondary-bg: #21262d;
   --button-secondary-hover: #30363d;
+
+  /* Standardized Hover Effect */
+  --hover-shadow: 0 0 8px rgba(158, 131, 255, 0.3);
+  --hover-border-color: var(--accent-primary);
+  --hover-border-width: 3px;
+  --hover-transition: all 0.2s ease-in-out;
+
+  /* UI Colors */
+  --header-bg: #161b22;
+  --header-border: #30363d;
+  --nav-text: #8b949e;
+  --nav-active-bg: #30363d;
+  --nav-hover-bg: #30363d;
+  --footer-bg: #161b22;
+  --footer-border: #30363d;
+  --icon-red: #f85149;
+  --icon-orange: #f0883e;
+  --icon-green: #3fb950;
+  --terminal-purple: #6e40c9;
+  --terminal-text: #8b949e;
+  --terminal-success: #3fb950;
+  --terminal-output: #c9d1d9;
+  --feature-icon-bg: rgba(110, 64, 201, 0.125);
 }
 
 /* Typography Classes */
@@ -47,79 +70,69 @@
   color: var(--text-tertiary);
 }
 
+/* Gradient Text Styles */
+.gradient-heading {
+  background-image: linear-gradient(to right, var(--accent-primary), #FF3CAC);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  padding-bottom: 0.25rem;
+  line-height: 1.5;
+}
+
 /* Card Classes */
 .saasy-card {
   border-radius: 0.75rem;
   padding: 1.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  transition: var(--hover-transition);
+  border: var(--hover-border-width) solid transparent;
 }
 
 .saasy-card-light {
   background-color: var(--card-bg-light);
-  border: 1px solid var(--card-border-light);
+  border: var(--hover-border-width) solid var(--card-border-light);
   color: var(--card-text-light);
 }
 
 .saasy-card-light:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.18);
-  border: 3px solid var(--accent-primary);
-  padding: 1.5rem;
+  box-shadow: var(--hover-shadow);
+  border: var(--hover-border-width) solid var(--hover-border-color);
 }
 
 .saasy-card-dark {
   background-color: var(--card-bg-dark);
-  border: 1px solid var(--card-border-dark);
+  border: var(--hover-border-width) solid var(--card-border-dark);
   color: var(--card-text-dark);
 }
 
 .saasy-card-dark:hover {
-  border: 3px solid var(--accent-primary);
-  padding: 1.5rem;
-  box-shadow: 0 4px 8px rgba(67, 55, 165, 0.2);
+  border: var(--hover-border-width) solid var(--hover-border-color);
+  box-shadow: var(--hover-shadow);
 }
 
 /* Pricing card specific styles */
 .pricing-card {
-  border: 2px solid transparent;
+  border: var(--hover-border-width) solid transparent;
+  transition: var(--hover-transition);
 }
 
 .pricing-card:hover {
-  box-shadow: 0 4px 8px rgba(158, 131, 255, 0.3);
-  border-color: var(--accent-primary);
+  box-shadow: var(--hover-shadow);
+  border-color: var(--hover-border-color);
 }
 
 /* Featured pricing card */
 .pricing-card-featured {
-  border: 2px solid var(--accent-primary);
+  border: var(--hover-border-width) solid var(--accent-primary);
   box-shadow: 0 4px 8px rgba(158, 131, 255, 0.2);
   position: relative;
   z-index: 10;
+  transition: var(--hover-transition);
 }
 
 .pricing-card-featured:hover {
-  box-shadow: 0 6px 12px rgba(158, 131, 255, 0.4);
-}
-
-/* Theme-specific card variants */
-.github-theme .saasy-card-light {
-  background-color: #f6f8fa;
-  border-color: #d0d7de;
-  color: #24292f;
-}
-
-.github-theme .saasy-card-light:hover {
-  border-color: #6e40c9;
-}
-
-.github-theme .saasy-card-dark {
-  background-color: #161b22;
-  border-color: #30363d;
-  color: #c9d1d9;
-}
-
-.github-theme .saasy-card-dark:hover {
-  border-color: #6e40c9;
-  box-shadow: 0 4px 8px rgba(110, 64, 201, 0.2);
+  box-shadow: var(--hover-shadow);
 }
 
 /* Mascot container styles */
@@ -137,151 +150,156 @@
   border-radius: 6px;
   padding: 0.5rem 1rem;
   font-weight: 500;
-  border: 2px solid transparent;
+  border: var(--hover-border-width) solid transparent;
+  transition: var(--hover-transition);
 }
 
 .saasy-button-primary:hover {
   background-color: var(--button-primary-hover);
-  border: 2px solid var(--accent-primary);
-  box-shadow: 0 0 8px rgba(158, 131, 255, 0.3);
+  border: var(--hover-border-width) solid var(--hover-border-color);
+  box-shadow: var(--hover-shadow);
 }
 
 .saasy-button-secondary {
   background-color: var(--button-secondary-bg);
   color: var(--text-secondary);
-  border: 1px solid var(--card-border-dark);
+  border: var(--hover-border-width) solid var(--card-border-dark);
   border-radius: 6px;
   padding: 0.5rem 1rem;
   font-weight: 500;
+  transition: var(--hover-transition);
 }
 
 .saasy-button-secondary:hover {
   background-color: var(--button-secondary-hover);
-  border: 1px solid var(--accent-primary);
-  box-shadow: 0 0 8px rgba(158, 131, 255, 0.3);
+  border: var(--hover-border-width) solid var(--hover-border-color);
+  box-shadow: var(--hover-shadow);
 }
 
 .saasy-button-outline {
   background-color: transparent;
   color: var(--card-text-light);
-  border: 1px solid var(--card-border-light);
+  border: var(--hover-border-width) solid var(--card-border-light);
   border-radius: 6px;
   padding: 0.5rem 1rem;
   font-weight: 500;
+  transition: var(--hover-transition);
 }
 
 .saasy-button-outline:hover {
-  border-color: var(--accent-primary);
+  border-color: var(--hover-border-color);
   color: var(--accent-primary);
-  box-shadow: 0 0 8px rgba(158, 131, 255, 0.2);
+  box-shadow: var(--hover-shadow);
 }
 
-/* Theme-specific button variants */
-.github-theme .saasy-button-primary {
-  background-color: #6e40c9;
-}
-
-.github-theme .saasy-button-primary:hover {
-  background-color: #8957e5;
-  border-color: #a78bfa;
-}
-
-/* Gradient Background - Base Style */
-.saasy-gradient-bg {
-  background-attachment: fixed;
+/* Navigation Styles */
+.nav-header {
+  background-color: var(--header-bg);
+  border-bottom: 1px solid var(--header-border);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   position: relative;
 }
 
-/* Section-specific gradient backgrounds */
-.section-gradient-1 {
-  background: linear-gradient(180deg, 
-    var(--bg-deep-blue) 0%, 
-    var(--bg-royal-blue) 50%, 
-    var(--bg-purple) 100%);
+.nav-link {
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
-.section-gradient-2 {
-  background: linear-gradient(180deg, 
-    var(--bg-purple) 0%, 
-    var(--bg-light-purple) 100%);
+.nav-link-active {
+  background-color: var(--nav-active-bg);
+  color: white;
 }
 
-/* Theme-specific gradient backgrounds */
-.github-gradient-bg {
-  background: linear-gradient(180deg, 
-    #0d1117 0%, 
-    #161b22 20%, 
-    #1c2331 40%, 
-    #2b2a4c 60%, 
-    #3b2a58 80%, 
-    #4c2a64 100%);
-  background-attachment: fixed;
-  background-size: 100% 600%;
+.nav-link-inactive {
+  color: var(--nav-text);
 }
 
-/* Gradient animations */
-@keyframes gradientScroll {
-  0% {
-    background-position: 0% 0%;
-  }
-  100% {
-    background-position: 0% 100%;
-  }
+.nav-link-inactive:hover {
+  background-color: var(--nav-hover-bg);
+  color: var(--accent-primary);
 }
 
-.animate-gradient {
-  animation: gradientScroll 60s ease infinite alternate;
+.mobile-nav-link {
+  display: block;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
-/* Gradient overlay for smooth transitions */
-.gradient-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-  pointer-events: none;
+/* Footer Styles */
+.site-footer {
+  background-color: var(--footer-bg);
+  border-top: 1px solid var(--footer-border);
+  padding: 1rem 0;
+  margin-top: auto;
 }
 
-/* Legacy text effect styles */
-.neon-text-cyan {
-  color: #34D399;
-  text-shadow: 0 0 5px rgba(52, 211, 153, 0.5);
+.footer-link {
+  color: var(--nav-text);
+  transition: color 0.3s ease;
 }
 
-.neon-text-purple {
-  color: #A78BFA;
-  text-shadow: 0 0 5px rgba(167, 139, 250, 0.5);
+.footer-link:hover {
+  color: var(--accent-primary);
 }
 
-.neon-text-blue {
-  color: #60A5FA;
-  text-shadow: 0 0 5px rgba(96, 165, 250, 0.5);
+/* Terminal UI Elements */
+.terminal-dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 9999px;
 }
 
-.neon-text-pink {
-  color: #F472B6;
-  text-shadow: 0 0 5px rgba(244, 114, 182, 0.5);
+.terminal-dot-red {
+  background-color: var(--icon-red);
 }
 
-.gradient-text {
-  background: linear-gradient(90deg, #A78BFA, #34D399);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+.terminal-dot-orange {
+  background-color: var(--icon-orange);
 }
 
-/* Dark Mode Overrides */
-.dark {
-  color-scheme: dark;
+.terminal-dot-green {
+  background-color: var(--icon-green);
 }
 
-.dark input, .dark select, .dark textarea {
-  background-color: #161b22;
-  border-color: #30363d;
-  color: #c9d1d9;
+.terminal-text {
+  font-family: monospace;
+  font-size: 0.875rem;
+  color: var(--terminal-text);
+}
+
+.terminal-command {
+  color: var(--terminal-purple);
+}
+
+.terminal-output {
+  color: var(--terminal-output);
+}
+
+.terminal-success {
+  color: var(--terminal-success);
+}
+
+/* Feature Icon Container */
+.feature-icon-container {
+  height: 4rem;
+  width: 4rem;
+  background-color: var(--feature-icon-bg);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.feature-icon {
+  height: 2rem;
+  width: 2rem;
+  color: var(--accent-primary);
 }
 
 /* Scroll-based gradient animation */
@@ -298,4 +316,136 @@
   background-attachment: fixed;
   background-position: var(--scroll-position, '0% 0%');
   transition: background-position 0.3s ease-out;
+}
+
+/* Form Input Styles */
+.form-input {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--button-secondary-bg);
+  border: 1px solid var(--card-border-dark);
+  border-radius: 0.375rem;
+  color: var(--card-text-dark);
+  transition: var(--hover-transition);
+}
+
+.form-input:focus {
+  outline: none;
+  outline-offset: 2px;
+  outline-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--nav-text);
+  margin-bottom: 0.25rem;
+}
+
+/* Contact Card Styles */
+.contact-card {
+  background-color: var(--card-bg-dark);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--card-border-dark);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: var(--hover-transition);
+}
+
+.contact-card:hover {
+  border-color: var(--hover-border-color);
+  transition: var(--hover-transition);
+}
+
+.contact-icon-container {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.contact-icon-purple {
+  background-color: rgba(110, 64, 201, 0.2);
+}
+
+.contact-icon-green {
+  background-color: rgba(63, 185, 80, 0.2);
+}
+
+.contact-icon {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.contact-icon-purple .contact-icon {
+  color: var(--terminal-purple);
+}
+
+.contact-icon-green .contact-icon {
+  color: var(--icon-green);
+}
+
+/* Value Card Styles */
+.value-card {
+  background-color: var(--button-secondary-bg);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--card-border-dark);
+  transition: var(--hover-transition);
+}
+
+.value-card:hover {
+  border-color: var(--hover-border-color);
+  transition: var(--hover-transition);
+}
+
+.value-title-purple {
+  color: var(--terminal-purple);
+}
+
+.value-title-green {
+  color: var(--icon-green);
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 50;
+}
+
+.modal-container {
+  background-color: var(--card-bg-dark);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 28rem;
+  border: 1px solid var(--card-border-dark);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.modal-close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: var(--nav-text);
+}
+
+.modal-close-button:hover {
+  color: var(--card-text-dark);
 }

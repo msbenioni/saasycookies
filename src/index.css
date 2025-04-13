@@ -3,7 +3,11 @@
 /* Import our global color palette */
 @import './styles/colors.css';
 
-/* Tailwind directives */
+/* 
+ * Tailwind CSS directives - these are processed by the Tailwind build system
+ * Note: CSS linters may show warnings for these directives, but they can be safely ignored
+ * as they are required for Tailwind CSS to work properly
+ */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -74,20 +78,6 @@ input:focus, select:focus, textarea:focus {
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Poppins', 'Nunito', sans-serif;
   font-weight: 600;
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.animate-fadeIn {
-  animation: fadeIn 0.5s ease-in-out;
 }
 
 /* Apply cookie cursor to all clickable elements */
