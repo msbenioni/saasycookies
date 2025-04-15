@@ -63,6 +63,11 @@ const MainLayout: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    // Instantly scroll to top on route change
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [location.pathname]);
+
   return (
     <div className="flex flex-col min-h-screen scroll-gradient text-white font-body">
       {/* Navigation Header */}

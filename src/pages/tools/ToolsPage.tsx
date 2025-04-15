@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FileText, Clock, CreditCard } from 'lucide-react';
+import GlassCard from '../../components/GlassCard';
 
 const ToolsPage: React.FC = () => {
   const tools = [
@@ -34,48 +35,48 @@ const ToolsPage: React.FC = () => {
   ];
 
   return (
-    <div>
-      <div className="mb-8 text-center">
-        <h1 className="text-4xl font-heading font-bold mb-4">Tools</h1>
-        <p className="text-text-secondary max-w-2xl mx-auto">
-          Online tools designed to help New Zealand freelancers, contractors, and small businesses work smarter.
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {tools.map((tool) => (
-          <div 
-            key={tool.id}
-            className={`brand-card ${
-              tool.available ? `hover:border-[${tool.color}]` : 'opacity-70'
-            } transition-colors duration-300`}
-          >
+    <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-10">
+      <GlassCard className="p-8 md:p-12">
+        <div className="mb-10 text-center">
+          <h1 className="text-4xl font-heading font-bold mb-4 gradient-heading">Tools</h1>
+          <p className="text-text-secondary max-w-2xl mx-auto">
+            Online tools designed to help New Zealand freelancers, contractors, and small businesses work smarter.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {tools.map((tool) => (
             <div 
-              className="h-12 w-12 rounded-lg flex items-center justify-center mb-4"
-              style={{ backgroundColor: `${tool.color}20` }}
+              key={tool.id}
+              className={`glass-card p-6 flex flex-col items-center text-center ${tool.available ? `hover:border-[${tool.color}]` : 'opacity-70'} transition-colors duration-300`}
+              style={tool.available ? { borderColor: tool.color } : {}}
             >
-              <div style={{ color: tool.color }}>{tool.icon}</div>
-            </div>
-            <h3 className="text-xl font-heading font-semibold mb-2">{tool.name}</h3>
-            <p className="text-text-secondary mb-4">
-              {tool.description}
-            </p>
-            {tool.available ? (
-              <Link
-                to={tool.path}
-                className="inline-flex items-center font-medium"
-                style={{ color: tool.color }}
+              <div 
+                className="h-12 w-12 rounded-lg flex items-center justify-center mb-4"
+                style={{ backgroundColor: `${tool.color}20` }}
               >
-                Launch Tool <span className="ml-1">→</span>
-              </Link>
-            ) : (
-              <span className="inline-flex items-center text-text-secondary">
-                Coming Soon
-              </span>
-            )}
-          </div>
-        ))}
-      </div>
+                <div style={{ color: tool.color }}>{tool.icon}</div>
+              </div>
+              <h3 className="text-xl font-heading font-semibold mb-2 heading-secondary" style={{ color: tool.color }}>{tool.name}</h3>
+              <p className="text-text-secondary mb-4">
+                {tool.description}
+              </p>
+              {tool.available ? (
+                <Link
+                  to={tool.path}
+                  className="saasy-button-primary"
+                  style={{ backgroundColor: tool.color, color: '#181e2a' }}
+                >
+                  Launch Tool <span className="ml-1">→</span>
+                </Link>
+              ) : (
+                <span className="inline-flex items-center text-text-secondary">
+                  Coming Soon
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+      </GlassCard>
     </div>
   );
 };
