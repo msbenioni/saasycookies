@@ -47,7 +47,7 @@ const ToolsPage: React.FC = () => {
           {tools.map((tool) => (
             <div 
               key={tool.id}
-              className={`glass-card p-6 flex flex-col items-center text-center ${tool.available ? `hover:border-[${tool.color}]` : 'opacity-70'} transition-colors duration-300`}
+              className={`glass-card p-6 flex flex-col items-center text-center shadow-none border border-[var(--glass-border)] ${tool.available ? `hover:border-[${tool.color}]` : 'opacity-70'} transition-colors duration-300`}
               style={tool.available ? { borderColor: tool.color } : {}}
             >
               <div 

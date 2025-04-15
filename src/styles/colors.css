@@ -711,7 +711,7 @@
   z-index: 3;
 }
 
-.glass-card, .glass-card * {
+.glass-card, .glass-card > * {
   border-radius: var(--glass-radius) !important;
 }
 
@@ -755,4 +755,11 @@
   .glasscard-section-gap {
     margin-top: 1.25rem;
   }
+}
+
+/* Input Styles */
+.saasy-input,
+.saasy-input:focus,
+.saasy-input:active {
+  border-radius: var(--glass-radius);
 }
