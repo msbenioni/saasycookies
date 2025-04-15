@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MessageSquare } from 'lucide-react';
+import GlassCard from '../components/GlassCard';
 
 const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -49,182 +50,68 @@ ${formData.message}`;
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-heading font-bold mb-2 heading-primary">Contact Us</h1>
-        <p className="text-xl text-[var(--nav-text)] font-body">Let's talk about your cloud & software needs.</p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-        <div className="contact-card">
-          <div className="contact-icon-container contact-icon-purple">
-            <Mail className="contact-icon" />
-          </div>
-          <h3 className="text-xl font-heading font-semibold mb-2 heading-secondary">Email</h3>
-          <a href="mailto:saasycookies@gmail.com" className="text-[var(--nav-text)] hover:text-[var(--accent-primary)]">
-            saasycookies@gmail.com
-          </a>
+    <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-10">
+      <GlassCard className="p-8 md:p-12">
+        <div className="text-center mb-10">
+          <h1 className="text-4xl font-heading font-bold mb-2 gradient-heading">Contact Us</h1>
+          <p className="text-xl text-[var(--nav-text)] font-body">Let's talk about your cloud & software needs.</p>
         </div>
-        
-        <div className="contact-card">
-          <div className="contact-icon-container contact-icon-green">
-            <Phone className="contact-icon" />
-          </div>
-          <h3 className="text-xl font-heading font-semibold mb-2 heading-secondary">Phone</h3>
-          <a href="tel:+6421123456" className="text-[var(--nav-text)] hover:text-[var(--icon-green)]">
-            +64 21 123 456
-          </a>
-        </div>
-        
-        <div className="contact-card">
-          <div className="contact-icon-container contact-icon-purple">
-            <MessageSquare className="contact-icon" />
-          </div>
-          <h3 className="text-xl font-heading font-semibold mb-2 heading-secondary">Book a Chat</h3>
-          <a href="https://calendly.com" target="_blank" rel="noopener noreferrer" className="text-[var(--nav-text)] hover:text-[var(--accent-primary)]">
-            Schedule on Calendly
-          </a>
-        </div>
-      </div>
-
-      <div className="saasy-card saasy-card-dark">
-        <h2 className="text-2xl font-heading font-bold mb-6 heading-secondary">Get in Touch</h2>
-        
-        {submitted ? (
-          <div className="text-center py-8">
-            <div className="contact-icon-container contact-icon-green mx-auto">
-              <svg xmlns="http://www.w3.org/2000/svg" className="contact-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          <div className="glass-card contact-card">
+            <div className="contact-icon-container contact-icon-purple">
+              <Mail className="contact-icon" />
             </div>
-            <h3 className="text-xl font-heading font-semibold mb-2 heading-secondary">Message Sent!</h3>
-            <p className="text-[var(--nav-text)] mb-6 font-body">
-              Thanks for reaching out. We'll get back to you as soon as possible.
-            </p>
-            <button
-              onClick={() => {
-                setSubmitted(false);
-                setFormData({
-                  name: '',
-                  email: '',
-                  phone: '',
-                  company: '',
-                  message: '',
-                  preferredContact: 'email'
-                });
-              }}
-              className="saasy-button-secondary"
-            >
-              Send Another Message
+            <h3 className="text-xl font-heading font-semibold mb-2 heading-secondary">Email</h3>
+            <a href="mailto:saasycookies@gmail.com" className="text-[var(--nav-text)] hover:text-[var(--accent-primary)]">
+              saasycookies@gmail.com
+            </a>
+          </div>
+          <div className="glass-card contact-card">
+            <div className="contact-icon-container contact-icon-green">
+              <Phone className="contact-icon" />
+            </div>
+            <h3 className="text-xl font-heading font-semibold mb-2 heading-secondary">Phone</h3>
+            <a href="tel:+6421123456" className="text-[var(--nav-text)] hover:text-[var(--icon-green)]">
+              +64 21 123 456
+            </a>
+          </div>
+          <div className="glass-card contact-card">
+            <div className="contact-icon-container contact-icon-purple">
+              <MessageSquare className="contact-icon" />
+            </div>
+            <h3 className="text-xl font-heading font-semibold mb-2 heading-secondary">Chat</h3>
+            <a href="mailto:saasycookies@gmail.com?subject=Let's%20chat!" className="text-[var(--nav-text)] hover:text-[var(--accent-primary)]">
+              Start a conversation
+            </a>
+          </div>
+        </div>
+        <form onSubmit={handleSubmit} className="glass-card p-8 max-w-2xl mx-auto space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <input type="text" name="name" value={formData.name} onChange={handleInputChange} required placeholder="Your Name" className="saasy-input" />
+            <input type="email" name="email" value={formData.email} onChange={handleInputChange} required placeholder="Your Email" className="saasy-input" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <input type="text" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="Phone (optional)" className="saasy-input" />
+            <input type="text" name="company" value={formData.company} onChange={handleInputChange} placeholder="Company (optional)" className="saasy-input" />
+          </div>
+          <div>
+            <textarea name="message" value={formData.message} onChange={handleInputChange} required placeholder="How can we help?" className="saasy-input min-h-[120px]" />
+          </div>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <select name="preferredContact" value={formData.preferredContact} onChange={handleInputChange} className="saasy-input w-full md:w-auto">
+              <option value="email">Email</option>
+              <option value="phone">Phone</option>
+              <option value="chat">Chat</option>
+            </select>
+            <button type="submit" className="saasy-button-primary w-full md:w-auto" disabled={isSubmitting}>
+              {isSubmitting ? 'Sending...' : 'Send Message'}
             </button>
           </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="name" className="form-label">
-                  Name *
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  required
-                  className="form-input"
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="email" className="form-label">
-                  Email *
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                  className="form-input"
-                />
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="phone" className="form-label">
-                  Phone
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  className="form-input"
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="company" className="form-label">
-                  Company
-                </label>
-                <input
-                  type="text"
-                  id="company"
-                  name="company"
-                  value={formData.company}
-                  onChange={handleInputChange}
-                  className="form-input"
-                />
-              </div>
-            </div>
-            
-            <div>
-              <label htmlFor="preferredContact" className="form-label">
-                Preferred Contact Method
-              </label>
-              <select
-                id="preferredContact"
-                name="preferredContact"
-                value={formData.preferredContact}
-                onChange={handleInputChange}
-                className="form-input"
-              >
-                <option value="email">Email</option>
-                <option value="phone">Phone</option>
-              </select>
-            </div>
-            
-            <div>
-              <label htmlFor="message" className="form-label">
-                Message *
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleInputChange}
-                required
-                rows={6}
-                className="form-input"
-              ></textarea>
-            </div>
-            
-            <div className="text-right">
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="saasy-button-primary"
-              >
-                {isSubmitting ? 'Sending...' : 'Send Message'}
-              </button>
-            </div>
-          </form>
-        )}
-      </div>
+          {submitted && (
+            <div className="text-green-400 mt-4 text-center">Thank you! We'll be in touch soon.</div>
+          )}
+        </form>
+      </GlassCard>
     </div>
   );
 };
