@@ -66,172 +66,158 @@ const MainLayout: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen scroll-gradient text-white font-body">
       {/* Navigation Header */}
-      <header className="nav-header">
-        {/* Centered Logo Image */}
-        <div className="absolute left-1/2 transform -translate-x-1/2 -top-5">
-          <Link to="/">
-            <img src={saasyLogo} alt="SaaSy Cookies Logo" className="pt-3 h-32 w-32 sm:h-36 sm:w-36" />
+      <header className="nav-header sticky top-0 z-50 w-full bg-black/20 backdrop-blur-xl bg-opacity-60">
+        <div className="w-full flex items-center h-24">
+          {/* Logo absolutely far left, outside container */}
+          <Link to="/" className="flex items-center ml-2 mr-8 min-w-[8rem] absolute left-0 top-1/2 -translate-y-1/2 z-10">
+            <img src={saasyLogo} alt="SaaSy Cookies Logo" className="h-48 w-48 drop-shadow-lg mt-16" />
           </Link>
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo Text */}
-            <div className="hidden md:flex items-center">
-              <Link to="/" className="flex items-center">
-                <span className="text-lg sm:text-xl font-heading font-bold text-white leading-relaxed pb-1">
-                  SaaSy Cookies
-                </span>
-              </Link>
-            </div>
-            
-            {/* Hamburger Menu Button (Mobile Only) */}
-            <div className="md:hidden">
-              <button 
-                onClick={toggleMobileMenu}
-                className="inline-flex items-center justify-center p-2 rounded-md nav-link-inactive hover:bg-[var(--nav-hover-bg)] hover:text-[var(--accent-primary)] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[var(--accent-primary)]"
-                aria-expanded={mobileMenuOpen ? 'true' : 'false'}
-              >
-                <span className="sr-only">Open main menu</span>
-                {/* Icon when menu is closed */}
-                <svg
-                  className={`${mobileMenuOpen ? 'hidden' : 'block'} h-6 w-6`}
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
-                {/* Icon when menu is open */}
-                <svg
-                  className={`${mobileMenuOpen ? 'block' : 'hidden'} h-6 w-6`}
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-            
-            {/* Desktop Navigation Links (Hidden on Mobile) */}
-            <nav className="hidden md:flex space-x-2 sm:space-x-4">
+          {/* Centered container for nav */}
+          <div className="max-w-7xl w-full mx-auto flex flex-1 justify-end items-center h-24">
+            <nav className="flex items-center space-x-2 sm:space-x-4">
               <Link 
                 to="/" 
-                className={`nav-link ${isActive('/') ? 'nav-link-active' : 'nav-link-inactive'}`}
+                className={`neon-nav-link px-6 py-2 ${isActive('/') ? 'active' : ''}`}
               >
                 Home
               </Link>
               <Link 
                 to="/tools" 
-                className={`nav-link ${isActive('/tools') ? 'nav-link-active' : 'nav-link-inactive'}`}
+                className={`neon-nav-link px-6 py-2 ${isActive('/tools') ? 'active' : ''}`}
               >
                 Tools
               </Link>
               <Link 
                 to="/about" 
-                className={`nav-link ${isActive('/about') ? 'nav-link-active' : 'nav-link-inactive'}`}
+                className={`neon-nav-link px-6 py-2 ${isActive('/about') ? 'active' : ''}`}
               >
                 About
               </Link>
               <Link 
                 to="/contact" 
-                className={`nav-link ${isActive('/contact') ? 'nav-link-active' : 'nav-link-inactive'}`}
+                className={`neon-nav-link px-6 py-2 ${isActive('/contact') ? 'active' : ''}`}
               >
                 Contact
               </Link>
             </nav>
           </div>
-        </div>
-        
-        {/* Mobile Menu (Shown when hamburger is clicked) */}
-        <div className={`${mobileMenuOpen ? 'block' : 'hidden'} md:hidden`}>
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-[var(--header-bg)] shadow-lg">
-            <Link 
-              to="/" 
-              className={`mobile-nav-link ${isActive('/') ? 'nav-link-active' : 'nav-link-inactive'}`}
-              onClick={() => setMobileMenuOpen(false)}
+          {/* Hamburger Menu Button (Mobile Only) */}
+          <div className="md:hidden ml-2 z-10 absolute right-2 top-1/2 -translate-y-1/2">
+            <button 
+              onClick={toggleMobileMenu}
+              className="inline-flex items-center justify-center p-2 rounded-md nav-link-inactive hover:bg-[var(--nav-hover-bg)] hover:text-[var(--accent-primary)] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[var(--accent-primary)]"
+              aria-expanded={mobileMenuOpen ? 'true' : 'false'}
             >
-              Home
-            </Link>
-            <Link 
-              to="/tools" 
-              className={`mobile-nav-link ${isActive('/tools') ? 'nav-link-active' : 'nav-link-inactive'}`}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Tools
-            </Link>
-            <Link 
-              to="/about" 
-              className={`mobile-nav-link ${isActive('/about') ? 'nav-link-active' : 'nav-link-inactive'}`}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              About
-            </Link>
-            <Link 
-              to="/contact" 
-              className={`mobile-nav-link ${isActive('/contact') ? 'nav-link-active' : 'nav-link-inactive'}`}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Contact
-            </Link>
+              <span className="sr-only">Open main menu</span>
+              {/* Icon when menu is closed */}
+              <svg
+                className={`${mobileMenuOpen ? 'hidden' : 'block'} h-6 w-6`}
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+              {/* Icon when menu is open */}
+              <svg
+                className={`${mobileMenuOpen ? 'block' : 'hidden'} h-6 w-6`}
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+          {/* Mobile Menu (Shown when hamburger is clicked) */}
+          <div className={`${mobileMenuOpen ? 'block' : 'hidden'} md:hidden absolute right-2 top-full bg-[var(--header-bg)] shadow-lg`}>
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+              <Link 
+                to="/" 
+                className={`mobile-nav-link ${isActive('/') ? 'nav-link-active' : 'nav-link-inactive'}`}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Home
+              </Link>
+              <Link 
+                to="/tools" 
+                className={`mobile-nav-link ${isActive('/tools') ? 'nav-link-active' : 'nav-link-inactive'}`}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Tools
+              </Link>
+              <Link 
+                to="/about" 
+                className={`mobile-nav-link ${isActive('/about') ? 'nav-link-active' : 'nav-link-inactive'}`}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                About
+              </Link>
+              <Link 
+                to="/contact" 
+                className={`mobile-nav-link ${isActive('/contact') ? 'nav-link-active' : 'nav-link-inactive'}`}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Contact
+              </Link>
+            </div>
           </div>
         </div>
       </header>
-      
-      {/* Main Content */}
-      <main className="flex-grow w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-6 sm:py-8 mt-10">
-        <Outlet />
-      </main>
-      
-      {/* Footer */}
-      <footer className="site-footer py-4 sm:py-6">
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-4 md:mb-0">
-              <p className="text-sm text-[var(--nav-text)]">
-                &copy; {new Date().getFullYear()} SaaSy Cookies. All rights reserved.
-              </p>
-            </div>
-            <div className="flex space-x-4">
-              <Link to="/tools" className="footer-link">
-                Tools
-              </Link>
-              <Link to="/contact" className="footer-link">
-                Contact
-              </Link>
-              <Link to="/about" className="footer-link">
-                About
-              </Link>
-              <Link to="/terms" className="footer-link">
-                Terms
-              </Link>
-              <Link to="/privacy" className="footer-link">
-                Privacy
-              </Link>
+        
+        {/* Main Content */}
+        <main className="flex-grow w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-6 sm:py-8 mt-10">
+          <Outlet />
+        </main>
+        
+        {/* Footer */}
+        <footer className="site-footer py-4 sm:py-6">
+          <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
+            <div className="flex flex-col md:flex-row justify-between items-center">
+              <div className="mb-4 md:mb-0">
+                <p className="text-sm text-[var(--nav-text)]">
+                  &copy; {new Date().getFullYear()} SaaSy Cookies. All rights reserved.
+                </p>
+              </div>
+              <div className="flex space-x-4">
+                <Link to="/tools" className="footer-link">
+                  Tools
+                </Link>
+                <Link to="/contact" className="footer-link">
+                  Contact
+                </Link>
+                <Link to="/about" className="footer-link">
+                  About
+                </Link>
+                <Link to="/terms" className="footer-link">
+                  Terms
+                </Link>
+                <Link to="/privacy" className="footer-link">
+                  Privacy
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
-      </footer>
-      
-      {/* Cookie Consent Banner */}
-      <CookieConsent />
-    </div>
-  );
-};
+        </footer>
+        
+        {/* Cookie Consent Banner */}
+        <CookieConsent />
+      </div>
+    );
+  };
 
-export default MainLayout;
+  export default MainLayout;

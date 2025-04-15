@@ -32,7 +32,7 @@ const HomePage: React.FC = () => {
             </div>
           </div>
           <div className="md:w-1/2 flex justify-center">
-            <GlassCard className="w-full max-w-md p-6 shadow-xl bg-transparent border-0">
+            <GlassCard className="w-full max-w-md p-6 shadow-xl bg-transparent border-0 inner-card">
               <div className="flex items-center gap-2 mb-4">
                 <div className="terminal-dot terminal-dot-red"></div>
                 <div className="terminal-dot terminal-dot-orange"></div>
@@ -52,7 +52,7 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Meet Our Team Section */}
-      <section className="scene-section" id="team-section">
+      <section id="team-section" className="scene-section">
         <GlassCard className="w-full max-w-6xl mx-auto flex flex-col items-center relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold mb-6 heading-primary">Meet Our Team</h2>
@@ -62,7 +62,7 @@ const HomePage: React.FC = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
             {/* Team Member 1 */}
-            <GlassCard className="flex flex-col items-center text-center p-8">
+            <GlassCard className="flex flex-col items-center text-center p-8 inner-card">
               <div className="feature-icon-container icon-purple mb-4" style={{width: "100px", height: "100px", margin: "0 auto"}}>
                 <svg className="h-12 w-12 text-[var(--accent-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
@@ -75,7 +75,7 @@ const HomePage: React.FC = () => {
               </p>
             </GlassCard>
             {/* Team Member 2 */}
-            <GlassCard className="flex flex-col items-center text-center p-8">
+            <GlassCard className="flex flex-col items-center text-center p-8 inner-card">
               <div className="feature-icon-container icon-purple mb-4" style={{width: "100px", height: "100px", margin: "0 auto"}}>
                 <svg className="h-12 w-12 text-[#3fb950]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
@@ -89,7 +89,7 @@ const HomePage: React.FC = () => {
               </p>
             </GlassCard>
             {/* Team Member 3 */}
-            <GlassCard className="flex flex-col items-center text-center p-8">
+            <GlassCard className="flex flex-col items-center text-center p-8 inner-card">
               <div className="feature-icon-container icon-purple mb-4" style={{width: "100px", height: "100px", margin: "0 auto"}}>
                 <svg className="h-12 w-12 text-[#f0883e]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <rect x="6" y="6" width="12" height="12" rx="6" stroke="currentColor" strokeWidth="2" />
@@ -106,6 +106,9 @@ const HomePage: React.FC = () => {
         </GlassCard>
       </section>
 
+      {/* Spacer Section */}
+      <section className="h-10 md:h-16"></section>
+
       {/* What We Do Section */}
       <section className="scene-section" id="what-we-do-section">
         <GlassCard className="w-full max-w-6xl mx-auto flex flex-col items-center relative z-10">
@@ -117,7 +120,7 @@ const HomePage: React.FC = () => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 w-full">
             {/* Service 1 */}
-            <GlassCard className="flex flex-col items-center text-center p-6">
+            <GlassCard className="flex flex-col items-center text-center p-6 inner-card">
               <div className="what-we-do-icon mb-2" style={{backgroundColor: "rgba(110, 64, 201, 0.2)", borderRadius: '1.25rem'}}>
                 <svg className="h-6 w-6 text-[var(--accent-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
@@ -127,7 +130,7 @@ const HomePage: React.FC = () => {
               <p className="what-we-do-description">Setup, migration & management</p>
             </GlassCard>
             {/* Service 2 */}
-            <GlassCard className="flex flex-col items-center text-center p-6">
+            <GlassCard className="flex flex-col items-center text-center p-6 inner-card">
               <div className="what-we-do-icon mb-2" style={{backgroundColor: "rgba(63, 185, 80, 0.2)", borderRadius: '1.25rem'}}>
                 <svg className="h-6 w-6 text-[var(--icon-green)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -137,7 +140,7 @@ const HomePage: React.FC = () => {
               <p className="what-we-do-description">Advanced protection & monitoring</p>
             </GlassCard>
             {/* Service 3 */}
-            <GlassCard className="flex flex-col items-center text-center p-6">
+            <GlassCard className="flex flex-col items-center text-center p-6 inner-card">
               <div className="what-we-do-icon mb-2" style={{backgroundColor: "rgba(33, 150, 243, 0.2)", borderRadius: '1.25rem'}}>
                 <svg className="h-6 w-6 text-[#2196f3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
@@ -147,7 +150,7 @@ const HomePage: React.FC = () => {
               <p className="what-we-do-description">Secure data protection</p>
             </GlassCard>
             {/* Service 4 */}
-            <GlassCard className="flex flex-col items-center text-center p-6">
+            <GlassCard className="flex flex-col items-center text-center p-6 inner-card">
               <div className="what-we-do-icon mb-2" style={{backgroundColor: "rgba(240, 136, 62, 0.2)", borderRadius: '1.25rem'}}>
                 <svg className="h-6 w-6 text-[#f0883e]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2z" />
@@ -157,7 +160,7 @@ const HomePage: React.FC = () => {
               <p className="what-we-do-description">Setup & anti-spam protection</p>
             </GlassCard>
             {/* Service 5 */}
-            <GlassCard className="flex flex-col items-center text-center p-6">
+            <GlassCard className="flex flex-col items-center text-center p-6 inner-card">
               <div className="what-we-do-icon mb-2" style={{backgroundColor: "rgba(110, 64, 201, 0.2)", borderRadius: '1.25rem'}}>
                 <svg className="h-6 w-6 text-[var(--accent-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -170,9 +173,12 @@ const HomePage: React.FC = () => {
         </GlassCard>
       </section>
 
+      {/* Spacer Section */}
+      <section className="h-10 md:h-16"></section>
+
       {/* Why We Exist Section */}
       <section className="scene-section" id="why-we-exist-section">
-        <GlassCard className="w-full max-w-3xl mx-auto flex flex-col items-center relative z-10 p-10">
+        <GlassCard className="w-full max-w-3xl mx-auto flex flex-col items-center relative z-10">
           <h3 className="text-center gradient-heading text-2xl mb-4">Why SaaSy Cookies Exists</h3>
           <p className="mb-4">
             We created SaaSy Cookies because we believe NZ small businesses deserve cloud services that are easy to understand, 
@@ -185,6 +191,9 @@ const HomePage: React.FC = () => {
         </GlassCard>
       </section>
 
+      {/* Spacer Section */}
+      <section className="h-10 md:h-16"></section>
+
       {/* Features Section */}
       <section className="scene-section" id="features-section">
         <GlassCard className="w-full max-w-6xl mx-auto flex flex-col items-center relative z-10">
@@ -196,7 +205,7 @@ const HomePage: React.FC = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
             {/* Feature 1 */}
-            <GlassCard className="flex flex-col items-center text-center p-8">
+            <GlassCard className="flex flex-col items-center text-center p-8 inner-card">
               <div className="feature-icon-container icon-purple mb-4">
                 <svg className="h-8 w-8 text-[var(--accent-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14M12 5l7 7-7 7" />
@@ -214,7 +223,7 @@ const HomePage: React.FC = () => {
               <p className="text-[var(--text-secondary)]">Seamless onboarding and setup for your team.</p>
             </GlassCard>
             {/* Feature 2 */}
-            <GlassCard className="flex flex-col items-center text-center p-8">
+            <GlassCard className="flex flex-col items-center text-center p-8 inner-card">
               <div className="feature-icon-container icon-green mb-4">
                 <svg className="h-8 w-8 text-[var(--icon-green)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -224,7 +233,7 @@ const HomePage: React.FC = () => {
               <p className="text-[var(--text-secondary)]">Protect your data with best-in-class security tools.</p>
             </GlassCard>
             {/* Feature 3 */}
-            <GlassCard className="flex flex-col items-center text-center p-8">
+            <GlassCard className="flex flex-col items-center text-center p-8 inner-card">
               <div className="feature-icon-container icon-blue mb-4">
                 <svg className="h-8 w-8 text-[#2196f3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
@@ -234,7 +243,7 @@ const HomePage: React.FC = () => {
               <p className="text-[var(--text-secondary)]">Automatic, encrypted backups for peace of mind.</p>
             </GlassCard>
             {/* Feature 4 */}
-            <GlassCard className="flex flex-col items-center text-center p-8">
+            <GlassCard className="flex flex-col items-center text-center p-8 inner-card">
               <div className="feature-icon-container icon-orange mb-4">
                 <svg className="h-8 w-8 text-[#f0883e]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2z" />
@@ -244,7 +253,7 @@ const HomePage: React.FC = () => {
               <p className="text-[var(--text-secondary)]">Keep your inbox safe from spam and phishing.</p>
             </GlassCard>
             {/* Feature 5 */}
-            <GlassCard className="flex flex-col items-center text-center p-8">
+            <GlassCard className="flex flex-col items-center text-center p-8 inner-card">
               <div className="feature-icon-container icon-purple mb-4">
                 <svg className="h-8 w-8 text-[var(--accent-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -254,7 +263,7 @@ const HomePage: React.FC = () => {
               <p className="text-[var(--text-secondary)]">Real people, real help, right here in NZ.</p>
             </GlassCard>
             {/* Feature 6 */}
-            <GlassCard className="flex flex-col items-center text-center p-8">
+            <GlassCard className="flex flex-col items-center text-center p-8 inner-card">
               <div className="feature-icon-container icon-mint mb-4">
                 <svg className="h-8 w-8 text-[var(--neon-mint)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
@@ -268,8 +277,11 @@ const HomePage: React.FC = () => {
         </GlassCard>
       </section>
 
+      {/* Spacer Section */}
+      <section className="h-10 md:h-16"></section>
+
       {/* Pricing Section */}
-      <section className="py-20 px-4" id="pricing-section">
+      <section className="scene-section" id="pricing-section">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold mb-6 heading-primary">Simple, Transparent Pricing</h2>
@@ -280,7 +292,7 @@ const HomePage: React.FC = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Starter Plan */}
-            <GlassCard className="flex flex-col h-full p-6">
+            <GlassCard className="flex flex-col h-full p-6 inner-card">
               <div className="mb-6">
                 <span className="plan-tag plan-tag-starter">Best for Solopreneurs</span>
                 <h3 className="text-2xl font-bold mb-2">Starter</h3>
@@ -321,7 +333,7 @@ const HomePage: React.FC = () => {
             </GlassCard>
             
             {/* Business Plan */}
-            <GlassCard className="flex flex-col h-full p-6 relative transform scale-105 z-10 shadow-xl">
+            <GlassCard className="flex flex-col h-full p-6 relative transform scale-105 z-10 shadow-xl inner-card">
               <div className="absolute top-0 right-0 bg-[var(--accent-primary)] text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">
                 POPULAR
               </div>
@@ -371,7 +383,7 @@ const HomePage: React.FC = () => {
             </GlassCard>
             
             {/* Enterprise Plan */}
-            <GlassCard className="flex flex-col h-full p-6">
+            <GlassCard className="flex flex-col h-full p-6 inner-card">
               <div className="mb-6">
                 <span className="plan-tag plan-tag-enterprise">Best for Larger Teams</span>
                 <h3 className="text-2xl font-bold mb-2">Enterprise</h3>
@@ -426,8 +438,11 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
+      {/* Spacer Section */}
+      <section className="h-10 md:h-16"></section>
+
       {/* Call to Action */}
-      <section className="py-24 px-4 min-h-[50vh] flex items-center relative" id="call-to-action-section">
+      <section className="scene-section" id="call-to-action-section">
         {/* Cloud-like background patterns */}
         <div className="cloud-pattern cloud-pattern-1"></div>
         <div className="cloud-pattern cloud-pattern-3"></div>
@@ -455,6 +470,18 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Up Button (Scroll to Top) */}
+      <button
+        aria-label="Scroll to top"
+        className="fixed right-6 bottom-8 z-40 bg-[var(--accent-primary)] text-white rounded-full shadow-lg p-3 hover:bg-[var(--accent-secondary)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]"
+        style={{display: 'inline-flex', alignItems: 'center'}}
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 15l7-7 7 7" />
+        </svg>
+      </button>
     </div>
   );
 };
