@@ -35,7 +35,7 @@ const ToolsPage: React.FC = () => {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-10">
+    <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-4">
       <GlassCard className="p-8 md:p-12">
         <div className="mb-10 text-center">
           <h1 className="text-4xl font-heading font-bold mb-4 gradient-heading">Tools</h1>
