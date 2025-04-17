@@ -87,16 +87,16 @@ const MainLayout: React.FC = () => {
                 Home
               </Link>
               <Link 
-                to="/tools" 
-                className={`neon-nav-link px-6 py-2 ${isActive('/tools') ? 'active' : ''}`}
-              >
-                Tools
-              </Link>
-              <Link 
                 to="/about" 
                 className={`neon-nav-link px-6 py-2 ${isActive('/about') ? 'active' : ''}`}
               >
                 About
+              </Link>
+              <Link 
+                to="/tools" 
+                className={`neon-nav-link px-6 py-2 ${isActive('/tools') ? 'active' : ''}`}
+              >
+                Tools
               </Link>
               <Link 
                 to="/contact" 
@@ -159,18 +159,18 @@ const MainLayout: React.FC = () => {
                 Home
               </Link>
               <Link 
-                to="/tools" 
-                className={`mobile-nav-link ${isActive('/tools') ? 'nav-link-active' : 'nav-link-inactive'}`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Tools
-              </Link>
-              <Link 
                 to="/about" 
                 className={`mobile-nav-link ${isActive('/about') ? 'nav-link-active' : 'nav-link-inactive'}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 About
+              </Link>
+              <Link 
+                to="/tools" 
+                className={`mobile-nav-link ${isActive('/tools') ? 'nav-link-active' : 'nav-link-inactive'}`}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Tools
               </Link>
               <Link 
                 to="/contact" 
@@ -199,20 +199,20 @@ const MainLayout: React.FC = () => {
                 </p>
               </div>
               <div className="flex space-x-4">
+                <Link to="/about" className="footer-link">
+                  About
+                </Link>
                 <Link to="/tools" className="footer-link">
                   Tools
                 </Link>
                 <Link to="/contact" className="footer-link">
                   Contact
                 </Link>
-                <Link to="/about" className="footer-link">
-                  About
+                <Link to="/privacy" className="footer-link">
+                  Privacy
                 </Link>
                 <Link to="/terms" className="footer-link">
                   Terms
-                </Link>
-                <Link to="/privacy" className="footer-link">
-                  Privacy
                 </Link>
               </div>
             </div>

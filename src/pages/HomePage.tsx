@@ -27,7 +27,7 @@ const HomePage: React.FC = () => {
                 to="/about"
                 className="saasy-button-soft-cta px-8 py-4 text-lg font-medium rounded-md"
               >
-                Not sure what you need? Let's chat.
+                Learn More About Us
               </Link>
             </div>
           </div>
@@ -449,7 +449,7 @@ const HomePage: React.FC = () => {
         
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-heading font-bold mb-6 heading-primary">
-            Not sure what you need? Let's chat.
+            Still not sure what you need? Let's chat.
           </h2>
           <p className="text-xl text-[var(--text-secondary)] mb-8">
             We're here to help local NZ businesses find the perfect cloud solution. No tech jargon, just friendly advice.

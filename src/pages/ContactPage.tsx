@@ -80,14 +80,14 @@ const ContactPage: React.FC = () => {
             </a>
           </div>
         </div>
-        <form onSubmit={handleSubmit} className="glass-card p-2 md:p-3 max-w-full mx-auto space-y-2 shadow-none border border-[var(--glass-border)]" style={{ borderRadius: '4px' }}>
-          <div className="flex flex-col md:flex-row gap-2">
-            <input type="text" name="name" value={formData.name} onChange={handleInputChange} required placeholder="Your Name" className="saasy-input flex-1 text-black" />
-            <input type="email" name="email" value={formData.email} onChange={handleInputChange} required placeholder="Your Email" className="saasy-input flex-1 text-black" />
+        <form onSubmit={handleSubmit} className="glass-card p-2 md:p-3 max-w-full mx-auto space-y-2 shadow-none border border-[var(--glass-border)]">
+          <div className="flex flex-col md:flex-row gap-3">
+            <input type="text" name="name" value={formData.name} onChange={handleInputChange} required placeholder="Your Name" className="saasy-input min-h-[40px] w-full text-black" />
+            <input type="email" name="email" value={formData.email} onChange={handleInputChange} required placeholder="Your Email" className="saasy-input min-h-[40px] w-full text-black" />
           </div>
-          <div className="flex flex-col md:flex-row gap-2">
-            <input type="text" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="Phone (optional)" className="saasy-input flex-1 text-black" />
-            <input type="text" name="company" value={formData.company} onChange={handleInputChange} placeholder="Company (optional)" className="saasy-input flex-1 text-black" />
+          <div className="flex flex-col md:flex-row gap-3">
+            <input type="text" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="Phone (optional)" className="saasy-input min-h-[40px] w-full text-black" />
+            <input type="text" name="company" value={formData.company} onChange={handleInputChange} placeholder="Company (optional)" className="saasy-input min-h-[40px] w-full text-black" />
           </div>
           <div>
             <textarea name="message" value={formData.message} onChange={handleInputChange} required placeholder="How can we help?" className="saasy-input min-h-[60px] w-full text-black" />
