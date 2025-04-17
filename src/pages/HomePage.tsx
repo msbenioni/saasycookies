@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import GlassCard from '../components/GlassCard';
+import SaasyCtaButton from '../components/SaasyCtaButton';
+import SaasySoftButton from '../components/SaasySoftButton';
 
 const HomePage: React.FC = () => {
   return (
@@ -17,18 +19,8 @@ const HomePage: React.FC = () => {
               We provide cloud services and software solutions tailored for local legends running real NZ businesses.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link
-                to="/contact"
-                className="saasy-button-cta px-8 py-4 text-lg font-medium rounded-md"
-              >
-                Get Started
-              </Link>
-              <Link
-                to="/about"
-                className="saasy-button-soft-cta px-8 py-4 text-lg font-medium rounded-md"
-              >
-                Learn More About Us
-              </Link>
+              <SaasyCtaButton to="/contact">Get Started</SaasyCtaButton>
+              <SaasySoftButton to="/about">Learn More About Us</SaasySoftButton>
             </div>
           </div>
           <div className="md:w-1/2 flex justify-center">

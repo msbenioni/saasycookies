@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { FileText, Clock, CreditCard } from 'lucide-react';
 import GlassCard from '../../components/GlassCard';
+import SaasySoftButton from '../../components/SaasySoftButton';
 
 const ToolsPage: React.FC = () => {
   const tools = [
@@ -35,11 +35,11 @@ const ToolsPage: React.FC = () => {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-4">
+    <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-2">
       <GlassCard className="p-8 md:p-12">
         <div className="mb-10 text-center">
           <h1 className="text-4xl font-heading font-bold mb-4 gradient-heading">Tools</h1>
-          <p className="text-text-secondary max-w-2xl mx-auto">
+          <p className="text-white max-w-2xl mx-auto">
             Online tools designed to help New Zealand freelancers, contractors, and small businesses work smarter.
           </p>
         </div>
@@ -57,17 +57,13 @@ const ToolsPage: React.FC = () => {
                 <div style={{ color: tool.color }}>{tool.icon}</div>
               </div>
               <h3 className="text-xl font-heading font-semibold mb-2 heading-secondary" style={{ color: tool.color }}>{tool.name}</h3>
-              <p className="text-text-secondary mb-4">
+              <p className="text-white mb-4">
                 {tool.description}
               </p>
               {tool.available ? (
-                <Link
-                  to={tool.path}
-                  className="saasy-button-primary"
-                  style={{ backgroundColor: tool.color, color: '#181e2a' }}
-                >
-                  Launch Tool <span className="ml-1">→</span>
-                </Link>
+                <SaasySoftButton to={tool.path}>
+  Launch Tool <span className="ml-1">→</span>
+</SaasySoftButton>
               ) : (
                 <span className="inline-flex items-center text-text-secondary">
                   Coming Soon

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MessageSquare } from 'lucide-react';
 import GlassCard from '../components/GlassCard';
+import SaasyCtaButton from '../components/SaasyCtaButton';
 
 const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -93,9 +94,9 @@ const ContactPage: React.FC = () => {
             <textarea name="message" value={formData.message} onChange={handleInputChange} required placeholder="How can we help?" className="saasy-input min-h-[60px] w-full text-black" />
           </div>
           <div className="flex justify-center mt-2">
-            <button type="submit" className="saasy-button-primary w-full md:w-auto" disabled={isSubmitting}>
-              {isSubmitting ? 'Sending...' : 'Send Message'}
-            </button>
+            <SaasyCtaButton to="#" as="button" type="submit" className="w-full md:w-auto" disabled={isSubmitting}>
+  {isSubmitting ? 'Sending...' : 'Send Message'}
+</SaasyCtaButton>
           </div>
           {submitted && (
             <div className="text-green-400 mt-2 text-center">Thank you! We'll be in touch soon.</div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import GlassCard from '../components/GlassCard';
+import SaasyCtaButton from '../components/SaasyCtaButton';
 
 const AboutPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -112,13 +112,10 @@ const AboutPage: React.FC = () => {
                 <li>Ongoing tech support plans</li>
                 <li>Free business tools like our invoice generator</li>
               </ul>
-              <div className="text-center">
-                <Link 
-                  to="/contact"
-                  className="saasy-button-primary"
-                >
+              <div className="text-left">
+                <SaasyCtaButton to="/contact">
                   Get in Touch
-                </Link>
+                </SaasyCtaButton>
               </div>
             </section>
             <section>
@@ -126,13 +123,10 @@ const AboutPage: React.FC = () => {
               <p className="mb-6 text-[var(--nav-text)]">
                 SaaSy Cookies is just getting started. We're excited to continue growing our services to better support New Zealand's small business community. If you have ideas for how we can help your business with its tech needs, we'd love to hear from you!
               </p>
-              <div className="text-center">
-                <button 
-                  onClick={() => setIsModalOpen(true)}
-                  className="saasy-button-secondary"
-                >
+              <div className="text-left">
+                <SaasyCtaButton to="#" onClick={() => setIsModalOpen(true)}>
                   Share Your Ideas
-                </button>
+                </SaasyCtaButton>
               </div>
             </section>
           </div>
