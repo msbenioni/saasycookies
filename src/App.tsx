@@ -6,6 +6,7 @@ import MainLayout from './layouts/MainLayout';
 import HomePage from './pages/HomePage';
 import ToolsPage from './pages/tools/ToolsPage';
 import InvoicePage from './pages/tools/InvoicePage';
+import QRCodePage from './pages/tools/QRCodePage';
 import AboutPage from './pages/AboutPage';
 import TermsPage from './pages/TermsPage';
 import PrivacyPage from './pages/PrivacyPage';
@@ -27,6 +28,7 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="tools" element={<ToolsPage />} />
           <Route path="tools/invoice" element={<InvoicePage onGenerate={handleGenerateInvoice} />} />
+          <Route path="tools/qrcode" element={<QRCodePage />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="terms" element={<TermsPage />} />
           <Route path="privacy" element={<PrivacyPage />} />

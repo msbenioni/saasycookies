@@ -1,5 +1,5 @@
 import React from 'react';
-import { FileText, Clock, CreditCard } from 'lucide-react';
+import { FileText, Clock, CreditCard, QrCode } from 'lucide-react';
 import GlassCard from '../../components/GlassCard';
 import SaasySoftButton from '../../components/SaasySoftButton';
 
@@ -13,6 +13,15 @@ const ToolsPage: React.FC = () => {
       color: '#A78BFA', 
       available: true,
       path: '/tools/invoice'
+    },
+    {
+      id: 'qrcode',
+      name: 'QR Code Generator',
+      description: 'Create customizable QR codes with your branding for websites, business cards, and more.',
+      icon: <QrCode className="h-6 w-6" />,
+      color: '#60A5FA', 
+      available: true,
+      path: '/tools/qrcode'
     },
     {
       id: 'time-tracker',
