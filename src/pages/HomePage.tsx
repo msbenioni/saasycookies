@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import GlassCard from '../components/GlassCard';
 import SaasyCtaButton from '../components/SaasyCtaButton';
 import SaasySoftButton from '../components/SaasySoftButton';
+import { QrCode, FileSpreadsheet } from 'lucide-react';
 
 const HomePage: React.FC = () => {
   return (
@@ -101,74 +102,6 @@ const HomePage: React.FC = () => {
       {/* Spacer Section */}
       <section className="h-10 md:h-16"></section>
 
-      {/* What We Do Section */}
-      <section className="scene-section" id="what-we-do-section">
-        <GlassCard className="w-full max-w-6xl mx-auto flex flex-col items-center relative z-10">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-6 heading-primary">What We Do</h2>
-            <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto">
-              Our comprehensive cloud services to help your business thrive.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 w-full">
-            {/* Service 1 */}
-            <GlassCard className="flex flex-col items-center text-center p-6 inner-card">
-              <div className="what-we-do-icon mb-2" style={{backgroundColor: "rgba(110, 64, 201, 0.2)", borderRadius: '1.25rem'}}>
-                <svg className="h-6 w-6 text-[var(--accent-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                </svg>
-              </div>
-              <h3 className="what-we-do-title">Microsoft 365</h3>
-              <p className="what-we-do-description">Setup, migration & management</p>
-            </GlassCard>
-            {/* Service 2 */}
-            <GlassCard className="flex flex-col items-center text-center p-6 inner-card">
-              <div className="what-we-do-icon mb-2" style={{backgroundColor: "rgba(63, 185, 80, 0.2)", borderRadius: '1.25rem'}}>
-                <svg className="h-6 w-6 text-[var(--icon-green)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                </svg>
-              </div>
-              <h3 className="what-we-do-title">Security</h3>
-              <p className="what-we-do-description">Advanced protection & monitoring</p>
-            </GlassCard>
-            {/* Service 3 */}
-            <GlassCard className="flex flex-col items-center text-center p-6 inner-card">
-              <div className="what-we-do-icon mb-2" style={{backgroundColor: "rgba(33, 150, 243, 0.2)", borderRadius: '1.25rem'}}>
-                <svg className="h-6 w-6 text-[#2196f3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
-                </svg>
-              </div>
-              <h3 className="what-we-do-title">Cloud Backup</h3>
-              <p className="what-we-do-description">Secure data protection</p>
-            </GlassCard>
-            {/* Service 4 */}
-            <GlassCard className="flex flex-col items-center text-center p-6 inner-card">
-              <div className="what-we-do-icon mb-2" style={{backgroundColor: "rgba(240, 136, 62, 0.2)", borderRadius: '1.25rem'}}>
-                <svg className="h-6 w-6 text-[#f0883e]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <h3 className="what-we-do-title">Email</h3>
-              <p className="what-we-do-description">Setup & anti-spam protection</p>
-            </GlassCard>
-            {/* Service 5 */}
-            <GlassCard className="flex flex-col items-center text-center p-6 inner-card">
-              <div className="what-we-do-icon mb-2" style={{backgroundColor: "rgba(110, 64, 201, 0.2)", borderRadius: '1.25rem'}}>
-                <svg className="h-6 w-6 text-[var(--accent-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="what-we-do-title">Support</h3>
-              <p className="what-we-do-description">Friendly, jargon-free help</p>
-            </GlassCard>
-          </div>
-        </GlassCard>
-      </section>
-
-      {/* Spacer Section */}
-      <section className="h-10 md:h-16"></section>
-
-      {/* Why We Exist Section */}
       <section className="scene-section" id="why-we-exist-section">
         <GlassCard className="w-full max-w-3xl mx-auto flex flex-col items-center relative z-10">
           <h3 className="text-center gradient-heading text-2xl mb-4">Why SaaSy Cookies Exists</h3>
@@ -264,6 +197,50 @@ const HomePage: React.FC = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3 flex items-center text-[var(--text-primary)]">Integrations</h3>
               <p className="text-[var(--text-secondary)]">Connect your favourite apps and automate workflows.</p>
+            </GlassCard>
+          </div>
+        </GlassCard>
+      </section>
+
+      {/* Spacer Section */}
+      <section className="h-10 md:h-16"></section>
+      
+      {/* Free Tools Section */}
+      <section className="scene-section" id="tools-section">
+        <GlassCard className="w-full max-w-6xl mx-auto flex flex-col items-center relative z-10">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-6 heading-primary">Free Tools</h2>
+            <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto">
+              Try our free business tools designed to make your work easier. No sign-up required!
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+            {/* Tool 1: Invoice Generator */}
+            <GlassCard className="flex flex-col items-center text-center p-8 inner-card h-full">
+              <div className="feature-icon-container icon-blue mb-6">
+                <FileSpreadsheet className="h-8 w-8 text-[#2196f3]" />
+              </div>
+              <h3 className="text-2xl font-semibold mb-3 text-[var(--text-primary)]">Invoice Generator</h3>
+              <p className="text-[var(--text-secondary)] mb-6">
+                Create professional invoices for your clients in seconds. Customize with your logo, download as PDF, and more.
+              </p>
+              <Link to="/tools/invoice" className="saasy-button-secondary mt-auto w-full py-3 rounded-md">
+                Create Invoice
+              </Link>
+            </GlassCard>
+            
+            {/* Tool 2: QR Code Generator */}
+            <GlassCard className="flex flex-col items-center text-center p-8 inner-card h-full">
+              <div className="feature-icon-container icon-purple mb-6">
+                <QrCode className="h-8 w-8 text-[var(--accent-primary)]" />
+              </div>
+              <h3 className="text-2xl font-semibold mb-3 text-[var(--text-primary)]">QR Code Generator</h3>
+              <p className="text-[var(--text-secondary)] mb-6">
+                Generate custom QR codes for your URLs, contact info, WiFi networks, and more. Add your logo and customize colors.
+              </p>
+              <Link to="/tools/qrcode" className="saasy-button-secondary mt-auto w-full py-3 rounded-md">
+                Create QR Code
+              </Link>
             </GlassCard>
           </div>
         </GlassCard>

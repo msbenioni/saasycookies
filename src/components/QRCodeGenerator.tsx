@@ -380,18 +380,12 @@ const QRCodeGenerator: React.FC = () => {
                 }
               })()}
             </label>
-            {formData.type === 'text' ? (
+            {formData.type === 'text' as QRCodeType ? (
               <textarea
                 name="url"
                 value={formData.url}
                 onChange={handleInputChange}
-                placeholder={
-                  formData.type === 'url' ? 'e.g., www.example.com' :
-                  formData.type === 'vcard' ? 'e.g., John Doe,john@example.com,123456789' :
-                  formData.type === 'wifi' ? 'e.g., MyWiFi,password123,WPA' :
-                  formData.type === 'sms' ? 'e.g., +123456789,Hello there!' :
-                  'Enter text content'
-                }
+                placeholder="Enter text content"
                 className="w-full p-3 rounded-lg bg-card-secondary"
                 rows={4}
               />
