@@ -367,8 +367,8 @@ const QRCodeGenerator: React.FC = () => {
           </div>
           
           {/* QR Code Content */}
-          <div className="mb-4">
-            <label className="block text-text-secondary mb-2">
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-[#8b949e] mb-2">
               {(() => {
                 switch(formData.type) {
                   case 'url': return 'URL (website address)';
@@ -386,7 +386,7 @@ const QRCodeGenerator: React.FC = () => {
                 value={formData.url}
                 onChange={handleInputChange}
                 placeholder="Enter text content"
-                className="w-full p-3 rounded-lg bg-card-secondary"
+                className="w-full p-3 rounded-lg bg-[#21262d] border border-[#30363d] text-white focus:outline-none focus:border-[#9e83ff]"
                 rows={4}
               />
             ) : (
@@ -405,70 +405,66 @@ const QRCodeGenerator: React.FC = () => {
                     default: return '';
                   }
                 })()}
-                className="w-full p-3 rounded-lg bg-card-secondary"
+                className="w-full p-3 rounded-lg bg-[#21262d] border border-[#30363d] text-white focus:outline-none focus:border-[#9e83ff]"
               />
             )}
           </div>
           
-          {/* Color Options */}
-          <div className="mb-4">
-            <label className="block text-text-secondary mb-2">Colors</label>
+          {/* Appearance */}
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-[#8b949e] mb-2">Appearance</label>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-text-secondary mb-1">Background</label>
-                <div className="relative">
-                  <button
-                    type="button"
-                    onClick={() => setShowColorPicker(showColorPicker === 'background' ? null : 'background')}
-                    className="w-full p-2 rounded-lg bg-card-secondary flex items-center"
-                  >
-                    <div
-                      className="w-6 h-6 rounded-md mr-2"
-                      style={{ backgroundColor: formData.backgroundColor }}
+                <label className="block text-xs text-[#8b949e] mb-1">Background</label>
+                <button
+                  type="button"
+                  onClick={() => setShowColorPicker(showColorPicker === 'background' ? null : 'background')}
+                  className="w-full p-2 rounded-lg bg-[#21262d] border border-[#30363d] flex items-center hover:border-[#9e83ff] transition-colors"
+                >
+                  <div
+                    className="w-5 h-5 rounded mr-2 border border-[#30363d]"
+                    style={{ backgroundColor: formData.backgroundColor }}
+                  />
+                  <span className="text-sm text-white font-mono">{formData.backgroundColor}</span>
+                </button>
+                {showColorPicker === 'background' && (
+                  <div className="absolute z-10 mt-2">
+                    <HexColorPicker
+                      color={formData.backgroundColor}
+                      onChange={(color) => handleColorChange(color, 'backgroundColor')}
                     />
-                    {formData.backgroundColor}
-                  </button>
-                  {showColorPicker === 'background' && (
-                    <div className="absolute z-10 mt-2">
-                      <HexColorPicker
-                        color={formData.backgroundColor}
-                        onChange={(color) => handleColorChange(color, 'backgroundColor')}
-                      />
-                    </div>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
               <div>
-                <label className="block text-text-secondary mb-1">QR Code</label>
-                <div className="relative">
-                  <button
-                    type="button"
-                    onClick={() => setShowColorPicker(showColorPicker === 'foreground' ? null : 'foreground')}
-                    className="w-full p-2 rounded-lg bg-card-secondary flex items-center"
-                  >
-                    <div
-                      className="w-6 h-6 rounded-md mr-2"
-                      style={{ backgroundColor: formData.foregroundColor }}
+                <label className="block text-xs text-[#8b949e] mb-1">QR Code</label>
+                <button
+                  type="button"
+                  onClick={() => setShowColorPicker(showColorPicker === 'foreground' ? null : 'foreground')}
+                  className="w-full p-2 rounded-lg bg-[#21262d] border border-[#30363d] flex items-center hover:border-[#9e83ff] transition-colors"
+                >
+                  <div
+                    className="w-5 h-5 rounded mr-2 border border-[#30363d]"
+                    style={{ backgroundColor: formData.foregroundColor }}
+                  />
+                  <span className="text-sm text-white font-mono">{formData.foregroundColor}</span>
+                </button>
+                {showColorPicker === 'foreground' && (
+                  <div className="absolute z-10 mt-2">
+                    <HexColorPicker
+                      color={formData.foregroundColor}
+                      onChange={(color) => handleColorChange(color, 'foregroundColor')}
                     />
-                    {formData.foregroundColor}
-                  </button>
-                  {showColorPicker === 'foreground' && (
-                    <div className="absolute z-10 mt-2">
-                      <HexColorPicker
-                        color={formData.foregroundColor}
-                        onChange={(color) => handleColorChange(color, 'foregroundColor')}
-                      />
-                    </div>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
           
           {/* Logo */}
-          <div className="mb-4">
-            <label className="block text-text-secondary mb-2">Add Logo (Optional)</label>
-            <div className="flex items-center space-x-4">
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-[#8b949e] mb-2">Logo (Optional)</label>
+            <div className="flex items-center gap-3">
               <input
                 type="file"
                 accept="image/*"
@@ -479,7 +475,7 @@ const QRCodeGenerator: React.FC = () => {
               />
               <label
                 htmlFor="logo-upload"
-                className="px-4 py-2 bg-primary text-white rounded-lg cursor-pointer flex items-center"
+                className="px-4 py-2 bg-[#6e40c9] text-white rounded-lg cursor-pointer flex items-center text-sm hover:bg-[#7d4fd8] transition-colors"
               >
                 <ImageIcon className="h-4 w-4 mr-2" />
                 Upload Logo
@@ -488,18 +484,18 @@ const QRCodeGenerator: React.FC = () => {
                 <button
                   type="button"
                   onClick={removeLogo}
-                  className="px-4 py-2 bg-red-500 text-white rounded-lg"
+                  className="px-4 py-2 bg-[#f85149]/20 text-[#f85149] border border-[#f85149] rounded-lg text-sm hover:bg-[#f85149]/30 transition-colors"
                 >
                   Remove
                 </button>
               )}
             </div>
             {formData.logoUrl && (
-              <div className="mt-2">
+              <div className="mt-3 p-2 bg-[#21262d] rounded-lg inline-block">
                 <img
                   src={formData.logoUrl}
                   alt="Logo Preview"
-                  className="max-h-16 rounded-md"
+                  className="h-12 object-contain rounded"
                 />
               </div>
             )}
@@ -509,21 +505,21 @@ const QRCodeGenerator: React.FC = () => {
           
           {/* URL Shortener */}
           {formData.type === 'url' && (
-            <div className="mb-4">
-              <div className="flex items-center justify-between">
-                <label className="block text-text-secondary">Shorten URL</label>
+            <div className="mb-6">
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-sm font-medium text-[#8b949e]">Shorten URL</label>
                 <button
                   type="button"
                   onClick={shortenUrl}
                   disabled={!formData.url || isGenerating}
-                  className="px-3 py-1 text-sm bg-primary text-white rounded-lg disabled:opacity-50"
+                  className="px-3 py-1 text-sm bg-[#6e40c9] text-white rounded-lg disabled:opacity-50 hover:bg-[#7d4fd8] transition-colors"
                 >
                   Shorten
                 </button>
               </div>
               {shortenedUrl && (
-                <div className="mt-2 p-2 bg-card-secondary rounded-lg">
-                  <p className="text-sm">Shortened URL: {shortenedUrl}</p>
+                <div className="p-2 bg-[#21262d] rounded-lg border border-[#30363d]">
+                  <p className="text-sm text-[#6affd8]">{shortenedUrl}</p>
                 </div>
               )}
             </div>
@@ -531,34 +527,34 @@ const QRCodeGenerator: React.FC = () => {
           
           {/* Expiration Date */}
           <div className="mb-4">
-            <label className="block text-text-secondary mb-2">Expiration Date (Optional)</label>
+            <label className="block text-sm font-medium text-[#8b949e] mb-2">Expiration Date (Optional)</label>
             <input
               type="date"
               name="expirationDate"
               value={formData.expirationDate ? new Date(formData.expirationDate).toISOString().split('T')[0] : ''}
               onChange={handleInputChange}
               min={new Date().toISOString().split('T')[0]}
-              className="w-full p-3 rounded-lg bg-card-secondary"
+              className="w-full p-3 rounded-lg bg-[#21262d] border border-[#30363d] text-white focus:outline-none focus:border-[#9e83ff]"
             />
-            <p className="text-xs mt-1 text-text-secondary">
-              This adds a visual expiration notice but doesn't disable the QR code functionality.
+            <p className="text-xs mt-1 text-[#8b949e]">
+              Adds a visual expiration notice but doesn't disable the QR code.
             </p>
           </div>
         </div>
       </div>
       
       {/* QR Code Preview & Options */}
-      <div className="glass-card p-6 space-y-6 flex flex-col">
-        <h2 className="text-xl font-semibold mb-4">Preview & Download</h2>
-                <div className="flex-grow flex flex-col items-center justify-center p-4 bg-card-secondary rounded-lg relative">
+      <div className="bg-[#161b22] rounded-xl p-6 border border-[#30363d] flex flex-col">
+        <h2 className="text-lg font-semibold text-white mb-4 pb-2 border-b border-[#30363d]">Preview & Download</h2>
+        <div className="flex-grow flex flex-col items-center justify-center p-4 bg-[#21262d] rounded-lg relative min-h-[300px]">
           {isGenerating && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-lg">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+            <div className="absolute inset-0 flex items-center justify-center bg-[#161b22]/50 rounded-lg">
+              <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-[#6affd8]"></div>
             </div>
           )}
           
           {error && (
-            <div className="text-red-500 p-4">
+            <div className="text-[#f85149] p-4 text-center">
               {error}
             </div>
           )}
@@ -567,8 +563,8 @@ const QRCodeGenerator: React.FC = () => {
             <>
               <canvas ref={canvasRef} className="max-w-full h-auto"></canvas>
               {formData.expirationDate && (
-                <div className="mt-2 p-2 bg-red-500/10 text-red-500 rounded-lg flex items-center">
-                  <Clock className="h-4 w-4 mr-1" />
+                <div className="mt-3 px-3 py-1.5 bg-[#f85149]/10 text-[#f85149] rounded-lg flex items-center text-sm">
+                  <Clock className="h-4 w-4 mr-2" />
                   Expires: {formData.expirationDate ? new Date(formData.expirationDate).toLocaleDateString() : ''}
                 </div>
               )}
@@ -582,7 +578,7 @@ const QRCodeGenerator: React.FC = () => {
               type="button"
               onClick={() => downloadQRCode('png')}
               disabled={!qrCodeUrl}
-              className="px-4 py-2 bg-primary text-white rounded-lg flex items-center disabled:opacity-50"
+              className="px-4 py-2 bg-[#6e40c9] text-white rounded-lg flex items-center text-sm disabled:opacity-50 hover:bg-[#7d4fd8] transition-colors"
             >
               <Download className="h-4 w-4 mr-2" />
               PNG
@@ -591,7 +587,7 @@ const QRCodeGenerator: React.FC = () => {
               type="button"
               onClick={() => downloadQRCode('svg')}
               disabled={!qrCodeUrl}
-              className="px-4 py-2 bg-primary text-white rounded-lg flex items-center disabled:opacity-50"
+              className="px-4 py-2 bg-[#6e40c9] text-white rounded-lg flex items-center text-sm disabled:opacity-50 hover:bg-[#7d4fd8] transition-colors"
             >
               <Download className="h-4 w-4 mr-2" />
               SVG
@@ -600,7 +596,7 @@ const QRCodeGenerator: React.FC = () => {
               type="button"
               onClick={printQRCode}
               disabled={!qrCodeUrl}
-              className="px-4 py-2 bg-primary text-white rounded-lg flex items-center disabled:opacity-50"
+              className="px-4 py-2 bg-[#6e40c9] text-white rounded-lg flex items-center text-sm disabled:opacity-50 hover:bg-[#7d4fd8] transition-colors"
             >
               <Printer className="h-4 w-4 mr-2" />
               Print
@@ -609,16 +605,16 @@ const QRCodeGenerator: React.FC = () => {
               type="button"
               onClick={saveQRCode}
               disabled={!qrCodeUrl}
-              className="px-4 py-2 bg-primary text-white rounded-lg flex items-center disabled:opacity-50"
+              className="px-4 py-2 bg-[#3fb950]/20 text-[#3fb950] border border-[#3fb950] rounded-lg flex items-center text-sm disabled:opacity-50 hover:bg-[#3fb950]/30 transition-colors"
             >
               Save
             </button>
           </div>
           
           {formData.type === 'url' && (
-            <div className="p-4 bg-card-secondary rounded-lg">
-              <p className="text-sm">
-                <strong>Pro Tip:</strong> Use shortened URLs for cleaner, more user-friendly QR codes with better scan rates.
+            <div className="p-3 bg-[#21262d] rounded-lg border border-[#30363d]">
+              <p className="text-sm text-[#8b949e]">
+                <span className="text-[#b388ff]">Pro Tip:</span> Use shortened URLs for cleaner, more user-friendly QR codes with better scan rates.
               </p>
             </div>
           )}
@@ -626,21 +622,21 @@ const QRCodeGenerator: React.FC = () => {
         
         {/* Saved QR Codes */}
         {savedQRCodes.length > 0 && (
-          <div className="mt-4">
-            <h3 className="text-lg font-semibold mb-2">Saved QR Codes</h3>
+          <div className="mt-4 pt-4 border-t border-[#30363d]">
+            <h3 className="text-base font-semibold text-white mb-3">Saved QR Codes</h3>
             <div className="max-h-40 overflow-y-auto space-y-2">
               {savedQRCodes.map((code) => (
                 <div 
                   key={code.id}
-                  className="p-2 bg-card-secondary rounded-lg flex justify-between items-center cursor-pointer hover:bg-card-secondary/80"
+                  className="p-3 bg-[#21262d] rounded-lg flex justify-between items-center cursor-pointer hover:bg-[#30363d] transition-colors border border-[#30363d]"
                   onClick={() => loadQRCode(code.id)}
                 >
                   <div>
-                    <p className="text-sm font-medium">
+                    <p className="text-sm font-medium text-white">
                       {code.options.type}: {code.options.url.substring(0, 30)}
                       {code.options.url.length > 30 ? '...' : ''}
                     </p>
-                    <p className="text-xs text-text-secondary">
+                    <p className="text-xs text-[#8b949e]">
                       {new Date(code.date).toLocaleString()}
                     </p>
                   </div>
