@@ -345,7 +345,7 @@ export const zIndex = {
 export const brand = {
   name: 'SaaSy Cookies',
   tagline: 'Building the future, one line at a time.',
-  positioning: 'A product studio crafting innovative digital tools with style and purpose.',
+  positioning: 'A product studio crafting innovative digital products with style and purpose.',
   
   // Product categories
   categories: {
@@ -356,7 +356,7 @@ export const brand = {
     },
     business: {
       title: 'Small Business',
-      description: 'Simple tools that remove admin overwhelm',
+      description: 'Simple products that remove admin overwhelm',
       icon: 'Briefcase',
     },
     utility: {

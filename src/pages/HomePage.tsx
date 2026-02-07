@@ -27,10 +27,10 @@ const HomePage: React.FC = () => {
             </p>
             <div className="flex flex-wrap gap-4">
               <Link
-                to="/tools"
+                to="/products"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-white bg-[#4337a5] hover:bg-[#5447b5] transition-all duration-300 hover:scale-105 shadow-lg"
               >
-                Explore Our Tools
+                Explore Our Products
                 <ArrowRight className="w-5 h-5" />
               </Link>
               <a
@@ -53,7 +53,7 @@ const HomePage: React.FC = () => {
               </div>
               <div className="terminal-text">
                 <p><span className="terminal-command">$</span> saasy-cookies init</p>
-                <p className="terminal-output">✓ Initializing AI tools...</p>
+                <p className="terminal-output">✓ Initializing AI products...</p>
                 <p className="terminal-output">✓ Loading SenseAI Journal...</p>
                 <p className="terminal-output">✓ Configuring Invoice Generator...</p>
                 <p className="terminal-output">✓ Ready for launch.</p>
@@ -77,7 +77,7 @@ const HomePage: React.FC = () => {
               not replace people, but empower them.
             </p>
             <p className="text-lg text-[var(--text-secondary)]">
-              Every tool we build starts with a simple question: <em className="text-[#b388ff]">How can we make this actually useful for real people?</em>
+              Every product we build starts with a simple question: <em className="text-[#b388ff]">How can we make this actually useful for real people?</em>
             </p>
           </div>
 
@@ -108,7 +108,7 @@ const HomePage: React.FC = () => {
               </p>
             </div>
 
-            {/* Utility Tools */}
+            {/* Utility Products */}
             <div className="p-6 rounded-xl bg-[#161b22] border border-[#30363d] transition-all duration-300 hover:border-[#ff6ad5] hover:shadow-[0_0_16px_2px_#ff6ad5]">
               <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-6 bg-[#ff6ad5]/20">
                 <Wrench className="w-7 h-7 text-[#ff6ad5]" />
@@ -191,10 +191,10 @@ const HomePage: React.FC = () => {
               </p>
               
               <Link
-                to="/tools/invoice"
+                to="/products/invoice"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 group-hover:gap-3 bg-[#f0883e]/20 text-[#f0883e] hover:bg-[#f0883e]/30 border border-[#f0883e] mt-auto"
               >
-                Use Tool
+                Use Product
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -203,10 +203,10 @@ const HomePage: React.FC = () => {
           {/* See More Indicator */}
           <div className="mt-8 text-center">
             <Link 
-              to="/tools" 
+              to="/products" 
               className="inline-flex items-center gap-2 text-[#8b949e] hover:text-[#b388ff] transition-colors group"
             >
-              <span className="text-sm font-medium">See all tools</span>
+              <span className="text-sm font-medium">See all products</span>
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
                 fill="none" 
@@ -226,21 +226,21 @@ const HomePage: React.FC = () => {
         <GlassCard className="w-full max-w-4xl mx-auto relative z-10">
           <div className="text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 heading-primary">
-              Ready to try our tools?
+              Ready to try our products?
             </h2>
             <p className="text-lg mb-8 text-[var(--text-secondary)]">
-              Explore our growing collection of AI-powered tools designed for real life.
+              Explore our growing collection of AI-powered products designed for real life.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link
-                to="/tools"
+                to="/products"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-105 shadow-lg bg-gradient-to-r from-[#6affd8] via-[#b388ff] to-[#ff6ad5]"
               >
                 <Wrench className="w-5 h-5" />
-                Browse All Tools
+                Browse All Products
               </Link>
               <Link
-                to="/tools/invoice"
+                to="/products/invoice"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105 border-2 border-[#9e83ff] text-[#9e83ff] hover:bg-[#9e83ff]/20"
               >
                 <FileText className="w-5 h-5" />

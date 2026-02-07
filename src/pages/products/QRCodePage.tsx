@@ -8,10 +8,10 @@ const QRCodePage: React.FC = () => {
     <div>
       <div className="mb-6">
         <Link 
-          to="/tools" 
+          to="/products" 
           className="inline-flex items-center text-primary hover:text-primary/80 mb-4"
         >
-          <ArrowLeft className="h-4 w-4 mr-1" /> Back to Tools
+          <ArrowLeft className="h-4 w-4 mr-1" /> Back to Products
         </Link>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">

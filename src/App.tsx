@@ -4,9 +4,9 @@ import { CompanyDetails, InvoiceDetails, StyleOptions } from './types';
 
 import MainLayout from './layouts/MainLayout';
 import HomePage from './pages/HomePage';
-import ToolsPage from './pages/tools/ToolsPage';
-import InvoicePage from './pages/tools/InvoicePage';
-import QRCodePage from './pages/tools/QRCodePage';
+import ProductsPage from './pages/products/ProductsPage';
+import InvoicePage from './pages/products/InvoicePage';
+import QRCodePage from './pages/products/QRCodePage';
 import TermsPage from './pages/TermsPage';
 import PrivacyPage from './pages/PrivacyPage';
 import ContactPage from './pages/ContactPage';
@@ -25,9 +25,9 @@ function App() {
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
-          <Route path="tools" element={<ToolsPage />} />
-          <Route path="tools/invoice" element={<InvoicePage onGenerate={handleGenerateInvoice} />} />
-          <Route path="tools/qrcode" element={<QRCodePage />} />
+          <Route path="products" element={<ProductsPage />} />
+          <Route path="products/invoice" element={<InvoicePage onGenerate={handleGenerateInvoice} />} />
+          <Route path="products/qrcode" element={<QRCodePage />} />
           <Route path="terms" element={<TermsPage />} />
           <Route path="privacy" element={<PrivacyPage />} />
           <Route path="contact" element={<ContactPage />} />
