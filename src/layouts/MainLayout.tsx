@@ -8,8 +8,22 @@ import '../styles/colors.css';
 const MainLayout: React.FC = () => {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   
   const isActive = (path: string) => location.pathname === path;
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
@@ -25,11 +39,15 @@ const MainLayout: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen scroll-gradient text-white font-body">
       {/* Navigation Header */}
-      <header className="nav-header sticky top-0 z-50 w-full bg-[#161b22]/80 backdrop-blur-xl">
+      <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+        scrolled 
+          ? 'bg-[#161b22]/70 backdrop-blur-xl shadow-lg border-b border-[#30363d]/50' 
+          : 'bg-transparent'
+      }`}>
         <div className="w-full max-w-7xl mx-auto flex items-center justify-between h-20 px-4 sm:px-6 lg:px-8">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 z-10">
-            <img src={saasyLogo} alt="SaaSy Cookies" className="h-10 w-auto" />
+            <img src={saasyLogo} alt="SaaSy Cookies" className="h-16 w-auto" />
             <span className="text-xl font-bold text-white hidden sm:block">
               SaaSy Cookies
             </span>
