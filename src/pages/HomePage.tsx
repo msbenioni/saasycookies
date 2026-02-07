@@ -71,8 +71,13 @@ const HomePage: React.FC = () => {
             <h2 className="text-3xl md:text-4xl font-bold mb-4 heading-primary">
               What We Build
             </h2>
+            <p className="text-lg text-[var(--text-secondary)] max-w-3xl mx-auto mb-6">
+              {brand.name} was created to make AI feel less overwhelming and more human. 
+              We believe AI should support everyday thinking, creativity, and small business life — 
+              not replace people, but empower them.
+            </p>
             <p className="text-lg text-[var(--text-secondary)]">
-              Practical AI tools that solve real problems for real people
+              Every tool we build starts with a simple question: <em className="text-[#b388ff]">How can we make this actually useful for real people?</em>
             </p>
           </div>
 
@@ -212,25 +217,6 @@ const HomePage: React.FC = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </Link>
-          </div>
-        </GlassCard>
-      </section>
-
-      {/* Why SaaSy Cookies Exists */}
-      <section className="scene-section">
-        <GlassCard className="w-full max-w-4xl mx-auto relative z-10">
-          <div className="text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 heading-primary">
-              Why {brand.name} Exists
-            </h2>
-            <p className="text-lg leading-relaxed mb-6 text-[var(--text-secondary)]">
-              {brand.name} was created to make AI feel less overwhelming and more human. 
-              We believe AI should support everyday thinking, creativity, and small business life — 
-              not replace people, but empower them.
-            </p>
-            <p className="text-lg leading-relaxed text-[var(--text-secondary)]">
-              Every tool we build starts with a simple question: <em className="text-[#b388ff]">How can we make this actually useful for real people?</em>
-            </p>
           </div>
         </GlassCard>
       </section>

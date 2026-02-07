@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { Menu, X, Sparkles, Wrench, Home, Mail, ArrowRight } from 'lucide-react';
+import { Menu, X, Wrench, Home, Mail, ArrowRight } from 'lucide-react';
 import saasyLogo from '../assets/saasy_logo.png';
 import CookieConsent from '../components/CookieConsent';
 import '../styles/colors.css';
@@ -32,7 +32,6 @@ const MainLayout: React.FC = () => {
   const navItems = [
     { path: '/', label: 'Home', icon: Home },
     { path: '/tools', label: 'Tools', icon: Wrench },
-    { path: '/about', label: 'About', icon: Sparkles },
     { path: '/contact', label: 'Contact', icon: Mail },
   ];
 
@@ -192,14 +191,6 @@ const MainLayout: React.FC = () => {
                 Company
               </h4>
               <ul className="space-y-2">
-                <li>
-                  <Link 
-                    to="/about"
-                    className="text-sm text-[#8b949e] hover:text-[#9e83ff] transition-colors"
-                  >
-                    About
-                  </Link>
-                </li>
                 <li>
                   <Link 
                     to="/contact"

@@ -369,9 +369,9 @@ export const brand = {
   // Products
   products: {
     senseai: {
-      name: 'SenseAI Journal',
-      tagline: 'AI-powered reflection and clarity system',
-      description: 'Think better. Understand yourself. Move forward with direction.',
+      name: 'SenseAI',
+      tagline: 'Type It, Say It, Scan It',
+      description: 'AI-powered journaling system',
       url: 'https://senseai.co.nz',
     },
     invoice: {

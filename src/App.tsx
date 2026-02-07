@@ -7,7 +7,6 @@ import HomePage from './pages/HomePage';
 import ToolsPage from './pages/tools/ToolsPage';
 import InvoicePage from './pages/tools/InvoicePage';
 import QRCodePage from './pages/tools/QRCodePage';
-import AboutPage from './pages/AboutPage';
 import TermsPage from './pages/TermsPage';
 import PrivacyPage from './pages/PrivacyPage';
 import ContactPage from './pages/ContactPage';
@@ -29,7 +28,6 @@ function App() {
           <Route path="tools" element={<ToolsPage />} />
           <Route path="tools/invoice" element={<InvoicePage onGenerate={handleGenerateInvoice} />} />
           <Route path="tools/qrcode" element={<QRCodePage />} />
-          <Route path="about" element={<AboutPage />} />
           <Route path="terms" element={<TermsPage />} />
           <Route path="privacy" element={<PrivacyPage />} />
           <Route path="contact" element={<ContactPage />} />
