@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { generatePDF } from '../utils/generatePDF';
-import { Eye, EyeOff, Download } from 'lucide-react';
+import { Eye, EyeOff, Download, Palette } from 'lucide-react';
 import CompanyDetails from './invoice/CompanyDetails';
 import ClientDetails from './invoice/ClientDetails';
 import InvoiceDetails from './invoice/InvoiceDetails';
@@ -173,47 +173,43 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onGenerate }) => {
   };
 
   return (
-    <div className="w-full mx-auto py-4 sm:py-6">
-      <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center">Invoice Generator</h1>
-
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-6 flex flex-wrap justify-end gap-2 sm:gap-4">
-          <button
-            type="button"
-            onClick={togglePreview}
-            className="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-white shadow-sm"
-            style={{ backgroundColor: watchPrimaryColor }}
-          >
-            {showPreview ? (
-              <>
-                <EyeOff className="mr-1 sm:mr-2 h-4 w-4 sm:h-5 sm:w-5" /> Hide Preview
-              </>
-            ) : (
-              <>
-                <Eye className="mr-1 sm:mr-2 h-4 w-4 sm:h-5 sm:w-5" /> Show Preview
-              </>
-            )}
-          </button>
+    <div className="w-full">
+      {/* Header Actions */}
+      <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+        <div className="flex items-center gap-2">
+          <Palette className="w-5 h-5 text-[#b388ff]" />
+          <span className="text-[#8b949e] text-sm">Customize your invoice style</span>
         </div>
+        <button
+          type="button"
+          onClick={togglePreview}
+          className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium text-white bg-[#6e40c9] hover:bg-[#7d4fd8] transition-colors"
+        >
+          {showPreview ? (
+            <><EyeOff className="mr-2 h-4 w-4" /> Hide Preview</>
+          ) : (
+            <><Eye className="mr-2 h-4 w-4" /> Show Preview</>
+          )}
+        </button>
+      </div>
 
-        {/* Style Options moved to the top */}
-        <div className="bg-white shadow-md rounded-md p-6 mb-6">
-          <h2 className="text-xl font-semibold mb-4" style={{ borderBottom: `2px solid ${watchPrimaryColor}`, paddingBottom: '0.5rem' }}>
-            Style Options
-          </h2>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Primary Color
-            </label>
-            <input
-              {...register('style.primaryColor')}
-              type="color"
-              className="w-full p-1 h-10 border border-gray-300 rounded-md"
-            />
-          </div>
+      {/* Style Options - Compact */}
+      <div className="bg-[#161b22] rounded-xl p-4 mb-6 border border-[#30363d]">
+        <label className="block text-sm font-medium text-[#8b949e] mb-2">
+          Primary Color
+        </label>
+        <div className="flex items-center gap-3">
+          <input
+            {...register('style.primaryColor')}
+            type="color"
+            className="w-12 h-10 rounded-lg border border-[#30363d] cursor-pointer"
+          />
+          <span className="text-[#c9d1d9] text-sm font-mono">{watchPrimaryColor}</span>
         </div>
+      </div>
 
-        {showPreview && (
+      {showPreview && (
+        <div className="mb-6">
           <InvoicePreview
             watch={watch}
             calculateSubtotal={calculateSubtotal}
@@ -221,9 +217,11 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onGenerate }) => {
             calculateWithholdingTax={calculateWithholdingTax}
             calculateTotal={calculateTotal}
           />
-        )}
+        </div>
+      )}
 
-        <div className="space-y-4 sm:space-y-6">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="space-y-4">
           <CompanyDetails
             register={register}
             watch={watch}
@@ -242,8 +240,8 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onGenerate }) => {
             setValue={setValue}
           />
 
-          <div className="bg-white shadow-md rounded-md p-6">
-            <h2 className="text-xl font-semibold mb-4" style={{ borderBottom: `2px solid ${watchPrimaryColor}`, paddingBottom: '0.5rem' }}>
+          <div className="bg-[#161b22] rounded-xl p-6 border border-[#30363d]">
+            <h2 className="text-lg font-semibold text-white mb-4 pb-2 border-b border-[#30363d]">
               Invoice Items
             </h2>
             <InvoiceItems
@@ -259,12 +257,14 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onGenerate }) => {
             />
           </div>
           
-          {/* Download PDF button moved to the bottom */}
-          <div className="flex justify-center mt-8">
+          {/* Download PDF button */}
+          <div className="flex justify-center pt-4">
             <button
               type="button"
-              className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white shadow-sm"
-              style={{ backgroundColor: watchPrimaryColor }}
+              className="inline-flex items-center px-8 py-3 rounded-xl text-base font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105"
+              style={{ 
+                background: `linear-gradient(135deg, ${watchPrimaryColor}, #6e40c9)`
+              }}
               onClick={handleDownloadPDF}
             >
               <Download className="mr-2 h-5 w-5" /> Download PDF

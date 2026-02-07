@@ -31,52 +31,52 @@ const InvoiceItems: React.FC<InvoiceItemsProps> = ({
 
   return (
     <div>
-      <h3 className="text-lg font-medium mb-2">Invoice Items</h3>
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
+        <table className="min-w-full">
           <thead>
-            <tr>
-              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
-              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-              <th className="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+            <tr className="border-b border-[#30363d]">
+              <th className="px-3 py-2 text-left text-xs font-medium text-[#8b949e] uppercase">Description</th>
+              <th className="px-3 py-2 text-left text-xs font-medium text-[#8b949e] uppercase w-24">Qty</th>
+              <th className="px-3 py-2 text-left text-xs font-medium text-[#8b949e] uppercase w-28">Price</th>
+              <th className="px-3 py-2 text-right text-xs font-medium text-[#8b949e] uppercase w-24">Amount</th>
+              <th className="px-3 py-2 text-center text-xs font-medium text-[#8b949e] uppercase w-12"></th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody>
             {fields.map((field, index) => (
-              <tr key={field.id}>
-                <td className="px-4 py-2">
+              <tr key={field.id} className="border-b border-[#30363d]/50">
+                <td className="px-3 py-2">
                   <input
                     {...register(`invoice.items.${index}.description`)}
-                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2"
-                    style={{ color: watchPrimaryColor }}
+                    className="w-full p-2 bg-[#21262d] border border-[#30363d] rounded-lg text-white text-sm focus:outline-none focus:border-[#9e83ff]"
+                    placeholder="Item description"
                   />
                 </td>
-                <td className="px-4 py-2">
+                <td className="px-3 py-2">
                   <input
                     {...register(`invoice.items.${index}.quantity`, { valueAsNumber: true })}
                     type="number"
-                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2"
-                    style={{ color: watchPrimaryColor }}
+                    min="1"
+                    className="w-full p-2 bg-[#21262d] border border-[#30363d] rounded-lg text-white text-sm focus:outline-none focus:border-[#9e83ff]"
                   />
                 </td>
-                <td className="px-4 py-2">
+                <td className="px-3 py-2">
                   <input
                     {...register(`invoice.items.${index}.price`, { valueAsNumber: true })}
                     type="number"
-                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2"
-                    style={{ color: watchPrimaryColor }}
+                    min="0"
+                    step="0.01"
+                    className="w-full p-2 bg-[#21262d] border border-[#30363d] rounded-lg text-white text-sm focus:outline-none focus:border-[#9e83ff]"
                   />
                 </td>
-                <td className="px-4 py-2 text-right font-medium" style={{ color: watchPrimaryColor }}>
+                <td className="px-3 py-2 text-right font-medium text-[#6affd8]">
                   ${(Number(watchItems[index]?.quantity || 0) * Number(watchItems[index]?.price || 0)).toFixed(2)}
                 </td>
-                <td className="px-4 py-2">
+                <td className="px-3 py-2 text-center">
                   <button
                     type="button"
                     onClick={() => remove(index)}
-                    className="text-red-500 hover:text-red-700"
+                    className="text-[#f85149] hover:text-[#ff6b6b] transition-colors p-1"
                   >
                     <Trash2 className="h-4 w-4" />
                   </button>
@@ -90,35 +90,35 @@ const InvoiceItems: React.FC<InvoiceItemsProps> = ({
       <button
         type="button"
         onClick={() => append({ description: '', quantity: 1, price: 0 })}
-        className="mt-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white shadow-sm"
+        className="mt-4 inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium text-white transition-all duration-200 hover:scale-105"
         style={{ backgroundColor: watchPrimaryColor }}
       >
         <Plus className="mr-2 h-4 w-4" /> Add Item
       </button>
       
-      {/* Real-time Calculations */}
-      <div className="mt-6 bg-white p-5 rounded-md border border-gray-300 shadow-md">
-        <h4 className="text-lg font-semibold mb-4 pb-2" style={{ color: watchPrimaryColor, borderBottom: `2px solid ${watchPrimaryColor}` }}>Invoice Summary</h4>
-        <div className="space-y-3">
-          <div className="flex justify-between">
-            <span className="font-medium text-gray-700">Subtotal:</span>
-            <span className="font-medium" style={{ color: watchPrimaryColor }}>${calculateSubtotal().toFixed(2)}</span>
+      {/* Summary */}
+      <div className="mt-6 pt-6 border-t border-[#30363d]">
+        <h4 className="text-base font-semibold text-white mb-4">Invoice Summary</h4>
+        <div className="space-y-2 text-sm">
+          <div className="flex justify-between text-[#8b949e]">
+            <span>Subtotal:</span>
+            <span className="text-white font-medium">${calculateSubtotal().toFixed(2)}</span>
           </div>
           {watchIsGstRegistered && (
-            <div className="flex justify-between">
-              <span className="font-medium text-gray-700">GST ({watch('invoice.gstRate')}%):</span>
-              <span className="font-medium" style={{ color: watchPrimaryColor }}>${calculateGST().toFixed(2)}</span>
+            <div className="flex justify-between text-[#8b949e]">
+              <span>GST ({watch('invoice.gstRate')}%):</span>
+              <span className="text-white font-medium">${calculateGST().toFixed(2)}</span>
             </div>
           )}
           {watch('invoice.isWithholdingTaxEnabled') && (
-            <div className="flex justify-between">
-              <span className="font-medium text-gray-700">Withholding Tax ({watch('invoice.withholdingTaxRate')}%):</span>
-              <span className="font-medium" style={{ color: watchPrimaryColor }}>${calculateWithholdingTax().toFixed(2)}</span>
+            <div className="flex justify-between text-[#8b949e]">
+              <span>Withholding Tax ({watch('invoice.withholdingTaxRate')}%):</span>
+              <span className="text-[#f85149] font-medium">-${calculateWithholdingTax().toFixed(2)}</span>
             </div>
           )}
-          <div className="flex justify-between border-t pt-3 mt-2">
-            <span className="font-bold text-lg text-gray-700">Total:</span>
-            <span className="font-bold text-lg" style={{ color: watchPrimaryColor }}>
+          <div className="flex justify-between border-t border-[#30363d] pt-2 mt-2">
+            <span className="font-bold text-white">Total:</span>
+            <span className="font-bold text-[#6affd8] text-lg">
               ${calculateTotal().toFixed(2)}
             </span>
           </div>

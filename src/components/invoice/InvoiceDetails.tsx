@@ -27,59 +27,52 @@ const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({ register, watch, setVal
   };
 
   return (
-    <div className="bg-white shadow-md rounded-md p-6">
-      <h2 className="text-xl font-semibold mb-4" style={{ borderBottom: `2px solid ${watchPrimaryColor}`, paddingBottom: '0.5rem' }}>
+    <div className="bg-[#161b22] rounded-xl p-6 border border-[#30363d]">
+      <h2 className="text-lg font-semibold text-white mb-4 pb-2 border-b border-[#30363d]">
         Invoice Details
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-[#8b949e] mb-1">
             Invoice Number
           </label>
           <input
             {...register('invoice.invoiceNumber')}
             placeholder="e.g. INV-2025-001"
-            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2"
-            style={{ color: watchPrimaryColor }}
+            className="w-full p-2 bg-[#21262d] border border-[#30363d] rounded-lg text-white focus:outline-none focus:border-[#9e83ff]"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-[#8b949e] mb-1">
             Date
           </label>
-          <div className="relative">
-            <input
-              type="date"
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2"
-              style={{ color: watchPrimaryColor }}
-              value={convertDateFormat(watch('invoice.date'))}
-              onChange={(e) => {
-                if (e.target.value) {
-                  const formattedDate = formatDateToDDMMYYYY(e.target.value);
-                  setValue('invoice.date', formattedDate);
-                }
-              }}
-            />
-          </div>
+          <input
+            type="date"
+            className="w-full p-2 bg-[#21262d] border border-[#30363d] rounded-lg text-white focus:outline-none focus:border-[#9e83ff]"
+            value={convertDateFormat(watch('invoice.date'))}
+            onChange={(e) => {
+              if (e.target.value) {
+                const formattedDate = formatDateToDDMMYYYY(e.target.value);
+                setValue('invoice.date', formattedDate);
+              }
+            }}
+          />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-[#8b949e] mb-1">
             Due Date
           </label>
-          <div className="relative">
-            <input
-              type="date"
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2"
-              style={{ color: watchPrimaryColor }}
-              value={convertDateFormat(watch('invoice.dueDate'))}
-              onChange={(e) => {
-                if (e.target.value) {
-                  const formattedDate = formatDateToDDMMYYYY(e.target.value);
-                  setValue('invoice.dueDate', formattedDate);
-                }
-              }}
-            />
-          </div>
+          <input
+            type="date"
+            className="w-full p-2 bg-[#21262d] border border-[#30363d] rounded-lg text-white focus:outline-none focus:border-[#9e83ff]"
+            value={convertDateFormat(watch('invoice.dueDate'))}
+            onChange={(e) => {
+              if (e.target.value) {
+                const formattedDate = formatDateToDDMMYYYY(e.target.value);
+                setValue('invoice.dueDate', formattedDate);
+              }
+            }}
+          />
         </div>
       </div>
 
@@ -89,9 +82,9 @@ const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({ register, watch, setVal
             {...register('invoice.isGstRegistered')}
             type="checkbox"
             id="isGstRegistered"
-            className="mr-2 h-4 w-4 text-blue-600"
+            className="mr-2 h-4 w-4 accent-[#6affd8]"
           />
-          <label htmlFor="isGstRegistered" className="text-sm font-medium text-gray-700">
+          <label htmlFor="isGstRegistered" className="text-sm font-medium text-[#8b949e]">
             GST Registered
           </label>
         </div>
@@ -99,43 +92,41 @@ const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({ register, watch, setVal
         {watchIsGstRegistered && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-[#8b949e] mb-1">
                 GST Rate (%)
               </label>
               <input
                 {...register('invoice.gstRate', { valueAsNumber: true })}
                 type="number"
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2"
-                style={{ color: watchPrimaryColor }}
+                className="w-full p-2 bg-[#21262d] border border-[#30363d] rounded-lg text-white focus:outline-none focus:border-[#9e83ff]"
               />
             </div>
           </div>
         )}
       </div>
 
-      <div className="mb-6">
+      <div>
         <div className="flex items-center mb-4">
           <input
             {...register('invoice.isWithholdingTaxEnabled')}
             type="checkbox"
             id="isWithholdingTaxEnabled"
-            className="mr-2 h-4 w-4 text-blue-600"
+            className="mr-2 h-4 w-4 accent-[#6affd8]"
           />
-          <label htmlFor="isWithholdingTaxEnabled" className="text-sm font-medium text-gray-700">
+          <label htmlFor="isWithholdingTaxEnabled" className="text-sm font-medium text-[#8b949e]">
             Enable Withholding Tax
           </label>
         </div>
 
         {watch('invoice.isWithholdingTaxEnabled') && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-[#8b949e] mb-1">
               Withholding Tax Rate (%)
             </label>
             <input
               {...register('invoice.withholdingTaxRate', { valueAsNumber: true })}
               type="number"
-              className="w-full md:w-1/2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2"
-              style={{ color: watchPrimaryColor }}
+              className="w-full md:w-1/2 p-2 bg-[#21262d] border border-[#30363d] rounded-lg text-white focus:outline-none focus:border-[#9e83ff]"
             />
           </div>
         )}

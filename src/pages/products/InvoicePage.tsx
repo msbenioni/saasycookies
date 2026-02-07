@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, FileText } from 'lucide-react';
 import InvoiceForm from '../../components/InvoiceForm';
 import { CompanyDetails, InvoiceDetails, StyleOptions } from '../../types';
+import GlassCard from '../../components/GlassCard';
 
 interface InvoicePageProps {
   onGenerate: (data: {
@@ -14,29 +15,32 @@ interface InvoicePageProps {
 
 const InvoicePage: React.FC<InvoicePageProps> = ({ onGenerate }) => {
   return (
-    <div>
-      <div className="mb-6">
+    <div className="max-w-5xl mx-auto">
+      {/* Header */}
+      <div className="mb-8">
         <Link 
           to="/products" 
-          className="inline-flex items-center text-primary hover:text-primary/80 mb-4"
+          className="inline-flex items-center text-[#b388ff] hover:text-[#6affd8] mb-4 transition-colors"
         >
-          <ArrowLeft className="h-4 w-4 mr-1" /> Back to Products
+          <ArrowLeft className="h-4 w-4 mr-2" /> Back to Products
         </Link>
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-3">
-            <FileText className="w-8 h-8 text-primary" />
-            <h1 className="text-3xl font-heading font-bold">NZ Invoice Generator</h1>
+        <div className="flex items-center gap-3 mb-2">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#6affd8] via-[#b388ff] to-[#ff6ad5] flex items-center justify-center">
+            <FileText className="w-6 h-6 text-white" />
+          </div>
+          <div>
+            <h1 className="text-3xl font-bold heading-primary">Invoice Generator</h1>
+            <p className="text-[#8b949e]">
+              Create professional invoices with GST and withholding tax calculations.
+            </p>
           </div>
         </div>
-        <p className="text-text-secondary">
-          Generate professional invoices for your business. Include GST and withholding tax calculations,
-          customize the layout, and download as PDF.
-        </p>
       </div>
       
-      <div className="brand-card">
+      {/* Form Container */}
+      <GlassCard className="p-6 md:p-8 shadow-none">
         <InvoiceForm onGenerate={onGenerate} />
-      </div>
+      </GlassCard>
     </div>
   );
 };
