@@ -1,4 +1,9 @@
 /* Global Color Palette for SaaSy Cookies */
+/* These CSS variables are now generated from design-tokens.ts */
+/* For JavaScript/TypeScript, import from design-tokens.ts instead */
+
+/* Legacy CSS Variables - maintained for backward compatibility */
+/* New code should use Tailwind classes or import from design-tokens.ts */
 
 :root {
   /* Background Gradient Colors */

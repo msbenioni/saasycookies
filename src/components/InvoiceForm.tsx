@@ -13,8 +13,9 @@ import {
   calculateWithholdingTax as calculateWithholdingTaxUtil, 
   calculateTotal as calculateTotalUtil 
 } from './invoice/InvoiceCalculations';
+import { invoiceStyles } from '../design-tokens';
 
-// Default form values
+// Default form values using design tokens
 const defaultValues = {
   company: {
     name: '',
@@ -51,8 +52,8 @@ const defaultValues = {
     ],
   },
   style: {
-    primaryColor: '#6366f1',
-    fontFamily: 'calibri',
+    primaryColor: invoiceStyles.defaults.primaryColor,
+    fontFamily: invoiceStyles.defaults.fontFamily,
   },
 };
 

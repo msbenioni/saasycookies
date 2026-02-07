@@ -1,3 +1,4 @@
+
 export interface InvoiceItem {
   description: string;
   quantity: number;
@@ -37,4 +38,5 @@ export interface InvoiceDetails {
 
 export interface StyleOptions {
   primaryColor: string;
+  fontFamily?: 'calibri' | 'arial' | 'helvetica' | 'times' | 'courier';
 }

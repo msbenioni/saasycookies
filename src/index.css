@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap');
 
 /* Import our global color palette */
+/* NOTE: For JavaScript/TypeScript values, use design-tokens.ts instead */
 @import './styles/colors.css';
 
 /* 
@@ -13,6 +14,7 @@
 @tailwind utilities;
 
 :root {
+  /* Design Tokens: Import from design-tokens.ts for JS/TS values */
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -27,10 +29,10 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #F9FAFB;
-  color: #1E293B;
+  background-color: var(--bg-body, #F9FAFB);
+  color: var(--text-body, #1E293B);
   font-family: 'Inter', 'Open Sans', sans-serif;
-  cursor: url('/cookie-cursor.svg'), auto;
+  cursor: auto;
 }
 
 /* Custom Scrollbar */
@@ -79,5 +81,5 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Apply cookie cursor to all clickable elements */
 a, button, [role="button"], input[type="submit"], input[type="button"], input[type="checkbox"], input[type="radio"], select {
-  cursor: url('/cookie-cursor.svg'), pointer;
+  cursor: pointer;
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { UseFormRegister, UseFormWatch } from 'react-hook-form';
+import { invoiceStyles } from '../../design-tokens';
 
 interface StyleOptionsProps {
   register: UseFormRegister<any>;
@@ -34,10 +35,11 @@ const StyleOptions: React.FC<StyleOptionsProps> = ({ register, watch }) => {
             className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2"
             style={{ color: watchPrimaryColor }}
           >
-            <option value="arial">arial</option>
-            <option value="helvetica">helvetica</option>
-            <option value="times">times</option>
-            <option value="courier">courier</option>
+            {invoiceStyles.fontOptions.map((font) => (
+              <option key={font.value} value={font.value}>
+                {font.label}
+              </option>
+            ))}
           </select>
         </div>
       </div>

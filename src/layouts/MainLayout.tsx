@@ -1,218 +1,223 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Menu, X, Sparkles, Wrench, Home, Mail, ArrowRight } from 'lucide-react';
 import saasyLogo from '../assets/saasy_logo.png';
 import CookieConsent from '../components/CookieConsent';
-import '../styles/colors.css'; // Import the global color palette
+import '../styles/colors.css';
 
 const MainLayout: React.FC = () => {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
-  // Function to check if a link is active
-  const isActive = (path: string) => {
-    return location.pathname === path;
-  };
-
-  // Scroll-based gradient effect
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const documentHeight = document.body.scrollHeight - window.innerHeight;
-      
-      // Calculate scroll percentage with a bit more precision
-      let scrollPercentage = (scrollPosition / documentHeight) * 100;
-      
-      // Ensure the percentage stays within 0-100 range
-      scrollPercentage = Math.max(0, Math.min(100, scrollPercentage));
-      
-      // Calculate background position based on scroll percentage
-      // This creates the dark-to-light-to-dark effect as you scroll
-      const backgroundPosition = `0% ${scrollPercentage}%`;
-      
-      // Apply the background position to the root element with the CSS variable
-      document.documentElement.style.setProperty('--scroll-position', backgroundPosition);
-      
-      // Optional: Add section-specific classes based on scroll position
-      // This helps create more distinct transitions between sections
-      const sections = document.querySelectorAll('section');
-      sections.forEach((section, index) => {
-        const rect = section.getBoundingClientRect();
-        const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-        
-        if (isVisible) {
-          // Add a data attribute to track which section is currently in view
-          document.documentElement.setAttribute('data-active-section', `${index}`);
-        }
-      });
-    };
-
-    // Add scroll event listener with passive option for better performance
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    
-    // Initial call to set the gradient
-    handleScroll();
-    
-    // Clean up event listener on component unmount
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  const isActive = (path: string) => location.pathname === path;
 
   useEffect(() => {
-    // Instantly scroll to top on route change
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   }, [location.pathname]);
+
+  const navItems = [
+    { path: '/', label: 'Home', icon: Home },
+    { path: '/tools', label: 'Tools', icon: Wrench },
+    { path: '/about', label: 'About', icon: Sparkles },
+    { path: '/contact', label: 'Contact', icon: Mail },
+  ];
 
   return (
     <div className="flex flex-col min-h-screen scroll-gradient text-white font-body">
       {/* Navigation Header */}
-      <header className="nav-header sticky top-0 z-50 w-full bg-black/20 backdrop-blur-xl bg-opacity-60">
-        <div className="w-full relative flex items-center justify-between h-24 px-4">
-          {/* Logo Centered */}
-          <Link to="/" className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-10">
-            <img src={saasyLogo} alt="SaaSy Cookies Logo" className="h-40 w-40 drop-shadow-lg mt-12" />
+      <header className="nav-header sticky top-0 z-50 w-full bg-[#161b22]/80 backdrop-blur-xl">
+        <div className="w-full max-w-7xl mx-auto flex items-center justify-between h-20 px-4 sm:px-6 lg:px-8">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-3 z-10">
+            <img src={saasyLogo} alt="SaaSy Cookies" className="h-10 w-auto" />
+            <span className="text-xl font-bold text-white hidden sm:block">
+              SaaSy Cookies
+            </span>
           </Link>
           
-          {/* Desktop Navigation - Right Aligned */}
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-2">
+            {navItems.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  isActive(item.path) 
+                    ? 'text-[#6affd8] bg-[#6e40c9]/20 shadow-[0_0_8px_2px_#6affd8]' 
+                    : 'text-[#8b949e] hover:text-[#6affd8] hover:bg-[#30363d]'
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+          
+          {/* CTA Button */}
           <div className="hidden md:block">
-            <nav className="flex items-center space-x-4">
-              <Link 
-                to="/" 
-                className={`neon-nav-link px-6 py-2 ${isActive('/') ? 'active' : ''}`}
-              >
-                Home
-              </Link>
-              <Link 
-                to="/about" 
-                className={`neon-nav-link px-6 py-2 ${isActive('/about') ? 'active' : ''}`}
-              >
-                About
-              </Link>
-              <Link 
-                to="/tools" 
-                className={`neon-nav-link px-6 py-2 ${isActive('/tools') ? 'active' : ''}`}
-              >
-                Tools
-              </Link>
-              <Link 
-                to="/contact" 
-                className={`neon-nav-link px-6 py-2 ${isActive('/contact') ? 'active' : ''}`}
-              >
-                Contact
-              </Link>
+            <Link
+              to="/tools/invoice"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white transition-all duration-200 hover:scale-105 shadow-lg bg-[#4337a5] hover:bg-[#5447b5]"
+            >
+              Try Free Tools
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+          
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 rounded-lg text-white hover:bg-[#30363d] transition-colors"
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
+          </button>
+        </div>
+        
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden absolute top-20 left-0 right-0 bg-[#161b22] shadow-xl border-t border-[#30363d]">
+            <nav className="px-4 py-4 space-y-1">
+              {navItems.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium transition-colors ${
+                    isActive(item.path)
+                      ? 'text-[#6affd8] bg-[#6e40c9]/20'
+                      : 'text-[#8b949e] hover:text-[#6affd8] hover:bg-[#30363d]'
+                  }`}
+                >
+                  <item.icon className="w-5 h-5" />
+                  {item.label}
+                </Link>
+              ))}
+              <div className="pt-2 border-t border-[#30363d] mt-2">
+                <Link
+                  to="/tools/invoice"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-lg text-base font-semibold text-white bg-[#4337a5] hover:bg-[#5447b5]"
+                >
+                  <Wrench className="w-5 h-5" />
+                  Try Free Tools
+                </Link>
+              </div>
             </nav>
           </div>
-          
-          {/* Hamburger Menu Button (Mobile Only) - RIGHT SIDE ONLY */}
-          <div className="md:hidden ml-2 z-10 absolute right-2 top-1/2 -translate-y-1/2">
-            <button 
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md nav-link-inactive hover:bg-[var(--nav-hover-bg)] hover:text-[var(--accent-primary)] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[var(--accent-primary)]"
-              aria-expanded={mobileMenuOpen ? 'true' : 'false'}
-            >
-              <span className="sr-only">Menu</span>
-              {/* Icon when menu is closed */}
-              <svg
-                className={`${mobileMenuOpen ? 'hidden' : 'block'} h-6 w-6`}
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-              {/* Icon when menu is open */}
-              <svg
-                className={`${mobileMenuOpen ? 'block' : 'hidden'} h-6 w-6`}
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-          </div>
-          
-          {/* Mobile Menu (Shown when hamburger is clicked) */}
-          <div className={`${mobileMenuOpen ? 'block' : 'hidden'} md:hidden fixed top-24 left-0 w-full bg-black/90 backdrop-blur-xl shadow-lg z-30 overflow-hidden transition-all duration-300 ease-in-out`}>
-            <div className="px-4 py-4 space-y-3 max-h-[calc(100vh-6rem)] overflow-y-auto">
-              <Link 
-                to="/" 
-                className={`block p-3 rounded-lg ${isActive('/') ? 'bg-[var(--accent-primary)]/20 text-[var(--accent-primary)]' : 'text-white hover:bg-[var(--accent-primary)]/10'}`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <span className="text-lg font-medium">Home</span>
-              </Link>
-              <Link 
-                to="/about" 
-                className={`block p-3 rounded-lg ${isActive('/about') ? 'bg-[var(--accent-primary)]/20 text-[var(--accent-primary)]' : 'text-white hover:bg-[var(--accent-primary)]/10'}`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <span className="text-lg font-medium">About</span>
-              </Link>
-              <Link 
-                to="/tools" 
-                className={`block p-3 rounded-lg ${isActive('/tools') ? 'bg-[var(--accent-primary)]/20 text-[var(--accent-primary)]' : 'text-white hover:bg-[var(--accent-primary)]/10'}`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <span className="text-lg font-medium">Tools</span>
-              </Link>
-              <Link 
-                to="/contact" 
-                className={`block p-3 rounded-lg ${isActive('/contact') ? 'bg-[var(--accent-primary)]/20 text-[var(--accent-primary)]' : 'text-white hover:bg-[var(--accent-primary)]/10'}`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <span className="text-lg font-medium">Contact</span>
-              </Link>
-            </div>
-          </div>
-        </div>
+        )}
       </header>
 
       {/* Main Content */}
-      <main className="flex-grow w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-6 sm:py-8 mt-10">
+      <main className="flex-grow w-full">
         <Outlet />
       </main>
       
       {/* Footer */}
-      <footer className="site-footer py-4 sm:py-6">
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-4 md:mb-0">
-              <p className="text-sm text-[var(--nav-text)]">
-                &copy; {new Date().getFullYear()} SaaSy Cookies. All rights reserved.
+      <footer className="site-footer">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            {/* Brand */}
+            <div className="md:col-span-2">
+              <div className="flex items-center gap-2 mb-4">
+                <img src={saasyLogo} alt="SaaSy Cookies" className="h-8 w-auto" />
+                <span className="text-lg font-bold text-white">
+                  SaaSy Cookies
+                </span>
+              </div>
+              <p className="text-sm text-[#8b949e] max-w-xs">
+                A product studio crafting innovative digital tools with style and purpose.
               </p>
             </div>
-            <div className="flex space-x-4">
-              <Link to="/about" className="footer-link">
-                About
-              </Link>
-              <Link to="/tools" className="footer-link">
-                Tools
-              </Link>
-              <Link to="/contact" className="footer-link">
-                Contact
-              </Link>
-              <Link to="/privacy" className="footer-link">
-                Privacy
-              </Link>
-              <Link to="/terms" className="footer-link">
-                Terms
-              </Link>
+            
+            {/* Products */}
+            <div>
+              <h4 className="font-semibold mb-4 text-white">
+                Products
+              </h4>
+              <ul className="space-y-2">
+                <li>
+                  <a 
+                    href="https://senseai.co.nz" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-sm text-[#8b949e] hover:text-[#9e83ff] transition-colors"
+                  >
+                    SenseAI Journal
+                  </a>
+                </li>
+                <li>
+                  <Link 
+                    to="/tools/invoice"
+                    className="text-sm text-[#8b949e] hover:text-[#9e83ff] transition-colors"
+                  >
+                    Invoice Generator
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/tools/qrcode"
+                    className="text-sm text-[#8b949e] hover:text-[#9e83ff] transition-colors"
+                  >
+                    QR Code Generator
+                  </Link>
+                </li>
+              </ul>
             </div>
+            
+            {/* Company */}
+            <div>
+              <h4 className="font-semibold mb-4 text-white">
+                Company
+              </h4>
+              <ul className="space-y-2">
+                <li>
+                  <Link 
+                    to="/about"
+                    className="text-sm text-[#8b949e] hover:text-[#9e83ff] transition-colors"
+                  >
+                    About
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/contact"
+                    className="text-sm text-[#8b949e] hover:text-[#9e83ff] transition-colors"
+                  >
+                    Contact
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/privacy"
+                    className="text-sm text-[#8b949e] hover:text-[#9e83ff] transition-colors"
+                  >
+                    Privacy
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/terms"
+                    className="text-sm text-[#8b949e] hover:text-[#9e83ff] transition-colors"
+                  >
+                    Terms
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+          {/* Bottom Bar */}
+          <div className="pt-8 border-t border-[#30363d] flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-sm text-[#8b949e]">
+              © {new Date().getFullYear()} SaaSy Cookies. All rights reserved.
+            </p>
+            <p className="text-sm text-[#8b949e]">
+              Made with care in New Zealand 🇳🇿
+            </p>
           </div>
         </div>
       </footer>
