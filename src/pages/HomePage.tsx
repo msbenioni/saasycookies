@@ -133,7 +133,7 @@ const HomePage: React.FC = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {/* SenseAI Journal */}
-            <div className="group p-8 rounded-2xl bg-[#161b22] border border-[#6e40c9] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_4px_#6e40c9]">
+            <div className="group p-8 rounded-2xl bg-[#161b22] border border-[#6e40c9] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_4px_#6e40c9] flex flex-col">
               <div className="flex items-start justify-between mb-6">
                 <div className="w-16 h-16 rounded-2xl flex items-center justify-center bg-gradient-to-r from-[#6affd8] via-[#b388ff] to-[#ff6ad5]">
                   <Sparkles className="w-8 h-8 text-white" />
@@ -149,7 +149,7 @@ const HomePage: React.FC = () => {
               <p className="text-lg mb-3 font-medium text-[#b388ff]">
                 {brand.products.senseai.tagline}
               </p>
-              <p className="mb-6 text-[var(--text-secondary)]">
+              <p className="mb-6 text-[var(--text-secondary)] flex-grow">
                 {brand.products.senseai.description}
               </p>
               
@@ -157,7 +157,7 @@ const HomePage: React.FC = () => {
                 href={brand.products.senseai.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 group-hover:gap-3 bg-[#6e40c9]/20 text-[#b388ff] hover:bg-[#6e40c9]/30 border border-[#6e40c9]"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 group-hover:gap-3 bg-[#6e40c9]/20 text-[#b388ff] hover:bg-[#6e40c9]/30 border border-[#6e40c9] mt-auto"
               >
                 Try App
                 <ArrowRight className="w-4 h-4" />
@@ -165,7 +165,7 @@ const HomePage: React.FC = () => {
             </div>
 
             {/* Smart Invoice Generator */}
-            <div className="group p-8 rounded-2xl bg-[#161b22] border border-[#f0883e] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_4px_#f0883e]">
+            <div className="group p-8 rounded-2xl bg-[#161b22] border border-[#f0883e] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_4px_#f0883e] flex flex-col">
               <div className="flex items-start justify-between mb-6">
                 <div className="w-16 h-16 rounded-2xl flex items-center justify-center bg-[#f0883e]">
                   <FileText className="w-8 h-8 text-white" />
@@ -181,18 +181,37 @@ const HomePage: React.FC = () => {
               <p className="text-lg mb-3 font-medium text-[#f0883e]">
                 {brand.products.invoice.tagline}
               </p>
-              <p className="mb-6 text-[var(--text-secondary)]">
+              <p className="mb-6 text-[var(--text-secondary)] flex-grow">
                 {brand.products.invoice.description}
               </p>
               
               <Link
                 to="/tools/invoice"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 group-hover:gap-3 bg-[#f0883e]/20 text-[#f0883e] hover:bg-[#f0883e]/30 border border-[#f0883e]"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 group-hover:gap-3 bg-[#f0883e]/20 text-[#f0883e] hover:bg-[#f0883e]/30 border border-[#f0883e] mt-auto"
               >
                 Use Tool
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
+          </div>
+          
+          {/* See More Indicator */}
+          <div className="mt-8 text-center">
+            <Link 
+              to="/tools" 
+              className="inline-flex items-center gap-2 text-[#8b949e] hover:text-[#b388ff] transition-colors group"
+            >
+              <span className="text-sm font-medium">See all tools</span>
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor" 
+                className="w-5 h-5 group-hover:translate-x-1 transition-transform"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
           </div>
         </GlassCard>
       </section>
