@@ -17,8 +17,8 @@ export const ProductPageHeader: React.FC<ProductPageHeaderProps> = ({
   icon: Icon,
   title,
   description,
-  backLink = '/products',
-  backLabel = 'Back to Products',
+  backLink = '/',
+  backLabel = 'Back to Home',
 }) => {
   return (
     <div className="mb-8">

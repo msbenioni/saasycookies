@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Brain, Briefcase, Wrench, ArrowRight, Sparkles, ExternalLink, Globe, FileText, QrCode } from 'lucide-react';
+import { Brain, Briefcase, Wrench, ArrowRight, Sparkles, ExternalLink, FileText, QrCode, Package, Globe } from 'lucide-react';
 import { brand } from '../design-tokens';
 import GlassCard from '../components/GlassCard';
 
@@ -26,18 +26,11 @@ const HomePage: React.FC = () => {
               We design practical AI-powered products for freelancers, creators, and small businesses.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link
-                to="/products"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-white bg-[#4337a5] hover:bg-[#5447b5] transition-all duration-300 hover:scale-105 shadow-lg"
-              >
-                Explore Our Products
-                <ArrowRight className="w-5 h-5" />
-              </Link>
               <a
                 href="https://senseai.co.nz"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 border border-[#6e40c9] text-[#b388ff] hover:bg-[#6e40c9]/20"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-white bg-[#4337a5] hover:bg-[#5447b5] transition-all duration-300 hover:scale-105 shadow-lg"
               >
                 Try SenseAI
                 <ExternalLink className="w-5 h-5" />
@@ -82,12 +75,12 @@ const HomePage: React.FC = () => {
               What We Build
             </h2>
             <p className="text-lg text-[var(--text-secondary)] max-w-3xl mx-auto mb-6">
-              {brand.name} was created to make AI feel less overwhelming and more human. 
-              We believe AI should support everyday thinking, creativity, and small business life — 
+              {brand.name} was created to make complex tasks feel less overwhelming and more human. 
+              We believe technology should support everyday thinking, creativity, and small business life — 
               not replace people, but empower them.
             </p>
             <p className="text-lg text-[var(--text-secondary)]">
-              Every product we build starts with a simple question: <em className="text-[#b388ff]">How can we make this actually useful for real people?</em>
+              Every product or tool we build starts with a simple question: <em className="text-[#b388ff]">How can we make this actually useful for real people?</em>
             </p>
           </div>
 
@@ -139,10 +132,10 @@ const HomePage: React.FC = () => {
         <GlassCard className="w-full max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 heading-primary">
-              Our Products
+              Featured Products
             </h2>
             <p className="text-lg text-[var(--text-secondary)]">
-              Built with care, designed for humans
+              Built with care, designed for everyday use.
             </p>
           </div>
 
@@ -210,25 +203,6 @@ const HomePage: React.FC = () => {
                 <ArrowRight className="w-4 h-4" />
               </a>
             </div>
-          </div>
-          
-          {/* See More Indicator */}
-          <div className="mt-8 text-center">
-            <Link 
-              to="/products" 
-              className="inline-flex items-center gap-2 text-[#8b949e] hover:text-[#b388ff] transition-colors group"
-            >
-              <span className="text-sm font-medium">See all products</span>
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor" 
-                className="w-5 h-5 group-hover:translate-x-1 transition-transform"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
           </div>
         </GlassCard>
       </section>
@@ -306,46 +280,33 @@ const HomePage: React.FC = () => {
               </Link>
             </div>
           </div>
-          
-          {/* See More Tools */}
-          <div className="mt-8 text-center">
-            <Link 
-              to="/tools" 
-              className="inline-flex items-center gap-2 text-[#8b949e] hover:text-[#60A5FA] transition-colors group"
-            >
-              <span className="text-sm font-medium">See all free tools</span>
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor" 
-                className="w-5 h-5 group-hover:translate-x-1 transition-transform"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
-          </div>
         </GlassCard>
       </section>
 
-      {/* Call to Action */}
+      {/* More Tools Coming Soon */}
       <section className="scene-section">
         <GlassCard className="w-full max-w-4xl mx-auto relative z-10">
           <div className="text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 heading-primary">
-              Ready to try our products?
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
+              <Wrench className="w-4 h-4 text-[#6affd8]" />
+              <span className="text-sm font-medium text-[#b388ff]">More tools coming soon</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 heading-primary">
+              We're constantly building & creating
             </h2>
             <p className="text-lg mb-8 text-[var(--text-secondary)]">
-              Explore our growing collection of AI-powered products designed for real life.
+              to help you succeed. Check back often for updates!
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link
-                to="/products"
+              <a
+                href="https://senseai.co.nz"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-105 shadow-lg bg-gradient-to-r from-[#6affd8] via-[#b388ff] to-[#ff6ad5]"
               >
-                <Wrench className="w-5 h-5" />
-                Browse All Products
-              </Link>
+                <Package className="w-5 h-5" />
+                Try SenseAI
+              </a>
               <a
                 href="https://pacificmarket.co.nz"
                 target="_blank"
@@ -355,6 +316,13 @@ const HomePage: React.FC = () => {
                 <Globe className="w-5 h-5" />
                 Visit Pacific Market
               </a>
+              <Link
+                to="/tools/invoice-generator"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105 border-2 border-[#A78BFA] text-[#A78BFA] hover:bg-[#A78BFA]/20"
+              >
+                <FileText className="w-5 h-5" />
+                Create Invoice
+              </Link>
             </div>
           </div>
         </GlassCard>
