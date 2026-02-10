@@ -23,7 +23,7 @@ const HomePage: React.FC = () => {
               <span className="gradient-heading">one line at a time</span>
             </h1>
             <p className="text-xl mb-8 text-[var(--text-secondary)]">
-              We design practical AI-powered products for freelancers, creators, and small businesses.
+              We design practical digital products for freelancers, creators, and small businesses.
             </p>
             <div className="flex flex-wrap gap-4">
               <a
