@@ -283,7 +283,7 @@ export default function HomePage() {
               More tools on the way
             </h2>
             <p className="text-zinc-400 text-lg leading-relaxed mb-10">
-              We&apos;re always building. Contract templates, expense trackers, and
+              We&apos;re always building. Templates, trackers, and
               more free tools are in the pipeline.
             </p>
             <Link
