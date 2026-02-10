@@ -83,7 +83,7 @@ export default function TermsPage() {
             7. Contact
           </h2>
           <p>
-            For questions about these terms, contact us at hello@saasycookies.com.
+            For questions about these terms, contact us at saasycookies@gmail.com.
           </p>
         </section>
       </div>

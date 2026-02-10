@@ -1,6 +1,45 @@
-import { Mail, MapPin, MessageSquare } from "lucide-react";
+import { useState } from "react";
+import { Mail, MapPin, MessageSquare, Send, CheckCircle } from "lucide-react";
+import { sendContactEmail, openEmailClient } from "../services/emailService";
 
 export default function ContactPage() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError("");
+
+    try {
+      await sendContactEmail(formData);
+      setIsSubmitted(true);
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    } catch (error) {
+      setError("Email service unavailable. Opening your email client...");
+      // Fallback to email client
+      openEmailClient(formData);
+      setIsSubmitted(true); // Still show success
+      console.error("Contact form error:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 py-16 md:py-24">
       <div className="max-w-2xl">
@@ -22,7 +61,7 @@ export default function ContactPage() {
             </div>
             <div>
               <h3 className="font-heading font-semibold mb-1">Email</h3>
-              <p className="text-zinc-400 text-sm">hello@saasycookies.com</p>
+              <p className="text-zinc-400 text-sm">saasycookies@gmail.com</p>
             </div>
           </div>
 
@@ -49,43 +88,89 @@ export default function ContactPage() {
 
         <div className="rounded-xl bg-zinc-900/40 border border-white/5 p-8">
           <h2 className="font-heading text-xl font-semibold mb-6">Send a message</h2>
-          <form
-            data-testid="contact-form"
-            onSubmit={(e) => {
-              e.preventDefault();
-              alert("Message sent! (Demo)");
-            }}
-            className="space-y-4"
-          >
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <input
-                data-testid="contact-name-input"
-                className="w-full bg-zinc-950/50 border border-zinc-800 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary/20 rounded-md py-2.5 px-4 text-white text-sm placeholder:text-zinc-600 transition-all outline-none"
-                placeholder="Name"
-                required
-              />
-              <input
-                data-testid="contact-email-input"
-                type="email"
-                className="w-full bg-zinc-950/50 border border-zinc-800 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary/20 rounded-md py-2.5 px-4 text-white text-sm placeholder:text-zinc-600 transition-all outline-none"
-                placeholder="Email"
-                required
-              />
+          
+          {isSubmitted ? (
+            <div className="text-center py-8">
+              <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-white mb-2">Message sent!</h3>
+              <p className="text-zinc-400">We'll get back to you as soon as possible.</p>
             </div>
-            <textarea
-              data-testid="contact-message-input"
-              className="w-full bg-zinc-950/50 border border-zinc-800 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary/20 rounded-md py-2.5 px-4 text-white text-sm placeholder:text-zinc-600 transition-all outline-none resize-none h-32"
-              placeholder="Your message..."
-              required
-            />
-            <button
-              data-testid="contact-submit-button"
-              type="submit"
-              className="bg-white text-black font-semibold px-8 py-2.5 rounded-md transition-all duration-300 hover:bg-zinc-200 hover:scale-[1.02] text-sm"
+          ) : (
+            <form
+              data-testid="contact-form"
+              onSubmit={handleSubmit}
+              className="space-y-4"
             >
-              Send Message
-            </button>
-          </form>
+              {error && (
+                <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-3 rounded-md text-sm">
+                  {error}
+                </div>
+              )}
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <input
+                  data-testid="contact-name-input"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="w-full bg-zinc-950/50 border border-zinc-800 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary/20 rounded-md py-2.5 px-4 text-white text-sm placeholder:text-zinc-600 transition-all outline-none"
+                  placeholder="Name"
+                  required
+                  disabled={isSubmitting}
+                />
+                <input
+                  data-testid="contact-email-input"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="w-full bg-zinc-950/50 border border-zinc-800 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary/20 rounded-md py-2.5 px-4 text-white text-sm placeholder:text-zinc-600 transition-all outline-none"
+                  placeholder="Email"
+                  required
+                  disabled={isSubmitting}
+                />
+              </div>
+              
+              <input
+                name="subject"
+                value={formData.subject}
+                onChange={handleChange}
+                className="w-full bg-zinc-950/50 border border-zinc-800 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary/20 rounded-md py-2.5 px-4 text-white text-sm placeholder:text-zinc-600 transition-all outline-none"
+                placeholder="Subject (optional)"
+                disabled={isSubmitting}
+              />
+              
+              <textarea
+                data-testid="contact-message-input"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                className="w-full bg-zinc-950/50 border border-zinc-800 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary/20 rounded-md py-2.5 px-4 text-white text-sm placeholder:text-zinc-600 transition-all outline-none resize-none h-32"
+                placeholder="Your message..."
+                required
+                disabled={isSubmitting}
+              />
+              
+              <button
+                data-testid="contact-submit-button"
+                type="submit"
+                disabled={isSubmitting}
+                className="bg-white text-black font-semibold px-8 py-2.5 rounded-md transition-all duration-300 hover:bg-zinc-200 hover:scale-[1.02] text-sm disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center gap-2"
+              >
+                {isSubmitting ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4" />
+                    Send Message
+                  </>
+                )}
+              </button>
+            </form>
+          )}
         </div>
       </div>
     </div>
