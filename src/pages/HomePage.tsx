@@ -8,16 +8,16 @@ const HomePage: React.FC = () => {
   return (
     <div className="min-h-screen scroll-gradient text-white font-body">
       {/* Hero Section */}
-      <section className="scene-section relative overflow-hidden" id="hero-section">
+      <section className="scene-section relative overflow-hidden" id="hero-section" itemScope itemType="https://schema.org/Organization">
         <div className="parallax-bg" aria-hidden="true"></div>
         <GlassCard className="w-full max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12 md:gap-16 relative z-10">
-          <div className="md:w-1/2">
+          <div className="md:w-1/2" itemProp="description">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
               <Sparkles className="w-4 h-4 text-[#6affd8]" />
               <span className="text-sm font-medium text-[#b388ff]">Product Studio</span>
             </div>
             
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 heading-primary">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 heading-primary" itemProp="name">
               Building the future,
               <br />
               <span className="gradient-heading">one line at a time</span>
@@ -31,6 +31,7 @@ const HomePage: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-white bg-[#4337a5] hover:bg-[#5447b5] transition-all duration-300 hover:scale-105 shadow-lg"
+                itemProp="sameAs"
               >
                 Try SenseAI
                 <ExternalLink className="w-5 h-5" />
@@ -40,6 +41,7 @@ const HomePage: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 border border-[#10b981] text-[#10b981] hover:bg-[#10b981]/20"
+                itemProp="sameAs"
               >
                 Visit Pacific Market
                 <ExternalLink className="w-5 h-5" />
@@ -127,11 +129,11 @@ const HomePage: React.FC = () => {
         </GlassCard>
       </section>
 
-      {/* Our Products Section */}
-      <section className="scene-section">
+      {/* Featured Products Section */}
+      <section className="scene-section" aria-labelledby="featured-products-heading">
         <GlassCard className="w-full max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 heading-primary">
+            <h2 id="featured-products-heading" className="text-3xl md:text-4xl font-bold mb-4 heading-primary">
               Featured Products
             </h2>
             <p className="text-lg text-[var(--text-secondary)]">
@@ -139,25 +141,31 @@ const HomePage: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto" role="list">
             {/* SenseAI Journal */}
-            <div className="group p-8 rounded-2xl bg-[#161b22] border border-[#6e40c9] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_4px_#6e40c9] flex flex-col">
+            <article className="group p-8 rounded-2xl bg-[#161b22] border border-[#6e40c9] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_4px_#6e40c9] flex flex-col" role="listitem" itemScope itemType="https://schema.org/SoftwareApplication">
+              <meta itemProp="applicationCategory" content="BusinessApplication" />
+              <meta itemProp="operatingSystem" content="Web Browser" />
+              <div itemProp="offers" itemScope itemType="https://schema.org/Offer">
+                <meta itemProp="price" content="0" />
+                <meta itemProp="priceCurrency" content="NZD" />
+              </div>
               <div className="flex items-start justify-between mb-6">
                 <div className="w-16 h-16 rounded-2xl flex items-center justify-center bg-gradient-to-r from-[#6affd8] via-[#b388ff] to-[#ff6ad5]">
-                  <img src="/senseai_logo.png" alt="SenseAI" className="w-full h-full object-cover rounded-2xl" />
+                  <img src="/senseai_logo.png" alt="SenseAI" className="w-full h-full object-cover rounded-2xl" itemProp="image" />
                 </div>
                 <span className="px-3 py-1 rounded-full text-sm font-medium bg-[#3fb950]/20 text-[#3fb950]">
                   Live
                 </span>
               </div>
               
-              <h3 className="text-2xl font-bold mb-2 text-white">
+              <h3 className="text-2xl font-bold mb-2 text-white" itemProp="name">
                 SenseAI
               </h3>
-              <p className="text-lg mb-3 font-medium text-[#b388ff]">
+              <p className="text-lg mb-3 font-medium text-[#b388ff]" itemProp="applicationSubCategory">
                 AI-powered journaling system
               </p>
-              <p className="mb-6 text-[var(--text-secondary)] flex-grow">
+              <p className="mb-6 text-[var(--text-secondary)] flex-grow" itemProp="description">
                 Type it, say it, scan it. Your thoughts, captured intelligently with AI assistance.
               </p>
               
@@ -166,27 +174,30 @@ const HomePage: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 group-hover:gap-3 bg-[#6e40c9]/20 text-[#b388ff] hover:bg-[#6e40c9]/30 border border-[#6e40c9] mt-auto"
+                itemProp="url"
               >
                 Try App
                 <ArrowRight className="w-4 h-4" />
               </a>
-            </div>
+            </article>
 
             {/* Pacific Market */}
-            <div className="group p-8 rounded-2xl bg-[#161b22] border border-[#10b981] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_4px_#10b981] flex flex-col">
+            <article className="group p-8 rounded-2xl bg-[#161b22] border border-[#10b981] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_4px_#10b981] flex flex-col" role="listitem" itemScope itemType="https://schema.org/WebSite">
+              <meta itemProp="url" content="https://pacificmarket.co.nz" />
+              <meta itemProp="inLanguage" content="en" />
               <div className="flex items-start justify-between mb-6">
                 <div className="w-16 h-16 rounded-2xl flex items-center justify-center bg-[#10b981]">
-                  <img src="/pacificmarket_logo.png" alt="Pacific Market" className="w-full h-full object-cover rounded-2xl" />
+                  <img src="/pacificmarket_logo.png" alt="Pacific Market" className="w-full h-full object-cover rounded-2xl" itemProp="image" />
                 </div>
                 <span className="px-3 py-1 rounded-full text-sm font-medium bg-[#3fb950]/20 text-[#3fb950]">
                   Live
                 </span>
               </div>
               
-              <h3 className="text-2xl font-bold mb-2 text-white">
+              <h3 className="text-2xl font-bold mb-2 text-white" itemProp="name">
                 Pacific Market
               </h3>
-              <p className="text-lg mb-3 font-medium text-[#10b981]">
+              <p className="text-lg mb-3 font-medium text-[#10b981]" itemProp="description">
                 Global Pacific Business Directory
               </p>
               <p className="mb-6 text-[var(--text-secondary)] flex-grow">
@@ -198,20 +209,21 @@ const HomePage: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 group-hover:gap-3 bg-[#10b981]/20 text-[#10b981] hover:bg-[#10b981]/30 border border-[#10b981] mt-auto"
+                itemProp="url"
               >
                 Visit Directory
                 <ArrowRight className="w-4 h-4" />
               </a>
-            </div>
+            </article>
           </div>
         </GlassCard>
       </section>
 
       {/* Free Tools Section */}
-      <section className="scene-section">
+      <section className="scene-section" aria-labelledby="free-tools-heading">
         <GlassCard className="w-full max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 heading-primary">
+            <h2 id="free-tools-heading" className="text-3xl md:text-4xl font-bold mb-4 heading-primary">
               Free Business Tools
             </h2>
             <p className="text-lg text-[var(--text-secondary)]">
@@ -219,9 +231,15 @@ const HomePage: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto" role="list">
             {/* Invoice Generator */}
-            <div className="group p-6 rounded-2xl bg-[#161b22] border border-[#A78BFA] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_4px_#A78BFA] flex flex-col">
+            <article className="group p-6 rounded-2xl bg-[#161b22] border border-[#A78BFA] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_4px_#A78BFA] flex flex-col" role="listitem" itemScope itemType="https://schema.org/SoftwareApplication">
+              <meta itemProp="applicationCategory" content="BusinessApplication" />
+              <meta itemProp="operatingSystem" content="Web Browser" />
+              <div itemProp="offers" itemScope itemType="https://schema.org/Offer">
+                <meta itemProp="price" content="0" />
+                <meta itemProp="priceCurrency" content="NZD" />
+              </div>
               <div className="flex items-start justify-between mb-4">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-[#A78BFA]">
                   <FileText className="w-6 h-6 text-white" />
@@ -231,27 +249,34 @@ const HomePage: React.FC = () => {
                 </span>
               </div>
               
-              <h3 className="text-xl font-bold mb-2 text-white">
+              <h3 className="text-xl font-bold mb-2 text-white" itemProp="name">
                 Invoice Generator
               </h3>
-              <p className="text-sm mb-4 font-medium text-[#A78BFA]">
+              <p className="text-sm mb-4 font-medium text-[#A78BFA]" itemProp="applicationSubCategory">
                 Professional NZ invoices with GST
               </p>
-              <p className="mb-4 text-[var(--text-secondary)] text-sm flex-grow">
+              <p className="mb-4 text-[var(--text-secondary)] text-sm flex-grow" itemProp="description">
                 Create professional invoices with GST and withholding tax calculations for New Zealand businesses.
               </p>
               
               <Link
                 to="/tools/invoice-generator"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 group-hover:gap-3 bg-[#A78BFA]/20 text-[#A78BFA] hover:bg-[#A78BFA]/30 border border-[#A78BFA] mt-auto"
+                itemProp="url"
               >
                 Create Invoice
                 <ArrowRight className="w-4 h-4" />
               </Link>
-            </div>
+            </article>
 
             {/* QR Code Generator */}
-            <div className="group p-6 rounded-2xl bg-[#161b22] border border-[#60A5FA] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_4px_#60A5FA] flex flex-col">
+            <article className="group p-6 rounded-2xl bg-[#161b22] border border-[#60A5FA] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_4px_#60A5FA] flex flex-col" role="listitem" itemScope itemType="https://schema.org/SoftwareApplication">
+              <meta itemProp="applicationCategory" content="BusinessApplication" />
+              <meta itemProp="operatingSystem" content="Web Browser" />
+              <div itemProp="offers" itemScope itemType="https://schema.org/Offer">
+                <meta itemProp="price" content="0" />
+                <meta itemProp="priceCurrency" content="NZD" />
+              </div>
               <div className="flex items-start justify-between mb-4">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-[#60A5FA]">
                   <QrCode className="w-6 h-6 text-white" />
@@ -261,24 +286,25 @@ const HomePage: React.FC = () => {
                 </span>
               </div>
               
-              <h3 className="text-xl font-bold mb-2 text-white">
+              <h3 className="text-xl font-bold mb-2 text-white" itemProp="name">
                 QR Code Generator
               </h3>
-              <p className="text-sm mb-4 font-medium text-[#60A5FA]">
+              <p className="text-sm mb-4 font-medium text-[#60A5FA]" itemProp="applicationSubCategory">
                 Custom QR codes with branding
               </p>
-              <p className="mb-4 text-[var(--text-secondary)] text-sm flex-grow">
+              <p className="mb-4 text-[var(--text-secondary)] text-sm flex-grow" itemProp="description">
                 Create customizable QR codes with your branding for websites, business cards, and more.
               </p>
               
               <Link
                 to="/tools/qr-generator"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 group-hover:gap-3 bg-[#60A5FA]/20 text-[#60A5FA] hover:bg-[#60A5FA]/30 border border-[#60A5FA] mt-auto"
+                itemProp="url"
               >
                 Generate QR Code
                 <ArrowRight className="w-4 h-4" />
               </Link>
-            </div>
+            </article>
           </div>
         </GlassCard>
       </section>
