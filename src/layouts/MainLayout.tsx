@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { Menu, X, Wrench, Home, Mail, ArrowRight } from 'lucide-react';
+import { Menu, X, Wrench, Home, Mail, ArrowRight, Package } from 'lucide-react';
 import saasyLogo from '../assets/saasy_logo.png';
 import '../styles/colors.css';
 
@@ -71,7 +71,8 @@ const MainLayout: React.FC = () => {
 
   const navItems = [
     { path: '/', label: 'Home', icon: Home },
-    { path: '/products', label: 'Products', icon: Wrench },
+    { path: '/products', label: 'Products', icon: Package },
+    { path: '/tools', label: 'Tools', icon: Wrench },
     { path: '/contact', label: 'Contact', icon: Mail },
   ];
 
@@ -106,7 +107,7 @@ const MainLayout: React.FC = () => {
           {/* CTA Button */}
           <div className="hidden md:block">
             <Link to="/products" className={`${CTA_BUTTON} px-5 py-2.5 text-sm shadow-lg`}>
-              Try Free Products
+              View Products
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -142,8 +143,8 @@ const MainLayout: React.FC = () => {
                   onClick={() => setMobileMenuOpen(false)}
                   className={`${CTA_BUTTON} w-full px-4 py-3 text-base`}
                 >
-                  <Wrench className="w-5 h-5" />
-                  Try Free Products
+                  <Package className="w-5 h-5" />
+                  View Products
                 </Link>
               </div>
             </nav>
@@ -176,8 +177,16 @@ const MainLayout: React.FC = () => {
               <h4 className="font-semibold mb-4 text-white">Products</h4>
               <ul className="space-y-2">
                 <li><FooterLink href="https://senseai.co.nz">SenseAI Journal</FooterLink></li>
-                <li><FooterLink to="/products/invoice">Invoice Generator</FooterLink></li>
-                <li><FooterLink to="/products/qrcode">QR Code Generator</FooterLink></li>
+                <li><FooterLink href="https://pacificmarket.co.nz">Pacific Market</FooterLink></li>
+              </ul>
+            </div>
+            
+            {/* Tools */}
+            <div>
+              <h4 className="font-semibold mb-4 text-white">Free Tools</h4>
+              <ul className="space-y-2">
+                <li><FooterLink to="/tools/invoice-generator">Invoice Generator</FooterLink></li>
+                <li><FooterLink to="/tools/qr-generator">QR Code Generator</FooterLink></li>
               </ul>
             </div>
             

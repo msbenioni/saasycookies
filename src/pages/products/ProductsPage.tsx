@@ -1,9 +1,7 @@
 import React from 'react';
-import { FileText, QrCode, Sparkles } from 'lucide-react';
 import GlassCard from '../../components/GlassCard';
-import SaasySoftButton from '../../components/SaasySoftButton';
 
-interface ExternalProduct {
+interface Product {
   id: string;
   name: string;
   description: string;
@@ -13,46 +11,25 @@ interface ExternalProduct {
   url: string;
 }
 
-interface InternalProduct {
-  id: string;
-  name: string;
-  description: string;
-  icon: React.ReactNode;
-  color: string;
-  external: false;
-  path: string;
-}
-
-type Product = ExternalProduct | InternalProduct;
-
 const ProductsPage: React.FC = () => {
   const products: Product[] = [
     {
       id: 'senseai',
       name: 'SenseAI',
       description: 'AI-powered journaling system. Type it, say it, scan it.',
-      icon: <Sparkles className="h-6 w-6" />,
+      icon: <img src="/senseai_logo.png" alt="SenseAI" className="h-full w-full object-cover rounded-lg" />,
       color: '#b388ff',
       external: true,
       url: 'https://senseai.co.nz'
     },
     {
-      id: 'invoice',
-      name: 'Invoice Generator',
-      description: 'Create professional invoices with GST and withholding tax calculations.',
-      icon: <FileText className="h-6 w-6" />,
-      color: '#A78BFA',
-      external: false,
-      path: '/products/invoice'
-    },
-    {
-      id: 'qrcode',
-      name: 'QR Code Generator',
-      description: 'Create customizable QR codes with your branding for websites, business cards, and more.',
-      icon: <QrCode className="h-6 w-6" />,
-      color: '#60A5FA',
-      external: false,
-      path: '/products/qrcode'
+      id: 'pacificmarket',
+      name: 'Pacific Market',
+      description: 'Global directory for Pacific businesses, creators, and cultural practitioners. Made in the Pacific, shared with the world.',
+      icon: <img src="/pacificmarket_logo.png" alt="Pacific Market" className="h-full w-full object-cover rounded-lg" />,
+      color: '#10b981',
+      external: true,
+      url: 'https://pacificmarket.co.nz'
     }
   ];
 
@@ -62,7 +39,7 @@ const ProductsPage: React.FC = () => {
         <div className="mb-10 text-center">
           <h1 className="text-4xl font-heading font-bold mb-4 gradient-heading">Products</h1>
           <p className="text-white max-w-2xl mx-auto">
-            AI-powered tools for journaling, invoicing, and QR code generation.
+            Our flagship platforms designed to empower communities and businesses.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -89,13 +66,9 @@ const ProductsPage: React.FC = () => {
                   rel="noopener noreferrer"
                   className="saasy-button-soft-cta px-8 py-4 text-lg font-medium rounded-md"
                 >
-                  Try Now <span className="ml-1">→</span>
+                  Visit <span className="ml-1">→</span>
                 </a>
-              ) : (
-                <SaasySoftButton to={product.path}>
-                  Launch <span className="ml-1">→</span>
-                </SaasySoftButton>
-              )}
+              ) : null}
             </div>
           ))}
         </div>

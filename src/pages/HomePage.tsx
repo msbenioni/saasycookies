@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Brain, Briefcase, Wrench, ArrowRight, Sparkles, FileText, ExternalLink } from 'lucide-react';
+import { Brain, Briefcase, Wrench, ArrowRight, Sparkles, ExternalLink, Globe, FileText, QrCode } from 'lucide-react';
 import { brand } from '../design-tokens';
 import GlassCard from '../components/GlassCard';
 
@@ -23,7 +23,7 @@ const HomePage: React.FC = () => {
               <span className="gradient-heading">one line at a time</span>
             </h1>
             <p className="text-xl mb-8 text-[var(--text-secondary)]">
-              We design practical AI-powered apps that support everyday people, creators, and small businesses.
+              We design practical AI-powered products for freelancers, creators, and small businesses.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link
@@ -42,6 +42,15 @@ const HomePage: React.FC = () => {
                 Try SenseAI
                 <ExternalLink className="w-5 h-5" />
               </a>
+              <a
+                href="https://pacificmarket.co.nz"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 border border-[#10b981] text-[#10b981] hover:bg-[#10b981]/20"
+              >
+                Visit Pacific Market
+                <ExternalLink className="w-5 h-5" />
+              </a>
             </div>
           </div>
           <div className="md:w-1/2 flex justify-center">
@@ -56,6 +65,7 @@ const HomePage: React.FC = () => {
                 <p className="terminal-output">✓ Initializing AI products...</p>
                 <p className="terminal-output">✓ Loading SenseAI Journal...</p>
                 <p className="terminal-output">✓ Configuring Invoice Generator...</p>
+                <p className="terminal-output">✓ Connecting Pacific Market...</p>
                 <p className="terminal-output">✓ Ready for launch.</p>
                 <p className="terminal-success">✓ All systems online.</p>
               </div>
@@ -141,7 +151,7 @@ const HomePage: React.FC = () => {
             <div className="group p-8 rounded-2xl bg-[#161b22] border border-[#6e40c9] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_4px_#6e40c9] flex flex-col">
               <div className="flex items-start justify-between mb-6">
                 <div className="w-16 h-16 rounded-2xl flex items-center justify-center bg-gradient-to-r from-[#6affd8] via-[#b388ff] to-[#ff6ad5]">
-                  <Sparkles className="w-8 h-8 text-white" />
+                  <img src="/senseai_logo.png" alt="SenseAI" className="w-full h-full object-cover rounded-2xl" />
                 </div>
                 <span className="px-3 py-1 rounded-full text-sm font-medium bg-[#3fb950]/20 text-[#3fb950]">
                   Live
@@ -149,17 +159,17 @@ const HomePage: React.FC = () => {
               </div>
               
               <h3 className="text-2xl font-bold mb-2 text-white">
-                {brand.products.senseai.name}
+                SenseAI
               </h3>
               <p className="text-lg mb-3 font-medium text-[#b388ff]">
-                {brand.products.senseai.tagline}
+                AI-powered journaling system
               </p>
               <p className="mb-6 text-[var(--text-secondary)] flex-grow">
-                {brand.products.senseai.description}
+                Type it, say it, scan it. Your thoughts, captured intelligently with AI assistance.
               </p>
               
               <a
-                href={brand.products.senseai.url}
+                href="https://senseai.co.nz"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 group-hover:gap-3 bg-[#6e40c9]/20 text-[#b388ff] hover:bg-[#6e40c9]/30 border border-[#6e40c9] mt-auto"
@@ -169,34 +179,36 @@ const HomePage: React.FC = () => {
               </a>
             </div>
 
-            {/* Smart Invoice Generator */}
-            <div className="group p-8 rounded-2xl bg-[#161b22] border border-[#f0883e] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_4px_#f0883e] flex flex-col">
+            {/* Pacific Market */}
+            <div className="group p-8 rounded-2xl bg-[#161b22] border border-[#10b981] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_4px_#10b981] flex flex-col">
               <div className="flex items-start justify-between mb-6">
-                <div className="w-16 h-16 rounded-2xl flex items-center justify-center bg-[#f0883e]">
-                  <FileText className="w-8 h-8 text-white" />
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center bg-[#10b981]">
+                  <img src="/pacificmarket_logo.png" alt="Pacific Market" className="w-full h-full object-cover rounded-2xl" />
                 </div>
                 <span className="px-3 py-1 rounded-full text-sm font-medium bg-[#3fb950]/20 text-[#3fb950]">
-                  Free
+                  Live
                 </span>
               </div>
               
               <h3 className="text-2xl font-bold mb-2 text-white">
-                {brand.products.invoice.name}
+                Pacific Market
               </h3>
-              <p className="text-lg mb-3 font-medium text-[#f0883e]">
-                {brand.products.invoice.tagline}
+              <p className="text-lg mb-3 font-medium text-[#10b981]">
+                Global Pacific Business Directory
               </p>
               <p className="mb-6 text-[var(--text-secondary)] flex-grow">
-                {brand.products.invoice.description}
+                Made in the Pacific, shared with the world. Discover Pacific-owned businesses, creators, and cultural practitioners.
               </p>
               
-              <Link
-                to="/products/invoice"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 group-hover:gap-3 bg-[#f0883e]/20 text-[#f0883e] hover:bg-[#f0883e]/30 border border-[#f0883e] mt-auto"
+              <a
+                href="https://pacificmarket.co.nz"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 group-hover:gap-3 bg-[#10b981]/20 text-[#10b981] hover:bg-[#10b981]/30 border border-[#10b981] mt-auto"
               >
-                Use Product
+                Visit Directory
                 <ArrowRight className="w-4 h-4" />
-              </Link>
+              </a>
             </div>
           </div>
           
@@ -207,6 +219,101 @@ const HomePage: React.FC = () => {
               className="inline-flex items-center gap-2 text-[#8b949e] hover:text-[#b388ff] transition-colors group"
             >
               <span className="text-sm font-medium">See all products</span>
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor" 
+                className="w-5 h-5 group-hover:translate-x-1 transition-transform"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+        </GlassCard>
+      </section>
+
+      {/* Free Tools Section */}
+      <section className="scene-section">
+        <GlassCard className="w-full max-w-6xl mx-auto relative z-10">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 heading-primary">
+              Free Business Tools
+            </h2>
+            <p className="text-lg text-[var(--text-secondary)]">
+              Practical utilities to help you run your business more efficiently.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* Invoice Generator */}
+            <div className="group p-6 rounded-2xl bg-[#161b22] border border-[#A78BFA] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_4px_#A78BFA] flex flex-col">
+              <div className="flex items-start justify-between mb-4">
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-[#A78BFA]">
+                  <FileText className="w-6 h-6 text-white" />
+                </div>
+                <span className="px-3 py-1 rounded-full text-sm font-medium bg-[#3fb950]/20 text-[#3fb950]">
+                  Free
+                </span>
+              </div>
+              
+              <h3 className="text-xl font-bold mb-2 text-white">
+                Invoice Generator
+              </h3>
+              <p className="text-sm mb-4 font-medium text-[#A78BFA]">
+                Professional NZ invoices with GST
+              </p>
+              <p className="mb-4 text-[var(--text-secondary)] text-sm flex-grow">
+                Create professional invoices with GST and withholding tax calculations for New Zealand businesses.
+              </p>
+              
+              <Link
+                to="/tools/invoice-generator"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 group-hover:gap-3 bg-[#A78BFA]/20 text-[#A78BFA] hover:bg-[#A78BFA]/30 border border-[#A78BFA] mt-auto"
+              >
+                Create Invoice
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            {/* QR Code Generator */}
+            <div className="group p-6 rounded-2xl bg-[#161b22] border border-[#60A5FA] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_4px_#60A5FA] flex flex-col">
+              <div className="flex items-start justify-between mb-4">
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-[#60A5FA]">
+                  <QrCode className="w-6 h-6 text-white" />
+                </div>
+                <span className="px-3 py-1 rounded-full text-sm font-medium bg-[#3fb950]/20 text-[#3fb950]">
+                  Free
+                </span>
+              </div>
+              
+              <h3 className="text-xl font-bold mb-2 text-white">
+                QR Code Generator
+              </h3>
+              <p className="text-sm mb-4 font-medium text-[#60A5FA]">
+                Custom QR codes with branding
+              </p>
+              <p className="mb-4 text-[var(--text-secondary)] text-sm flex-grow">
+                Create customizable QR codes with your branding for websites, business cards, and more.
+              </p>
+              
+              <Link
+                to="/tools/qr-generator"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 group-hover:gap-3 bg-[#60A5FA]/20 text-[#60A5FA] hover:bg-[#60A5FA]/30 border border-[#60A5FA] mt-auto"
+              >
+                Generate QR Code
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+          
+          {/* See More Tools */}
+          <div className="mt-8 text-center">
+            <Link 
+              to="/tools" 
+              className="inline-flex items-center gap-2 text-[#8b949e] hover:text-[#60A5FA] transition-colors group"
+            >
+              <span className="text-sm font-medium">See all free tools</span>
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
                 fill="none" 
@@ -239,13 +346,15 @@ const HomePage: React.FC = () => {
                 <Wrench className="w-5 h-5" />
                 Browse All Products
               </Link>
-              <Link
-                to="/products/invoice"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105 border-2 border-[#9e83ff] text-[#9e83ff] hover:bg-[#9e83ff]/20"
+              <a
+                href="https://pacificmarket.co.nz"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105 border-2 border-[#10b981] text-[#10b981] hover:bg-[#10b981]/20"
               >
-                <FileText className="w-5 h-5" />
-                Create Invoice
-              </Link>
+                <Globe className="w-5 h-5" />
+                Visit Pacific Market
+              </a>
             </div>
           </div>
         </GlassCard>
