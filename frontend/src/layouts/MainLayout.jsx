@@ -1,6 +1,7 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { useState } from "react";
-import { Cookie, Brain, Globe, FileText, QrCode, Menu, X } from "lucide-react";
+import { Brain, Globe, FileText, QrCode, Menu, X } from "lucide-react";
+import { LOGO_CLASSES } from "../constants/logo";
 
 const navLinks = [
   { to: "/senseai", label: "SenseAI", icon: Brain, color: "text-senseai" },
@@ -25,9 +26,11 @@ export default function MainLayout() {
             data-testid="logo-link"
             className="flex items-center gap-2.5 group"
           >
-            <div className="w-8 h-8 rounded-lg bg-brand-primary/20 border border-brand-primary/30 flex items-center justify-center group-hover:bg-brand-primary/30 transition-colors">
-              <Cookie className="w-4 h-4 text-brand-primary" strokeWidth={1.5} />
-            </div>
+            <img 
+              src="/SAASY_logo_transparent.png" 
+              alt="SaaSy Cookies Logo" 
+              className={LOGO_CLASSES.NAVIGATION}
+            />
             <span className="font-heading font-bold text-lg tracking-tight">
               SaaSy<span className="text-brand-primary">Cookies</span>
             </span>
@@ -103,7 +106,11 @@ export default function MainLayout() {
       >
         <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-zinc-500 text-sm">
-            <Cookie className="w-3.5 h-3.5" strokeWidth={1.5} />
+            <img 
+              src="/SAASY_logo_transparent.png" 
+              alt="SaaSy Cookies Logo" 
+              className={LOGO_CLASSES.FOOTER}
+            />
             <span>&copy; {new Date().getFullYear()} SaaSy Cookies. All rights reserved.</span>
           </div>
           <div className="flex items-center gap-6">
