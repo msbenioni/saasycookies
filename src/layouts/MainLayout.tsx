@@ -101,23 +101,19 @@ const MainLayout: React.FC = () => {
           
           {/* CTA Button */}
           <div className="hidden md:flex items-center gap-4">
-            <a
-              href="https://senseai.co.nz"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/senseai"
               className="text-sm text-[#8b949e] hover:text-[#b388ff] transition-colors"
             >
               SenseAI
-            </a>
+            </Link>
             <span className="text-[#30363d]">•</span>
-            <a
-              href="https://pacificmarket.co.nz"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/pacificmarket"
               className="text-sm text-[#8b949e] hover:text-[#10b981] transition-colors"
             >
               Pacific Market
-            </a>
+            </Link>
             <span className="text-[#30363d]">•</span>
             <Link
               to="/tools/invoice-generator"

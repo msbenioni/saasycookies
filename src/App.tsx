@@ -6,6 +6,8 @@ import MainLayout from './layouts/MainLayout';
 import HomePage from './pages/HomePage';
 import InvoicePage from './pages/products/InvoicePage';
 import QRCodePage from './pages/products/QRCodePage';
+import SenseAIPage from './pages/seo/SenseAIPage';
+import PacificMarketPage from './pages/seo/PacificMarketPage';
 import TermsPage from './pages/TermsPage';
 import PrivacyPage from './pages/PrivacyPage';
 import ContactPage from './pages/ContactPage';
@@ -24,6 +26,8 @@ function App() {
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
+          <Route path="senseai" element={<SenseAIPage />} />
+          <Route path="pacificmarket" element={<PacificMarketPage />} />
           <Route path="tools/invoice-generator" element={<InvoicePage onGenerate={handleGenerateInvoice} />} />
           <Route path="tools/qr-generator" element={<QRCodePage />} />
           <Route path="terms" element={<TermsPage />} />

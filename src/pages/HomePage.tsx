@@ -169,16 +169,14 @@ const HomePage: React.FC = () => {
                 Type it, say it, scan it. Your thoughts, captured intelligently with AI assistance.
               </p>
               
-              <a
-                href="https://senseai.co.nz"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/senseai"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 group-hover:gap-3 bg-[#6e40c9]/20 text-[#b388ff] hover:bg-[#6e40c9]/30 border border-[#6e40c9] mt-auto"
                 itemProp="url"
               >
-                Try App
+                Explore SenseAI
                 <ArrowRight className="w-4 h-4" />
-              </a>
+              </Link>
             </article>
 
             {/* Pacific Market */}
@@ -204,16 +202,14 @@ const HomePage: React.FC = () => {
                 Made in the Pacific, shared with the world. Discover Pacific-owned businesses, creators, and cultural practitioners.
               </p>
               
-              <a
-                href="https://pacificmarket.co.nz"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/pacificmarket"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 group-hover:gap-3 bg-[#10b981]/20 text-[#10b981] hover:bg-[#10b981]/30 border border-[#10b981] mt-auto"
                 itemProp="url"
               >
-                Visit Directory
+                Explore Pacific Market
                 <ArrowRight className="w-4 h-4" />
-              </a>
+              </Link>
             </article>
           </div>
         </GlassCard>
