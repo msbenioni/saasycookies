@@ -1,0 +1,160 @@
+{
+  "design_system": {
+    "identity": {
+      "name": "SaaSy Cookies",
+      "persona": "E1 - The Anti-AI Designer",
+      "tone": "Dark, Modern, Mysterious, Tech-Forward",
+      "theme_mode": "dark"
+    },
+    "typography": {
+      "font_family": {
+        "headings": "Outfit, sans-serif",
+        "body": "Manrope, sans-serif",
+        "mono": "JetBrains Mono, monospace"
+      },
+      "imports": [
+        "https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Manrope:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      ],
+      "scale": {
+        "h1": "text-5xl md:text-7xl font-extrabold tracking-tight leading-none",
+        "h2": "text-4xl md:text-5xl font-bold tracking-tight",
+        "h3": "text-2xl md:text-3xl font-semibold tracking-normal",
+        "body_lg": "text-lg md:text-xl font-normal leading-relaxed",
+        "body_sm": "text-sm font-medium leading-relaxed text-muted-foreground"
+      }
+    },
+    "colors": {
+      "palette": {
+        "background": {
+          "default": "#050505",
+          "paper": "#0A0A0A",
+          "subtle": "#121212"
+        },
+        "brand": {
+          "primary": "#7c3aed",
+          "secondary": "#8b5cf6",
+          "accent": "#c026d3"
+        },
+        "products": {
+          "senseai": "#06b6d4",
+          "pacific_market": "#f59e0b"
+        },
+        "functional": {
+          "success": "#10b981",
+          "warning": "#f59e0b",
+          "error": "#ef4444",
+          "info": "#3b82f6"
+        },
+        "text": {
+          "primary": "#ffffff",
+          "secondary": "#a1a1aa",
+          "muted": "#52525b"
+        },
+        "border": {
+          "default": "rgba(255,255,255,0.1)",
+          "active": "rgba(255,255,255,0.2)"
+        }
+      },
+      "gradients": {
+        "hero_glow": "radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.15) 0%, rgba(0, 0, 0, 0) 50%)",
+        "senseai_glow": "radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.15) 0%, rgba(0, 0, 0, 0) 50%)",
+        "pacific_glow": "radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.15) 0%, rgba(0, 0, 0, 0) 50%)",
+        "beam": "linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)"
+      }
+    },
+    "spacing": {
+      "container_padding": "p-6 md:p-12 lg:p-24",
+      "section_gap": "gap-12 md:gap-24",
+      "element_gap": "gap-4 md:gap-8"
+    },
+    "visual_enhancers": {
+      "glassmorphism": {
+        "card": "bg-black/40 backdrop-blur-xl border border-white/10 shadow-2xl",
+        "nav": "bg-black/60 backdrop-blur-md border-b border-white/5"
+      },
+      "borders": {
+        "tracing_beam": "relative rounded-xl border border-white/10 overflow-hidden",
+        "neon_edge": "shadow-[0_0_15px_rgba(124,58,237,0.3)]"
+      },
+      "textures": {
+        "noise": "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E\")"
+      }
+    }
+  },
+  "layout_strategies": {
+    "marketing_home": {
+      "type": "bento_grid",
+      "columns": "grid-cols-1 md:grid-cols-8 lg:grid-cols-12",
+      "gap": "gap-6 md:gap-8",
+      "items": [
+        {"role": "hero", "span": "col-span-full md:col-span-8 lg:col-span-8 row-span-2"},
+        {"role": "senseai_card", "span": "col-span-full md:col-span-4 lg:col-span-4 row-span-1"},
+        {"role": "pacific_card", "span": "col-span-full md:col-span-4 lg:col-span-4 row-span-1"}
+      ]
+    },
+    "landing_page": {
+      "type": "asymmetrical_scroll",
+      "description": "Alternating text and visual blocks. Heavy use of negative space.",
+      "hero_alignment": "center",
+      "feature_alignment": "zigzag"
+    },
+    "tools": {
+      "type": "functional_dashboard",
+      "grid": "grid-cols-1 lg:grid-cols-12",
+      "sidebar": "col-span-12 lg:col-span-3",
+      "main": "col-span-12 lg:col-span-9"
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-white text-black hover:bg-zinc-200 font-semibold px-8 py-3 rounded-md transition-all duration-300 transform hover:scale-[1.02]",
+      "secondary": "bg-zinc-900 text-white border border-zinc-800 hover:bg-zinc-800 hover:border-zinc-700 font-medium px-8 py-3 rounded-md transition-all",
+      "ghost": "text-zinc-400 hover:text-white transition-colors"
+    },
+    "inputs": {
+      "default": "bg-zinc-950/50 border border-zinc-800 focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 rounded-md py-2 px-4 text-white placeholder:text-zinc-600 transition-all"
+    },
+    "cards": {
+      "feature": "group relative overflow-hidden bg-zinc-900/40 border border-white/5 hover:border-white/10 transition-all duration-500 rounded-xl p-8"
+    }
+  },
+  "assets": {
+    "images": {
+      "hero_bg": "https://images.unsplash.com/photo-1762279389042-9439bfb6c155?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "senseai_feature": "https://images.unsplash.com/photo-1764336312138-14a5368a6cd3?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "pacific_feature": "https://images.unsplash.com/photo-1764258560295-21e74c3d0d15?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "tools_bg": "https://images.unsplash.com/photo-1762009365851-c5b5b1aae3b9?crop=entropy&cs=srgb&fm=jpg&q=85"
+    },
+    "icons": {
+      "library": "lucide-react",
+      "style": "stroke-1.5"
+    }
+  },
+  "universal_guidelines": {
+    "general": [
+      "Avoid 'AI slop' aesthetics (generic centered layouts, default blue gradients).",
+      "Use 'Dark Matter' theme: Deep blacks + neon accents.",
+      "Typography: Use 'Outfit' for headers, 'Manrope' for body.",
+      "Interactive elements must have hover/active states.",
+      "Accessibility: Ensure high contrast text on dark backgrounds."
+    ],
+    "file_rules": [
+      "Use .js extension for all components (NO .tsx).",
+      "Use Tailwind CSS for styling.",
+      "Use 'sonner' for toasts.",
+      "Components must be named exports."
+    ],
+    "testing": [
+      "All interactive elements MUST have data-testid attributes."
+    ]
+  },
+  "instructions_to_main_agent": [
+    "1. Install required fonts via Google Fonts import in index.css.",
+    "2. Update tailwind.config.js to include the custom colors and fonts.",
+    "3. Create the 'Layout' component first to handle the global nav and footer.",
+    "4. Build the 'Home' page using the Bento Grid strategy.",
+    "5. Build 'SenseAI' and 'Pacific Market' pages using the Asymmetrical Scroll strategy.",
+    "6. Build the Tools (Invoice, QR) using functional dashboard layouts.",
+    "7. Ensure all inputs and buttons have proper focus states for accessibility."
+  ]
+}
