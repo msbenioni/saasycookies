@@ -1,19 +1,23 @@
 import { useState, useRef } from "react";
-import { FileText, Plus, Trash2, Download, Printer } from "lucide-react";
+import { FileText, Plus, Trash2, Download, Upload, X } from "lucide-react";
 import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 const emptyItem = { description: "", quantity: 1, rate: 0 };
 
 export default function InvoicePage() {
   const [invoice, setInvoice] = useState({
     invoiceNumber: "INV-001",
-    date: new Date().toISOString().split("T")[0],
+    date: new Date().toLocaleDateString('en-GB').split('/').reverse().join('-'), // dd/mm/yyyy format for input
     dueDate: "",
-    from: { name: "", email: "", address: "" },
+    from: { name: "", email: "", address: "", gst: "" },
     to: { name: "", email: "", address: "" },
     items: [{ ...emptyItem }],
     taxRate: 0,
+    withholdingTaxRate: 0, // New withholding tax field
     notes: "",
+    logo: "", // Logo field
+    payment: { accountName: "", accountNumber: "" }, // Payment details
   });
 
   const previewRef = useRef(null);
@@ -51,98 +55,294 @@ export default function InvoicePage() {
     0
   );
   const tax = subtotal * (invoice.taxRate / 100);
-  const total = subtotal + tax;
+  const withholdingTax = subtotal * (invoice.withholdingTaxRate / 100);
+  const total = subtotal + tax - withholdingTax;
+
+  const handleLogoUpload = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        updateField("logo", event.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeLogo = () => {
+    updateField("logo", "");
+  };
 
   const fmt = (n) =>
     n.toLocaleString("en-US", { style: "currency", currency: "USD" });
 
-  const downloadPDF = () => {
-    const doc = new jsPDF();
-    const margin = 20;
-    let y = margin;
+  // Format date for display as dd/mm/yyyy
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
 
-    doc.setFontSize(24);
-    doc.setTextColor(40, 40, 40);
-    doc.text("INVOICE", margin, y);
+  const downloadPDF = () => {
+    // A4 in mm for predictable spacing
+    const doc = new jsPDF({ unit: "mm", format: "a4" });
+    const pageW = doc.internal.pageSize.getWidth();
+    const pageH = doc.internal.pageSize.getHeight();
+
+    const M = 16;              // margin
+    const R = pageW - M;       // right edge
+    let y = M;
+
+    const line = (yy) => {
+      doc.setDrawColor(230);
+      doc.line(M, yy, R, yy);
+    };
+
+    const textRight = (txt, xx, yy) => doc.text(String(txt), xx, yy, { align: "right" });
+    const textCenter = (txt, xx, yy) => doc.text(String(txt), xx, yy, { align: "center" });
+
+    const fmt = (n) =>
+      (Number(n) || 0).toLocaleString("en-US", { style: "currency", currency: "USD" });
+
+    const formatDate = (dateString) => {
+      if (!dateString) return "";
+      const d = new Date(dateString);
+      const dd = String(d.getDate()).padStart(2, "0");
+      const mm = String(d.getMonth() + 1).padStart(2, "0");
+      const yyyy = d.getFullYear();
+      return `${dd}/${mm}/${yyyy}`;
+    };
+
+    // ---- CALCS ----
+    const subtotal = invoice.items.reduce((s, i) => s + (Number(i.quantity) || 0) * (Number(i.rate) || 0), 0);
+    const tax = subtotal * ((Number(invoice.taxRate) || 0) / 100);
+    const withholdingTax = subtotal * ((Number(invoice.withholdingTaxRate) || 0) / 100);
+    const total = subtotal + tax - withholdingTax;
+
+    // ---- Header ----
+    // Optional logo (keep aspect ratio)
+    const logoMaxW = 22; // mm (smaller looks more premium)
+    if (invoice.logo) {
+      try {
+        const props = doc.getImageProperties(invoice.logo);
+        const ratio = props.width / props.height;
+
+        const w = logoMaxW;
+        const h = w / ratio; // keep aspect ratio
+
+        doc.addImage(invoice.logo, props.fileType || "PNG", M, y, w, h);
+
+        // if logo is tall, reserve a bit more vertical space
+      } catch (e) {
+        // ignore logo if addImage fails
+      }
+    }
+
+    // Title
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(28);
+    doc.setTextColor(30);
+    const titleX = invoice.logo ? M + 28 : M; // 28mm gives breathing room after logo
+    doc.text("INVOICE", titleX, y + 10);
+
+    // Invoice number under title
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.setTextColor(120);
+    doc.text(`#${invoice.invoiceNumber || "—"}`, titleX, y + 16);
+
+    // Dates top-right
+    doc.setTextColor(90);
+    doc.setFontSize(10);
+    textRight(`Date: ${formatDate(invoice.date)}`, R, y + 6);
+    if (invoice.dueDate) textRight(`Due: ${formatDate(invoice.dueDate)}`, R, y + 12);
+
+    y += 26;
+    line(y);
     y += 10;
 
-    doc.setFontSize(10);
-    doc.setTextColor(100, 100, 100);
-    doc.text(`Invoice #: ${invoice.invoiceNumber}`, margin, y);
-    doc.text(`Date: ${invoice.date}`, 130, y);
-    y += 5;
-    if (invoice.dueDate) {
-      doc.text(`Due: ${invoice.dueDate}`, 130, y);
-    }
-    y += 12;
+    // ---- From / To blocks ----
+    const colGap = 12;
+    const colW = (pageW - (M * 2) - colGap) / 2;
 
-    doc.setFontSize(10);
-    doc.setTextColor(40, 40, 40);
-    doc.text("From:", margin, y);
-    doc.text("To:", 110, y);
-    y += 5;
-    doc.setTextColor(80, 80, 80);
-    doc.text(invoice.from.name || "—", margin, y);
-    doc.text(invoice.to.name || "—", 110, y);
-    y += 5;
-    doc.text(invoice.from.email || "", margin, y);
-    doc.text(invoice.to.email || "", 110, y);
-    y += 5;
-    const fromAddr = doc.splitTextToSize(invoice.from.address || "", 80);
-    const toAddr = doc.splitTextToSize(invoice.to.address || "", 80);
-    doc.text(fromAddr, margin, y);
-    doc.text(toAddr, 110, y);
-    y += Math.max(fromAddr.length, toAddr.length) * 5 + 10;
+    const clean = (s) =>
+      String(s || "")
+        .replace(/\r\n/g, "\n")
+        .replace(/[ \t]+/g, " ")     // collapse multiple spaces
+        .replace(/\n{3,}/g, "\n\n")  // collapse too many newlines
+        .trim();
 
-    doc.setFillColor(245, 245, 245);
-    doc.rect(margin, y, 170, 8, "F");
-    doc.setFontSize(9);
-    doc.setTextColor(60, 60, 60);
-    doc.text("Description", margin + 2, y + 5.5);
-    doc.text("Qty", 115, y + 5.5);
-    doc.text("Rate", 135, y + 5.5);
-    doc.text("Amount", 160, y + 5.5);
-    y += 12;
+    const wrap = (s, width) => doc.splitTextToSize(clean(s), width);
 
-    doc.setTextColor(40, 40, 40);
-    invoice.items.forEach((item) => {
-      doc.text(item.description || "—", margin + 2, y);
-      doc.text(String(item.quantity), 115, y);
-      doc.text(fmt(item.rate), 135, y);
-      doc.text(fmt(item.quantity * item.rate), 160, y);
-      y += 7;
+    const block = (title, x, yy, data) => {
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(9);
+      doc.setTextColor(120);
+      doc.text(title.toUpperCase(), x, yy);
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+      doc.setTextColor(40);
+
+      const maxWidth = colW; // stay within the column
+
+      // Build lines carefully (name/email as single lines, address wrapped)
+      const lines = [];
+
+      if (data.name) lines.push(clean(data.name));
+      if (data.email) lines.push(clean(data.email));
+
+      if (data.address) {
+        lines.push(...wrap(data.address, maxWidth)); // ✅ wraps properly
+      }
+
+      if (data.gst) lines.push(`GST: ${clean(data.gst)}`);
+
+      doc.text(lines.length ? lines : ["—"], x, yy + 6);
+
+      return yy + 6 + lines.length * 5;
+    };
+
+    const leftEnd = block("From", M, y, {
+      name: invoice.from.name,
+      email: invoice.from.email,
+      address: invoice.from.address,
+      gst: invoice.from.gst,
     });
 
-    y += 5;
-    doc.setDrawColor(220, 220, 220);
-    doc.line(margin, y, 190, y);
+    const rightEnd = block("To", M + colW + colGap, y, {
+      name: invoice.to.name,
+      email: invoice.to.email,
+      address: invoice.to.address,
+    });
+
+    y = Math.max(leftEnd, rightEnd) + 8;
+    line(y);
     y += 8;
 
+    // ---- Items table (AutoTable) ----
+    const rows = invoice.items.map((it) => {
+      const qty = Number(it.quantity) || 0;
+      const rate = Number(it.rate) || 0;
+      return [
+        it.description || "—",
+        String(qty || 0),
+        fmt(rate),
+        fmt(qty * rate),
+      ];
+    });
+
+    autoTable(doc, {
+      startY: y,
+      margin: { left: M, right: M },
+      head: [["Description", "Qty", "Rate", "Amount"]],
+      body: rows.length ? rows : [["—", "0", fmt(0), fmt(0)]],
+      theme: "grid",
+      styles: {
+        font: "helvetica",
+        fontSize: 10,
+        textColor: 40,
+        lineColor: 230,
+        lineWidth: 0.2,
+        cellPadding: 3,
+      },
+      headStyles: {
+        fillColor: [245, 245, 245],
+        textColor: 60,
+        fontStyle: "bold",
+      },
+      columnStyles: {
+        0: { cellWidth: 92 },                 // description
+        1: { halign: "center", cellWidth: 18 },
+        2: { halign: "right", cellWidth: 30 },
+        3: { halign: "right", cellWidth: 34 },
+      },
+    });
+
+    // Update y after table
+    y = doc.lastAutoTable.finalY + 10;
+
+    // ---- Totals box (right aligned, no overlap) ----
+    const boxW = 78;
+    const boxX = R - boxW;
+
+    doc.setDrawColor(230);
+    doc.rect(boxX, y, boxW, 34);
+
+    const labelX = boxX + 6;
+    const valueX = boxX + boxW - 6;
+
+    let ty = y + 8;
+
+    const row = (label, value, bold = false) => {
+      doc.setFont("helvetica", bold ? "bold" : "normal");
+      doc.setFontSize(bold ? 11 : 10);
+      doc.setTextColor(60);
+
+      doc.text(label, labelX, ty);
+      doc.setTextColor(30);
+      textRight(value, valueX, ty);
+
+      ty += 7;
+    };
+
+    row("Subtotal", fmt(subtotal));
+    if ((Number(invoice.taxRate) || 0) > 0) row(`Tax (${invoice.taxRate}%)`, fmt(tax));
+    if ((Number(invoice.withholdingTaxRate) || 0) > 0) row(`Withholding (${invoice.withholdingTaxRate}%)`, fmt(withholdingTax));
+    row("Total", fmt(total), true);
+
+    y += 44;
+
+    // ---- Payment Details (boxed, left side) ----
+    const pay = invoice.payment || {};
+    const payBoxW = 78;
+    const payBoxH = 22;
+    const payBoxX = M;
+
+    doc.setDrawColor(230);
+    doc.rect(payBoxX, y - 44, payBoxW, payBoxH);
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(9);
+    doc.setTextColor(120);
+    doc.text("PAYMENT", payBoxX + 6, y - 44 + 8);
+
+    doc.setFont("helvetica", "normal");
     doc.setFontSize(10);
-    doc.text("Subtotal:", 135, y);
-    doc.text(fmt(subtotal), 165, y);
-    y += 6;
-    if (invoice.taxRate > 0) {
-      doc.text(`Tax (${invoice.taxRate}%):`, 135, y);
-      doc.text(fmt(tax), 165, y);
-      y += 6;
-    }
-    doc.setFontSize(12);
-    doc.setTextColor(20, 20, 20);
-    doc.text("Total:", 135, y);
-    doc.text(fmt(total), 165, y);
+    doc.setTextColor(60);
 
+    const payLines = [
+      pay.accountName ? `Name: ${clean(pay.accountName)}` : "",
+      pay.accountNumber ? `Account: ${clean(pay.accountNumber)}` : "",
+    ].filter(Boolean);
+
+    doc.text(payLines.length ? payLines : ["—"], payBoxX + 6, y - 44 + 15);
+
+    // ---- Notes ----
     if (invoice.notes) {
-      y += 15;
+      doc.setFont("helvetica", "bold");
       doc.setFontSize(9);
-      doc.setTextColor(100, 100, 100);
-      doc.text("Notes:", margin, y);
-      y += 5;
-      const noteLines = doc.splitTextToSize(invoice.notes, 170);
-      doc.text(noteLines, margin, y);
+      doc.setTextColor(120);
+      doc.text("NOTES", M, y);
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+      doc.setTextColor(60);
+
+      const noteLines = doc.splitTextToSize(invoice.notes, pageW - M * 2);
+      doc.text(noteLines, M, y + 6);
+      y += 6 + noteLines.length * 5;
     }
 
-    doc.save(`${invoice.invoiceNumber}.pdf`);
+    // ---- Footer (optional subtle) ----
+    doc.setFontSize(9);
+    doc.setTextColor(150);
+    textCenter("Thank you for your business", pageW / 2, pageH - 10);
+
+    doc.save(`${invoice.invoiceNumber || "invoice"}.pdf`);
   };
 
   const inputClass =
@@ -158,7 +358,7 @@ export default function InvoicePage() {
           data-testid="invoice-page-title"
           className="font-heading text-3xl md:text-4xl font-bold tracking-tight"
         >
-          Invoice Generator
+          Invoice
         </h1>
       </div>
       <p className="text-zinc-500 mb-12 ml-[52px]">
@@ -215,6 +415,7 @@ export default function InvoicePage() {
               <input data-testid="from-name-input" className={inputClass} placeholder="Your name" value={invoice.from.name} onChange={(e) => updateField("from.name", e.target.value)} />
               <input data-testid="from-email-input" className={inputClass} placeholder="Email" value={invoice.from.email} onChange={(e) => updateField("from.email", e.target.value)} />
               <textarea data-testid="from-address-input" className={inputClass + " resize-none h-16"} placeholder="Address" value={invoice.from.address} onChange={(e) => updateField("from.address", e.target.value)} />
+              <input data-testid="from-gst-input" className={inputClass} placeholder="GST Number" value={invoice.from.gst} onChange={(e) => updateField("from.gst", e.target.value)} />
             </div>
             <div className="rounded-xl bg-zinc-900/40 border border-white/5 p-6 space-y-3">
               <h3 className="font-heading text-sm font-semibold text-zinc-400 uppercase tracking-wider">
@@ -226,45 +427,90 @@ export default function InvoicePage() {
             </div>
           </div>
 
+          {/* Logo Upload */}
+          <div className="rounded-xl bg-zinc-900/40 border border-white/5 p-6 space-y-4">
+            <h3 className="font-heading text-sm font-semibold text-zinc-400 uppercase tracking-wider">
+              Company Logo
+            </h3>
+            {invoice.logo ? (
+              <div className="space-y-3">
+                <div className="relative inline-block">
+                  <img 
+                    src={invoice.logo} 
+                    alt="Company logo" 
+                    className="h-16 max-w-xs object-contain rounded-lg border border-zinc-700"
+                  />
+                  <button
+                    onClick={removeLogo}
+                    className="absolute -top-2 -right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </div>
+                <p className="text-xs text-zinc-500">PNG, JPG up to 2MB</p>
+              </div>
+            ) : (
+              <div>
+                <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-zinc-700 rounded-lg cursor-pointer hover:border-brand-primary transition-colors">
+                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                    <Upload className="w-8 h-8 mb-3 text-zinc-500" />
+                    <p className="mb-2 text-sm text-zinc-400">
+                      <span className="font-semibold">Click to upload</span> or drag and drop
+                    </p>
+                    <p className="text-xs text-zinc-500">PNG, JPG up to 2MB</p>
+                  </div>
+                  <input 
+                    type="file" 
+                    className="hidden" 
+                    accept="image/*"
+                    onChange={handleLogoUpload}
+                  />
+                </label>
+              </div>
+            )}
+          </div>
+
           {/* Line Items */}
           <div className="rounded-xl bg-zinc-900/40 border border-white/5 p-6 space-y-4">
             <h3 className="font-heading text-sm font-semibold text-zinc-400 uppercase tracking-wider">
               Line Items
             </h3>
             {invoice.items.map((item, idx) => (
-              <div key={idx} className="flex gap-2 items-start">
+              <div key={idx} className="space-y-2">
                 <input
                   data-testid={`item-desc-${idx}`}
-                  className={inputClass + " flex-1"}
+                  className={inputClass}
                   placeholder="Description"
                   value={item.description}
                   onChange={(e) => updateItem(idx, "description", e.target.value)}
                 />
-                <input
-                  data-testid={`item-qty-${idx}`}
-                  type="number"
-                  min="1"
-                  className={inputClass + " w-16 text-center"}
-                  value={item.quantity}
-                  onChange={(e) => updateItem(idx, "quantity", Number(e.target.value))}
-                />
-                <input
-                  data-testid={`item-rate-${idx}`}
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  className={inputClass + " w-24 text-right"}
-                  placeholder="Rate"
-                  value={item.rate || ""}
-                  onChange={(e) => updateItem(idx, "rate", Number(e.target.value))}
-                />
-                <button
-                  data-testid={`item-remove-${idx}`}
-                  onClick={() => removeItem(idx)}
-                  className="p-2 text-zinc-600 hover:text-red-400 transition-colors mt-0.5"
-                >
-                  <Trash2 className="w-4 h-4" strokeWidth={1.5} />
-                </button>
+                <div className="flex gap-2 items-center">
+                  <input
+                    data-testid={`item-qty-${idx}`}
+                    type="number"
+                    min="1"
+                    className={inputClass + " w-20 text-center"}
+                    value={item.quantity}
+                    onChange={(e) => updateItem(idx, "quantity", Number(e.target.value))}
+                  />
+                  <input
+                    data-testid={`item-rate-${idx}`}
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    className={inputClass + " w-28 text-right"}
+                    placeholder="Rate"
+                    value={item.rate || ""}
+                    onChange={(e) => updateItem(idx, "rate", Number(e.target.value))}
+                  />
+                  <button
+                    data-testid={`item-remove-${idx}`}
+                    onClick={() => removeItem(idx)}
+                    className="p-2 text-zinc-600 hover:text-red-400 transition-colors mt-0.5"
+                  >
+                    <Trash2 className="w-4 h-4" strokeWidth={1.5} />
+                  </button>
+                </div>
               </div>
             ))}
             <button
@@ -279,18 +525,33 @@ export default function InvoicePage() {
 
           {/* Tax & Notes */}
           <div className="rounded-xl bg-zinc-900/40 border border-white/5 p-6 space-y-4">
-            <div>
-              <label className="text-xs text-zinc-500 mb-1 block">Tax Rate (%)</label>
-              <input
-                data-testid="tax-rate-input"
-                type="number"
-                min="0"
-                max="100"
-                step="0.1"
-                className={inputClass + " w-32"}
-                value={invoice.taxRate || ""}
-                onChange={(e) => updateField("taxRate", Number(e.target.value))}
-              />
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="text-xs text-zinc-500 mb-1 block">Tax Rate (%)</label>
+                <input
+                  data-testid="tax-rate-input"
+                  type="number"
+                  min="0"
+                  max="100"
+                  step="0.1"
+                  className={inputClass}
+                  value={invoice.taxRate || ""}
+                  onChange={(e) => updateField("taxRate", Number(e.target.value))}
+                />
+              </div>
+              <div>
+                <label className="text-xs text-zinc-500 mb-1 block">Withholding Tax (%)</label>
+                <input
+                  data-testid="withholding-tax-rate-input"
+                  type="number"
+                  min="0"
+                  max="100"
+                  step="0.1"
+                  className={inputClass}
+                  value={invoice.withholdingTaxRate || ""}
+                  onChange={(e) => updateField("withholdingTaxRate", Number(e.target.value))}
+                />
+              </div>
             </div>
             <div>
               <label className="text-xs text-zinc-500 mb-1 block">Notes</label>
@@ -304,6 +565,35 @@ export default function InvoicePage() {
             </div>
           </div>
 
+          {/* Payment Details */}
+          <div className="rounded-xl bg-zinc-900/40 border border-white/5 p-6 space-y-4">
+            <h3 className="font-heading text-sm font-semibold text-zinc-400 uppercase tracking-wider">
+              Payment Details
+            </h3>
+            <div className="space-y-3">
+              <div>
+                <label className="text-xs text-zinc-500 mb-1 block">Account Name</label>
+                <input
+                  data-testid="payment-account-name-input"
+                  className={inputClass}
+                  placeholder="Bank account name"
+                  value={invoice.payment.accountName}
+                  onChange={(e) => updateField("payment.accountName", e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="text-xs text-zinc-500 mb-1 block">Account Number</label>
+                <input
+                  data-testid="payment-account-number-input"
+                  className={inputClass}
+                  placeholder="Bank account number"
+                  value={invoice.payment.accountNumber}
+                  onChange={(e) => updateField("payment.accountNumber", e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+
           {/* Actions */}
           <div className="flex gap-3">
             <button
@@ -312,15 +602,7 @@ export default function InvoicePage() {
               className="flex items-center gap-2 bg-white text-black font-semibold px-6 py-2.5 rounded-md transition-all duration-300 hover:bg-zinc-200 hover:scale-[1.02] text-sm"
             >
               <Download className="w-4 h-4" strokeWidth={1.5} />
-              Download PDF
-            </button>
-            <button
-              data-testid="print-invoice-button"
-              onClick={() => window.print()}
-              className="flex items-center gap-2 bg-zinc-900 text-white border border-zinc-800 hover:bg-zinc-800 font-medium px-6 py-2.5 rounded-md transition-all text-sm"
-            >
-              <Printer className="w-4 h-4" strokeWidth={1.5} />
-              Print
+              Download Invoice (PDF)
             </button>
           </div>
         </div>
@@ -330,22 +612,33 @@ export default function InvoicePage() {
           <div
             ref={previewRef}
             data-testid="invoice-preview"
-            className="rounded-xl bg-white text-gray-900 p-8 md:p-10 shadow-2xl sticky top-24"
+            className="rounded-xl bg-white text-gray-900 p-8 md:p-10 shadow-2xl sticky top-24 min-w-[640px]"
           >
             <div className="flex justify-between items-start mb-8">
-              <div>
-                <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 font-heading">
-                  INVOICE
-                </h2>
-                <p className="text-sm text-gray-500 mt-1">
-                  #{invoice.invoiceNumber}
-                </p>
+              <div className="flex items-start gap-4">
+                {invoice.logo && (
+                  <img
+                    src={invoice.logo}
+                    alt="Company logo"
+                    className="w-[84px] h-[42px] object-contain object-left"
+                  />
+                )}
+                <div>
+                  <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 font-heading">
+                    INVOICE
+                  </h2>
+                  <p className="text-sm text-gray-500 mt-1">
+                    #{invoice.invoiceNumber}
+                  </p>
+                </div>
               </div>
               <div className="text-right text-sm text-gray-500">
-                <p>Date: {invoice.date}</p>
-                {invoice.dueDate && <p>Due: {invoice.dueDate}</p>}
+                <p>Date: {formatDate(invoice.date)}</p>
+                {invoice.dueDate && <p>Due: {formatDate(invoice.dueDate)}</p>}
               </div>
             </div>
+
+            <div className="h-px bg-gray-200 my-8" />
 
             <div className="grid grid-cols-2 gap-8 mb-8">
               <div>
@@ -354,7 +647,10 @@ export default function InvoicePage() {
                 </p>
                 <p className="font-semibold text-gray-900">{invoice.from.name || "—"}</p>
                 <p className="text-sm text-gray-500">{invoice.from.email}</p>
-                <p className="text-sm text-gray-500 whitespace-pre-line">{invoice.from.address}</p>
+                <p className="text-sm text-gray-500 whitespace-pre-line break-words max-w-[280px] leading-relaxed">
+                  {invoice.from.address}
+                </p>
+                {invoice.from.gst && <p className="text-sm text-gray-500">GST: {invoice.from.gst}</p>}
               </div>
               <div>
                 <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
@@ -362,7 +658,9 @@ export default function InvoicePage() {
                 </p>
                 <p className="font-semibold text-gray-900">{invoice.to.name || "—"}</p>
                 <p className="text-sm text-gray-500">{invoice.to.email}</p>
-                <p className="text-sm text-gray-500 whitespace-pre-line">{invoice.to.address}</p>
+                <p className="text-sm text-gray-500 whitespace-pre-line break-words max-w-[280px] leading-relaxed">
+                  {invoice.to.address}
+                </p>
               </div>
             </div>
 
@@ -385,39 +683,73 @@ export default function InvoicePage() {
               </thead>
               <tbody>
                 {invoice.items.map((item, idx) => (
-                  <tr key={idx} className="border-b border-gray-100">
-                    <td className="py-3 text-sm text-gray-700">
-                      {item.description || "—"}
-                    </td>
-                    <td className="py-3 text-sm text-gray-700 text-center">
-                      {item.quantity}
-                    </td>
-                    <td className="py-3 text-sm text-gray-700 text-right">
-                      {fmt(item.rate)}
-                    </td>
-                    <td className="py-3 text-sm text-gray-900 font-medium text-right">
-                      {fmt(item.quantity * item.rate)}
-                    </td>
+                  <tr key={idx} className="border-b border-gray-100 last:border-b-0">
+                    <td className="py-3 text-sm text-gray-900">{item.description || "—"}</td>
+                    <td className="py-3 text-sm text-gray-900 text-center">{item.quantity || 0}</td>
+                    <td className="py-3 text-sm text-gray-900 text-right">{fmt(item.rate)}</td>
+                    <td className="py-3 text-sm text-gray-900 text-right font-medium">{fmt((item.quantity || 0) * (item.rate || 0))}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
 
-            <div className="flex justify-end mb-8">
-              <div className="w-64 space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Subtotal</span>
-                  <span className="text-gray-900">{fmt(subtotal)}</span>
-                </div>
-                {invoice.taxRate > 0 && (
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Tax ({invoice.taxRate}%)</span>
-                    <span className="text-gray-900">{fmt(tax)}</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 items-start">
+              {/* Payment box (left) */}
+              <div className="border border-gray-200 rounded-lg p-5 min-w-[280px]">
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+                  Payment Details
+                </p>
+
+                <div className="space-y-2 text-sm text-gray-600">
+                  <div className="flex justify-between gap-4">
+                    <span className="text-gray-500">Account Name</span>
+                    <span className="text-gray-900 font-medium text-right break-words flex-1">
+                      {invoice.payment.accountName || "—"}
+                    </span>
                   </div>
-                )}
-                <div className="flex justify-between text-base font-bold border-t border-gray-200 pt-2">
-                  <span className="text-gray-900">Total</span>
-                  <span className="text-gray-900">{fmt(total)}</span>
+
+                  <div className="flex justify-between gap-4">
+                    <span className="text-gray-500">Account Number</span>
+                    <span className="text-gray-900 font-medium text-right break-words flex-1">
+                      {invoice.payment.accountNumber || "—"}
+                    </span>
+                  </div>
+
+                  <div className="flex justify-between gap-4">
+                    <span className="text-gray-500">Reference</span>
+                    <span className="text-gray-900 font-medium text-right">
+                      {invoice.invoiceNumber || "—"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Totals box (right) */}
+              <div className="border border-gray-200 rounded-lg p-5 md:ml-auto w-full min-w-[280px]">
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">Subtotal</span>
+                    <span className="text-gray-900">{fmt(subtotal)}</span>
+                  </div>
+
+                  {invoice.taxRate > 0 && (
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-500">Tax ({invoice.taxRate}%)</span>
+                      <span className="text-gray-900">{fmt(tax)}</span>
+                    </div>
+                  )}
+
+                  {invoice.withholdingTaxRate > 0 && (
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-500">Withholding ({invoice.withholdingTaxRate}%)</span>
+                      <span className="text-gray-900">{fmt(withholdingTax)}</span>
+                    </div>
+                  )}
+
+                  <div className="flex justify-between text-base font-bold border-t border-gray-200 pt-3 mt-3">
+                    <span className="text-gray-900">Total</span>
+                    <span className="text-gray-900">{fmt(total)}</span>
+                  </div>
                 </div>
               </div>
             </div>
