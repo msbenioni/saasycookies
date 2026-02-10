@@ -6,6 +6,10 @@
 [build.environment]
   NODE_VERSION = "20"
 
+[functions]
+  directory = "netlify/functions"
+  node_modules = "node_modules"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"

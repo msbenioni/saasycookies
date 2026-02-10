@@ -3,6 +3,21 @@ const { Resend } = require('resend');
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 exports.handler = async (event, context) => {
+  console.log('Function invoked with:', event.httpMethod);
+  
+  // Add CORS headers for preflight requests
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      },
+      body: '',
+    };
+  }
+
   // Only allow POST requests
   if (event.httpMethod !== 'POST') {
     return {
@@ -16,7 +31,9 @@ exports.handler = async (event, context) => {
   }
 
   try {
+    console.log('Parsing request body...');
     const { name, email, subject, message } = JSON.parse(event.body);
+    console.log('Form data received:', { name, email, subject: subject || 'No subject', message: message.substring(0, 50) + '...' });
 
     if (!name || !email || !message) {
       return {
@@ -29,6 +46,7 @@ exports.handler = async (event, context) => {
       };
     }
 
+    console.log('Sending email via Resend...');
     const { data, error } = await resend.emails.send({
       from: 'contact@saasycookies.co.nz',
       to: 'saasycookies@gmail.com',
@@ -56,7 +74,7 @@ exports.handler = async (event, context) => {
       console.error('Resend error:', error);
       return {
         statusCode: 500,
-        body: JSON.stringify({ error: 'Failed to send email' }),
+        body: JSON.stringify({ error: 'Failed to send email', details: error }),
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Headers': 'Content-Type',
@@ -64,6 +82,7 @@ exports.handler = async (event, context) => {
       };
     }
 
+    console.log('Email sent successfully:', data);
     return {
       statusCode: 200,
       body: JSON.stringify({ message: 'Email sent successfully', data }),
@@ -76,7 +95,7 @@ exports.handler = async (event, context) => {
     console.error('Function error:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Internal server error' }),
+      body: JSON.stringify({ error: 'Internal server error', details: error.message }),
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': 'Content-Type',
