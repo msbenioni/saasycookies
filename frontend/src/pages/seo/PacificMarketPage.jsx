@@ -199,7 +199,7 @@ export default function PacificMarketPage() {
               building the bridge I wish existed.&rdquo;
             </blockquote>
             <p className="text-zinc-500">
-              &mdash; Founder, SaaSy Cookies
+              &mdash; Jasmin Benioni, Founder, SaaSy Cookies
             </p>
           </div>
         </div>

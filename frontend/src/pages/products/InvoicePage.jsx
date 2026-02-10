@@ -3,7 +3,50 @@ import { FileText, Plus, Trash2, Download, Upload, X } from "lucide-react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
+// Constants
 const emptyItem = { description: "", quantity: 1, rate: 0 };
+
+const INPUT_CLASS = "w-full bg-zinc-950/50 border border-zinc-800 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary/20 rounded-md py-2 px-3 text-white text-sm placeholder:text-zinc-600 transition-all outline-none";
+
+const PDF_CONFIG = {
+  MARGIN: 16,
+  LOGO_MAX_WIDTH: 22,
+  TITLE_OFFSET: 28,
+  COLUMN_GAP: 12,
+  BOX_WIDTH: 78,
+  BOX_HEIGHT: 22,
+  PAYMENT_BOX_HEIGHT: 34,
+};
+
+const TABLE_STYLES = {
+  font: "helvetica",
+  fontSize: 10,
+  textColor: 40,
+  lineColor: 230,
+  lineWidth: 0.2,
+  cellPadding: 3,
+};
+
+const HEAD_STYLES = {
+  fillColor: [245, 245, 245],
+  textColor: 60,
+  fontStyle: "bold",
+};
+
+const COLUMN_STYLES = {
+  0: { cellWidth: 92 },                 // description
+  1: { halign: "center", cellWidth: 18 },
+  2: { halign: "right", cellWidth: 30 },
+  3: { halign: "right", cellWidth: 34 },
+};
+
+const PREVIEW_CLASSES = {
+  CONTAINER: "rounded-xl bg-white text-gray-900 p-8 md:p-10 shadow-2xl sticky top-24 min-w-[640px]",
+  LOGO: "w-[84px] h-[42px] object-contain object-left",
+  DIVIDER: "h-px bg-gray-200 my-8",
+  TABLE: "w-full mb-8",
+  TABLE_ROW: "border-b border-gray-100 last:border-b-0",
+};
 
 export default function InvoicePage() {
   const [invoice, setInvoice] = useState({
@@ -87,266 +130,253 @@ export default function InvoicePage() {
   };
 
   const downloadPDF = () => {
-    // A4 in mm for predictable spacing
-    const doc = new jsPDF({ unit: "mm", format: "a4" });
-    const pageW = doc.internal.pageSize.getWidth();
-    const pageH = doc.internal.pageSize.getHeight();
+    try {
+      // A4 in mm for predictable spacing
+      const doc = new jsPDF({ unit: "mm", format: "a4" });
+      const pageW = doc.internal.pageSize.getWidth();
+      const pageH = doc.internal.pageSize.getHeight();
 
-    const M = 16;              // margin
-    const R = pageW - M;       // right edge
-    let y = M;
+      const M = PDF_CONFIG.MARGIN;
+      const R = pageW - M;
+      let y = M;
 
-    const line = (yy) => {
-      doc.setDrawColor(230);
-      doc.line(M, yy, R, yy);
-    };
+      const line = (yy) => {
+        doc.setDrawColor(230);
+        doc.line(M, yy, R, yy);
+      };
 
-    const textRight = (txt, xx, yy) => doc.text(String(txt), xx, yy, { align: "right" });
-    const textCenter = (txt, xx, yy) => doc.text(String(txt), xx, yy, { align: "center" });
+      const textRight = (txt, xx, yy) => doc.text(String(txt), xx, yy, { align: "right" });
+      const textCenter = (txt, xx, yy) => doc.text(String(txt), xx, yy, { align: "center" });
 
-    const fmt = (n) =>
-      (Number(n) || 0).toLocaleString("en-US", { style: "currency", currency: "USD" });
+      const fmt = (n) =>
+        (Number(n) || 0).toLocaleString("en-US", { style: "currency", currency: "USD" });
 
-    const formatDate = (dateString) => {
-      if (!dateString) return "";
-      const d = new Date(dateString);
-      const dd = String(d.getDate()).padStart(2, "0");
-      const mm = String(d.getMonth() + 1).padStart(2, "0");
-      const yyyy = d.getFullYear();
-      return `${dd}/${mm}/${yyyy}`;
-    };
+      const formatDate = (dateString) => {
+        if (!dateString) return "";
+        const d = new Date(dateString);
+        const dd = String(d.getDate()).padStart(2, "0");
+        const mm = String(d.getMonth() + 1).padStart(2, "0");
+        const yyyy = d.getFullYear();
+        return `${dd}/${mm}/${yyyy}`;
+      };
 
-    // ---- CALCS ----
-    const subtotal = invoice.items.reduce((s, i) => s + (Number(i.quantity) || 0) * (Number(i.rate) || 0), 0);
-    const tax = subtotal * ((Number(invoice.taxRate) || 0) / 100);
-    const withholdingTax = subtotal * ((Number(invoice.withholdingTaxRate) || 0) / 100);
-    const total = subtotal + tax - withholdingTax;
+      // ---- CALCS ----
+      const subtotal = invoice.items.reduce((s, i) => s + (Number(i.quantity) || 0) * (Number(i.rate) || 0), 0);
+      const tax = subtotal * ((Number(invoice.taxRate) || 0) / 100);
+      const withholdingTax = subtotal * ((Number(invoice.withholdingTaxRate) || 0) / 100);
+      const total = subtotal + tax - withholdingTax;
 
-    // ---- Header ----
-    // Optional logo (keep aspect ratio)
-    const logoMaxW = 22; // mm (smaller looks more premium)
-    if (invoice.logo) {
-      try {
-        const props = doc.getImageProperties(invoice.logo);
-        const ratio = props.width / props.height;
+      // ---- Header ----
+      // Optional logo (keep aspect ratio)
+      if (invoice.logo) {
+        try {
+          const props = doc.getImageProperties(invoice.logo);
+          const ratio = props.width / props.height;
 
-        const w = logoMaxW;
-        const h = w / ratio; // keep aspect ratio
+          const w = PDF_CONFIG.LOGO_MAX_WIDTH;
+          const h = w / ratio; // keep aspect ratio
 
-        doc.addImage(invoice.logo, props.fileType || "PNG", M, y, w, h);
+          doc.addImage(invoice.logo, props.fileType || "PNG", M, y, w, h);
 
-        // if logo is tall, reserve a bit more vertical space
-      } catch (e) {
-        // ignore logo if addImage fails
+          // if logo is tall, reserve a bit more vertical space
+        } catch (e) {
+          // ignore logo if addImage fails
+        }
       }
-    }
 
-    // Title
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(28);
-    doc.setTextColor(30);
-    const titleX = invoice.logo ? M + 28 : M; // 28mm gives breathing room after logo
-    doc.text("INVOICE", titleX, y + 10);
-
-    // Invoice number under title
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(10);
-    doc.setTextColor(120);
-    doc.text(`#${invoice.invoiceNumber || "—"}`, titleX, y + 16);
-
-    // Dates top-right
-    doc.setTextColor(90);
-    doc.setFontSize(10);
-    textRight(`Date: ${formatDate(invoice.date)}`, R, y + 6);
-    if (invoice.dueDate) textRight(`Due: ${formatDate(invoice.dueDate)}`, R, y + 12);
-
-    y += 26;
-    line(y);
-    y += 10;
-
-    // ---- From / To blocks ----
-    const colGap = 12;
-    const colW = (pageW - (M * 2) - colGap) / 2;
-
-    const clean = (s) =>
-      String(s || "")
-        .replace(/\r\n/g, "\n")
-        .replace(/[ \t]+/g, " ")     // collapse multiple spaces
-        .replace(/\n{3,}/g, "\n\n")  // collapse too many newlines
-        .trim();
-
-    const wrap = (s, width) => doc.splitTextToSize(clean(s), width);
-
-    const block = (title, x, yy, data) => {
+      // Title
       doc.setFont("helvetica", "bold");
-      doc.setFontSize(9);
-      doc.setTextColor(120);
-      doc.text(title.toUpperCase(), x, yy);
-
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(10);
-      doc.setTextColor(40);
-
-      const maxWidth = colW; // stay within the column
-
-      // Build lines carefully (name/email as single lines, address wrapped)
-      const lines = [];
-
-      if (data.name) lines.push(clean(data.name));
-      if (data.email) lines.push(clean(data.email));
-
-      if (data.address) {
-        lines.push(...wrap(data.address, maxWidth)); // ✅ wraps properly
-      }
-
-      if (data.gst) lines.push(`GST: ${clean(data.gst)}`);
-
-      doc.text(lines.length ? lines : ["—"], x, yy + 6);
-
-      return yy + 6 + lines.length * 5;
-    };
-
-    const leftEnd = block("From", M, y, {
-      name: invoice.from.name,
-      email: invoice.from.email,
-      address: invoice.from.address,
-      gst: invoice.from.gst,
-    });
-
-    const rightEnd = block("To", M + colW + colGap, y, {
-      name: invoice.to.name,
-      email: invoice.to.email,
-      address: invoice.to.address,
-    });
-
-    y = Math.max(leftEnd, rightEnd) + 8;
-    line(y);
-    y += 8;
-
-    // ---- Items table (AutoTable) ----
-    const rows = invoice.items.map((it) => {
-      const qty = Number(it.quantity) || 0;
-      const rate = Number(it.rate) || 0;
-      return [
-        it.description || "—",
-        String(qty || 0),
-        fmt(rate),
-        fmt(qty * rate),
-      ];
-    });
-
-    autoTable(doc, {
-      startY: y,
-      margin: { left: M, right: M },
-      head: [["Description", "Qty", "Rate", "Amount"]],
-      body: rows.length ? rows : [["—", "0", fmt(0), fmt(0)]],
-      theme: "grid",
-      styles: {
-        font: "helvetica",
-        fontSize: 10,
-        textColor: 40,
-        lineColor: 230,
-        lineWidth: 0.2,
-        cellPadding: 3,
-      },
-      headStyles: {
-        fillColor: [245, 245, 245],
-        textColor: 60,
-        fontStyle: "bold",
-      },
-      columnStyles: {
-        0: { cellWidth: 92 },                 // description
-        1: { halign: "center", cellWidth: 18 },
-        2: { halign: "right", cellWidth: 30 },
-        3: { halign: "right", cellWidth: 34 },
-      },
-    });
-
-    // Update y after table
-    y = doc.lastAutoTable.finalY + 10;
-
-    // ---- Totals box (right aligned, no overlap) ----
-    const boxW = 78;
-    const boxX = R - boxW;
-
-    doc.setDrawColor(230);
-    doc.rect(boxX, y, boxW, 34);
-
-    const labelX = boxX + 6;
-    const valueX = boxX + boxW - 6;
-
-    let ty = y + 8;
-
-    const row = (label, value, bold = false) => {
-      doc.setFont("helvetica", bold ? "bold" : "normal");
-      doc.setFontSize(bold ? 11 : 10);
-      doc.setTextColor(60);
-
-      doc.text(label, labelX, ty);
+      doc.setFontSize(28);
       doc.setTextColor(30);
-      textRight(value, valueX, ty);
+      const titleX = invoice.logo ? M + PDF_CONFIG.TITLE_OFFSET : M;
+      doc.text("INVOICE", titleX, y + 10);
 
-      ty += 7;
-    };
+      // Invoice number under title
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+      doc.setTextColor(120);
+      doc.text(`#${invoice.invoiceNumber || "—"}`, titleX, y + 16);
 
-    row("Subtotal", fmt(subtotal));
-    if ((Number(invoice.taxRate) || 0) > 0) row(`Tax (${invoice.taxRate}%)`, fmt(tax));
-    if ((Number(invoice.withholdingTaxRate) || 0) > 0) row(`Withholding (${invoice.withholdingTaxRate}%)`, fmt(withholdingTax));
-    row("Total", fmt(total), true);
+      // Dates top-right
+      doc.setTextColor(90);
+      doc.setFontSize(10);
+      textRight(`Date: ${formatDate(invoice.date)}`, R, y + 6);
+      if (invoice.dueDate) textRight(`Due: ${formatDate(invoice.dueDate)}`, R, y + 12);
 
-    y += 44;
+      y += 26;
+      line(y);
+      y += 10;
 
-    // ---- Payment Details (boxed, left side) ----
-    const pay = invoice.payment || {};
-    const payBoxW = 78;
-    const payBoxH = 22;
-    const payBoxX = M;
+      // ---- From / To blocks ----
+      const colGap = PDF_CONFIG.COLUMN_GAP;
+      const colW = (pageW - (M * 2) - colGap) / 2;
 
-    doc.setDrawColor(230);
-    doc.rect(payBoxX, y - 44, payBoxW, payBoxH);
+      const clean = (s) =>
+        String(s || "")
+          .replace(/\r\n/g, "\n")
+          .replace(/[ \t]+/g, " ")     // collapse multiple spaces
+          .replace(/\n{3,}/g, "\n\n")  // collapse too many newlines
+          .trim();
 
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(9);
-    doc.setTextColor(120);
-    doc.text("PAYMENT", payBoxX + 6, y - 44 + 8);
+      const wrap = (s, width) => doc.splitTextToSize(clean(s), width);
 
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(10);
-    doc.setTextColor(60);
+      const block = (title, x, yy, data) => {
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(9);
+        doc.setTextColor(120);
+        doc.text(title.toUpperCase(), x, yy);
 
-    const payLines = [
-      pay.accountName ? `Name: ${clean(pay.accountName)}` : "",
-      pay.accountNumber ? `Account: ${clean(pay.accountNumber)}` : "",
-    ].filter(Boolean);
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(10);
+        doc.setTextColor(40);
 
-    doc.text(payLines.length ? payLines : ["—"], payBoxX + 6, y - 44 + 15);
+        const maxWidth = colW; // stay within the column
 
-    // ---- Notes ----
-    if (invoice.notes) {
+        // Build lines carefully (name/email as single lines, address wrapped)
+        const lines = [];
+
+        if (data.name) lines.push(clean(data.name));
+        if (data.email) lines.push(clean(data.email));
+
+        if (data.address) {
+          lines.push(...wrap(data.address, maxWidth)); // ✅ wraps properly
+        }
+
+        if (data.gst) lines.push(`GST: ${clean(data.gst)}`);
+
+        doc.text(lines.length ? lines : ["—"], x, yy + 6);
+
+        return yy + 6 + lines.length * 5;
+      };
+
+      const leftEnd = block("From", M, y, {
+        name: invoice.from.name,
+        email: invoice.from.email,
+        address: invoice.from.address,
+        gst: invoice.from.gst,
+      });
+
+      const rightEnd = block("To", M + colGap + colW, y, {
+        name: invoice.to.name,
+        email: invoice.to.email,
+        address: invoice.to.address,
+      });
+
+      y = Math.max(leftEnd, rightEnd) + 8;
+      line(y);
+      y += 8;
+
+      // ---- Items table (AutoTable) ----
+      const rows = invoice.items.map((it) => {
+        const qty = Number(it.quantity) || 0;
+        const rate = Number(it.rate) || 0;
+        return [
+          it.description || "—",
+          String(qty || 0),
+          fmt(rate),
+          fmt(qty * rate),
+        ];
+      });
+
+      autoTable(doc, {
+        startY: y,
+        margin: { left: M, right: M },
+        head: [["Description", "Qty", "Rate", "Amount"]],
+        body: rows.length ? rows : [["—", "0", fmt(0), fmt(0)]],
+        theme: "grid",
+        styles: TABLE_STYLES,
+        headStyles: HEAD_STYLES,
+        columnStyles: COLUMN_STYLES,
+      });
+
+      // Update y after table
+      y = doc.lastAutoTable.finalY + 10;
+
+      // ---- Totals box (right aligned, no overlap) ----
+      const boxW = PDF_CONFIG.BOX_WIDTH;
+      const boxX = R - boxW;
+
+      doc.setDrawColor(230);
+      doc.rect(boxX, y, boxW, PDF_CONFIG.BOX_HEIGHT);
+
+      const labelX = boxX + 6;
+      const valueX = boxX + boxW - 6;
+
+      let ty = y + 8;
+
+      const row = (label, value, bold = false) => {
+        doc.setFont("helvetica", bold ? "bold" : "normal");
+        doc.setFontSize(bold ? 11 : 10);
+        doc.setTextColor(60);
+
+        doc.text(label, labelX, ty);
+        doc.setTextColor(30);
+        textRight(value, valueX, ty);
+
+        ty += 7;
+      };
+
+      row("Subtotal", fmt(subtotal));
+      if ((Number(invoice.taxRate) || 0) > 0) row(`Tax (${invoice.taxRate}%)`, fmt(tax));
+      if ((Number(invoice.withholdingTaxRate) || 0) > 0) row(`Withholding (${invoice.withholdingTaxRate}%)`, fmt(withholdingTax));
+      row("Total", fmt(total), true);
+
+      y += 44;
+
+      // ---- Payment Details (boxed, left side) ----
+      const pay = invoice.payment || {};
+      const payBoxW = PDF_CONFIG.BOX_WIDTH;
+      const payBoxH = PDF_CONFIG.PAYMENT_BOX_HEIGHT;
+      const payBoxX = M;
+
+      doc.setDrawColor(230);
+      doc.rect(payBoxX, y - 44, payBoxW, payBoxH);
+
       doc.setFont("helvetica", "bold");
       doc.setFontSize(9);
       doc.setTextColor(120);
-      doc.text("NOTES", M, y);
+      doc.text("PAYMENT", payBoxX + 6, y - 44 + 8);
 
       doc.setFont("helvetica", "normal");
       doc.setFontSize(10);
       doc.setTextColor(60);
 
-      const noteLines = doc.splitTextToSize(invoice.notes, pageW - M * 2);
-      doc.text(noteLines, M, y + 6);
-      y += 6 + noteLines.length * 5;
+      const payLines = [
+        pay.accountName ? `Name: ${clean(pay.accountName)}` : "",
+        pay.accountNumber ? `Account: ${clean(pay.accountNumber)}` : "",
+      ].filter(Boolean);
+
+      doc.text(payLines.length ? payLines : ["—"], payBoxX + 6, y - 44 + 15);
+
+      // ---- Notes ----
+      if (invoice.notes) {
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(9);
+        doc.setTextColor(120);
+        doc.text("NOTES", M, y);
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(10);
+        doc.setTextColor(60);
+
+        const noteLines = doc.splitTextToSize(invoice.notes, pageW - M * 2);
+        doc.text(noteLines, M, y + 6);
+        y += 6 + noteLines.length * 5;
+      }
+
+      // ---- Footer (optional subtle) ----
+      doc.setFontSize(9);
+      doc.setTextColor(150);
+      textCenter("Thank you for your business", pageW / 2, pageH - 10);
+
+      // Generate filename without special characters
+      const filename = `${invoice.invoiceNumber || "invoice"}.pdf`.replace(/[^a-zA-Z0-9.-]/g, '_');
+      doc.save(filename);
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+      alert("There was an error generating the PDF. Please try again.");
     }
-
-    // ---- Footer (optional subtle) ----
-    doc.setFontSize(9);
-    doc.setTextColor(150);
-    textCenter("Thank you for your business", pageW / 2, pageH - 10);
-
-    doc.save(`${invoice.invoiceNumber || "invoice"}.pdf`);
   };
-
-  const inputClass =
-    "w-full bg-zinc-950/50 border border-zinc-800 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary/20 rounded-md py-2 px-3 text-white text-sm placeholder:text-zinc-600 transition-all outline-none";
 
   return (
     <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 py-16 md:py-24">
@@ -378,7 +408,7 @@ export default function InvoicePage() {
                 <label className="text-xs text-zinc-500 mb-1 block">Invoice #</label>
                 <input
                   data-testid="invoice-number-input"
-                  className={inputClass}
+                  className={INPUT_CLASS}
                   value={invoice.invoiceNumber}
                   onChange={(e) => updateField("invoiceNumber", e.target.value)}
                 />
@@ -388,7 +418,7 @@ export default function InvoicePage() {
                 <input
                   data-testid="invoice-date-input"
                   type="date"
-                  className={inputClass}
+                  className={INPUT_CLASS}
                   value={invoice.date}
                   onChange={(e) => updateField("date", e.target.value)}
                 />
@@ -399,7 +429,7 @@ export default function InvoicePage() {
               <input
                 data-testid="invoice-due-date-input"
                 type="date"
-                className={inputClass}
+                className={INPUT_CLASS}
                 value={invoice.dueDate}
                 onChange={(e) => updateField("dueDate", e.target.value)}
               />
@@ -412,18 +442,18 @@ export default function InvoicePage() {
               <h3 className="font-heading text-sm font-semibold text-zinc-400 uppercase tracking-wider">
                 From
               </h3>
-              <input data-testid="from-name-input" className={inputClass} placeholder="Your name" value={invoice.from.name} onChange={(e) => updateField("from.name", e.target.value)} />
-              <input data-testid="from-email-input" className={inputClass} placeholder="Email" value={invoice.from.email} onChange={(e) => updateField("from.email", e.target.value)} />
-              <textarea data-testid="from-address-input" className={inputClass + " resize-none h-16"} placeholder="Address" value={invoice.from.address} onChange={(e) => updateField("from.address", e.target.value)} />
-              <input data-testid="from-gst-input" className={inputClass} placeholder="GST Number" value={invoice.from.gst} onChange={(e) => updateField("from.gst", e.target.value)} />
+              <input data-testid="from-name-input" className={INPUT_CLASS} placeholder="Your name" value={invoice.from.name} onChange={(e) => updateField("from.name", e.target.value)} />
+              <input data-testid="from-email-input" className={INPUT_CLASS} placeholder="Email" value={invoice.from.email} onChange={(e) => updateField("from.email", e.target.value)} />
+              <textarea data-testid="from-address-input" className={INPUT_CLASS + " resize-none h-16"} placeholder="Address" value={invoice.from.address} onChange={(e) => updateField("from.address", e.target.value)} />
+              <input data-testid="from-gst-input" className={INPUT_CLASS} placeholder="GST Number" value={invoice.from.gst} onChange={(e) => updateField("from.gst", e.target.value)} />
             </div>
             <div className="rounded-xl bg-zinc-900/40 border border-white/5 p-6 space-y-3">
               <h3 className="font-heading text-sm font-semibold text-zinc-400 uppercase tracking-wider">
                 To
               </h3>
-              <input data-testid="to-name-input" className={inputClass} placeholder="Client name" value={invoice.to.name} onChange={(e) => updateField("to.name", e.target.value)} />
-              <input data-testid="to-email-input" className={inputClass} placeholder="Email" value={invoice.to.email} onChange={(e) => updateField("to.email", e.target.value)} />
-              <textarea data-testid="to-address-input" className={inputClass + " resize-none h-16"} placeholder="Address" value={invoice.to.address} onChange={(e) => updateField("to.address", e.target.value)} />
+              <input data-testid="to-name-input" className={INPUT_CLASS} placeholder="Client name" value={invoice.to.name} onChange={(e) => updateField("to.name", e.target.value)} />
+              <input data-testid="to-email-input" className={INPUT_CLASS} placeholder="Email" value={invoice.to.email} onChange={(e) => updateField("to.email", e.target.value)} />
+              <textarea data-testid="to-address-input" className={INPUT_CLASS + " resize-none h-16"} placeholder="Address" value={invoice.to.address} onChange={(e) => updateField("to.address", e.target.value)} />
             </div>
           </div>
 
@@ -479,7 +509,7 @@ export default function InvoicePage() {
               <div key={idx} className="space-y-2">
                 <input
                   data-testid={`item-desc-${idx}`}
-                  className={inputClass}
+                  className={INPUT_CLASS}
                   placeholder="Description"
                   value={item.description}
                   onChange={(e) => updateItem(idx, "description", e.target.value)}
@@ -489,7 +519,7 @@ export default function InvoicePage() {
                     data-testid={`item-qty-${idx}`}
                     type="number"
                     min="1"
-                    className={inputClass + " w-20 text-center"}
+                    className={INPUT_CLASS + " w-20 text-center"}
                     value={item.quantity}
                     onChange={(e) => updateItem(idx, "quantity", Number(e.target.value))}
                   />
@@ -498,7 +528,7 @@ export default function InvoicePage() {
                     type="number"
                     min="0"
                     step="0.01"
-                    className={inputClass + " w-28 text-right"}
+                    className={INPUT_CLASS + " w-28 text-right"}
                     placeholder="Rate"
                     value={item.rate || ""}
                     onChange={(e) => updateItem(idx, "rate", Number(e.target.value))}
@@ -534,7 +564,7 @@ export default function InvoicePage() {
                   min="0"
                   max="100"
                   step="0.1"
-                  className={inputClass}
+                  className={INPUT_CLASS}
                   value={invoice.taxRate || ""}
                   onChange={(e) => updateField("taxRate", Number(e.target.value))}
                 />
@@ -547,7 +577,7 @@ export default function InvoicePage() {
                   min="0"
                   max="100"
                   step="0.1"
-                  className={inputClass}
+                  className={INPUT_CLASS}
                   value={invoice.withholdingTaxRate || ""}
                   onChange={(e) => updateField("withholdingTaxRate", Number(e.target.value))}
                 />
@@ -557,7 +587,7 @@ export default function InvoicePage() {
               <label className="text-xs text-zinc-500 mb-1 block">Notes</label>
               <textarea
                 data-testid="invoice-notes-input"
-                className={inputClass + " resize-none h-20"}
+                className={INPUT_CLASS + " resize-none h-20"}
                 placeholder="Payment terms, thank you note..."
                 value={invoice.notes}
                 onChange={(e) => updateField("notes", e.target.value)}
@@ -575,7 +605,7 @@ export default function InvoicePage() {
                 <label className="text-xs text-zinc-500 mb-1 block">Account Name</label>
                 <input
                   data-testid="payment-account-name-input"
-                  className={inputClass}
+                  className={INPUT_CLASS}
                   placeholder="Bank account name"
                   value={invoice.payment.accountName}
                   onChange={(e) => updateField("payment.accountName", e.target.value)}
@@ -585,7 +615,7 @@ export default function InvoicePage() {
                 <label className="text-xs text-zinc-500 mb-1 block">Account Number</label>
                 <input
                   data-testid="payment-account-number-input"
-                  className={inputClass}
+                  className={INPUT_CLASS}
                   placeholder="Bank account number"
                   value={invoice.payment.accountNumber}
                   onChange={(e) => updateField("payment.accountNumber", e.target.value)}
@@ -612,7 +642,7 @@ export default function InvoicePage() {
           <div
             ref={previewRef}
             data-testid="invoice-preview"
-            className="rounded-xl bg-white text-gray-900 p-8 md:p-10 shadow-2xl sticky top-24 min-w-[640px]"
+            className={PREVIEW_CLASSES.CONTAINER}
           >
             <div className="flex justify-between items-start mb-8">
               <div className="flex items-start gap-4">
@@ -620,7 +650,7 @@ export default function InvoicePage() {
                   <img
                     src={invoice.logo}
                     alt="Company logo"
-                    className="w-[84px] h-[42px] object-contain object-left"
+                    className={PREVIEW_CLASSES.LOGO}
                   />
                 )}
                 <div>
@@ -638,7 +668,7 @@ export default function InvoicePage() {
               </div>
             </div>
 
-            <div className="h-px bg-gray-200 my-8" />
+            <div className={PREVIEW_CLASSES.DIVIDER} />
 
             <div className="grid grid-cols-2 gap-8 mb-8">
               <div>
@@ -664,7 +694,7 @@ export default function InvoicePage() {
               </div>
             </div>
 
-            <table className="w-full mb-8">
+            <table className={PREVIEW_CLASSES.TABLE}>
               <thead>
                 <tr className="border-b border-gray-200">
                   <th className="text-left text-xs font-semibold text-gray-400 uppercase tracking-wider pb-3">
@@ -683,7 +713,7 @@ export default function InvoicePage() {
               </thead>
               <tbody>
                 {invoice.items.map((item, idx) => (
-                  <tr key={idx} className="border-b border-gray-100 last:border-b-0">
+                  <tr key={idx} className={PREVIEW_CLASSES.TABLE_ROW}>
                     <td className="py-3 text-sm text-gray-900">{item.description || "—"}</td>
                     <td className="py-3 text-sm text-gray-900 text-center">{item.quantity || 0}</td>
                     <td className="py-3 text-sm text-gray-900 text-right">{fmt(item.rate)}</td>
