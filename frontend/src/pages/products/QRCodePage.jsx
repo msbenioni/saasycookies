@@ -21,12 +21,65 @@ export default function QRCodePage() {
   const downloadQR = useCallback(() => {
     const canvas = qrRef.current?.querySelector("canvas");
     if (!canvas) return;
-    const url = canvas.toDataURL("image/png");
+
+    // Create a new canvas with padding
+    const padding = 16;
+    const cornerRadius = 12; // Match rounded-xl exactly
+    const newCanvas = document.createElement("canvas");
+    const ctx = newCanvas.getContext("2d");
+    
+    // Set new canvas size with padding
+    newCanvas.width = canvas.width + (padding * 2);
+    newCanvas.height = canvas.height + (padding * 2);
+    
+    // Add shadow (match shadow-2xl)
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.25)';
+    ctx.shadowBlur = 25;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 8;
+    
+    // Draw rounded rectangle with background color
+    ctx.fillStyle = bgColor;
+    roundRect(ctx, 0, 0, newCanvas.width, newCanvas.height, cornerRadius);
+    ctx.fill();
+    
+    // Reset shadow for the QR code
+    ctx.shadowColor = 'transparent';
+    ctx.shadowBlur = 0;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
+    
+    // Create clipping path for rounded corners
+    ctx.save();
+    roundRect(ctx, 0, 0, newCanvas.width, newCanvas.height, cornerRadius);
+    ctx.clip();
+    
+    // Draw the QR code on top
+    ctx.drawImage(canvas, padding, padding);
+    ctx.restore();
+    
+    // Download the new canvas
+    const url = newCanvas.toDataURL("image/png");
     const a = document.createElement("a");
     a.href = url;
     a.download = "qr-code.png";
     a.click();
-  }, []);
+  }, [bgColor]);
+
+  // Helper function to draw rounded rectangles
+  const roundRect = (ctx, x, y, width, height, radius) => {
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.lineTo(x + width - radius, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+    ctx.lineTo(x + width, y + height - radius);
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    ctx.lineTo(x + radius, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+    ctx.lineTo(x, y + radius);
+    ctx.quadraticCurveTo(x, y, x + radius, y);
+    ctx.closePath();
+  };
 
   const copyToClipboard = useCallback(async () => {
     const canvas = qrRef.current?.querySelector("canvas");
