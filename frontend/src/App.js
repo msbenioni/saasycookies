@@ -1,14 +1,14 @@
-import "@/App.css";
+import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import MainLayout from "@/layouts/MainLayout";
-import HomePage from "@/pages/HomePage";
-import SenseAIPage from "@/pages/seo/SenseAIPage";
-import PacificMarketPage from "@/pages/seo/PacificMarketPage";
-import InvoicePage from "@/pages/products/InvoicePage";
-import QRCodePage from "@/pages/products/QRCodePage";
-import ContactPage from "@/pages/ContactPage";
-import PrivacyPage from "@/pages/PrivacyPage";
-import TermsPage from "@/pages/TermsPage";
+import MainLayout from "./layouts/MainLayout";
+import HomePage from "./pages/HomePage";
+import SenseAIPage from "./pages/seo/SenseAIPage";
+import PacificMarketPage from "./pages/seo/PacificMarketPage";
+import InvoicePage from "./pages/products/InvoicePage";
+import QRCodePage from "./pages/products/QRCodePage";
+import ContactPage from "./pages/ContactPage";
+import PrivacyPage from "./pages/PrivacyPage";
+import TermsPage from "./pages/TermsPage";
 
 function App() {
   return (
