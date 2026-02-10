@@ -1,27 +1,11 @@
-// Email service using Netlify function + Resend
+// Email service - uses email client fallback
 export const sendContactEmail = async (formData) => {
-  try {
-    const response = await fetch('/.netlify/functions/send-email', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || 'Failed to send email');
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error('Error sending email:', error);
-    throw error;
-  }
+  // Always use email client fallback for simplicity and reliability
+  openEmailClient(formData);
+  return { message: 'Email client opened' };
 };
 
-// Fallback: Open email client
+// Open email client
 export const openEmailClient = (formData) => {
   const subject = encodeURIComponent(formData.subject || 'Contact from SaaSy Cookies website');
   const body = encodeURIComponent(

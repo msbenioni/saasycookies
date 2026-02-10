@@ -30,10 +30,7 @@ export default function ContactPage() {
       setIsSubmitted(true);
       setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (error) {
-      setError("Email service unavailable. Opening your email client...");
-      // Fallback to email client
-      openEmailClient(formData);
-      setIsSubmitted(true); // Still show success
+      setError("Failed to open email client. Please try again.");
       console.error("Contact form error:", error);
     } finally {
       setIsSubmitting(false);
