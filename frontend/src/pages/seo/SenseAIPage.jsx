@@ -3,6 +3,7 @@ import {
   Brain, ArrowRight, BookOpen, Lightbulb, Shield,
   TrendingUp, MessageSquare, Sparkles, Heart
 } from "lucide-react";
+import { PRODUCT_LOGOS } from "../../constants/productLogos";
 
 const useCases = [
   {
@@ -40,26 +41,39 @@ export default function SenseAIPage() {
           }}
         />
         <div className="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-24 w-full py-24">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-senseai/10 border border-senseai/20 text-senseai text-xs font-medium mb-8">
-              <Brain className="w-3 h-3" strokeWidth={1.5} />
-              SenseAI by SaaSy Cookies
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+            <div className="flex-1 max-w-3xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-senseai/10 border border-senseai/20 text-senseai text-xs font-medium mb-8">
+                <Brain className="w-3 h-3" strokeWidth={1.5} />
+                SenseAI by SaaSy Cookies
+              </div>
+
+              <h1
+                data-testid="senseai-title"
+                className="font-heading text-5xl md:text-7xl font-extrabold tracking-tight leading-none mb-6"
+              >
+                Journaling that
+                <br />
+                <span className="text-senseai">thinks with you.</span>
+              </h1>
+
+              <p className="text-lg md:text-xl text-zinc-400 leading-relaxed max-w-xl mb-10">
+                Most journals are just blank pages. SenseAI is an AI-powered
+                companion that helps you reflect deeper, think clearer, and grow
+                faster.
+              </p>
             </div>
 
-            <h1
-              data-testid="senseai-title"
-              className="font-heading text-5xl md:text-7xl font-extrabold tracking-tight leading-none mb-6"
-            >
-              Journaling that
-              <br />
-              <span className="text-senseai">thinks with you.</span>
-            </h1>
-
-            <p className="text-lg md:text-xl text-zinc-400 leading-relaxed max-w-xl mb-10">
-              Most journals are just blank pages. SenseAI is an AI-powered
-              companion that helps you reflect deeper, think clearer, and grow
-              faster.
-            </p>
+            {/* Large Hero Logo - Right Side */}
+            <div className="flex-shrink-0">
+              <div className="relative p-2 rounded-2xl bg-gradient-to-r from-senseai/30 via-senseai/20 to-transparent shadow-[0_0_60px_rgba(6,182,212,0.6),0_0_120px_rgba(6,182,212,0.4)]">
+                <img
+                  src={PRODUCT_LOGOS.SENSEAI.src}
+                  alt={PRODUCT_LOGOS.SENSEAI.alt}
+                  className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>

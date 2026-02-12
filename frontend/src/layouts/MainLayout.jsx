@@ -2,10 +2,25 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { Brain, Globe, FileText, QrCode, Menu, X } from "lucide-react";
 import { LOGO_CLASSES } from "../constants/logo";
+import { PRODUCT_LOGOS } from "../constants/productLogos";
 
 const navLinks = [
-  { to: "/senseai", label: "SenseAI", icon: Brain, color: "text-senseai" },
-  { to: "/pacificmarket", label: "Pacific Market", icon: Globe, color: "text-pacific" },
+  { 
+    to: "/senseai", 
+    label: "SenseAI", 
+    icon: Brain, 
+    color: "text-senseai",
+    hasLogo: true,
+    logoKey: "SENSEAI"
+  },
+  { 
+    to: "/pacificmarket", 
+    label: "Pacific Market", 
+    icon: Globe, 
+    color: "text-pacific",
+    hasLogo: true,
+    logoKey: "PACIFIC_MARKET"
+  },
   { to: "/tools/invoice-generator", label: "Invoice", icon: FileText, color: "text-zinc-300" },
   { to: "/tools/qr-generator", label: "QR Code", icon: QrCode, color: "text-zinc-300" },
 ];
@@ -51,7 +66,15 @@ export default function MainLayout() {
                       : "text-zinc-400 hover:text-white hover:bg-white/5"
                   }`}
                 >
-                  <Icon className={`w-3.5 h-3.5 ${active ? link.color : ""}`} strokeWidth={1.5} />
+                  {link.hasLogo ? (
+                    <img
+                      src={PRODUCT_LOGOS[link.logoKey].src}
+                      alt={PRODUCT_LOGOS[link.logoKey].alt}
+                      className={PRODUCT_LOGOS[link.logoKey].classes.NAV}
+                    />
+                  ) : (
+                    <Icon className={`w-3.5 h-3.5 ${active ? link.color : ""}`} strokeWidth={1.5} />
+                  )}
                   {link.label}
                 </Link>
               );

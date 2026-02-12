@@ -3,6 +3,7 @@ import {
   Brain, Globe, FileText, QrCode, ArrowRight, Zap,
   Layers, Sparkles, Code2, Rocket, ChevronRight
 } from "lucide-react";
+import { PRODUCT_LOGOS } from "../constants/productLogos";
 
 const categoryCards = [
   {
@@ -11,6 +12,8 @@ const categoryCards = [
     desc: "Intelligent tools that think with you, not for you.",
     color: "text-senseai",
     border: "hover:border-senseai/30",
+    hasLogo: true,
+    logoKey: "SENSEAI"
   },
   {
     icon: Globe,
@@ -18,6 +21,8 @@ const categoryCards = [
     desc: "Connecting creators and businesses across the Pacific.",
     color: "text-pacific",
     border: "hover:border-pacific/30",
+    hasLogo: true,
+    logoKey: "PACIFIC_MARKET"
   },
   {
     icon: Code2,
@@ -25,6 +30,7 @@ const categoryCards = [
     desc: "Free utilities built for speed, simplicity, and real work.",
     color: "text-brand-primary",
     border: "hover:border-brand-primary/30",
+    hasLogo: false
   },
 ];
 
@@ -121,7 +127,15 @@ export default function HomePage() {
                 >
                   <div className="absolute -top-12 -right-12 w-32 h-32 rounded-full bg-gradient-to-br from-white/[0.02] to-transparent" />
                   <div className={`w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center mb-5 ${card.color}`}>
-                    <Icon className="w-5 h-5" strokeWidth={1.5} />
+                    {card.hasLogo ? (
+                      <img
+                        src={PRODUCT_LOGOS[card.logoKey].src}
+                        alt={PRODUCT_LOGOS[card.logoKey].alt}
+                        className="w-6 h-6 object-contain"
+                      />
+                    ) : (
+                      <Icon className="w-5 h-5" strokeWidth={1.5} />
+                    )}
                   </div>
                   <h3 className="font-heading text-xl font-semibold mb-2">{card.title}</h3>
                   <p className="text-zinc-500 text-sm leading-relaxed">{card.desc}</p>
@@ -158,9 +172,11 @@ export default function HomePage() {
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ background: "radial-gradient(circle at 50% 50%, rgba(6,182,212,0.08) 0%, transparent 70%)" }} />
               <div className="relative p-8 md:p-10">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-lg bg-senseai/10 border border-senseai/20 flex items-center justify-center">
-                    <Brain className="w-5 h-5 text-senseai" strokeWidth={1.5} />
-                  </div>
+                  <img
+                    src={PRODUCT_LOGOS.SENSEAI.src}
+                    alt={PRODUCT_LOGOS.SENSEAI.alt}
+                    className={PRODUCT_LOGOS.SENSEAI.classes.CARD}
+                  />
                   <span className="font-heading text-2xl font-bold">SenseAI</span>
                 </div>
                 <p className="text-zinc-400 leading-relaxed mb-6 max-w-md">
@@ -183,9 +199,11 @@ export default function HomePage() {
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ background: "radial-gradient(circle at 50% 50%, rgba(245,158,11,0.08) 0%, transparent 70%)" }} />
               <div className="relative p-8 md:p-10">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-lg bg-pacific/10 border border-pacific/20 flex items-center justify-center">
-                    <Globe className="w-5 h-5 text-pacific" strokeWidth={1.5} />
-                  </div>
+                  <img
+                    src={PRODUCT_LOGOS.PACIFIC_MARKET.src}
+                    alt={PRODUCT_LOGOS.PACIFIC_MARKET.alt}
+                    className={PRODUCT_LOGOS.PACIFIC_MARKET.classes.CARD}
+                  />
                   <span className="font-heading text-2xl font-bold">Pacific Market</span>
                 </div>
                 <p className="text-zinc-400 leading-relaxed mb-6 max-w-md">

@@ -3,6 +3,7 @@ import {
   Globe, ArrowRight, Users, Store, Wifi, MapPin,
   Heart, Compass, BarChart3, Handshake
 } from "lucide-react";
+import { PRODUCT_LOGOS } from "../../constants/productLogos";
 
 const visionPoints = [
   {
@@ -40,25 +41,38 @@ export default function PacificMarketPage() {
           }}
         />
         <div className="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-24 w-full py-24">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pacific/10 border border-pacific/20 text-pacific text-xs font-medium mb-8">
-              <Globe className="w-3 h-3" strokeWidth={1.5} />
-              Pacific Market by SaaSy Cookies
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+            <div className="flex-1 max-w-3xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pacific/10 border border-pacific/20 text-pacific text-xs font-medium mb-8">
+                <Globe className="w-3 h-3" strokeWidth={1.5} />
+                Pacific Market by SaaSy Cookies
+              </div>
+
+              <h1
+                data-testid="pacific-title"
+                className="font-heading text-5xl md:text-7xl font-extrabold tracking-tight leading-none mb-6"
+              >
+                The Pacific
+                <br />
+                <span className="text-pacific">deserves better.</span>
+              </h1>
+
+              <p className="text-lg md:text-xl text-zinc-400 leading-relaxed max-w-xl mb-10">
+                A community marketplace connecting Pacific Island creators,
+                businesses, and cultural voices to a global audience.
+              </p>
             </div>
 
-            <h1
-              data-testid="pacific-title"
-              className="font-heading text-5xl md:text-7xl font-extrabold tracking-tight leading-none mb-6"
-            >
-              The Pacific
-              <br />
-              <span className="text-pacific">deserves better.</span>
-            </h1>
-
-            <p className="text-lg md:text-xl text-zinc-400 leading-relaxed max-w-xl mb-10">
-              A community marketplace connecting Pacific Island creators,
-              businesses, and cultural voices to a global audience.
-            </p>
+            {/* Large Hero Logo - Right Side */}
+            <div className="flex-shrink-0">
+              <div className="relative p-2 rounded-2xl bg-gradient-to-r from-pacific/30 via-pacific/20 to-transparent shadow-[0_0_60px_rgba(245,158,11,0.6),0_0_120px_rgba(245,158,11,0.4)]">
+                <img
+                  src={PRODUCT_LOGOS.PACIFIC_MARKET.src}
+                  alt={PRODUCT_LOGOS.PACIFIC_MARKET.alt}
+                  className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
