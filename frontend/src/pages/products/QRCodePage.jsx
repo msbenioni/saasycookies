@@ -22,7 +22,7 @@ const CANVAS_CONFIG = {
   }
 };
 
-const INPUT_CLASS = "w-full bg-zinc-950/50 border border-zinc-800 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary/20 rounded-md py-2 px-3 text-white text-sm placeholder:text-zinc-600 transition-all outline-none";
+const INPUT_CLASS = "w-full bg-zinc-950/50 border border-zinc-800 focus:border-pink-500 focus:ring-1 focus:ring-pink-500/20 rounded-md py-2 px-3 text-white text-sm placeholder:text-zinc-600 transition-all outline-none";
 
 const PREVIEW_CONTAINER_CLASS = "rounded-2xl bg-zinc-900/40 border border-white/5 p-8 md:p-12 flex flex-col items-center gap-6 sticky top-24";
 const QR_CONTAINER_CLASS = "rounded-xl overflow-hidden shadow-2xl";
@@ -116,8 +116,8 @@ export default function QRCodePage() {
   return (
     <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 py-16 md:py-24">
       <div className="flex items-center gap-3 mb-2">
-        <div className="w-10 h-10 rounded-lg bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center">
-          <QrCode className="w-5 h-5 text-brand-accent" strokeWidth={1.5} />
+        <div className="w-10 h-10 rounded-lg bg-pink-500/10 border border-pink-500/20 flex items-center justify-center">
+          <QrCode className="w-5 h-5 text-pink-500" strokeWidth={1.5} />
         </div>
         <h1
           data-testid="qr-page-title"
@@ -158,7 +158,7 @@ export default function QRCodePage() {
                   onClick={() => setSize(s)}
                   className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
                     size === s
-                      ? "bg-brand-primary text-white"
+                      ? "bg-pink-500 text-white"
                       : "bg-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-700"
                   }`}
                 >

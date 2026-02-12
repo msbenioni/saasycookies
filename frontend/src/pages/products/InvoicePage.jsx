@@ -6,7 +6,7 @@ import autoTable from "jspdf-autotable";
 // Constants
 const emptyItem = { description: "", quantity: 1, rate: 0 };
 
-const INPUT_CLASS = "w-full bg-zinc-950/50 border border-zinc-800 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary/20 rounded-md py-2 px-3 text-white text-sm placeholder:text-zinc-600 transition-all outline-none";
+const INPUT_CLASS = "w-full bg-zinc-950/50 border border-zinc-800 focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 rounded-md py-2 px-3 text-white text-sm placeholder:text-zinc-600 transition-all outline-none";
 
 const PDF_CONFIG = {
   MARGIN: 16,
@@ -381,8 +381,8 @@ export default function InvoicePage() {
   return (
     <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 py-16 md:py-24">
       <div className="flex items-center gap-3 mb-2">
-        <div className="w-10 h-10 rounded-lg bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center">
-          <FileText className="w-5 h-5 text-brand-primary" strokeWidth={1.5} />
+        <div className="w-10 h-10 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
+          <FileText className="w-5 h-5 text-purple-500" strokeWidth={1.5} />
         </div>
         <h1
           data-testid="invoice-page-title"

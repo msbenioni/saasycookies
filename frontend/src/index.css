@@ -9,8 +9,8 @@ body {
     font-family: 'Manrope', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: #050505;
-    color: #ffffff;
+    background: #0b0b0b;
+    color: #f3f4f6;
 }
 
 code {
@@ -23,20 +23,20 @@ h1, h2, h3, h4, h5, h6 {
 
 @layer base {
     :root {
-        --background: 0 0% 2%;
-        --foreground: 0 0% 100%;
-        --card: 0 0% 4%;
-        --card-foreground: 0 0% 100%;
-        --popover: 0 0% 4%;
-        --popover-foreground: 0 0% 100%;
+        --background: 0 0% 5%;
+        --foreground: 0 0% 98%;
+        --card: 0 0% 8%;
+        --card-foreground: 0 0% 98%;
+        --popover: 0 0% 8%;
+        --popover-foreground: 0 0% 98%;
         --primary: 263 70% 58%;
         --primary-foreground: 0 0% 100%;
-        --secondary: 0 0% 7%;
-        --secondary-foreground: 0 0% 100%;
-        --muted: 0 0% 10%;
-        --muted-foreground: 240 5% 65%;
-        --accent: 0 0% 10%;
-        --accent-foreground: 0 0% 100%;
+        --secondary: 0 0% 12%;
+        --secondary-foreground: 0 0% 98%;
+        --muted: 0 0% 14%;
+        --muted-foreground: 240 5% 72%;
+        --accent: 0 0% 14%;
+        --accent-foreground: 0 0% 98%;
         --destructive: 0 84% 60%;
         --destructive-foreground: 0 0% 100%;
         --border: 0 0% 12%;

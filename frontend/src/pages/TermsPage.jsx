@@ -28,9 +28,12 @@ export default function TermsPage() {
             2. Our Products
           </h2>
           <p>
-            SaaSy Cookies offers a range of products including SenseAI (AI
-            journaling), Pacific Market (community marketplace), and free business
-            tools. Each product may have additional terms specific to its use.
+            SaaSy Cookies offers a range of products including{" "}
+            <span className="text-senseai font-semibold">SenseAI</span> (AI
+            journaling),{" "}
+            <span className="text-pacific font-semibold">Pacific Market</span> (community marketplace),
+            and free business tools. Each product may have additional terms
+            specific to its use.
           </p>
         </section>
 

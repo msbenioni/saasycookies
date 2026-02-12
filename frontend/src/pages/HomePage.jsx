@@ -78,7 +78,7 @@ export default function HomePage() {
               <Link
                 to="/senseai"
                 data-testid="cta-senseai"
-                className="inline-flex items-center gap-2 bg-white text-black font-semibold px-8 py-3 rounded-md transition-all duration-300 hover:bg-zinc-200 hover:scale-[1.02]"
+                className="inline-flex items-center gap-2 bg-senseai text-black font-semibold px-8 py-3 rounded-md transition-all duration-300 hover:bg-senseai/80 hover:scale-[1.02]"
               >
                 <Brain className="w-4 h-4" strokeWidth={1.5} />
                 Explore SenseAI
@@ -86,7 +86,7 @@ export default function HomePage() {
               <Link
                 to="/pacificmarket"
                 data-testid="cta-pacific"
-                className="inline-flex items-center gap-2 bg-zinc-900 text-white border border-zinc-800 hover:bg-zinc-800 hover:border-zinc-700 font-medium px-8 py-3 rounded-md transition-all"
+                className="inline-flex items-center gap-2 bg-pacific text-black border border-pacific/40 hover:bg-pacific/80 hover:border-pacific/60 font-medium px-8 py-3 rounded-md transition-all"
               >
                 <Globe className="w-4 h-4" strokeWidth={1.5} />
                 Pacific Market
@@ -97,7 +97,7 @@ export default function HomePage() {
       </section>
 
       {/* What We Build */}
-      <section data-testid="what-we-build-section" className="py-24 md:py-32 relative">
+      <section data-testid="what-we-build-section" className="py-24 md:py-32 relative bg-white/[0.02]">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <div className="flex items-center gap-3 mb-4">
             <div className="h-px flex-1 max-w-[40px] bg-brand-primary/50" />
@@ -111,7 +111,7 @@ export default function HomePage() {
           >
             Products with purpose
           </h2>
-          <p className="text-zinc-400 text-lg max-w-2xl mb-16 leading-relaxed">
+          <p className="text-zinc-200 text-lg max-w-2xl mb-16 leading-relaxed">
             Every tool we ship solves a real problem. We focus on craft,
             usability, and impact over vanity metrics.
           </p>
@@ -123,7 +123,7 @@ export default function HomePage() {
                 <div
                   key={card.title}
                   data-testid={`category-${card.title.toLowerCase().replace(/\s/g, "-")}`}
-                  className={`group relative overflow-hidden bg-zinc-900/40 border border-white/5 ${card.border} transition-all duration-500 rounded-xl p-8`}
+                  className={`group relative overflow-hidden bg-zinc-900/85 border border-white/10 ${card.border} transition-all duration-500 rounded-xl p-8`}
                 >
                   <div className="absolute -top-12 -right-12 w-32 h-32 rounded-full bg-gradient-to-br from-white/[0.02] to-transparent" />
                   <div className={`w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center mb-5 ${card.color}`}>
@@ -138,7 +138,7 @@ export default function HomePage() {
                     )}
                   </div>
                   <h3 className="font-heading text-xl font-semibold mb-2">{card.title}</h3>
-                  <p className="text-zinc-500 text-sm leading-relaxed">{card.desc}</p>
+                  <p className="text-zinc-200/80 text-sm leading-relaxed">{card.desc}</p>
                 </div>
               );
             })}
@@ -147,7 +147,7 @@ export default function HomePage() {
       </section>
 
       {/* Featured Products */}
-      <section data-testid="featured-products-section" className="py-24 md:py-32 relative">
+      <section data-testid="featured-products-section" className="py-24 md:py-32 relative bg-white/[0.02]">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <div className="flex items-center gap-3 mb-4">
             <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
@@ -167,7 +167,7 @@ export default function HomePage() {
             <Link
               to="/senseai"
               data-testid="featured-senseai-card"
-              className="group relative overflow-hidden rounded-2xl border border-white/5 hover:border-senseai/20 transition-all duration-500 bg-zinc-900/30"
+              className="group relative overflow-hidden rounded-2xl border border-white/10 hover:border-senseai/20 transition-all duration-500 bg-zinc-900/85"
             >
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ background: "radial-gradient(circle at 50% 50%, rgba(6,182,212,0.08) 0%, transparent 70%)" }} />
               <div className="relative p-8 md:p-10">
@@ -177,9 +177,9 @@ export default function HomePage() {
                     alt={PRODUCT_LOGOS.SENSEAI.alt}
                     className={PRODUCT_LOGOS.SENSEAI.classes.CARD}
                   />
-                  <span className="font-heading text-2xl font-bold">SenseAI</span>
+                  <span className="font-heading text-2xl font-bold text-senseai">SenseAI</span>
                 </div>
-                <p className="text-zinc-400 leading-relaxed mb-6 max-w-md">
+                <p className="text-zinc-200 leading-relaxed mb-6 max-w-md">
                   AI-powered journaling that helps you think clearly, reflect deeply,
                   and grow intentionally. Your thoughts, amplified.
                 </p>
@@ -194,7 +194,7 @@ export default function HomePage() {
             <Link
               to="/pacificmarket"
               data-testid="featured-pacific-card"
-              className="group relative overflow-hidden rounded-2xl border border-white/5 hover:border-pacific/20 transition-all duration-500 bg-zinc-900/30"
+              className="group relative overflow-hidden rounded-2xl border border-white/10 hover:border-pacific/20 transition-all duration-500 bg-zinc-900/85"
             >
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ background: "radial-gradient(circle at 50% 50%, rgba(245,158,11,0.08) 0%, transparent 70%)" }} />
               <div className="relative p-8 md:p-10">
@@ -204,9 +204,9 @@ export default function HomePage() {
                     alt={PRODUCT_LOGOS.PACIFIC_MARKET.alt}
                     className={PRODUCT_LOGOS.PACIFIC_MARKET.classes.CARD}
                   />
-                  <span className="font-heading text-2xl font-bold">Pacific Market</span>
+                  <span className="font-heading text-2xl font-bold text-pacific">Pacific Market</span>
                 </div>
-                <p className="text-zinc-400 leading-relaxed mb-6 max-w-md">
+                <p className="text-zinc-200 leading-relaxed mb-6 max-w-md">
                   Connecting Pacific creators, businesses, and communities.
                   A marketplace built for visibility, impact, and growth.
                 </p>
@@ -221,7 +221,7 @@ export default function HomePage() {
       </section>
 
       {/* Free Business Tools */}
-      <section data-testid="free-tools-section" className="py-24 md:py-32 relative">
+      <section data-testid="tools-section" className="py-24 md:py-32 relative bg-white/[0.05]">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <div className="flex items-center gap-3 mb-4">
             <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
@@ -230,12 +230,12 @@ export default function HomePage() {
             </span>
           </div>
           <h2
-            data-testid="free-tools-title"
+            data-testid="tools-title"
             className="font-heading text-4xl md:text-5xl font-bold tracking-tight mb-6"
           >
             Business utilities, on the house
           </h2>
-          <p className="text-zinc-400 text-lg max-w-2xl mb-16 leading-relaxed">
+          <p className="text-zinc-200 text-lg max-w-2xl mb-16 leading-relaxed">
             No sign-up. No paywall. Just useful tools built with care.
           </p>
 
@@ -243,7 +243,7 @@ export default function HomePage() {
             <Link
               to="/tools/invoice-generator"
               data-testid="tool-invoice-card"
-              className="group relative overflow-hidden rounded-xl border border-white/5 hover:border-white/15 transition-all duration-500 bg-zinc-900/30 p-8"
+              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/85 hover:border-brand-primary/30 transition-all duration-500"
             >
               <div className="flex items-start gap-5">
                 <div className="w-12 h-12 rounded-xl bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center shrink-0">
@@ -251,7 +251,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex-1">
                   <h3 className="font-heading text-xl font-semibold mb-2">Invoice Generator</h3>
-                  <p className="text-zinc-500 text-sm leading-relaxed mb-4">
+                  <p className="text-zinc-200/80 text-sm leading-relaxed mb-4">
                     Create professional invoices in seconds. Add line items, taxes,
                     and download as PDF.
                   </p>
@@ -265,7 +265,7 @@ export default function HomePage() {
             <Link
               to="/tools/qr-generator"
               data-testid="tool-qr-card"
-              className="group relative overflow-hidden rounded-xl border border-white/5 hover:border-white/15 transition-all duration-500 bg-zinc-900/30 p-8"
+              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/85 hover:border-brand-accent/30 transition-all duration-500"
             >
               <div className="flex items-start gap-5">
                 <div className="w-12 h-12 rounded-xl bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center shrink-0">
@@ -273,7 +273,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex-1">
                   <h3 className="font-heading text-xl font-semibold mb-2">QR Code Generator</h3>
-                  <p className="text-zinc-500 text-sm leading-relaxed mb-4">
+                  <p className="text-zinc-200/80 text-sm leading-relaxed mb-4">
                     Generate QR codes for URLs, text, or contact info. Download as PNG
                     in any size.
                   </p>
@@ -288,7 +288,7 @@ export default function HomePage() {
       </section>
 
       {/* More Tools Coming Soon */}
-      <section data-testid="coming-soon-section" className="py-24 md:py-32 relative">
+      <section data-testid="coming-soon-section" className="py-24 md:py-32 relative bg-white/[0.02]">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 text-center">
           <div className="max-w-2xl mx-auto">
             <div className="w-14 h-14 rounded-2xl bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center mx-auto mb-8">
@@ -300,7 +300,7 @@ export default function HomePage() {
             >
               More tools on the way
             </h2>
-            <p className="text-zinc-400 text-lg leading-relaxed mb-10">
+            <p className="text-zinc-200 text-lg leading-relaxed mb-10">
               We&apos;re always building. Templates, trackers, and
               more free tools are in the pipeline.
             </p>

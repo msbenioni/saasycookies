@@ -21,8 +21,8 @@ const navLinks = [
     hasLogo: true,
     logoKey: "PACIFIC_MARKET"
   },
-  { to: "/tools/invoice-generator", label: "Invoice", icon: FileText, color: "text-zinc-300" },
-  { to: "/tools/qr-generator", label: "QR Code", icon: QrCode, color: "text-zinc-300" },
+  { to: "/tools/invoice-generator", label: "Invoice", icon: FileText, color: "text-purple-500" },
+  { to: "/tools/qr-generator", label: "QR Code", icon: QrCode, color: "text-pink-500" },
 ];
 
 export default function MainLayout() {
@@ -47,7 +47,7 @@ export default function MainLayout() {
               className={LOGO_CLASSES.NAVIGATION}
             />
             <span className="font-heading font-bold text-lg tracking-tight">
-              SaaSy<span className="text-brand-primary">Cookies</span>
+              SaaSy <span className="text-brand-primary">Cookies</span>
             </span>
           </Link>
 
@@ -75,7 +75,7 @@ export default function MainLayout() {
                   ) : (
                     <Icon className={`w-3.5 h-3.5 ${active ? link.color : ""}`} strokeWidth={1.5} />
                   )}
-                  {link.label}
+                  <span className={link.color}>{link.label}</span>
                 </Link>
               );
             })}
@@ -110,8 +110,8 @@ export default function MainLayout() {
                       : "text-zinc-400 hover:text-white hover:bg-white/5"
                   }`}
                 >
-                  <Icon className={`w-4 h-4 ${active ? link.color : ""}`} strokeWidth={1.5} />
-                  {link.label}
+                  <Icon className={`w-4 h-4 ${active ? link.color : link.color}`} strokeWidth={1.5} />
+                  <span className={link.color}>{link.label}</span>
                 </Link>
               );
             })}

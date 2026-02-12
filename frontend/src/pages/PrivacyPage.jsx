@@ -29,8 +29,10 @@ export default function PrivacyPage() {
             2. How We Use Information
           </h2>
           <p>
-            Any information collected through our products (SenseAI, Pacific
-            Market) is used solely to provide and improve the services you&apos;ve
+            Any information collected through our products ({" "}
+            <span className="text-senseai font-semibold">SenseAI</span>,{" "}
+            <span className="text-pacific font-semibold">Pacific Market</span>
+            ) is used solely to provide and improve the services you&apos;ve
             signed up for. We do not sell your data to third parties.
           </p>
         </section>

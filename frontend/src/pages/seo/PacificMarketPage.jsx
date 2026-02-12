@@ -78,7 +78,7 @@ export default function PacificMarketPage() {
       </section>
 
       {/* The Gap */}
-      <section data-testid="pacific-gap" className="py-24 md:py-32">
+      <section data-testid="pacific-gap" className="py-24 md:py-32 bg-white/[0.02]">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -88,24 +88,24 @@ export default function PacificMarketPage() {
               <h2 className="font-heading text-4xl md:text-5xl font-bold tracking-tight mb-6">
                 Invisible to the world.
               </h2>
-              <p className="text-zinc-400 text-lg leading-relaxed mb-6">
+              <p className="text-zinc-200 text-lg leading-relaxed mb-6">
                 Pacific Island creators and small businesses are some of the most
                 resourceful, creative people on the planet. But they&apos;re invisible
                 online. Global marketplaces weren&apos;t built for them. The tools are
                 too complex, the fees too high, and the audience too far away.
               </p>
-              <p className="text-zinc-400 text-lg leading-relaxed">
+              <p className="text-zinc-200 text-lg leading-relaxed">
                 The Pacific region generates incredible art, food, fashion, and
                 services&mdash;but lacks the digital infrastructure to share it
                 with the world.
               </p>
             </div>
             <div className="relative">
-              <div className="rounded-2xl overflow-hidden border border-white/5 bg-zinc-900/40 p-8">
+              <div className="rounded-2xl overflow-hidden border border-white/10 bg-zinc-900/85 p-8">
                 <img
                   src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=400&fit=crop"
                   alt="Pacific island landscape"
-                  className="w-full h-64 object-cover rounded-xl opacity-60"
+                  className="w-full h-64 object-cover rounded-xl opacity-70"
                 />
               </div>
             </div>
@@ -114,7 +114,7 @@ export default function PacificMarketPage() {
       </section>
 
       {/* Vision */}
-      <section data-testid="pacific-vision" className="py-24 md:py-32 bg-void-paper">
+      <section data-testid="pacific-vision" className="py-24 md:py-32 bg-void-paper/70">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <span className="text-xs font-medium text-pacific uppercase tracking-widest mb-4 block">
@@ -123,7 +123,7 @@ export default function PacificMarketPage() {
             <h2 className="font-heading text-4xl md:text-5xl font-bold tracking-tight mb-6">
               A marketplace <span className="text-pacific">built for the Pacific.</span>
             </h2>
-            <p className="text-zinc-400 text-lg leading-relaxed">
+            <p className="text-zinc-300 text-lg leading-relaxed">
               Pacific Market isn&apos;t another Etsy clone. It&apos;s a platform
               designed from the ground up for Pacific communities, with features
               that respect their culture, connectivity, and commerce patterns.
@@ -137,13 +137,13 @@ export default function PacificMarketPage() {
                 <div
                   key={vp.title}
                   data-testid={`vision-${vp.title.toLowerCase().replace(/\s/g, "-")}`}
-                  className="group relative overflow-hidden bg-zinc-900/40 border border-white/5 hover:border-pacific/20 transition-all duration-500 rounded-xl p-8"
+                  className="group relative overflow-hidden bg-zinc-900/85 border border-white/10 hover:border-pacific/20 transition-all duration-500 rounded-xl p-8"
                 >
                   <div className="w-10 h-10 rounded-lg bg-pacific/10 flex items-center justify-center mb-5">
                     <Icon className="w-5 h-5 text-pacific" strokeWidth={1.5} />
                   </div>
                   <h3 className="font-heading text-xl font-semibold mb-2">{vp.title}</h3>
-                  <p className="text-zinc-500 text-sm leading-relaxed">{vp.desc}</p>
+                  <p className="text-zinc-200/80 text-sm leading-relaxed">{vp.desc}</p>
                 </div>
               );
             })}
@@ -152,11 +152,11 @@ export default function PacificMarketPage() {
       </section>
 
       {/* Tech as Enabler */}
-      <section data-testid="pacific-tech" className="py-24 md:py-32">
+      <section data-testid="pacific-tech" className="py-24 md:py-32 bg-white/[0.02]">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="order-2 lg:order-1">
-              <div className="rounded-2xl overflow-hidden border border-white/5 bg-zinc-900/40 p-8">
+              <div className="rounded-2xl overflow-hidden border border-white/10 bg-zinc-900/70 p-8">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="rounded-xl bg-pacific/5 border border-pacific/10 p-5 flex flex-col items-center text-center">
                     <MapPin className="w-6 h-6 text-pacific mb-2" strokeWidth={1.5} />
@@ -184,7 +184,7 @@ export default function PacificMarketPage() {
               <h2 className="font-heading text-4xl md:text-5xl font-bold tracking-tight mb-6">
                 Technology that serves, not complicates.
               </h2>
-              <p className="text-zinc-400 text-lg leading-relaxed">
+              <p className="text-zinc-300 text-lg leading-relaxed">
                 We&apos;re using technology to remove barriers, not create new ones.
                 Pacific Market is mobile-first, works on slow connections, and is
                 designed so that anyone&mdash;from a weaver in Samoa to a food
@@ -196,14 +196,14 @@ export default function PacificMarketPage() {
       </section>
 
       {/* Founder Story */}
-      <section data-testid="pacific-founder" className="py-24 md:py-32 bg-void-paper">
+      <section data-testid="pacific-founder" className="py-24 md:py-32 bg-void-paper/70">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <div className="max-w-3xl">
             <div className="flex items-center gap-3 mb-8">
               <div className="w-10 h-10 rounded-full bg-pacific/10 border border-pacific/20 flex items-center justify-center">
                 <Heart className="w-5 h-5 text-pacific" strokeWidth={1.5} />
               </div>
-              <span className="text-xs font-medium text-zinc-500 uppercase tracking-widest">
+              <span className="text-xs font-medium text-zinc-400 uppercase tracking-widest">
                 From the Founder
               </span>
             </div>
@@ -212,7 +212,7 @@ export default function PacificMarketPage() {
               because the tools weren&apos;t there. Pacific Market is my way of
               building the bridge I wish existed.&rdquo;
             </blockquote>
-            <p className="text-zinc-500">
+            <p className="text-zinc-200/70">
               &mdash; Jasmin Benioni, Founder, SaaSy Cookies
             </p>
           </div>
@@ -220,12 +220,12 @@ export default function PacificMarketPage() {
       </section>
 
       {/* CTA */}
-      <section data-testid="pacific-cta" className="py-24 md:py-32 text-center">
+      <section data-testid="pacific-cta" className="py-24 md:py-32 text-center bg-white/[0.02]">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <h2 className="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-4">
             Join the Pacific movement
           </h2>
-          <p className="text-zinc-400 text-lg mb-10 max-w-xl mx-auto">
+          <p className="text-zinc-200 text-lg mb-10 max-w-xl mx-auto">
             Whether you&apos;re a creator, a business, or someone who believes in
             equitable commerce&mdash;Pacific Market needs you.
           </p>
