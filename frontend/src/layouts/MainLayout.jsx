@@ -47,8 +47,8 @@ export default function MainLayout() {
               alt="SaaSy Cookies Logo" 
               className={LOGO_CLASSES.NAVIGATION}
             />
-            <span className="font-heading font-bold text-lg tracking-tight">
-              SaaSy <span className="text-brand-primary">Cookies</span>
+            <span className="brand-title text-xl">
+              SaaSy <span className="text-white">Cookies</span>
             </span>
           </Link>
 
