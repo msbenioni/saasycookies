@@ -103,7 +103,7 @@ export default function HomePage() {
         <div className="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <div className="flex items-center gap-3 mb-4">
             <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
-            <span className={SECTION_LABEL_STYLES.default}>
+            <span className={SECTION_LABEL_STYLES.primary}>
               Services
             </span>
           </div>
@@ -200,7 +200,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <div className="flex items-center gap-3 mb-4">
             <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
-            <span className={SECTION_LABEL_STYLES.default}>
+            <span className={SECTION_LABEL_STYLES.primary}>
               Featured Products
             </span>
           </div>
@@ -274,7 +274,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <div className="flex items-center gap-3 mb-4">
             <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
-            <span className={SECTION_LABEL_STYLES.default}>
+            <span className={SECTION_LABEL_STYLES.primary}>
               Free Tools
             </span>
           </div>
