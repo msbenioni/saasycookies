@@ -11,10 +11,13 @@ import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
 import RequestWebsiteQuotePage from "./pages/RequestWebsiteQuotePage";
 import QuoteThankYouPage from "./pages/QuoteThankYouPage";
+import ScrollToTop from "./components/ScrollToTop";
+import ScrollToTopOnMount from "./components/ScrollToTopOnMount";
 
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTopOnMount />
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />
@@ -29,6 +32,7 @@ function App() {
           <Route path="/terms" element={<TermsPage />} />
         </Route>
       </Routes>
+      <ScrollToTop />
     </BrowserRouter>
   );
 }
