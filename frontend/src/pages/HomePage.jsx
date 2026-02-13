@@ -96,6 +96,54 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Services */}
+      <section data-testid="services-section" className="py-24 md:py-32 relative">
+        <div className="absolute inset-0 opacity-30" style={{ background: "radial-gradient(circle at 20% 20%, rgba(16,185,129,0.16) 0%, transparent 55%), radial-gradient(circle at 80% 40%, rgba(6,182,212,0.12) 0%, transparent 55%)" }} />
+        <div className="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
+            <span className="text-xs font-medium text-zinc-500 uppercase tracking-widest">
+              Services
+            </span>
+          </div>
+          <h2
+            data-testid="services-title"
+            className="font-heading text-4xl md:text-5xl font-bold tracking-tight mb-6"
+          >
+            Custom websites built for clarity and conversion
+          </h2>
+          <p className="text-zinc-200 text-lg max-w-2xl mb-16 leading-relaxed">
+            From strategy to launch, we design and ship websites that show your value and
+            turn visitors into customers.
+          </p>
+
+          <Link
+            to="/services/websites"
+            data-testid="service-website-card"
+            className="group relative overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/85 hover:border-emerald-400/30 transition-all duration-500"
+          >
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ background: "radial-gradient(circle at 35% 35%, rgba(16,185,129,0.24) 0%, transparent 70%)" }} />
+            <div className="relative p-8 md:p-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center shrink-0">
+                  <Layers className="w-6 h-6 text-emerald-400" strokeWidth={1.5} />
+                </div>
+                <div>
+                  <h3 className="font-heading text-2xl font-semibold mb-2">Creating a website</h3>
+                  <p className="text-zinc-200/80 text-sm leading-relaxed max-w-xl">
+                    A guided discovery + build process tailored to your brand, goals, and
+                    audience. Get a clear scope, timeline, and quote.
+                  </p>
+                </div>
+              </div>
+              <div className="inline-flex items-center gap-2 text-emerald-400 text-sm font-semibold group-hover:gap-3 transition-all">
+                Request a quote <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+              </div>
+            </div>
+          </Link>
+        </div>
+      </section>
+
       {/* What We Build */}
       <section data-testid="what-we-build-section" className="py-24 md:py-32 relative bg-white/[0.02]">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">

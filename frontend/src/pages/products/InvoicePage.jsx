@@ -2,11 +2,12 @@ import { useState, useRef } from "react";
 import { FileText, Plus, Trash2, Download, Upload, X } from "lucide-react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { INPUT_CLASS, FOCUS_COLORS, TEXT_COLORS, BG_COLORS, PAGE_HEADER_CLASS, PAGE_HEADER_ICON_CLASS, PAGE_HEADER_TITLE_CLASS, PAGE_HEADER_DESC_CLASS, ICON_BG_COLORS } from "../../constants/formStyles";
 
 // Constants
-const emptyItem = { description: "", quantity: 1, rate: 0 };
+const emptyItem = { description: "", quantity: 1, rate:0 };
 
-const INPUT_CLASS = "w-full bg-zinc-950/50 border border-zinc-800 focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 rounded-md py-2 px-3 text-white text-sm placeholder:text-zinc-600 transition-all outline-none";
+const INPUT_CLASS_FINAL = INPUT_CLASS + " py-2 text-sm " + FOCUS_COLORS.purple;
 
 const PDF_CONFIG = {
   MARGIN: 16,
@@ -379,19 +380,19 @@ export default function InvoicePage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 py-16 md:py-24">
+    <div className={PAGE_HEADER_CLASS}>
       <div className="flex items-center gap-3 mb-2">
-        <div className="w-10 h-10 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
-          <FileText className="w-5 h-5 text-purple-500" strokeWidth={1.5} />
+        <div className={`${PAGE_HEADER_ICON_CLASS} ${ICON_BG_COLORS.purple}`}>
+          <FileText className={`w-5 h-5 ${TEXT_COLORS.purple}`} strokeWidth={1.5} />
         </div>
         <h1
           data-testid="invoice-page-title"
-          className="font-heading text-3xl md:text-4xl font-bold tracking-tight"
+          className={PAGE_HEADER_TITLE_CLASS}
         >
           Invoice
         </h1>
       </div>
-      <p className="text-zinc-500 mb-12 ml-[52px]">
+      <p className={PAGE_HEADER_DESC_CLASS}>
         Create professional invoices and download as PDF. Free, no sign-up required.
       </p>
 
@@ -408,7 +409,7 @@ export default function InvoicePage() {
                 <label className="text-xs text-zinc-500 mb-1 block">Invoice #</label>
                 <input
                   data-testid="invoice-number-input"
-                  className={INPUT_CLASS}
+                  className={INPUT_CLASS_FINAL}
                   value={invoice.invoiceNumber}
                   onChange={(e) => updateField("invoiceNumber", e.target.value)}
                 />
@@ -418,7 +419,7 @@ export default function InvoicePage() {
                 <input
                   data-testid="invoice-date-input"
                   type="date"
-                  className={INPUT_CLASS}
+                  className={INPUT_CLASS_FINAL}
                   value={invoice.date}
                   onChange={(e) => updateField("date", e.target.value)}
                 />
@@ -429,7 +430,7 @@ export default function InvoicePage() {
               <input
                 data-testid="invoice-due-date-input"
                 type="date"
-                className={INPUT_CLASS}
+                className={INPUT_CLASS_FINAL}
                 value={invoice.dueDate}
                 onChange={(e) => updateField("dueDate", e.target.value)}
               />
@@ -442,18 +443,18 @@ export default function InvoicePage() {
               <h3 className="font-heading text-sm font-semibold text-zinc-400 uppercase tracking-wider">
                 From
               </h3>
-              <input data-testid="from-name-input" className={INPUT_CLASS} placeholder="Your name" value={invoice.from.name} onChange={(e) => updateField("from.name", e.target.value)} />
-              <input data-testid="from-email-input" className={INPUT_CLASS} placeholder="Email" value={invoice.from.email} onChange={(e) => updateField("from.email", e.target.value)} />
-              <textarea data-testid="from-address-input" className={INPUT_CLASS + " resize-none h-16"} placeholder="Address" value={invoice.from.address} onChange={(e) => updateField("from.address", e.target.value)} />
-              <input data-testid="from-gst-input" className={INPUT_CLASS} placeholder="GST Number" value={invoice.from.gst} onChange={(e) => updateField("from.gst", e.target.value)} />
+              <input data-testid="from-name-input" className={INPUT_CLASS_FINAL} placeholder="Your name" value={invoice.from.name} onChange={(e) => updateField("from.name", e.target.value)} />
+              <input data-testid="from-email-input" className={INPUT_CLASS_FINAL} placeholder="Email" value={invoice.from.email} onChange={(e) => updateField("from.email", e.target.value)} />
+              <textarea data-testid="from-address-input" className={INPUT_CLASS_FINAL + " resize-none h-16"} placeholder="Address" value={invoice.from.address} onChange={(e) => updateField("from.address", e.target.value)} />
+              <input data-testid="from-gst-input" className={INPUT_CLASS_FINAL} placeholder="GST Number" value={invoice.from.gst} onChange={(e) => updateField("from.gst", e.target.value)} />
             </div>
             <div className="rounded-xl bg-zinc-900/40 border border-white/5 p-6 space-y-3">
               <h3 className="font-heading text-sm font-semibold text-zinc-400 uppercase tracking-wider">
                 To
               </h3>
-              <input data-testid="to-name-input" className={INPUT_CLASS} placeholder="Client name" value={invoice.to.name} onChange={(e) => updateField("to.name", e.target.value)} />
-              <input data-testid="to-email-input" className={INPUT_CLASS} placeholder="Email" value={invoice.to.email} onChange={(e) => updateField("to.email", e.target.value)} />
-              <textarea data-testid="to-address-input" className={INPUT_CLASS + " resize-none h-16"} placeholder="Address" value={invoice.to.address} onChange={(e) => updateField("to.address", e.target.value)} />
+              <input data-testid="to-name-input" className={INPUT_CLASS_FINAL} placeholder="Client name" value={invoice.to.name} onChange={(e) => updateField("to.name", e.target.value)} />
+              <input data-testid="to-email-input" className={INPUT_CLASS_FINAL} placeholder="Email" value={invoice.to.email} onChange={(e) => updateField("to.email", e.target.value)} />
+              <textarea data-testid="to-address-input" className={INPUT_CLASS_FINAL + " resize-none h-16"} placeholder="Address" value={invoice.to.address} onChange={(e) => updateField("to.address", e.target.value)} />
             </div>
           </div>
 
@@ -509,7 +510,7 @@ export default function InvoicePage() {
               <div key={idx} className="space-y-2">
                 <input
                   data-testid={`item-desc-${idx}`}
-                  className={INPUT_CLASS}
+                  className={INPUT_CLASS_FINAL}
                   placeholder="Description"
                   value={item.description}
                   onChange={(e) => updateItem(idx, "description", e.target.value)}
@@ -519,7 +520,7 @@ export default function InvoicePage() {
                     data-testid={`item-qty-${idx}`}
                     type="number"
                     min="1"
-                    className={INPUT_CLASS + " w-20 text-center"}
+                    className={INPUT_CLASS_FINAL + " w-20 text-center"}
                     value={item.quantity}
                     onChange={(e) => updateItem(idx, "quantity", Number(e.target.value))}
                   />
@@ -528,7 +529,7 @@ export default function InvoicePage() {
                     type="number"
                     min="0"
                     step="0.01"
-                    className={INPUT_CLASS + " w-28 text-right"}
+                    className={INPUT_CLASS_FINAL + " w-28 text-right"}
                     placeholder="Rate"
                     value={item.rate || ""}
                     onChange={(e) => updateItem(idx, "rate", Number(e.target.value))}
@@ -564,7 +565,7 @@ export default function InvoicePage() {
                   min="0"
                   max="100"
                   step="0.1"
-                  className={INPUT_CLASS}
+                  className={INPUT_CLASS_FINAL}
                   value={invoice.taxRate || ""}
                   onChange={(e) => updateField("taxRate", Number(e.target.value))}
                 />
@@ -577,7 +578,7 @@ export default function InvoicePage() {
                   min="0"
                   max="100"
                   step="0.1"
-                  className={INPUT_CLASS}
+                  className={INPUT_CLASS_FINAL}
                   value={invoice.withholdingTaxRate || ""}
                   onChange={(e) => updateField("withholdingTaxRate", Number(e.target.value))}
                 />
@@ -587,7 +588,7 @@ export default function InvoicePage() {
               <label className="text-xs text-zinc-500 mb-1 block">Notes</label>
               <textarea
                 data-testid="invoice-notes-input"
-                className={INPUT_CLASS + " resize-none h-20"}
+                className={INPUT_CLASS_FINAL + " resize-none h-20"}
                 placeholder="Payment terms, thank you note..."
                 value={invoice.notes}
                 onChange={(e) => updateField("notes", e.target.value)}
@@ -605,7 +606,7 @@ export default function InvoicePage() {
                 <label className="text-xs text-zinc-500 mb-1 block">Account Name</label>
                 <input
                   data-testid="payment-account-name-input"
-                  className={INPUT_CLASS}
+                  className={INPUT_CLASS_FINAL}
                   placeholder="Bank account name"
                   value={invoice.payment.accountName}
                   onChange={(e) => updateField("payment.accountName", e.target.value)}
@@ -615,7 +616,7 @@ export default function InvoicePage() {
                 <label className="text-xs text-zinc-500 mb-1 block">Account Number</label>
                 <input
                   data-testid="payment-account-number-input"
-                  className={INPUT_CLASS}
+                  className={INPUT_CLASS_FINAL}
                   placeholder="Bank account number"
                   value={invoice.payment.accountNumber}
                   onChange={(e) => updateField("payment.accountNumber", e.target.value)}

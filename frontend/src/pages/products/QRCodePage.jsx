@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback } from "react";
 import { QRCodeCanvas } from "qrcode.react";
 import { QrCode, Download, Copy, Check } from "lucide-react";
+import { INPUT_CLASS, FOCUS_COLORS, TEXT_COLORS, BG_COLORS, PAGE_HEADER_CLASS, PAGE_HEADER_ICON_CLASS, PAGE_HEADER_TITLE_CLASS, PAGE_HEADER_DESC_CLASS, ICON_BG_COLORS } from "../../constants/formStyles";
 
 // Constants
 const SIZE_OPTIONS = [128, 256, 512, 1024];
@@ -22,7 +23,7 @@ const CANVAS_CONFIG = {
   }
 };
 
-const INPUT_CLASS = "w-full bg-zinc-950/50 border border-zinc-800 focus:border-pink-500 focus:ring-1 focus:ring-pink-500/20 rounded-md py-2 px-3 text-white text-sm placeholder:text-zinc-600 transition-all outline-none";
+const INPUT_CLASS_FINAL = INPUT_CLASS + " text-sm " + FOCUS_COLORS.pink;
 
 const PREVIEW_CONTAINER_CLASS = "rounded-2xl bg-zinc-900/40 border border-white/5 p-8 md:p-12 flex flex-col items-center gap-6 sticky top-24";
 const QR_CONTAINER_CLASS = "rounded-xl overflow-hidden shadow-2xl";
@@ -114,19 +115,19 @@ export default function QRCodePage() {
   }, []);
 
   return (
-    <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 py-16 md:py-24">
+    <div className={PAGE_HEADER_CLASS}>
       <div className="flex items-center gap-3 mb-2">
-        <div className="w-10 h-10 rounded-lg bg-pink-500/10 border border-pink-500/20 flex items-center justify-center">
-          <QrCode className="w-5 h-5 text-pink-500" strokeWidth={1.5} />
+        <div className={`${PAGE_HEADER_ICON_CLASS} ${ICON_BG_COLORS.pink}`}>
+          <QrCode className={`w-5 h-5 ${TEXT_COLORS.pink}`} strokeWidth={1.5} />
         </div>
         <h1
           data-testid="qr-page-title"
-          className="font-heading text-3xl md:text-4xl font-bold tracking-tight"
+          className={PAGE_HEADER_TITLE_CLASS}
         >
           QR Code Generator
         </h1>
       </div>
-      <p className="text-zinc-500 mb-12 ml-[52px]">
+      <p className={PAGE_HEADER_DESC_CLASS}>
         Generate QR codes for URLs, text, or contact info. Download as PNG.
       </p>
 
@@ -139,7 +140,7 @@ export default function QRCodePage() {
             </h3>
             <textarea
               data-testid="qr-text-input"
-              className={INPUT_CLASS + " resize-none h-28"}
+              className={INPUT_CLASS_FINAL + " resize-none h-28"}
               placeholder="Enter URL, text, or any content..."
               value={text}
               onChange={(e) => setText(e.target.value)}
@@ -207,7 +208,7 @@ export default function QRCodePage() {
                     className="w-8 h-8 rounded cursor-pointer border-0 bg-transparent"
                   />
                   <input
-                    className={INPUT_CLASS}
+                    className={INPUT_CLASS_FINAL}
                     value={fgColor}
                     onChange={(e) => setFgColor(e.target.value)}
                   />
@@ -224,7 +225,7 @@ export default function QRCodePage() {
                     className="w-8 h-8 rounded cursor-pointer border-0 bg-transparent"
                   />
                   <input
-                    className={INPUT_CLASS}
+                    className={INPUT_CLASS_FINAL}
                     value={bgColor}
                     onChange={(e) => setBgColor(e.target.value)}
                   />
