@@ -4,6 +4,7 @@ import {
   Layers, Sparkles, Code2, Rocket, ChevronRight
 } from "lucide-react";
 import { PRODUCT_LOGOS } from "../constants/productLogos";
+import { SECTION_TITLE_STYLES } from "../constants/formStyles";
 
 const categoryCards = [
   {
@@ -108,7 +109,7 @@ export default function HomePage() {
           </div>
           <h2
             data-testid="services-title"
-            className="font-heading text-4xl md:text-5xl font-bold tracking-tight mb-6"
+            className={SECTION_TITLE_STYLES.main}
           >
             Custom websites built for clarity and conversion
           </h2>
@@ -129,7 +130,7 @@ export default function HomePage() {
                   <Layers className="w-6 h-6 text-emerald-400" strokeWidth={1.5} />
                 </div>
                 <div>
-                  <h3 className="font-heading text-2xl font-semibold mb-2">Creating a website</h3>
+                  <h3 className={SECTION_TITLE_STYLES.subsection}>Creating a website</h3>
                   <p className="text-zinc-200/80 text-sm leading-relaxed max-w-xl">
                     A guided discovery + build process tailored to your brand, goals, and
                     audience. Get a clear scope, timeline, and quote.
@@ -155,7 +156,7 @@ export default function HomePage() {
           </div>
           <h2
             data-testid="what-we-build-title"
-            className="font-heading text-4xl md:text-5xl font-bold tracking-tight mb-6"
+            className={SECTION_TITLE_STYLES.main}
           >
             Products with purpose
           </h2>
@@ -185,7 +186,7 @@ export default function HomePage() {
                       <Icon className="w-5 h-5" strokeWidth={1.5} />
                     )}
                   </div>
-                  <h3 className="font-heading text-xl font-semibold mb-2">{card.title}</h3>
+                  <h3 className={SECTION_TITLE_STYLES.card}>{card.title}</h3>
                   <p className="text-zinc-200/80 text-sm leading-relaxed">{card.desc}</p>
                 </div>
               );
@@ -205,7 +206,7 @@ export default function HomePage() {
           </div>
           <h2
             data-testid="featured-products-title"
-            className="font-heading text-4xl md:text-5xl font-bold tracking-tight mb-16"
+            className={SECTION_TITLE_STYLES.main}
           >
             Flagship launches
           </h2>
@@ -279,7 +280,7 @@ export default function HomePage() {
           </div>
           <h2
             data-testid="tools-title"
-            className="font-heading text-4xl md:text-5xl font-bold tracking-tight mb-6"
+            className={SECTION_TITLE_STYLES.main}
           >
             Business utilities, on the house
           </h2>
@@ -298,7 +299,7 @@ export default function HomePage() {
                   <FileText className="w-6 h-6 text-brand-primary" strokeWidth={1.5} />
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-heading text-xl font-semibold mb-2">Invoice Generator</h3>
+                  <h3 className={SECTION_TITLE_STYLES.card}>Invoice Generator</h3>
                   <p className="text-zinc-200/80 text-sm leading-relaxed mb-4">
                     Create professional invoices in seconds. Add line items, taxes,
                     and download as PDF.
@@ -320,7 +321,7 @@ export default function HomePage() {
                   <QrCode className="w-6 h-6 text-brand-accent" strokeWidth={1.5} />
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-heading text-xl font-semibold mb-2">QR Code Generator</h3>
+                  <h3 className={SECTION_TITLE_STYLES.card}>QR Code Generator</h3>
                   <p className="text-zinc-200/80 text-sm leading-relaxed mb-4">
                     Generate QR codes for URLs, text, or contact info. Download as PNG
                     in any size.
@@ -344,7 +345,7 @@ export default function HomePage() {
             </div>
             <h2
               data-testid="coming-soon-title"
-              className="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-4"
+              className={SECTION_TITLE_STYLES.small}
             >
               More tools on the way
             </h2>

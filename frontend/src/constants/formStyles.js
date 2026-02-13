@@ -51,3 +51,18 @@ export const ICON_BG_COLORS = {
   pink: "bg-pink-500/10 border-pink-500/20",
   emerald: "bg-emerald-400/10 border-emerald-400/20",
 };
+
+// Section title styles for consistency across pages
+export const SECTION_TITLE_STYLES = {
+  // Main section titles (h2)
+  main: "font-heading text-4xl md:text-5xl font-bold tracking-tight text-white mb-6",
+  
+  // Subsection titles (h3) 
+  subsection: "font-heading text-2xl font-semibold text-white mb-2",
+  
+  // Card titles (h3)
+  card: "font-heading text-xl font-semibold text-white mb-2",
+  
+  // Small section titles
+  small: "font-heading text-3xl md:text-4xl font-bold tracking-tight text-white mb-4",
+};
