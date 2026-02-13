@@ -26,7 +26,7 @@ export default function QuoteThankYouPage() {
           </h1>
           
           <p className="text-xl text-zinc-300 mb-8 max-w-2xl mx-auto">
-            Thank you for your detailed website quote request. I've received all your information and will review it carefully.
+            Thank you for your detailed website quote request. We've received all your information and will review it carefully.
           </p>
           
           <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-6 mb-8 max-w-2xl mx-auto">
@@ -34,7 +34,7 @@ export default function QuoteThankYouPage() {
             <ul className="text-zinc-300 space-y-2 text-left">
               <li className="flex items-start gap-3">
                 <span className="text-emerald-400 mt-1">•</span>
-                <span>I'll review your requirements and business goals</span>
+                <span>We'll review your requirements and business goals</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-emerald-400 mt-1">•</span>
