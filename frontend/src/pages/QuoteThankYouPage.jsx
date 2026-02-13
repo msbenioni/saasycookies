@@ -4,10 +4,32 @@ import { useEffect } from "react";
 
 export default function QuoteThankYouPage() {
   useEffect(() => {
-    // Force scroll to top when component mounts
-    window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
+    // Force scroll to top with multiple attempts
+    const scrollToTop = () => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      document.documentElement.style.scrollBehavior = 'auto';
+      document.body.style.scrollBehavior = 'auto';
+    };
+
+    // Immediate scroll
+    scrollToTop();
+
+    // Additional scroll after a short delay to ensure DOM is ready
+    setTimeout(scrollToTop, 0);
+
+    // Final scroll after render is complete
+    setTimeout(scrollToTop, 100);
+
+    // Reset scroll behavior after positioning
+    setTimeout(() => {
+      document.documentElement.style.scrollBehavior = '';
+      document.body.style.scrollBehavior = '';
+    }, 200);
+
+    // Also disable browser scroll restoration
+    window.history.scrollRestoration = 'manual';
   }, []);
 
   return (
