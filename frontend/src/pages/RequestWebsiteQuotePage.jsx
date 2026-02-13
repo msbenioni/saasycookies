@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowRight, AlertTriangle, CheckCircle } from "lucide-react";
+import { ArrowRight, AlertTriangle, CheckCircle, Layers } from "lucide-react";
 import { sendQuoteRequestEmail } from "../utils/emailService";
 import { INPUT_CLASS, SELECT_CLASS, CHECKBOX_LABEL_CLASS, CHECKBOX_INPUT_CLASS, BADGE_CLASS, MESSAGE_BOX_CLASS, FOCUS_COLORS, TEXT_COLORS, BG_COLORS, PAGE_HEADER_CLASS, PAGE_HEADER_ICON_CLASS, PAGE_HEADER_TITLE_CLASS, PAGE_HEADER_DESC_CLASS, ICON_BG_COLORS, SECTION_CLASS, SECTION_TITLE_CLASS, FORM_GRID_CLASS } from "../constants/formStyles";
 
