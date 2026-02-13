@@ -127,10 +127,15 @@ exports.handler = async (event, context) => {
     const { data, error } = await resend.emails.send(emailConfig);
 
     if (error) {
-      console.error('Resend error:', error);
+      console.error('Full Resend error:', JSON.stringify(error, null, 2));
+      console.error('API Key used:', apiKey.substring(0, 10) + '...');
       return {
         statusCode: 500,
-        body: JSON.stringify({ error: error.message }),
+        body: JSON.stringify({ 
+          error: error.message,
+          details: error.name,
+          statusCode: error.statusCode
+        }),
       };
     }
 
