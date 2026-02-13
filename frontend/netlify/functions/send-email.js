@@ -18,8 +18,8 @@ exports.handler = async (event, context) => {
 
     if (type === 'contact') {
       emailConfig = {
-        from: 'onboarding@resend.dev',
-        to: 'support@saasycookies.com',
+        from: 'noreply@saasycookies.com', // Use verified domain
+        to: 'saasycookies@gmail.com', // Temporary - change to support@saasycookies.com after domain verification
         subject: `Contact Form: ${formData.subject || 'New message from website'}`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -40,8 +40,8 @@ exports.handler = async (event, context) => {
       };
     } else if (type === 'quote') {
       emailConfig = {
-        from: 'onboarding@resend.dev',
-        to: 'support@saasycookies.com',
+        from: 'noreply@saasycookies.com', // Use verified domain
+        to: 'saasycookies@gmail.com', // Temporary - change to support@saasycookies.com after domain verification
         subject: `Website Quote Request: ${formData.businessName || 'New request'}`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
