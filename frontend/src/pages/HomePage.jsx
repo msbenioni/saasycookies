@@ -209,6 +209,10 @@ export default function HomePage() {
           >
             Flagship launches
           </h2>
+          <p className={SECTION_DESCRIPTION_STYLES}>
+            Our signature products that showcase what's possible when design meets functionality.
+            Each one solves real problems with thoughtful, user-centered experiences.
+          </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* SenseAI */}
