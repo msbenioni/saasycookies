@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Layers, ArrowRight, CheckCircle2, AlertTriangle } from "lucide-react";
-import { INPUT_CLASS, SELECT_CLASS, CHECKBOX_LABEL_CLASS, CHECKBOX_INPUT_CLASS, BADGE_CLASS, MESSAGE_BOX_CLASS, FOCUS_COLORS, TEXT_COLORS, BG_COLORS, PAGE_HEADER_CLASS, PAGE_HEADER_ICON_CLASS, PAGE_HEADER_TITLE_CLASS, PAGE_HEADER_DESC_CLASS, ICON_BG_COLORS } from "../constants/formStyles";
+import { INPUT_CLASS, SELECT_CLASS, CHECKBOX_LABEL_CLASS, CHECKBOX_INPUT_CLASS, BADGE_CLASS, MESSAGE_BOX_CLASS, FOCUS_COLORS, TEXT_COLORS, BG_COLORS, PAGE_HEADER_CLASS, PAGE_HEADER_ICON_CLASS, PAGE_HEADER_TITLE_CLASS, PAGE_HEADER_DESC_CLASS, ICON_BG_COLORS, SECTION_CLASS, SECTION_TITLE_CLASS, FORM_GRID_CLASS } from "../constants/formStyles";
 
 function encode(data) {
   return Object.keys(data)
@@ -138,7 +138,7 @@ export default function RequestWebsiteQuotePage() {
       />
       <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20200%20200%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cfilter%20id%3D%22n%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.7%22%20numOctaves%3D%223%22%20stitchTiles%3D%22stitch%22/%3E%3C/filter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url(%23n)%22%20opacity%3D%220.03%22/%3E%3C/svg%3E')]" />
       
-      <div className={PAGE_HEADER_CLASS} style={{ position: 'relative', zIndex: 10 }}>
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 py-16 md:py-24" style={{ position: 'relative', zIndex: 10 }}>
         <div className="flex items-center gap-3 mb-2">
           <div className={`${PAGE_HEADER_ICON_CLASS} ${ICON_BG_COLORS.emerald}`}>
             <Layers className={`w-5 h-5 ${TEXT_COLORS.emerald}`} strokeWidth={1.5} />
@@ -157,7 +157,7 @@ export default function RequestWebsiteQuotePage() {
             <div>
               <div className="font-semibold mb-1">Submitted ✅</div>
               <div className="text-zinc-400 text-sm">
-                Thanks — I’ve received your request and will be in touch.
+                Thanks — I've received your request and will be in touch.
               </div>
             </div>
           </div>
@@ -181,8 +181,7 @@ export default function RequestWebsiteQuotePage() {
           data-netlify="true"
           data-netlify-honeypot="bot-field"
           onSubmit={handleSubmit}
-          className="space-y-8"
-          style={{ position: 'relative', zIndex: 10 }}
+          className="space-y-8" style={{ position: 'relative', zIndex: 10 }}
         >
           <input type="hidden" name="form-name" value="website-discovery" />
 
@@ -192,9 +191,9 @@ export default function RequestWebsiteQuotePage() {
             </label>
           </p>
 
-          <section className="space-y-6">
-            <h2 className="font-heading text-xl font-semibold">Basics</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <section className={SECTION_CLASS}>
+            <h2 className={SECTION_TITLE_CLASS}>Basics</h2>
+            <div className={FORM_GRID_CLASS}>
               <Field label="Full name" name="fullName" required />
               <Field label="Email" name="email" type="email" required />
               <Field label="Phone (optional)" name="phone" />
@@ -202,9 +201,9 @@ export default function RequestWebsiteQuotePage() {
             </div>
           </section>
 
-          <section className="space-y-6">
-            <h2 className="font-heading text-xl font-semibold">Business overview</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <section className={SECTION_CLASS}>
+            <h2 className={SECTION_TITLE_CLASS}>Business overview</h2>
+            <div className={FORM_GRID_CLASS}>
               <Field label="Current website URL" name="websiteUrl" placeholder="https://" />
               <Field label="Industry" name="industry" placeholder="e.g. Retail, coaching" />
               <Field label="Primary goal this year" name="primaryGoalThisYear" />
@@ -219,8 +218,8 @@ export default function RequestWebsiteQuotePage() {
             />
           </section>
 
-          <section className="space-y-6">
-            <h2 className="font-heading text-xl font-semibold">Website purpose & goals</h2>
+          <section className={SECTION_CLASS}>
+            <h2 className={SECTION_TITLE_CLASS}>Website purpose & goals</h2>
             <Textarea
               label="Why do you need a new website?"
               name="whyNewWebsite"
@@ -249,20 +248,22 @@ export default function RequestWebsiteQuotePage() {
             />
           </section>
 
-          <section className="space-y-6">
-            <h2 className="font-heading text-xl font-semibold">Target audience</h2>
+          <section className={SECTION_CLASS}>
+            <h2 className={SECTION_TITLE_CLASS}>Target audience</h2>
             <Textarea
               label="Ideal customer"
               name="idealCustomer"
               required
               rows={3}
             />
-            <Field label="Desired user action" name="desiredUserAction" />
-            <Field label="Desired action (other)" name="desiredUserActionOther" />
+            <div className={FORM_GRID_CLASS}>
+              <Field label="Desired user action" name="desiredUserAction" />
+              <Field label="Desired action (other)" name="desiredUserActionOther" />
+            </div>
           </section>
 
-          <section className="space-y-6">
-            <h2 className="font-heading text-xl font-semibold">Features & functionality</h2>
+          <section className={SECTION_CLASS}>
+            <h2 className={SECTION_TITLE_CLASS}>Features & functionality</h2>
             <CheckboxGroup
               label="Required features"
               name="requiredFeatures"
@@ -289,8 +290,8 @@ export default function RequestWebsiteQuotePage() {
             />
           </section>
 
-          <section className="space-y-6">
-            <h2 className="font-heading text-xl font-semibold">Brand & design</h2>
+          <section className={SECTION_CLASS}>
+            <h2 className={SECTION_TITLE_CLASS}>Brand & design</h2>
             <Select
               label="Brand guidelines available?"
               name="hasBrandGuidelines"
@@ -322,28 +323,30 @@ export default function RequestWebsiteQuotePage() {
             />
           </section>
 
-          <section className="space-y-6">
-            <h2 className="font-heading text-xl font-semibold">Content & SEO</h2>
-            <Select
-              label="Content ready?"
-              name="contentReady"
-              options={[
-                { label: "Select an option", value: "" },
-                { label: "Yes", value: "yes" },
-                { label: "No", value: "no" },
-                { label: "Some", value: "some" },
-              ]}
-            />
-            <Select
-              label="Need copywriting help?"
-              name="needsCopywriting"
-              options={[
-                { label: "Select an option", value: "" },
-                { label: "Yes", value: "yes" },
-                { label: "No", value: "no" },
-                { label: "Not sure yet", value: "unsure" },
-              ]}
-            />
+          <section className={SECTION_CLASS}>
+            <h2 className={SECTION_TITLE_CLASS}>Content & SEO</h2>
+            <div className={FORM_GRID_CLASS}>
+              <Select
+                label="Content ready?"
+                name="contentReady"
+                options={[
+                  { label: "Select an option", value: "" },
+                  { label: "Yes", value: "yes" },
+                  { label: "No", value: "no" },
+                  { label: "Some", value: "some" },
+                ]}
+              />
+              <Select
+                label="Need copywriting help?"
+                name="needsCopywriting"
+                options={[
+                  { label: "Select an option", value: "" },
+                  { label: "Yes", value: "yes" },
+                  { label: "No", value: "no" },
+                  { label: "Not sure yet", value: "unsure" },
+                ]}
+              />
+            </div>
             <Textarea
               label="Target keywords"
               name="seoKeywords"
@@ -352,9 +355,9 @@ export default function RequestWebsiteQuotePage() {
             />
           </section>
 
-          <section className="space-y-6">
-            <h2 className="font-heading text-xl font-semibold">Technical</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <section className={SECTION_CLASS}>
+            <h2 className={SECTION_TITLE_CLASS}>Technical</h2>
+            <div className={FORM_GRID_CLASS}>
               <Field label="Domain host" name="domainHost" />
               <Field label="Current platform" name="currentPlatform" />
               <Field label="Email provider" name="emailProvider" />
@@ -362,9 +365,9 @@ export default function RequestWebsiteQuotePage() {
             </div>
           </section>
 
-          <section className="space-y-6">
-            <h2 className="font-heading text-xl font-semibold">Budget & timeline</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <section className={SECTION_CLASS}>
+            <h2 className={SECTION_TITLE_CLASS}>Budget & timeline</h2>
+            <div className={FORM_GRID_CLASS}>
               <Field label="Desired launch date" name="desiredLaunchDate" />
               <Field label="Timeline" name="timeline" placeholder="e.g. 4–6 weeks" />
             </div>
@@ -382,26 +385,21 @@ export default function RequestWebsiteQuotePage() {
             />
           </section>
 
-          <section className="space-y-6">
-            <h2 className="font-heading text-xl font-semibold">Final notes</h2>
+          <section className={SECTION_CLASS}>
+            <h2 className={SECTION_TITLE_CLASS}>Final notes</h2>
             <Textarea label="Anything else?" name="anythingElse" rows={4} />
-            <Textarea
-              label="If your website was perfect, what would change?"
-              name="whatChanges"
-              rows={3}
-            />
           </section>
 
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
             <button
               disabled={status === "sending"}
-              className={"inline-flex items-center justify-center gap-2 rounded-md " + BG_COLORS.emerald + " text-black font-semibold px-6 py-3 hover:opacity-90 transition disabled:opacity-50"}
+              className={"inline-flex items-center justify-center gap-2 rounded-md " + BG_COLORS.emerald + " text-black font-semibold px-6 py-3 hover:opacity-90 transition disabled:opacity-50 flex-1 sm:flex-none"}
             >
               {status === "sending" ? "Sending..." : "Submit request"}
               <ArrowRight className="w-4 h-4" strokeWidth={2} />
             </button>
-            <p className="text-xs text-zinc-500">
-              By submitting, you agree you’re happy for SaaSy Cookies to contact you
+            <p className="text-xs text-zinc-500 sm:ml-4">
+              By submitting, you agree you're happy for SaaSy Cookies to contact you
               about your request.
             </p>
           </div>

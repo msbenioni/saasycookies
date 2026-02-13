@@ -1,7 +1,7 @@
 import { useState, useRef, useCallback } from "react";
 import { QRCodeCanvas } from "qrcode.react";
 import { QrCode, Download, Copy, Check } from "lucide-react";
-import { INPUT_CLASS, FOCUS_COLORS, TEXT_COLORS, BG_COLORS, PAGE_HEADER_CLASS, PAGE_HEADER_ICON_CLASS, PAGE_HEADER_TITLE_CLASS, PAGE_HEADER_DESC_CLASS, ICON_BG_COLORS } from "../../constants/formStyles";
+import { INPUT_CLASS, FOCUS_COLORS, TEXT_COLORS, BG_COLORS, PAGE_HEADER_CLASS, PAGE_HEADER_ICON_CLASS, PAGE_HEADER_TITLE_CLASS, PAGE_HEADER_DESC_CLASS, ICON_BG_COLORS, SECTION_CLASS, SECTION_TITLE_CLASS, FORM_GRID_CLASS, QR_PREVIEW_CONTAINER_CLASS } from "../../constants/formStyles";
 
 // Constants
 const SIZE_OPTIONS = [128, 256, 512, 1024];
@@ -25,12 +25,12 @@ const CANVAS_CONFIG = {
 
 const INPUT_CLASS_FINAL = INPUT_CLASS + " text-sm " + FOCUS_COLORS.pink;
 
-const PREVIEW_CONTAINER_CLASS = "rounded-2xl bg-zinc-900/40 border border-white/5 p-8 md:p-12 flex flex-col items-center gap-6 sticky top-24";
+const PREVIEW_CONTAINER_CLASS = QR_PREVIEW_CONTAINER_CLASS;
 const QR_CONTAINER_CLASS = "rounded-xl overflow-hidden shadow-2xl";
 
 export default function QRCodePage() {
   const [text, setText] = useState("https://saasycookies.com");
-  const [size, setSize] = useState(256);
+  const [qrSize, setQrSize] = useState(256);
   const [fgColor, setFgColor] = useState("#000000");
   const [bgColor, setBgColor] = useState("#ffffff");
   const [copied, setCopied] = useState(false);
@@ -135,45 +135,47 @@ export default function QRCodePage() {
         {/* Controls */}
         <div className="lg:col-span-5 space-y-6">
           <div className="rounded-xl bg-zinc-900/40 border border-white/5 p-6 space-y-4">
-            <h3 className="font-heading text-sm font-semibold text-zinc-400 uppercase tracking-wider">
+            <h3 className={SECTION_TITLE_CLASS + " text-zinc-400 uppercase tracking-wider"}>
               Content
             </h3>
-            <textarea
-              data-testid="qr-text-input"
-              className={INPUT_CLASS_FINAL + " resize-none h-28"}
-              placeholder="Enter URL, text, or any content..."
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-            />
-          </div>
-
-          <div className="rounded-xl bg-zinc-900/40 border border-white/5 p-6 space-y-4">
-            <h3 className="font-heading text-sm font-semibold text-zinc-400 uppercase tracking-wider">
-              Size
-            </h3>
-            <div className="flex gap-2">
-              {SIZE_OPTIONS.map((s) => (
-                <button
-                  key={s}
-                  data-testid={`qr-size-${s}`}
-                  onClick={() => setSize(s)}
-                  className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
-                    size === s
-                      ? "bg-pink-500 text-white"
-                      : "bg-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-700"
-                  }`}
-                >
-                  {s}px
-                </button>
-              ))}
+            <div className={FORM_GRID_CLASS}>
+              <div>
+                <label className="text-xs text-zinc-500 mb-1 block">Text/URL</label>
+                <textarea
+                  data-testid="qr-content-input"
+                  className={INPUT_CLASS_FINAL + " resize-none h-28"}
+                  placeholder="Enter text or URL"
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="text-xs text-zinc-500 mb-1 block">Size</label>
+                <div className="grid grid-cols-2 gap-2">
+                  {SIZE_OPTIONS.map((size) => (
+                    <button
+                      key={size}
+                      data-testid={`qr-size-${size}`}
+                      onClick={() => setQrSize(size)}
+                      className={`px-3 py-2 text-xs font-medium rounded-md transition-all ${
+                        qrSize === size
+                          ? "bg-pink-500 text-black"
+                          : "bg-zinc-800 text-zinc-300 hover:bg-zinc-700"
+                      }`}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
 
           <div className="rounded-xl bg-zinc-900/40 border border-white/5 p-6 space-y-4">
-            <h3 className="font-heading text-sm font-semibold text-zinc-400 uppercase tracking-wider">
+            <h3 className={SECTION_TITLE_CLASS + " text-zinc-400 uppercase tracking-wider"}>
               Colors
             </h3>
-            <div className="flex gap-2 mb-4">
+            <div className="flex flex-wrap gap-2 mb-4">
               {COLOR_PRESETS.map((preset) => (
                 <button
                   key={preset.label}
@@ -196,7 +198,7 @@ export default function QRCodePage() {
                 </button>
               ))}
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className={FORM_GRID_CLASS}>
               <div>
                 <label className="text-xs text-zinc-500 mb-1 block">Foreground</label>
                 <div className="flex items-center gap-2">
@@ -234,7 +236,7 @@ export default function QRCodePage() {
             </div>
           </div>
 
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <button
               data-testid="download-qr-button"
               onClick={downloadQR}
@@ -276,7 +278,7 @@ export default function QRCodePage() {
             >
               <QRCodeCanvas
                 value={text || " "}
-                size={Math.min(size, 400)}
+                size={Math.min(qrSize, 400)}
                 fgColor={fgColor}
                 bgColor={bgColor}
                 level="H"

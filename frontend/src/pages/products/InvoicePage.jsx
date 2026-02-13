@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { FileText, Plus, Trash2, Download, Upload, X } from "lucide-react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import { INPUT_CLASS, FOCUS_COLORS, TEXT_COLORS, BG_COLORS, PAGE_HEADER_CLASS, PAGE_HEADER_ICON_CLASS, PAGE_HEADER_TITLE_CLASS, PAGE_HEADER_DESC_CLASS, ICON_BG_COLORS } from "../../constants/formStyles";
+import { INPUT_CLASS, FOCUS_COLORS, TEXT_COLORS, BG_COLORS, PAGE_HEADER_CLASS, PAGE_HEADER_ICON_CLASS, PAGE_HEADER_TITLE_CLASS, PAGE_HEADER_DESC_CLASS, ICON_BG_COLORS, SECTION_CLASS, SECTION_TITLE_CLASS, FORM_GRID_CLASS, PREVIEW_CONTAINER_CLASS } from "../../constants/formStyles";
 
 // Constants
 const emptyItem = { description: "", quantity: 1, rate:0 };
@@ -42,7 +42,7 @@ const COLUMN_STYLES = {
 };
 
 const PREVIEW_CLASSES = {
-  CONTAINER: "rounded-xl bg-white text-gray-900 p-8 md:p-10 shadow-2xl sticky top-24 min-w-[640px]",
+  CONTAINER: PREVIEW_CONTAINER_CLASS,
   LOGO: "w-[84px] h-[42px] object-contain object-left",
   DIVIDER: "h-px bg-gray-200 my-8",
   TABLE: "w-full mb-8",
@@ -401,10 +401,10 @@ export default function InvoicePage() {
         <div className="lg:col-span-5 space-y-6">
           {/* Invoice Details */}
           <div className="rounded-xl bg-zinc-900/40 border border-white/5 p-6 space-y-4">
-            <h3 className="font-heading text-sm font-semibold text-zinc-400 uppercase tracking-wider">
+            <h3 className={SECTION_TITLE_CLASS + " text-zinc-400 uppercase tracking-wider"}>
               Invoice Details
             </h3>
-            <div className="grid grid-cols-2 gap-3">
+            <div className={FORM_GRID_CLASS}>
               <div>
                 <label className="text-xs text-zinc-500 mb-1 block">Invoice #</label>
                 <input
@@ -438,9 +438,9 @@ export default function InvoicePage() {
           </div>
 
           {/* From / To */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className={FORM_GRID_CLASS}>
             <div className="rounded-xl bg-zinc-900/40 border border-white/5 p-6 space-y-3">
-              <h3 className="font-heading text-sm font-semibold text-zinc-400 uppercase tracking-wider">
+              <h3 className={SECTION_TITLE_CLASS + " text-zinc-400 uppercase tracking-wider"}>
                 From
               </h3>
               <input data-testid="from-name-input" className={INPUT_CLASS_FINAL} placeholder="Your name" value={invoice.from.name} onChange={(e) => updateField("from.name", e.target.value)} />
@@ -449,7 +449,7 @@ export default function InvoicePage() {
               <input data-testid="from-gst-input" className={INPUT_CLASS_FINAL} placeholder="GST Number" value={invoice.from.gst} onChange={(e) => updateField("from.gst", e.target.value)} />
             </div>
             <div className="rounded-xl bg-zinc-900/40 border border-white/5 p-6 space-y-3">
-              <h3 className="font-heading text-sm font-semibold text-zinc-400 uppercase tracking-wider">
+              <h3 className={SECTION_TITLE_CLASS + " text-zinc-400 uppercase tracking-wider"}>
                 To
               </h3>
               <input data-testid="to-name-input" className={INPUT_CLASS_FINAL} placeholder="Client name" value={invoice.to.name} onChange={(e) => updateField("to.name", e.target.value)} />
@@ -460,7 +460,7 @@ export default function InvoicePage() {
 
           {/* Logo Upload */}
           <div className="rounded-xl bg-zinc-900/40 border border-white/5 p-6 space-y-4">
-            <h3 className="font-heading text-sm font-semibold text-zinc-400 uppercase tracking-wider">
+            <h3 className={SECTION_TITLE_CLASS + " text-zinc-400 uppercase tracking-wider"}>
               Company Logo
             </h3>
             {invoice.logo ? (
@@ -503,7 +503,7 @@ export default function InvoicePage() {
 
           {/* Line Items */}
           <div className="rounded-xl bg-zinc-900/40 border border-white/5 p-6 space-y-4">
-            <h3 className="font-heading text-sm font-semibold text-zinc-400 uppercase tracking-wider">
+            <h3 className={SECTION_TITLE_CLASS + " text-zinc-400 uppercase tracking-wider"}>
               Line Items
             </h3>
             {invoice.items.map((item, idx) => (
@@ -515,7 +515,7 @@ export default function InvoicePage() {
                   value={item.description}
                   onChange={(e) => updateItem(idx, "description", e.target.value)}
                 />
-                <div className="flex gap-2 items-center">
+                <div className="flex flex-wrap gap-2 items-center">
                   <input
                     data-testid={`item-qty-${idx}`}
                     type="number"
@@ -556,7 +556,7 @@ export default function InvoicePage() {
 
           {/* Tax & Notes */}
           <div className="rounded-xl bg-zinc-900/40 border border-white/5 p-6 space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className={FORM_GRID_CLASS}>
               <div>
                 <label className="text-xs text-zinc-500 mb-1 block">Tax Rate (%)</label>
                 <input
@@ -598,7 +598,7 @@ export default function InvoicePage() {
 
           {/* Payment Details */}
           <div className="rounded-xl bg-zinc-900/40 border border-white/5 p-6 space-y-4">
-            <h3 className="font-heading text-sm font-semibold text-zinc-400 uppercase tracking-wider">
+            <h3 className={SECTION_TITLE_CLASS + " text-zinc-400 uppercase tracking-wider"}>
               Payment Details
             </h3>
             <div className="space-y-3">
@@ -626,7 +626,7 @@ export default function InvoicePage() {
           </div>
 
           {/* Actions */}
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <button
               data-testid="download-pdf-button"
               onClick={downloadPDF}
@@ -645,7 +645,7 @@ export default function InvoicePage() {
             data-testid="invoice-preview"
             className={PREVIEW_CLASSES.CONTAINER}
           >
-            <div className="flex justify-between items-start mb-8">
+            <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8">
               <div className="flex items-start gap-4">
                 {invoice.logo && (
                   <img
@@ -671,7 +671,7 @@ export default function InvoicePage() {
 
             <div className={PREVIEW_CLASSES.DIVIDER} />
 
-            <div className="grid grid-cols-2 gap-8 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
               <div>
                 <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
                   From
@@ -724,7 +724,7 @@ export default function InvoicePage() {
               </tbody>
             </table>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 items-start">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8 items-start">
               {/* Payment box (left) */}
               <div className="border border-gray-200 rounded-lg p-5 min-w-[280px]">
                 <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
@@ -756,7 +756,7 @@ export default function InvoicePage() {
               </div>
 
               {/* Totals box (right) */}
-              <div className="border border-gray-200 rounded-lg p-5 md:ml-auto w-full min-w-[280px]">
+              <div className="border border-gray-200 rounded-lg p-5 sm:ml-auto w-full min-w-[280px]">
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-500">Subtotal</span>
