@@ -81,8 +81,8 @@ export const SECTION_LABEL_STYLES = {
 
 // Card styles for consistency across pages
 export const CARD_STYLES = {
-  // Base card style (from Featured Products)
-  base: "group relative overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/60 hover:border-brand-primary/30 transition-all duration-500",
+  // Base card style with premium ring instead of border
+  base: "group block relative overflow-hidden rounded-2xl bg-zinc-900/60 ring-1 ring-white/10 hover:ring-brand-primary/40 transition-all duration-500",
   
   // Hover overlay effect
   overlay: "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700",

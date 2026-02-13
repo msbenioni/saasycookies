@@ -12,7 +12,7 @@ const categoryCards = [
     title: "AI Products",
     desc: "Intelligent tools that think with you, not for you.",
     color: "text-senseai",
-    border: "hover:border-senseai/30",
+    ring: "hover:ring-cyan-400/40",
     hasLogo: true,
     logoKey: "SENSEAI"
   },
@@ -21,7 +21,7 @@ const categoryCards = [
     title: "Community Platforms",
     desc: "Connecting creators and businesses across the Pacific.",
     color: "text-pacific",
-    border: "hover:border-pacific/30",
+    ring: "hover:ring-amber-400/40",
     hasLogo: true,
     logoKey: "PACIFIC_MARKET"
   },
@@ -30,7 +30,7 @@ const categoryCards = [
     title: "Developer Tools",
     desc: "Free utilities built for speed, simplicity, and real work.",
     color: "text-brand-primary",
-    border: "hover:border-brand-primary/30",
+    ring: "hover:ring-violet-400/40",
     hasLogo: false
   },
 ];
@@ -121,7 +121,7 @@ export default function HomePage() {
           <Link
             to="/services/websites"
             data-testid="service-website-card"
-            className={`${CARD_STYLES.base} hover:border-emerald-400/30`}
+            className={`${CARD_STYLES.base} hover:ring-emerald-400/40`}
           >
             <div className={CARD_STYLES.padding}>
               <div className="flex items-center gap-3 mb-6">
@@ -169,7 +169,7 @@ export default function HomePage() {
               return (
                 <div
                   key={card.title}
-                  className={`${CARD_STYLES.base} ${card.border} rounded-xl`}
+                  className={`${CARD_STYLES.base} ${card.ring} rounded-xl`}
                 >
                   <div className="absolute -top-12 -right-12 w-32 h-32 rounded-full bg-gradient-to-br from-white/[0.02] to-transparent" />
                   <div className={CARD_STYLES.categoryLayout}>
@@ -178,7 +178,7 @@ export default function HomePage() {
                         <img
                           src={PRODUCT_LOGOS[card.logoKey].src}
                           alt={PRODUCT_LOGOS[card.logoKey].alt}
-                          className="w-6 h-6 object-contain"
+                          className="w-8 h-8 object-contain"
                         />
                       ) : (
                         <Icon className="w-5 h-5" strokeWidth={1.5} />
@@ -215,7 +215,7 @@ export default function HomePage() {
             <Link
               to="/senseai"
               data-testid="featured-senseai-card"
-              className={`${CARD_STYLES.base} hover:border-senseai/20`}
+              className={`${CARD_STYLES.base} hover:ring-cyan-400/40`}
             >
               <div className={CARD_STYLES.overlay} style={{ background: "radial-gradient(circle at 50% 50%, rgba(6,182,212,0.08) 0%, transparent 70%)" }} />
               <div className={CARD_STYLES.padding}>
@@ -242,7 +242,7 @@ export default function HomePage() {
             <Link
               to="/pacificmarket"
               data-testid="featured-pacific-card"
-              className={`${CARD_STYLES.base} hover:border-pacific/20`}
+              className={`${CARD_STYLES.base} hover:ring-amber-400/40`}
             >
               <div className={CARD_STYLES.overlay} style={{ background: "radial-gradient(circle at 50% 50%, rgba(245,158,11,0.08) 0%, transparent 70%)" }} />
               <div className={CARD_STYLES.padding}>
@@ -291,21 +291,23 @@ export default function HomePage() {
             <Link
               to="/tools/invoice-generator"
               data-testid="tool-invoice-card"
-              className={`${CARD_STYLES.base} hover:border-brand-primary/30`}
+              className={`${CARD_STYLES.base} hover:ring-violet-400/40`}
             >
-              <div className={CARD_STYLES.contentLayout}>
-                <div className={CARD_STYLES.iconContainer}>
-                  <FileText className="w-6 h-6 text-brand-primary" strokeWidth={1.5} />
-                </div>
-                <div className="flex-1">
-                  <h3 className={SECTION_TITLE_STYLES.card}>Invoice Generator</h3>
-                  <p className="text-zinc-200/80 text-sm leading-relaxed mb-4">
-                    Create professional invoices in seconds. Add line items, taxes,
-                    and download as PDF.
-                  </p>
-                  <span className="inline-flex items-center gap-1.5 text-brand-primary text-sm font-medium group-hover:gap-2.5 transition-all">
-                    Try it free <ChevronRight className="w-3.5 h-3.5" strokeWidth={2} />
-                  </span>
+              <div className={CARD_STYLES.padding}>
+                <div className={CARD_STYLES.contentLayout}>
+                  <div className={CARD_STYLES.iconContainer}>
+                    <FileText className="w-6 h-6 text-brand-primary" strokeWidth={1.5} />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className={SECTION_TITLE_STYLES.card}>Invoice Generator</h3>
+                    <p className="text-zinc-200/80 text-sm leading-relaxed mb-4">
+                      Create professional invoices in seconds. Add line items, taxes,
+                      and download as PDF.
+                    </p>
+                    <span className="inline-flex items-center gap-1.5 text-brand-primary text-sm font-medium group-hover:gap-2.5 transition-all">
+                      Try it free <ChevronRight className="w-3.5 h-3.5" strokeWidth={2} />
+                    </span>
+                  </div>
                 </div>
               </div>
             </Link>
@@ -313,21 +315,23 @@ export default function HomePage() {
             <Link
               to="/tools/qr-generator"
               data-testid="tool-qr-card"
-              className={`${CARD_STYLES.base} hover:border-brand-accent/30`}
+              className={`${CARD_STYLES.base} hover:ring-pink-400/40`}
             >
-              <div className={CARD_STYLES.contentLayout}>
-                <div className="w-12 h-12 rounded-xl bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center shrink-0">
-                  <QrCode className="w-6 h-6 text-brand-accent" strokeWidth={1.5} />
-                </div>
-                <div className="flex-1">
-                  <h3 className={SECTION_TITLE_STYLES.card}>QR Code Generator</h3>
-                  <p className="text-zinc-200/80 text-sm leading-relaxed mb-4">
-                    Generate QR codes for URLs, text, or contact info. Download as PNG
-                    in any size.
-                  </p>
-                  <span className="inline-flex items-center gap-1.5 text-brand-accent text-sm font-medium group-hover:gap-2.5 transition-all">
-                    Try it free <ChevronRight className="w-3.5 h-3.5" strokeWidth={2} />
-                  </span>
+              <div className={CARD_STYLES.padding}>
+                <div className={CARD_STYLES.contentLayout}>
+                  <div className="w-12 h-12 rounded-xl bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center shrink-0">
+                    <QrCode className="w-6 h-6 text-brand-accent" strokeWidth={1.5} />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className={SECTION_TITLE_STYLES.card}>QR Code Generator</h3>
+                    <p className="text-zinc-200/80 text-sm leading-relaxed mb-4">
+                      Generate QR codes for URLs, text, or contact info. Download as PNG
+                      in any size.
+                    </p>
+                    <span className="inline-flex items-center gap-1.5 text-brand-accent text-sm font-medium group-hover:gap-2.5 transition-all">
+                      Try it free <ChevronRight className="w-3.5 h-3.5" strokeWidth={2} />
+                    </span>
+                  </div>
                 </div>
               </div>
             </Link>
