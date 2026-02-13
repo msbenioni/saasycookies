@@ -66,3 +66,15 @@ export const SECTION_TITLE_STYLES = {
   // Small section titles
   small: "font-heading text-3xl md:text-4xl font-bold tracking-tight text-white mb-4",
 };
+
+// Section label styles (small uppercase text above titles)
+export const SECTION_LABEL_STYLES = {
+  // Standard section labels
+  default: "text-xs font-medium text-zinc-500 uppercase tracking-widest",
+  
+  // Primary colored labels
+  primary: "text-xs font-medium text-brand-primary uppercase tracking-widest",
+  
+  // Emerald colored labels
+  emerald: "text-xs font-medium text-emerald-400 uppercase tracking-widest",
+};

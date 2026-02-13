@@ -4,7 +4,7 @@ import {
   Layers, Sparkles, Code2, Rocket, ChevronRight
 } from "lucide-react";
 import { PRODUCT_LOGOS } from "../constants/productLogos";
-import { SECTION_TITLE_STYLES } from "../constants/formStyles";
+import { SECTION_TITLE_STYLES, SECTION_LABEL_STYLES } from "../constants/formStyles";
 
 const categoryCards = [
   {
@@ -103,7 +103,7 @@ export default function HomePage() {
         <div className="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <div className="flex items-center gap-3 mb-4">
             <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
-            <span className="text-xs font-medium text-zinc-500 uppercase tracking-widest">
+            <span className={SECTION_LABEL_STYLES.default}>
               Services
             </span>
           </div>
@@ -150,7 +150,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <div className="flex items-center gap-3 mb-4">
             <div className="h-px flex-1 max-w-[40px] bg-brand-primary/50" />
-            <span className="text-xs font-medium text-brand-primary uppercase tracking-widest">
+            <span className={SECTION_LABEL_STYLES.primary}>
               What We Build
             </span>
           </div>
@@ -200,7 +200,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <div className="flex items-center gap-3 mb-4">
             <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
-            <span className="text-xs font-medium text-zinc-500 uppercase tracking-widest">
+            <span className={SECTION_LABEL_STYLES.default}>
               Featured Products
             </span>
           </div>
@@ -274,7 +274,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <div className="flex items-center gap-3 mb-4">
             <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
-            <span className="text-xs font-medium text-zinc-500 uppercase tracking-widest">
+            <span className={SECTION_LABEL_STYLES.default}>
               Free Tools
             </span>
           </div>
