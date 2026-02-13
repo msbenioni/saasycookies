@@ -1,7 +1,7 @@
 import { useState, useRef, useCallback } from "react";
 import { QRCodeCanvas } from "qrcode.react";
 import { QrCode, Download, Copy, Check } from "lucide-react";
-import { INPUT_CLASS, FOCUS_COLORS, TEXT_COLORS, BG_COLORS, PAGE_HEADER_CLASS, PAGE_HEADER_ICON_CLASS, PAGE_HEADER_TITLE_CLASS, PAGE_HEADER_DESC_CLASS, ICON_BG_COLORS, SECTION_CLASS, SECTION_TITLE_CLASS, FORM_GRID_CLASS, QR_PREVIEW_CONTAINER_CLASS } from "../../constants/formStyles";
+import { INPUT_CLASS, FOCUS_COLORS, TEXT_COLORS, BG_COLORS, PAGE_HEADER_CLASS, PAGE_HEADER_ICON_CLASS, PAGE_HEADER_TITLE_CLASS, PAGE_HEADER_DESC_CLASS, ICON_BG_COLORS, SECTION_CLASS, SECTION_TITLE_CLASS, FORM_GRID_CLASS, QR_PREVIEW_CONTAINER_CLASS, PAGE_BACKGROUND_STYLES } from "../../constants/formStyles";
 
 // Constants
 const SIZE_OPTIONS = [128, 256, 512, 1024];
@@ -115,7 +115,15 @@ export default function QRCodePage() {
   }, []);
 
   return (
-    <div className={PAGE_HEADER_CLASS}>
+    <div className={PAGE_BACKGROUND_STYLES.qrCode.container}>
+      <div
+        className={PAGE_BACKGROUND_STYLES.qrCode.gradientOverlay}
+        style={{ background: PAGE_BACKGROUND_STYLES.qrCode.gradientStyle }}
+      />
+      <div className={PAGE_BACKGROUND_STYLES.qrCode.noiseOverlay} />
+      
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 py-16 md:py-24" style={{ position: 'relative', zIndex: 10 }}>
+        <div className={PAGE_HEADER_CLASS}>
       <div className="flex items-center gap-3 mb-2">
         <div className={`${PAGE_HEADER_ICON_CLASS} ${ICON_BG_COLORS.pink}`}>
           <QrCode className={`w-5 h-5 ${TEXT_COLORS.pink}`} strokeWidth={1.5} />
@@ -289,6 +297,8 @@ export default function QRCodePage() {
               {text || "Enter content to generate QR code"}
             </p>
           </div>
+        </div>
+      </div>
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { FileText, Plus, Trash2, Download, Upload, X } from "lucide-react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import { INPUT_CLASS, FOCUS_COLORS, TEXT_COLORS, BG_COLORS, PAGE_HEADER_CLASS, PAGE_HEADER_ICON_CLASS, PAGE_HEADER_TITLE_CLASS, PAGE_HEADER_DESC_CLASS, ICON_BG_COLORS, SECTION_CLASS, SECTION_TITLE_CLASS, FORM_GRID_CLASS, PREVIEW_CONTAINER_CLASS } from "../../constants/formStyles";
+import { INPUT_CLASS, FOCUS_COLORS, TEXT_COLORS, BG_COLORS, PAGE_HEADER_CLASS, PAGE_HEADER_ICON_CLASS, PAGE_HEADER_TITLE_CLASS, PAGE_HEADER_DESC_CLASS, ICON_BG_COLORS, SECTION_CLASS, SECTION_TITLE_CLASS, FORM_GRID_CLASS, PREVIEW_CONTAINER_CLASS, PAGE_BACKGROUND_STYLES } from "../../constants/formStyles";
 
 // Constants
 const emptyItem = { description: "", quantity: 1, rate:0 };
@@ -380,7 +380,15 @@ export default function InvoicePage() {
   };
 
   return (
-    <div className={PAGE_HEADER_CLASS}>
+    <div className={PAGE_BACKGROUND_STYLES.invoice.container}>
+      <div
+        className={PAGE_BACKGROUND_STYLES.invoice.gradientOverlay}
+        style={{ background: PAGE_BACKGROUND_STYLES.invoice.gradientStyle }}
+      />
+      <div className={PAGE_BACKGROUND_STYLES.invoice.noiseOverlay} />
+      
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 py-16 md:py-24" style={{ position: 'relative', zIndex: 10 }}>
+        <div className={PAGE_HEADER_CLASS}>
       <div className="flex items-center gap-3 mb-2">
         <div className={`${PAGE_HEADER_ICON_CLASS} ${ICON_BG_COLORS.purple}`}>
           <FileText className={`w-5 h-5 ${TEXT_COLORS.purple}`} strokeWidth={1.5} />
@@ -796,6 +804,8 @@ export default function InvoicePage() {
               </div>
             )}
           </div>
+        </div>
+      </div>
         </div>
       </div>
     </div>

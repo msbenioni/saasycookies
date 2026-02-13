@@ -105,3 +105,30 @@ export const CARD_STYLES = {
 
 // Section description styles
 export const SECTION_DESCRIPTION_STYLES = "text-zinc-200 text-lg max-w-2xl mb-16 leading-relaxed";
+
+// Page background styles for consistency
+export const PAGE_BACKGROUND_STYLES = {
+  // Quote page style (emerald/cyan theme)
+  quote: {
+    container: "min-h-[calc(100vh-4rem)] bg-void text-white relative overflow-hidden",
+    gradientOverlay: "absolute inset-0 opacity-40",
+    gradientStyle: "radial-gradient(circle at 30% 20%, rgba(16,185,129,0.22) 0%, transparent 55%), radial-gradient(circle at 70% 40%, rgba(6,182,212,0.14) 0%, transparent 60%)",
+    noiseOverlay: "absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20200%20200%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cfilter%20id%3D%22n%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.7%22%20numOctaves%3D%223%22%20stitchTiles%3D%22stitch%22/%3E%3C/filter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url(%23n)%22%20opacity%3D%220.03%22/%3E%3C/svg%3E')]"
+  },
+  
+  // Invoice page style (purple theme)
+  invoice: {
+    container: "min-h-[calc(100vh-4rem)] bg-void text-white relative overflow-hidden",
+    gradientOverlay: "absolute inset-0 opacity-40",
+    gradientStyle: "radial-gradient(circle at 30% 20%, rgba(139,92,246,0.22) 0%, transparent 55%), radial-gradient(circle at 70% 40%, rgba(167,139,250,0.14) 0%, transparent 60%)",
+    noiseOverlay: "absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20200%20200%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cfilter%20id%3D%22n%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.7%22%20numOctaves%3D%223%22%20stitchTiles%3D%22stitch%22/%3E%3C/filter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url(%23n)%22%20opacity%3D%220.03%22/%3E%3C/svg%3E')]"
+  },
+  
+  // QR Code page style (pink theme)
+  qrCode: {
+    container: "min-h-[calc(100vh-4rem)] bg-void text-white relative overflow-hidden",
+    gradientOverlay: "absolute inset-0 opacity-40",
+    gradientStyle: "radial-gradient(circle at 30% 20%, rgba(236,72,153,0.22) 0%, transparent 55%), radial-gradient(circle at 70% 40%, rgba(244,114,182,0.14) 0%, transparent 60%)",
+    noiseOverlay: "absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20200%20200%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cfilter%20id%3D%22n%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.7%22%20numOctaves%3D%223%22%20stitchTiles%3D%22stitch%22/%3E%3C/filter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url(%23n)%22%20opacity%3D%220.03%22/%3E%3C/svg%3E')]"
+  }
+};
