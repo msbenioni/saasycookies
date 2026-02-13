@@ -4,7 +4,7 @@ import {
   Layers, Sparkles, Code2, Rocket, ChevronRight
 } from "lucide-react";
 import { PRODUCT_LOGOS } from "../constants/productLogos";
-import { SECTION_TITLE_STYLES, SECTION_LABEL_STYLES } from "../constants/formStyles";
+import { SECTION_TITLE_STYLES, SECTION_LABEL_STYLES, CARD_STYLES, SECTION_DESCRIPTION_STYLES } from "../constants/formStyles";
 
 const categoryCards = [
   {
@@ -113,7 +113,7 @@ export default function HomePage() {
           >
             Custom websites built for clarity and conversion
           </h2>
-          <p className="text-zinc-200 text-lg max-w-2xl mb-16 leading-relaxed">
+          <p className={SECTION_DESCRIPTION_STYLES}>
             From strategy to launch, we design and ship websites that show your value and
             turn visitors into customers.
           </p>
@@ -121,26 +121,24 @@ export default function HomePage() {
           <Link
             to="/services/websites"
             data-testid="service-website-card"
-            className="group relative overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/85 hover:border-emerald-400/30 transition-all duration-500"
+            className={`${CARD_STYLES.base} hover:border-emerald-400/30`}
           >
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ background: "radial-gradient(circle at 35% 35%, rgba(16,185,129,0.24) 0%, transparent 70%)" }} />
-            <div className="relative p-8 md:p-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center shrink-0">
+            <div className={CARD_STYLES.padding}>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 rounded-xl bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center">
                   <Layers className="w-6 h-6 text-emerald-400" strokeWidth={1.5} />
                 </div>
-                <div>
-                  <h3 className={SECTION_TITLE_STYLES.subsection}>Creating a website</h3>
-                  <p className="text-zinc-200/80 text-sm leading-relaxed max-w-xl">
-                    A guided discovery + build process tailored to your brand, goals, and
-                    audience. Get a clear scope, timeline, and quote.
-                  </p>
-                </div>
+                <span className="font-heading text-2xl font-bold text-emerald-400">Website Development</span>
               </div>
-              <div className="inline-flex items-center gap-2 text-emerald-400 text-sm font-semibold group-hover:gap-3 transition-all">
+              <p className="text-zinc-200 leading-relaxed mb-6 max-w-md">
+                From strategy to launch, we design and ship websites that show your value and
+                turn visitors into customers. A guided discovery + build process tailored to your brand, goals, and audience.
+              </p>
+              <div className="inline-flex items-center gap-2 text-emerald-400 text-sm font-medium group-hover:gap-3 transition-all">
                 Request a quote <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
               </div>
             </div>
+            <div className="h-1 bg-gradient-to-r from-emerald-400/50 via-emerald-400/20 to-transparent" />
           </Link>
         </div>
       </section>
@@ -160,7 +158,7 @@ export default function HomePage() {
           >
             Products with purpose
           </h2>
-          <p className="text-zinc-200 text-lg max-w-2xl mb-16 leading-relaxed">
+          <p className={SECTION_DESCRIPTION_STYLES}>
             Every tool we ship solves a real problem. We focus on craft,
             usability, and impact over vanity metrics.
           </p>
@@ -171,23 +169,24 @@ export default function HomePage() {
               return (
                 <div
                   key={card.title}
-                  data-testid={`category-${card.title.toLowerCase().replace(/\s/g, "-")}`}
-                  className={`group relative overflow-hidden bg-zinc-900/85 border border-white/10 ${card.border} transition-all duration-500 rounded-xl p-8`}
+                  className={`${CARD_STYLES.base} ${card.border} rounded-xl`}
                 >
                   <div className="absolute -top-12 -right-12 w-32 h-32 rounded-full bg-gradient-to-br from-white/[0.02] to-transparent" />
-                  <div className={`w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center mb-5 ${card.color}`}>
-                    {card.hasLogo ? (
-                      <img
-                        src={PRODUCT_LOGOS[card.logoKey].src}
-                        alt={PRODUCT_LOGOS[card.logoKey].alt}
-                        className="w-6 h-6 object-contain"
-                      />
-                    ) : (
-                      <Icon className="w-5 h-5" strokeWidth={1.5} />
-                    )}
+                  <div className={CARD_STYLES.categoryLayout}>
+                    <div className={`w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center mb-5 ${card.color}`}>
+                      {card.hasLogo ? (
+                        <img
+                          src={PRODUCT_LOGOS[card.logoKey].src}
+                          alt={PRODUCT_LOGOS[card.logoKey].alt}
+                          className="w-6 h-6 object-contain"
+                        />
+                      ) : (
+                        <Icon className="w-5 h-5" strokeWidth={1.5} />
+                      )}
+                    </div>
+                    <h3 className={SECTION_TITLE_STYLES.card}>{card.title}</h3>
+                    <p className="text-zinc-200/80 text-sm leading-relaxed">{card.desc}</p>
                   </div>
-                  <h3 className={SECTION_TITLE_STYLES.card}>{card.title}</h3>
-                  <p className="text-zinc-200/80 text-sm leading-relaxed">{card.desc}</p>
                 </div>
               );
             })}
@@ -216,10 +215,10 @@ export default function HomePage() {
             <Link
               to="/senseai"
               data-testid="featured-senseai-card"
-              className="group relative overflow-hidden rounded-2xl border border-white/10 hover:border-senseai/20 transition-all duration-500 bg-zinc-900/85"
+              className={`${CARD_STYLES.base} hover:border-senseai/20`}
             >
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ background: "radial-gradient(circle at 50% 50%, rgba(6,182,212,0.08) 0%, transparent 70%)" }} />
-              <div className="relative p-8 md:p-10">
+              <div className={CARD_STYLES.overlay} style={{ background: "radial-gradient(circle at 50% 50%, rgba(6,182,212,0.08) 0%, transparent 70%)" }} />
+              <div className={CARD_STYLES.padding}>
                 <div className="flex items-center gap-3 mb-6">
                   <img
                     src={PRODUCT_LOGOS.SENSEAI.src}
@@ -243,10 +242,10 @@ export default function HomePage() {
             <Link
               to="/pacificmarket"
               data-testid="featured-pacific-card"
-              className="group relative overflow-hidden rounded-2xl border border-white/10 hover:border-pacific/20 transition-all duration-500 bg-zinc-900/85"
+              className={`${CARD_STYLES.base} hover:border-pacific/20`}
             >
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ background: "radial-gradient(circle at 50% 50%, rgba(245,158,11,0.08) 0%, transparent 70%)" }} />
-              <div className="relative p-8 md:p-10">
+              <div className={CARD_STYLES.overlay} style={{ background: "radial-gradient(circle at 50% 50%, rgba(245,158,11,0.08) 0%, transparent 70%)" }} />
+              <div className={CARD_STYLES.padding}>
                 <div className="flex items-center gap-3 mb-6">
                   <img
                     src={PRODUCT_LOGOS.PACIFIC_MARKET.src}
@@ -284,7 +283,7 @@ export default function HomePage() {
           >
             Business utilities, on the house
           </h2>
-          <p className="text-zinc-200 text-lg max-w-2xl mb-16 leading-relaxed">
+          <p className={SECTION_DESCRIPTION_STYLES}>
             No sign-up. No paywall. Just useful tools built with care.
           </p>
 
@@ -292,10 +291,10 @@ export default function HomePage() {
             <Link
               to="/tools/invoice-generator"
               data-testid="tool-invoice-card"
-              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/85 hover:border-brand-primary/30 transition-all duration-500"
+              className={`${CARD_STYLES.base} hover:border-brand-primary/30`}
             >
-              <div className="flex items-start gap-5">
-                <div className="w-12 h-12 rounded-xl bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center shrink-0">
+              <div className={CARD_STYLES.contentLayout}>
+                <div className={CARD_STYLES.iconContainer}>
                   <FileText className="w-6 h-6 text-brand-primary" strokeWidth={1.5} />
                 </div>
                 <div className="flex-1">
@@ -314,9 +313,9 @@ export default function HomePage() {
             <Link
               to="/tools/qr-generator"
               data-testid="tool-qr-card"
-              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/85 hover:border-brand-accent/30 transition-all duration-500"
+              className={`${CARD_STYLES.base} hover:border-brand-accent/30`}
             >
-              <div className="flex items-start gap-5">
+              <div className={CARD_STYLES.contentLayout}>
                 <div className="w-12 h-12 rounded-xl bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center shrink-0">
                   <QrCode className="w-6 h-6 text-brand-accent" strokeWidth={1.5} />
                 </div>

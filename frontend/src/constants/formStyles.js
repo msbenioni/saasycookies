@@ -78,3 +78,30 @@ export const SECTION_LABEL_STYLES = {
   // Emerald colored labels
   emerald: "text-xs font-medium text-emerald-400 uppercase tracking-widest",
 };
+
+// Card styles for consistency across pages
+export const CARD_STYLES = {
+  // Base card style (from Featured Products)
+  base: "group relative overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/60 hover:border-brand-primary/30 transition-all duration-500",
+  
+  // Hover overlay effect
+  overlay: "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700",
+  
+  // Card padding
+  padding: "relative p-8 md:p-10",
+  
+  // Icon container
+  iconContainer: "w-12 h-12 rounded-xl bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center shrink-0",
+  
+  // Card content layout
+  contentLayout: "flex items-start gap-5",
+  
+  // Alternative layout for service cards
+  serviceLayout: "relative p-8 md:p-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6",
+  
+  // Category card layout
+  categoryLayout: "relative p-6 flex flex-col gap-4",
+};
+
+// Section description styles
+export const SECTION_DESCRIPTION_STYLES = "text-zinc-200 text-lg max-w-2xl mb-16 leading-relaxed";
