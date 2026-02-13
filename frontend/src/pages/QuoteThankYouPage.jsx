@@ -1,7 +1,15 @@
 import { CheckCircle, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function QuoteThankYouPage() {
+  useEffect(() => {
+    // Force scroll to top when component mounts
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, []);
+
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-void text-white relative overflow-hidden">
       <div
