@@ -10,6 +10,7 @@ import ContactPage from "./pages/ContactPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
 import RequestWebsiteQuotePage from "./pages/RequestWebsiteQuotePage";
+import QuoteThankYouPage from "./pages/QuoteThankYouPage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/tools/invoice-generator" element={<InvoicePage />} />
           <Route path="/tools/qr-generator" element={<QRCodePage />} />
           <Route path="/services/websites" element={<RequestWebsiteQuotePage />} />
+          <Route path="/quote-thank-you" element={<QuoteThankYouPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />

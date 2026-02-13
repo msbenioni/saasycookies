@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ArrowRight, AlertTriangle, CheckCircle, CheckCircle2, Layers } from "lucide-react";
 import { sendQuoteRequestEmail } from "../utils/emailService";
 import { INPUT_CLASS, SELECT_CLASS, CHECKBOX_LABEL_CLASS, CHECKBOX_INPUT_CLASS, BADGE_CLASS, MESSAGE_BOX_CLASS, FOCUS_COLORS, TEXT_COLORS, BG_COLORS, PAGE_HEADER_CLASS, PAGE_HEADER_ICON_CLASS, PAGE_HEADER_TITLE_CLASS, PAGE_HEADER_DESC_CLASS, ICON_BG_COLORS, SECTION_CLASS, SECTION_TITLE_CLASS, FORM_GRID_CLASS } from "../constants/formStyles";
@@ -100,6 +101,7 @@ function CheckboxGroup({ label, name, options, hint }) {
 
 export default function RequestWebsiteQuotePage() {
   const [status, setStatus] = useState("idle");
+  const navigate = useNavigate();
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -115,8 +117,8 @@ export default function RequestWebsiteQuotePage() {
 
     try {
       await sendQuoteRequestEmail(payload);
-      setStatus("sent");
-      form.reset();
+      // Redirect to thank you page on success
+      navigate("/quote-thank-you");
     } catch (error) {
       console.error("Form submission error:", error);
       setStatus("error");
@@ -146,18 +148,6 @@ export default function RequestWebsiteQuotePage() {
         <p className={PAGE_HEADER_DESC_CLASS}>
           Tell me about your business and goals. I'll reply with scope, timeline, and a clear quote.
         </p>
-
-        {status === "sent" && (
-          <div className={MESSAGE_BOX_CLASS}>
-            <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-            <div>
-              <div className="font-semibold mb-1">Submitted ✅</div>
-              <div className="text-zinc-400 text-sm">
-                Thanks — I've received your request and will be in touch.
-              </div>
-            </div>
-          </div>
-        )}
 
         {status === "error" && (
           <div className="mb-8 rounded-md border border-red-500/30 bg-red-500/10 p-5 flex items-start gap-3">
