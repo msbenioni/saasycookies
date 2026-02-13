@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Layers, ArrowRight, CheckCircle2, AlertTriangle } from "lucide-react";
+import { ArrowRight, AlertTriangle, CheckCircle } from "lucide-react";
+import { sendQuoteRequestEmail } from "../utils/emailService";
 import { INPUT_CLASS, SELECT_CLASS, CHECKBOX_LABEL_CLASS, CHECKBOX_INPUT_CLASS, BADGE_CLASS, MESSAGE_BOX_CLASS, FOCUS_COLORS, TEXT_COLORS, BG_COLORS, PAGE_HEADER_CLASS, PAGE_HEADER_ICON_CLASS, PAGE_HEADER_TITLE_CLASS, PAGE_HEADER_DESC_CLASS, ICON_BG_COLORS, SECTION_CLASS, SECTION_TITLE_CLASS, FORM_GRID_CLASS } from "../constants/formStyles";
 
 function encode(data) {
@@ -113,16 +114,11 @@ export default function RequestWebsiteQuotePage() {
     });
 
     try {
-      const response = await fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: encode(payload),
-      });
-
-      if (!response.ok) throw new Error("Submission failed");
+      await sendQuoteRequestEmail(payload);
       setStatus("sent");
       form.reset();
-    } catch {
+    } catch (error) {
+      console.error("Form submission error:", error);
       setStatus("error");
     }
   }
@@ -169,7 +165,7 @@ export default function RequestWebsiteQuotePage() {
             <div>
               <div className="font-semibold mb-1">Something went wrong</div>
               <div className="text-red-200/80 text-sm">
-                Please try again, or message via the Contact page.
+                Please try again, or email support@saasycookies.com
               </div>
             </div>
           </div>
@@ -240,12 +236,6 @@ export default function RequestWebsiteQuotePage() {
               ]}
             />
             <Field label="Goals (other)" name="websiteGoalsOther" placeholder="Anything else?" />
-            <Textarea
-              label="Success metrics"
-              name="successMetrics"
-              rows={3}
-              placeholder="How will we measure success?"
-            />
           </section>
 
           <section className={SECTION_CLASS}>
@@ -282,7 +272,6 @@ export default function RequestWebsiteQuotePage() {
               label="Ongoing content updates needed"
               name="needsContentUpdates"
               options={[
-                { label: "Select an option", value: "" },
                 { label: "Yes, regularly", value: "yes" },
                 { label: "Occasionally", value: "sometimes" },
                 { label: "No", value: "no" },
@@ -296,7 +285,6 @@ export default function RequestWebsiteQuotePage() {
               label="Brand guidelines available?"
               name="hasBrandGuidelines"
               options={[
-                { label: "Select an option", value: "" },
                 { label: "Yes", value: "yes" },
                 { label: "No", value: "no" },
                 { label: "In progress", value: "in-progress" },
@@ -330,7 +318,6 @@ export default function RequestWebsiteQuotePage() {
                 label="Content ready?"
                 name="contentReady"
                 options={[
-                  { label: "Select an option", value: "" },
                   { label: "Yes", value: "yes" },
                   { label: "No", value: "no" },
                   { label: "Some", value: "some" },
@@ -340,7 +327,6 @@ export default function RequestWebsiteQuotePage() {
                 label="Need copywriting help?"
                 name="needsCopywriting"
                 options={[
-                  { label: "Select an option", value: "" },
                   { label: "Yes", value: "yes" },
                   { label: "No", value: "no" },
                   { label: "Not sure yet", value: "unsure" },
@@ -375,12 +361,11 @@ export default function RequestWebsiteQuotePage() {
               label="Budget range"
               name="budgetRange"
               options={[
-                { label: "Select a range", value: "" },
-                { label: "$1k–$3k", value: "1k-3k" },
-                { label: "$3k–$6k", value: "3k-6k" },
-                { label: "$6k–$10k", value: "6k-10k" },
-                { label: "$10k+", value: "10k+" },
-                { label: "Not sure", value: "not-sure" },
+                { label: "$2k–$7k (standard custom website)", value: "2k-7k" },
+                { label: "$7k+ (complex website with AI/backend)", value: "7k+" },
+                { label: "$39.99/month (subscription - standard)", value: "39.99-monthly" },
+                { label: "$99/month (subscription - complex)", value: "99-monthly" },
+                { label: "Not sure - need guidance", value: "not-sure" },
               ]}
             />
           </section>
@@ -399,8 +384,7 @@ export default function RequestWebsiteQuotePage() {
               <ArrowRight className="w-4 h-4" strokeWidth={2} />
             </button>
             <p className="text-xs text-zinc-500 sm:ml-4">
-              By submitting, you agree you're happy for SaaSy Cookies to contact you
-              about your request.
+              By submitting, you agree you're happy for SaaSy Cookies to contact you about your request.
             </p>
           </div>
         </form>

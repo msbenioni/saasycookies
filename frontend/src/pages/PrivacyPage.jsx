@@ -64,7 +64,7 @@ export default function PrivacyPage() {
           </h2>
           <p>
             You have the right to access, correct, or delete any personal
-            information we hold about you. Contact us at saasycookies@gmail.com for
+            information we hold about you. Contact us at support@saasycookies.com for
             any privacy-related requests.
           </p>
         </section>
@@ -75,7 +75,7 @@ export default function PrivacyPage() {
           </h2>
           <p>
             For privacy concerns or questions, reach out to us at
-            saasycookies@gmail.com. We&apos;re based in New Zealand and comply with
+            support@saasycookies.com. We&apos;re based in New Zealand and comply with
             applicable data protection regulations.
           </p>
         </section>

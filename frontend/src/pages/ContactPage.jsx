@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Mail, MapPin, MessageSquare, Send, CheckCircle } from "lucide-react";
+import { Mail, MapPin, Phone, Send, CheckCircle, MessageSquare } from "lucide-react";
+import { sendContactEmail } from "../utils/emailService";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -25,15 +26,11 @@ export default function ContactPage() {
     setError("");
 
     try {
-      const subject = encodeURIComponent(formData.subject || "Message from SaaSy Cookies contact form");
-      const body = encodeURIComponent(
-        `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
-      );
-      window.location.href = `mailto:saasycookies@gmail.com?subject=${subject}&body=${body}`;
+      await sendContactEmail(formData);
       setIsSubmitted(true);
       setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (error) {
-      setError("Failed to open email client. Please try again.");
+      setError("Failed to send message. Please try again or email support@saasycookies.com directly.");
       console.error("Contact form error:", error);
     } finally {
       setIsSubmitting(false);
@@ -61,7 +58,7 @@ export default function ContactPage() {
             </div>
             <div>
               <h3 className="font-heading font-semibold mb-1">Email</h3>
-              <p className="text-zinc-400 text-sm">saasycookies@gmail.com</p>
+              <p className="text-zinc-400 text-sm">support@saasycookies.com</p>
             </div>
           </div>
 
