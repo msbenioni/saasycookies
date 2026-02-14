@@ -180,7 +180,7 @@ export default function DigitalCardPage() {
                 Trial terms
               </h3>
               <p className="text-sm text-zinc-300">
-                Card required upfront. No charge today. Trial lasts 30 days, then $2.99/month. If canceled or unpaid,
+                Card required upfront. No charge today. Trial lasts 30 days, then $3.99/month. If canceled or unpaid,
                 your card becomes paused.
               </p>
             </div>

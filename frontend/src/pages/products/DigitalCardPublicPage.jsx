@@ -112,7 +112,7 @@ export default function DigitalCardPublicPage() {
         <div className="max-w-lg w-full rounded-2xl border border-red-500/20 bg-zinc-900/60 p-8 text-center">
           <h1 className="font-heading text-3xl text-white mb-3">This card is inactive</h1>
           <p className="text-zinc-300 mb-6">
-            Billing is paused for this digital card. Resume for $2.99/month to make the public page live again.
+            Billing is paused for this digital card. Resume for $3.99/month to make the public page live again.
           </p>
           <button
             onClick={onResume}
