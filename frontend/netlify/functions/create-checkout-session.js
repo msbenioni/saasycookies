@@ -78,7 +78,23 @@ exports.handler = async (event) => {
   }
 
   try {
-    const { cardData, discountCode, cardId: existingCardId } = JSON.parse(event.body);
+    const requestBody = JSON.parse(event.body);
+    
+    // Handle both formats: direct form data or nested cardData
+    let cardData, discountCode, existingCardId;
+    
+    if (requestBody.cardData) {
+      // New format: { cardData, discountCode, cardId }
+      cardData = requestBody.cardData;
+      discountCode = requestBody.discountCode;
+      existingCardId = requestBody.cardId;
+    } else {
+      // Direct format: { fullName, email, ... }
+      cardData = requestBody;
+      discountCode = requestBody.discountCode;
+      existingCardId = requestBody.cardId;
+    }
+    
     const {
       cardId,
       fullName,
@@ -90,7 +106,18 @@ exports.handler = async (event) => {
       instagram,
       bio,
       themeColor,
-    } = cardData;
+    } = cardData || {};
+
+    // Validate required fields for new card creation
+    if (!cardId && (!fullName || !email)) {
+      return { 
+        statusCode: 400, 
+        body: JSON.stringify({ 
+          error: "Missing required fields", 
+          details: "fullName and email are required for new card creation" 
+        }) 
+      };
+    }
 
     const isResume = Boolean(cardId);
     let card;
