@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import {
   Brain, Globe, FileText, QrCode, ArrowRight, Zap,
-  Layers, Sparkles, Code2, Rocket, ChevronRight
+  Layers, Sparkles, Code2, Rocket, ChevronRight, CreditCard
 } from "lucide-react";
 import { PRODUCT_LOGOS } from "../constants/productLogos";
 import { SECTION_TITLE_STYLES, SECTION_LABEL_STYLES, CARD_STYLES, SECTION_DESCRIPTION_STYLES } from "../constants/formStyles";
@@ -278,7 +278,7 @@ export default function HomePage() {
           <div className="flex items-center gap-3 mb-4">
             <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
             <span className={SECTION_LABEL_STYLES.primary}>
-              Free Tools
+              Tools
             </span>
           </div>
           <h2
@@ -288,10 +288,33 @@ export default function HomePage() {
             Business utilities, on the house
           </h2>
           <p className={SECTION_DESCRIPTION_STYLES}>
-            No sign-up. No paywall. Just useful tools built with care.
+            A mix of free and premium tools built with care for real business workflows.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Link
+              to="/tools/digital-card"
+              data-testid="tool-digital-card"
+              className={`${CARD_STYLES.base} hover:ring-indigo-400/40`}
+            >
+              <div className={CARD_STYLES.padding}>
+                <div className={CARD_STYLES.contentLayout}>
+                  <div className="w-12 h-12 rounded-xl bg-indigo-400/10 border border-indigo-400/20 flex items-center justify-center shrink-0">
+                    <CreditCard className="w-6 h-6 text-indigo-300" strokeWidth={1.5} />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className={SECTION_TITLE_STYLES.card}>Digital Business Card</h3>
+                    <p className="text-zinc-200/80 text-sm leading-relaxed mb-4">
+                      Create a shareable digital profile with contact save, QR code, and instant updates.
+                    </p>
+                    <span className="inline-flex items-center gap-1.5 text-indigo-300 text-sm font-medium group-hover:gap-2.5 transition-all">
+                      Start free trial <ChevronRight className="w-3.5 h-3.5" strokeWidth={2} />
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </Link>
+
             <Link
               to="/tools/invoice-generator"
               data-testid="tool-invoice-card"
