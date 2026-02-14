@@ -387,8 +387,8 @@ export default function InvoicePage() {
       <div className={PAGE_BACKGROUND_STYLES.invoice.noiseOverlay} />
       
       <div className={PAGE_CONTAINER_STYLES} style={{ position: 'relative', zIndex: 10 }}>
-        <div className={PAGE_HEADER_CLASS}>
-      <div className="flex items-center gap-3 mb-2">
+        <div className="flex flex-col">
+          <div className="flex items-center gap-3 mb-2">
         <div className={`${PAGE_HEADER_ICON_CLASS} ${ICON_BG_COLORS.purple}`}>
           <FileText className={`w-5 h-5 ${TEXT_COLORS.purple}`} strokeWidth={1.5} />
         </div>

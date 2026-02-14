@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, AlertTriangle, CheckCircle, CheckCircle2, Layers } from "lucide-react";
 import { sendQuoteRequestEmail } from "../utils/emailService";
-import { INPUT_CLASS, SELECT_CLASS, CHECKBOX_LABEL_CLASS, CHECKBOX_INPUT_CLASS, BADGE_CLASS, MESSAGE_BOX_CLASS, FOCUS_COLORS, TEXT_COLORS, BG_COLORS, PAGE_HEADER_CLASS, PAGE_HEADER_ICON_CLASS, PAGE_HEADER_TITLE_CLASS, PAGE_HEADER_DESC_CLASS, ICON_BG_COLORS, SECTION_CLASS, SECTION_TITLE_CLASS, FORM_GRID_CLASS, PAGE_BACKGROUND_STYLES, PAGE_CONTAINER_STYLES, PAGE_HEADER_TO_FORM_SPACING } from "../constants/formStyles";
+import { INPUT_CLASS, SELECT_CLASS, CHECKBOX_LABEL_CLASS, CHECKBOX_INPUT_CLASS, BADGE_CLASS, MESSAGE_BOX_CLASS, FOCUS_COLORS, TEXT_COLORS, BG_COLORS, PAGE_HEADER_CLASS, PAGE_HEADER_ICON_CLASS, PAGE_HEADER_TITLE_CLASS, PAGE_HEADER_DESC_CLASS, ICON_BG_COLORS, SECTION_CLASS, SECTION_TITLE_CLASS, FORM_GRID_CLASS, PAGE_BACKGROUND_STYLES, PAGE_CONTAINER_STYLES, PAGE_HEADER_TO_FORM_SPACING, FORM_LABEL_SPACING, FORM_SECTION_LABEL_SPACING, FORM_CHECKBOX_LABEL_SPACING } from "../constants/formStyles";
 
 function encode(data) {
   return Object.keys(data)
@@ -13,7 +13,7 @@ function encode(data) {
 function Field({ label, name, type = "text", required, placeholder }) {
   return (
     <div>
-      <label className="block text-sm text-zinc-300 mb-2">
+      <label className={`block text-sm text-zinc-300 ${FORM_LABEL_SPACING}`}>
         {label}
         {required ? " *" : ""}
       </label>
@@ -32,7 +32,7 @@ function Field({ label, name, type = "text", required, placeholder }) {
 function Select({ label, name, required, options }) {
   return (
     <div>
-      <label className="block text-sm text-zinc-300 mb-2">
+      <label className={`block text-sm text-zinc-300 ${FORM_LABEL_SPACING}`}>
         {label}
         {required ? " *" : ""}
       </label>
@@ -56,7 +56,7 @@ function Select({ label, name, required, options }) {
 function Textarea({ label, name, required, placeholder, rows = 4 }) {
   return (
     <div>
-      <label className="block text-sm text-zinc-300 mb-2">
+      <label className={`block text-sm text-zinc-300 ${FORM_LABEL_SPACING}`}>
         {label}
         {required ? " *" : ""}
       </label>
@@ -75,7 +75,7 @@ function Textarea({ label, name, required, placeholder, rows = 4 }) {
 function CheckboxGroup({ label, name, options, hint }) {
   return (
     <div>
-      <div className="flex items-center justify-between mb-3">
+      <div className={`flex items-center justify-between ${FORM_CHECKBOX_LABEL_SPACING}`}>
         <label className="block text-sm text-zinc-300">{label}</label>
         {hint ? <span className="text-xs text-zinc-500">{hint}</span> : null}
       </div>
@@ -134,7 +134,7 @@ export default function RequestWebsiteQuotePage() {
       <div className={PAGE_BACKGROUND_STYLES.quote.noiseOverlay} />
       
       <div className={PAGE_CONTAINER_STYLES} style={{ position: 'relative', zIndex: 10 }}>
-        <div className={PAGE_HEADER_CLASS}>
+        <div className="flex flex-col">
           <div className="flex items-center gap-3 mb-2">
             <div className={`${PAGE_HEADER_ICON_CLASS} ${ICON_BG_COLORS.emerald}`}>
               <Layers className={`w-5 h-5 ${TEXT_COLORS.emerald}`} strokeWidth={1.5} />
@@ -161,8 +161,6 @@ export default function RequestWebsiteQuotePage() {
           </div>
         )}
 
-        {!status && <div className={PAGE_HEADER_TO_FORM_SPACING} />}
-
         <form
           name="website-discovery"
           method="POST"
@@ -180,7 +178,7 @@ export default function RequestWebsiteQuotePage() {
           </p>
 
           <section className={SECTION_CLASS}>
-            <h2 className={SECTION_TITLE_CLASS}>Basics</h2>
+            <h2 className={SECTION_TITLE_CLASS}>Basic Information</h2>
             <div className={FORM_GRID_CLASS}>
               <Field label="Full name" name="fullName" required />
               <Field label="Email" name="email" type="email" required />

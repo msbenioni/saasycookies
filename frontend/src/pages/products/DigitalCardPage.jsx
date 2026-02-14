@@ -13,10 +13,13 @@ import {
   SECTION_TITLE_CLASS,
   SECTION_CLASS,
   FORM_GRID_CLASS,
+  FORM_LABEL_SPACING,
+  FORM_SECTION_LABEL_SPACING,
+  FORM_HELP_TEXT_SPACING,
 } from "../../constants/formStyles";
 import { createDigitalCardCheckout } from "../../utils/digitalCardService";
 
-const inputClass = `${INPUT_CLASS} ${FOCUS_COLORS.purple}`;
+const inputClass = `${INPUT_CLASS} ${FOCUS_COLORS.cyan}`;
 
 const initialForm = {
   fullName: "",
@@ -54,18 +57,18 @@ export default function DigitalCardPage() {
   };
 
   return (
-    <div className={PAGE_BACKGROUND_STYLES.quote.container}>
+    <div className={PAGE_BACKGROUND_STYLES.digitalCard.container}>
       <div
-        className={PAGE_BACKGROUND_STYLES.quote.gradientOverlay}
-        style={{ background: PAGE_BACKGROUND_STYLES.quote.gradientStyle }}
+        className={PAGE_BACKGROUND_STYLES.digitalCard.gradientOverlay}
+        style={{ background: PAGE_BACKGROUND_STYLES.digitalCard.gradientStyle }}
       />
-      <div className={PAGE_BACKGROUND_STYLES.quote.noiseOverlay} />
+      <div className={PAGE_BACKGROUND_STYLES.digitalCard.noiseOverlay} />
 
       <div className={PAGE_CONTAINER_STYLES} style={{ zIndex: 10 }}>
-        <div className={PAGE_HEADER_CLASS}>
+        <div className="flex flex-col">
           <div className="flex items-center gap-3 mb-2">
-            <div className={`${PAGE_HEADER_ICON_CLASS} bg-violet-500/10 border border-violet-500/20`}>
-              <CreditCard className="w-5 h-5 text-violet-400" strokeWidth={1.5} />
+            <div className={`${PAGE_HEADER_ICON_CLASS} bg-cyan-500/10 border border-cyan-500/20`}>
+              <CreditCard className="w-5 h-5 text-cyan-400" strokeWidth={1.5} />
             </div>
             <h1 className={PAGE_HEADER_TITLE_CLASS}>Digital Business Card</h1>
           </div>
@@ -79,7 +82,7 @@ export default function DigitalCardPage() {
               <h2 className={SECTION_TITLE_CLASS}>Basic Information</h2>
               <div className={FORM_GRID_CLASS}>
                 <div>
-                  <label className="text-xs text-zinc-400 mb-1 block">Full name *</label>
+                  <label className={`text-xs text-zinc-400 ${FORM_LABEL_SPACING} block`}>Full name *</label>
                   <input
                     required
                     className={inputClass}
@@ -88,7 +91,7 @@ export default function DigitalCardPage() {
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-zinc-400 mb-1 block">Business</label>
+                  <label className={`text-xs text-zinc-400 ${FORM_LABEL_SPACING} block`}>Business</label>
                   <input
                     className={inputClass}
                     value={form.businessName}
@@ -96,7 +99,7 @@ export default function DigitalCardPage() {
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-zinc-400 mb-1 block">Email *</label>
+                  <label className={`text-xs text-zinc-400 ${FORM_LABEL_SPACING} block`}>Email *</label>
                   <input
                     required
                     type="email"
@@ -106,7 +109,7 @@ export default function DigitalCardPage() {
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-zinc-400 mb-1 block">Phone</label>
+                  <label className={`text-xs text-zinc-400 ${FORM_LABEL_SPACING} block`}>Phone</label>
                   <input
                     className={inputClass}
                     value={form.phone}
@@ -120,7 +123,7 @@ export default function DigitalCardPage() {
               <h2 className={SECTION_TITLE_CLASS}>Online Presence</h2>
               <div className={FORM_GRID_CLASS}>
                 <div>
-                  <label className="text-xs text-zinc-400 mb-1 block">Website</label>
+                  <label className={`text-xs text-zinc-400 ${FORM_LABEL_SPACING} block`}>Website</label>
                   <input
                     className={inputClass}
                     value={form.website}
@@ -129,7 +132,7 @@ export default function DigitalCardPage() {
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-zinc-400 mb-1 block">Theme color</label>
+                  <label className={`text-xs text-zinc-400 ${FORM_LABEL_SPACING} block`}>Theme color</label>
                   <div className="flex items-center gap-2">
                     <input
                       type="color"
@@ -151,7 +154,7 @@ export default function DigitalCardPage() {
               <h2 className={SECTION_TITLE_CLASS}>Social Media</h2>
               <div className={FORM_GRID_CLASS}>
                 <div>
-                  <label className="text-xs text-zinc-400 mb-1 block">LinkedIn</label>
+                  <label className={`text-xs text-zinc-400 ${FORM_LABEL_SPACING} block`}>LinkedIn</label>
                   <input
                     className={inputClass}
                     value={form.linkedin}
@@ -159,7 +162,7 @@ export default function DigitalCardPage() {
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-zinc-400 mb-1 block">Instagram</label>
+                  <label className={`text-xs text-zinc-400 ${FORM_LABEL_SPACING} block`}>Instagram</label>
                   <input
                     className={inputClass}
                     value={form.instagram}
@@ -170,7 +173,7 @@ export default function DigitalCardPage() {
             </section>
 
             <div>
-              <label className="text-xs text-zinc-400 mb-1 block">Short bio</label>
+              <label className={`text-xs text-zinc-400 ${FORM_LABEL_SPACING} block`}>Short bio</label>
               <textarea
                 className={`${inputClass} resize-none h-24`}
                 value={form.bio}
@@ -179,7 +182,7 @@ export default function DigitalCardPage() {
             </div>
 
             <div>
-              <label className="text-xs text-zinc-400 mb-1 block">Discount code (optional)</label>
+              <label className={`text-xs text-zinc-400 ${FORM_LABEL_SPACING} block`}>Discount code (optional)</label>
               <input
                 className={inputClass}
                 value={form.discountCode}
@@ -194,8 +197,8 @@ export default function DigitalCardPage() {
               </p>
             ) : null}
 
-            <div className="rounded-lg border border-violet-500/20 bg-violet-500/10 p-4">
-              <h3 className={`${SECTION_TITLE_CLASS} text-violet-200 mb-2 flex items-center gap-2`}>
+            <div className="rounded-lg border border-cyan-500/20 bg-cyan-500/10 p-4">
+              <h3 className={`${SECTION_TITLE_CLASS} text-cyan-200 ${FORM_SECTION_LABEL_SPACING} flex items-center gap-2`}>
                 <CheckCircle2 className="w-4 h-4" strokeWidth={1.8} />
                 Trial terms
               </h3>
@@ -208,7 +211,7 @@ export default function DigitalCardPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex items-center gap-2 bg-violet-500 text-black font-semibold px-7 py-3 rounded-md hover:bg-violet-400 transition-all disabled:opacity-60"
+              className="inline-flex items-center gap-2 bg-cyan-500 text-black font-semibold px-7 py-3 rounded-md hover:bg-cyan-400 transition-all disabled:opacity-60"
             >
               {submitting ? (
                 <>
@@ -223,9 +226,9 @@ export default function DigitalCardPage() {
             </button>
           </form>
 
-          <p className="text-sm text-zinc-400 mt-6">
+          <p className={`text-sm text-zinc-400 ${FORM_HELP_TEXT_SPACING}`}>
             Already created one? Use your edit link or open your public card URL to resume billing if paused.
-            <Link to="/contact" className="text-violet-300 hover:text-violet-200 ml-1">Need help?</Link>
+            <Link to="/contact" className="text-cyan-300 hover:text-cyan-200 ml-1">Need help?</Link>
           </p>
         </div>
       </div>

@@ -123,8 +123,8 @@ export default function QRCodePage() {
       <div className={PAGE_BACKGROUND_STYLES.qrCode.noiseOverlay} />
       
       <div className={PAGE_CONTAINER_STYLES} style={{ position: 'relative', zIndex: 10 }}>
-        <div className={PAGE_HEADER_CLASS}>
-      <div className="flex items-center gap-3 mb-2">
+        <div className="flex flex-col">
+          <div className="flex items-center gap-3 mb-2">
         <div className={`${PAGE_HEADER_ICON_CLASS} ${ICON_BG_COLORS.pink}`}>
           <QrCode className={`w-5 h-5 ${TEXT_COLORS.pink}`} strokeWidth={1.5} />
         </div>
