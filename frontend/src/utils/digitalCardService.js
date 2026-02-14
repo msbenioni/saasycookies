@@ -93,8 +93,8 @@ export function buildVcf(cardJson) {
   const lines = [
     "BEGIN:VCARD",
     "VERSION:3.0",
-    `FN:${cardJson.fullName || ""}`,
-    `ORG:${cardJson.businessName || ""}`,
+    `FN:${cardJson.name || ""}`,
+    `ORG:${cardJson.company || ""}`,
     cardJson.phone ? `TEL;TYPE=CELL:${cardJson.phone}` : "",
     cardJson.email ? `EMAIL;TYPE=INTERNET:${cardJson.email}` : "",
     cardJson.website ? `URL:${cardJson.website}` : "",

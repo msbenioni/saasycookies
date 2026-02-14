@@ -51,7 +51,7 @@ export default function DigitalCardPublicPage() {
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = url;
-    anchor.download = `${(cardJson.fullName || "digital-card").replace(/\s+/g, "-").toLowerCase()}.vcf`;
+    anchor.download = `${(cardJson.name || "digital-card").replace(/\s+/g, "-").toLowerCase()}.vcf`;
     anchor.click();
     URL.revokeObjectURL(url);
   };
@@ -59,7 +59,7 @@ export default function DigitalCardPublicPage() {
   const onShare = async () => {
     try {
       if (navigator.share) {
-        await navigator.share({ title: cardJson.fullName || "Digital Card", url: shareUrl });
+        await navigator.share({ title: cardJson.name || "Digital Card", url: shareUrl });
         return;
       }
 
@@ -136,12 +136,13 @@ export default function DigitalCardPublicPage() {
           {cardJson.avatarUrl ? (
             <img
               src={cardJson.avatarUrl}
-              alt={`${cardJson.fullName || "Profile"} avatar`}
+              alt={`${cardJson.name || "Profile"} avatar`}
               className="w-16 h-16 rounded-full object-cover border border-white/15 mb-4"
             />
           ) : null}
-          <h1 className="font-heading text-4xl font-bold mb-1">{cardJson.fullName}</h1>
-          <p className="text-zinc-300 mb-5">{cardJson.businessName}</p>
+          <h1 className="font-heading text-4xl font-bold mb-1">{cardJson.name}</h1>
+          <p className="text-zinc-300 mb-2">{cardJson.title}</p>
+          <p className="text-zinc-300 mb-5">{cardJson.company}</p>
           {cardJson.bio ? <p className="text-zinc-200 leading-relaxed mb-6">{cardJson.bio}</p> : null}
 
           <div className="space-y-2 text-sm text-zinc-300">
