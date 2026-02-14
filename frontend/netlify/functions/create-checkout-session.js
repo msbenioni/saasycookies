@@ -56,6 +56,27 @@ exports.handler = async (event) => {
     return { statusCode: 405, body: "Method not allowed" };
   }
 
+  // Validate required environment variables
+  const requiredEnvVars = [
+    'STRIPE_SECRET_KEY',
+    'SUPABASE_URL', 
+    'SUPABASE_SERVICE_ROLE_KEY',
+    'STRIPE_PRICE_ID',
+    'PUBLIC_SITE_URL'
+  ];
+
+  const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
+  if (missingVars.length > 0) {
+    console.error('Missing environment variables:', missingVars);
+    return { 
+      statusCode: 500, 
+      body: JSON.stringify({ 
+        error: "Server configuration error", 
+        details: `Missing: ${missingVars.join(', ')}` 
+      }) 
+    };
+  }
+
   try {
     const { cardData, discountCode, cardId: existingCardId } = JSON.parse(event.body);
     const {
@@ -69,7 +90,7 @@ exports.handler = async (event) => {
       instagram,
       bio,
       themeColor,
-    } = body;
+    } = cardData;
 
     const isResume = Boolean(cardId);
     let card;
@@ -160,7 +181,25 @@ exports.handler = async (event) => {
       body: JSON.stringify({ checkoutUrl: session.url, cardId: card.id, slug: card.slug }),
     };
   } catch (error) {
-    console.error("create-checkout-session error", error);
-    return { statusCode: 500, body: JSON.stringify({ error: "Server error" }) };
+    console.error("create-checkout-session error:", error.message);
+    console.error("Full error:", error);
+    
+    // Return more specific error messages
+    let errorMessage = "Server error";
+    if (error.message.includes("JSON")) {
+      errorMessage = "Invalid request format";
+    } else if (error.message.includes("database") || error.message.includes("supabase")) {
+      errorMessage = "Database error";
+    } else if (error.message.includes("stripe")) {
+      errorMessage = "Payment processing error";
+    }
+    
+    return { 
+      statusCode: 500, 
+      body: JSON.stringify({ 
+        error: errorMessage,
+        details: error.message 
+      }) 
+    };
   }
 };
