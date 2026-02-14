@@ -17,6 +17,15 @@ function randomToken() {
   return crypto.randomBytes(24).toString("hex");
 }
 
+function getCouponId(discountCode) {
+  const codes = {
+    'FRIENDS50': process.env.STRIPE_COUPON_API_FRIENDS50,
+    'FAM100': process.env.STRIPE_COUPON_API_FAM100,
+  };
+  
+  return codes[discountCode?.toUpperCase()] || null;
+}
+
 async function ensureUniqueSlug(baseSlug) {
   let slug = baseSlug || `card-${Date.now()}`;
 
@@ -44,11 +53,11 @@ function parseBody(event) {
 
 exports.handler = async (event) => {
   if (event.httpMethod !== "POST") {
-    return { statusCode: 405, body: JSON.stringify({ error: "Method not allowed" }) };
+    return { statusCode: 405, body: "Method not allowed" };
   }
 
   try {
-    const body = parseBody(event);
+    const { cardData, discountCode, cardId: existingCardId } = JSON.parse(event.body);
     const {
       cardId,
       fullName,
@@ -134,6 +143,14 @@ exports.handler = async (event) => {
 
     if (cardEmail) {
       checkoutPayload.customer_email = cardEmail;
+    }
+
+    // Apply discount code if provided
+    if (discountCode) {
+      const couponId = getCouponId(discountCode);
+      if (couponId) {
+        checkoutPayload.discounts = [{ coupon: couponId }];
+      }
     }
 
     const session = await stripe.checkout.sessions.create(checkoutPayload);

@@ -103,3 +103,13 @@ export function buildVcf(cardJson) {
 
   return lines.join("\n");
 }
+
+export async function sendEditLinkEmail(cardId) {
+  const response = await fetch("/.netlify/functions/send-edit-link", {
+    method: "POST",
+    headers: jsonHeaders,
+    body: JSON.stringify({ cardId }),
+  });
+
+  return handleResponse(response);
+}

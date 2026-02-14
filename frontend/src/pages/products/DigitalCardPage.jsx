@@ -25,6 +25,7 @@ const initialForm = {
   instagram: "",
   bio: "",
   themeColor: "#7c3aed",
+  discountCode: "",
 };
 
 export default function DigitalCardPage() {
@@ -165,6 +166,16 @@ export default function DigitalCardPage() {
                 className={`${inputClass} resize-none h-24`}
                 value={form.bio}
                 onChange={(event) => update("bio", event.target.value)}
+              />
+            </div>
+
+            <div>
+              <label className="text-xs text-zinc-400 mb-1 block">Discount code (optional)</label>
+              <input
+                className={inputClass}
+                value={form.discountCode}
+                onChange={(event) => update("discountCode", event.target.value)}
+                style={{ textTransform: "uppercase" }}
               />
             </div>
 
