@@ -16,7 +16,6 @@
   status = 404
 
 [functions]
-  node_modules = "node_modules"
   directory = "netlify/functions"
 
 # Environment variables (these should be set in Netlify dashboard)
