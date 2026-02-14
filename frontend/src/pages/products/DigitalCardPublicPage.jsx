@@ -129,7 +129,7 @@ export default function DigitalCardPublicPage() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] py-10 px-6 bg-void text-white">
+    <div className="py-16 px-6 bg-void text-white">
       <div className="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 rounded-2xl border border-white/10 bg-zinc-900/60 p-8">
           <div className="w-12 h-1 rounded-full mb-6" style={{ backgroundColor: cardJson.themeColor || "#7c3aed" }} />

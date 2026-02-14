@@ -60,7 +60,7 @@ export default function DigitalCardSuccessPage() {
   }, [cardId]);
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-6">
+    <div className="py-16 flex items-center justify-center px-6">
       <div className="max-w-lg w-full rounded-2xl border border-white/10 bg-zinc-900/60 p-8 text-center">
         {status === "ready" ? (
           <>

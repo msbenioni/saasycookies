@@ -3,7 +3,7 @@ import { Ban } from "lucide-react";
 
 export default function DigitalCardCancelPage() {
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-6">
+    <div className="py-16 flex items-center justify-center px-6">
       <div className="max-w-lg w-full rounded-2xl border border-white/10 bg-zinc-900/60 p-8 text-center">
         <Ban className="w-8 h-8 mx-auto text-zinc-300 mb-4" strokeWidth={1.7} />
         <h1 className="font-heading text-3xl text-white mb-3">Checkout canceled</h1>

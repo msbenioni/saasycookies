@@ -29,7 +29,7 @@ h1, h2, h3, h4, h5, h6 {
 .brand-title {
     font-family: 'Bungee Shade', cursive;
     font-weight: 400; /* Bungee Shade only has one weight */
-    font-size: 1.75rem; /* Even bigger for maximum impact */
+    font-size: 1.5rem; /* Reduced from 1.75rem */
     line-height: 1.2;
     letter-spacing: 0.02em; /* Slightly increased spacing for the bold font */
     color: #ffffff;

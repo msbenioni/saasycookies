@@ -90,6 +90,9 @@ export const CARD_STYLES = {
   // Card padding
   padding: "relative p-8 md:p-10",
   
+  // Alternative base style that allows hover ring overrides
+  baseOverride: "group block relative overflow-hidden rounded-2xl bg-zinc-900/60 ring-1 ring-white/10 transition-all duration-500",
+  
   // Icon container
   iconContainer: "w-12 h-12 rounded-xl bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center shrink-0",
   
@@ -105,6 +108,12 @@ export const CARD_STYLES = {
 
 // Section description styles
 export const SECTION_DESCRIPTION_STYLES = "text-zinc-200 text-lg max-w-2xl mb-16 leading-relaxed";
+
+// Shared container spacing for tool pages
+export const PAGE_CONTAINER_STYLES = "relative max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 py-8 md:py-24";
+
+// Shared spacing between header description and form content
+export const PAGE_HEADER_TO_FORM_SPACING = "mb-12";
 
 // Page background styles for consistency
 export const PAGE_BACKGROUND_STYLES = {

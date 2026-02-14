@@ -12,7 +12,7 @@ const categoryCards = [
     title: "AI Products",
     desc: "Intelligent tools that think with you, not for you.",
     color: "text-senseai",
-    ring: "hover:ring-cyan-400/40",
+    ring: "hover:ring-senseai/40",
     hasLogo: true,
     logoKey: "SENSEAI"
   },
@@ -21,7 +21,7 @@ const categoryCards = [
     title: "Community Platforms",
     desc: "Connecting creators and businesses across the Pacific.",
     color: "text-pacific",
-    ring: "hover:ring-amber-400/40",
+    ring: "hover:ring-pacific/40",
     hasLogo: true,
     logoKey: "PACIFIC_MARKET"
   },
@@ -30,7 +30,7 @@ const categoryCards = [
     title: "Developer Tools",
     desc: "Free utilities built for speed, simplicity, and real work.",
     color: "text-brand-primary",
-    ring: "hover:ring-violet-400/40",
+    ring: "hover:ring-brand-primary/40",
     hasLogo: false
   },
 ];
@@ -246,7 +246,7 @@ export default function HomePage() {
             <Link
               to="/pacificmarket"
               data-testid="featured-pacific-card"
-              className={`${CARD_STYLES.base} hover:ring-amber-400/40`}
+              className={`${CARD_STYLES.baseOverride} hover:ring-pacific/40`}
             >
               <div className={CARD_STYLES.overlay} style={{ background: "radial-gradient(circle at 50% 50%, rgba(245,158,11,0.08) 0%, transparent 70%)" }} />
               <div className={CARD_STYLES.padding}>

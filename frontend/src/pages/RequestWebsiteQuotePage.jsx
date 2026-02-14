@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, AlertTriangle, CheckCircle, CheckCircle2, Layers } from "lucide-react";
 import { sendQuoteRequestEmail } from "../utils/emailService";
-import { INPUT_CLASS, SELECT_CLASS, CHECKBOX_LABEL_CLASS, CHECKBOX_INPUT_CLASS, BADGE_CLASS, MESSAGE_BOX_CLASS, FOCUS_COLORS, TEXT_COLORS, BG_COLORS, PAGE_HEADER_CLASS, PAGE_HEADER_ICON_CLASS, PAGE_HEADER_TITLE_CLASS, PAGE_HEADER_DESC_CLASS, ICON_BG_COLORS, SECTION_CLASS, SECTION_TITLE_CLASS, FORM_GRID_CLASS } from "../constants/formStyles";
+import { INPUT_CLASS, SELECT_CLASS, CHECKBOX_LABEL_CLASS, CHECKBOX_INPUT_CLASS, BADGE_CLASS, MESSAGE_BOX_CLASS, FOCUS_COLORS, TEXT_COLORS, BG_COLORS, PAGE_HEADER_CLASS, PAGE_HEADER_ICON_CLASS, PAGE_HEADER_TITLE_CLASS, PAGE_HEADER_DESC_CLASS, ICON_BG_COLORS, SECTION_CLASS, SECTION_TITLE_CLASS, FORM_GRID_CLASS, PAGE_BACKGROUND_STYLES, PAGE_CONTAINER_STYLES, PAGE_HEADER_TO_FORM_SPACING } from "../constants/formStyles";
 
 function encode(data) {
   return Object.keys(data)
@@ -126,31 +126,31 @@ export default function RequestWebsiteQuotePage() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-void text-white relative overflow-hidden">
+    <div className={PAGE_BACKGROUND_STYLES.quote.container}>
       <div
-        className="absolute inset-0 opacity-40"
-        style={{
-          background:
-            "radial-gradient(circle at 30% 20%, rgba(16,185,129,0.22) 0%, transparent 55%), radial-gradient(circle at 70% 40%, rgba(6,182,212,0.14) 0%, transparent 60%)",
-        }}
+        className={PAGE_BACKGROUND_STYLES.quote.gradientOverlay}
+        style={{ background: PAGE_BACKGROUND_STYLES.quote.gradientStyle }}
       />
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20200%20200%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cfilter%20id%3D%22n%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.7%22%20numOctaves%3D%223%22%20stitchTiles%3D%22stitch%22/%3E%3C/filter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url(%23n)%22%20opacity%3D%220.03%22/%3E%3C/svg%3E')]" />
+      <div className={PAGE_BACKGROUND_STYLES.quote.noiseOverlay} />
       
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 py-16 md:py-24" style={{ position: 'relative', zIndex: 10 }}>
-        <div className="flex items-center gap-3 mb-2">
-          <div className={`${PAGE_HEADER_ICON_CLASS} ${ICON_BG_COLORS.emerald}`}>
-            <Layers className={`w-5 h-5 ${TEXT_COLORS.emerald}`} strokeWidth={1.5} />
+      <div className={PAGE_CONTAINER_STYLES} style={{ position: 'relative', zIndex: 10 }}>
+        <div className={PAGE_HEADER_CLASS}>
+          <div className="flex items-center gap-3 mb-2">
+            <div className={`${PAGE_HEADER_ICON_CLASS} ${ICON_BG_COLORS.emerald}`}>
+              <Layers className={`w-5 h-5 ${TEXT_COLORS.emerald}`} strokeWidth={1.5} />
+            </div>
+            <h1 className={PAGE_HEADER_TITLE_CLASS}>
+              Website Quote
+            </h1>
           </div>
-          <h1 className={PAGE_HEADER_TITLE_CLASS}>
-            Request a website quote
-          </h1>
+
+          <p className={PAGE_HEADER_DESC_CLASS}>
+            Tell us about your project and we'll get back to you within 24 hours with a detailed proposal.
+          </p>
         </div>
-        <p className={PAGE_HEADER_DESC_CLASS}>
-          Tell me about your business and goals. I'll reply with scope, timeline, and a clear quote.
-        </p>
 
         {status === "error" && (
-          <div className="mb-8 rounded-md border border-red-500/30 bg-red-500/10 p-5 flex items-start gap-3">
+          <div className={`${PAGE_HEADER_TO_FORM_SPACING} rounded-md border border-red-500/30 bg-red-500/10 p-5 flex items-start gap-3`}>
             <AlertTriangle className="w-5 h-5 text-red-300" />
             <div>
               <div className="font-semibold mb-1">Something went wrong</div>
@@ -161,13 +161,15 @@ export default function RequestWebsiteQuotePage() {
           </div>
         )}
 
+        {!status && <div className={PAGE_HEADER_TO_FORM_SPACING} />}
+
         <form
           name="website-discovery"
           method="POST"
           data-netlify="true"
           data-netlify-honeypot="bot-field"
           onSubmit={handleSubmit}
-          className="space-y-8" style={{ position: 'relative', zIndex: 10 }}
+          className="space-y-6 rounded-2xl bg-zinc-900/40 border border-white/10 p-6 md:p-8"
         >
           <input type="hidden" name="form-name" value="website-discovery" />
 

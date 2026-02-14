@@ -33,7 +33,7 @@ export default function QuoteThankYouPage() {
   }, []);
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-void text-white relative overflow-hidden">
+    <div className="py-16 bg-void text-white relative overflow-hidden">
       <div
         className="absolute inset-0 opacity-40"
         style={{

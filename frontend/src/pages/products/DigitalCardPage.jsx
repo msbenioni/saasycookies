@@ -5,10 +5,13 @@ import {
   INPUT_CLASS,
   FOCUS_COLORS,
   PAGE_BACKGROUND_STYLES,
+  PAGE_CONTAINER_STYLES,
+  PAGE_HEADER_CLASS,
   PAGE_HEADER_TITLE_CLASS,
   PAGE_HEADER_DESC_CLASS,
   PAGE_HEADER_ICON_CLASS,
   SECTION_TITLE_CLASS,
+  SECTION_CLASS,
   FORM_GRID_CLASS,
 } from "../../constants/formStyles";
 import { createDigitalCardCheckout } from "../../utils/digitalCardService";
@@ -58,8 +61,8 @@ export default function DigitalCardPage() {
       />
       <div className={PAGE_BACKGROUND_STYLES.quote.noiseOverlay} />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 py-16 md:py-24" style={{ zIndex: 10 }}>
-        <div className="max-w-3xl">
+      <div className={PAGE_CONTAINER_STYLES} style={{ zIndex: 10 }}>
+        <div className={PAGE_HEADER_CLASS}>
           <div className="flex items-center gap-3 mb-2">
             <div className={`${PAGE_HEADER_ICON_CLASS} bg-violet-500/10 border border-violet-500/20`}>
               <CreditCard className="w-5 h-5 text-violet-400" strokeWidth={1.5} />
@@ -72,93 +75,99 @@ export default function DigitalCardPage() {
           </p>
 
           <form onSubmit={onSubmit} className="space-y-6 rounded-2xl bg-zinc-900/40 border border-white/10 p-6 md:p-8">
-            <div className={FORM_GRID_CLASS}>
-              <div>
-                <label className="text-xs text-zinc-400 mb-1 block">Full name *</label>
-                <input
-                  required
-                  className={inputClass}
-                  value={form.fullName}
-                  onChange={(event) => update("fullName", event.target.value)}
-                />
-              </div>
-              <div>
-                <label className="text-xs text-zinc-400 mb-1 block">Business</label>
-                <input
-                  className={inputClass}
-                  value={form.businessName}
-                  onChange={(event) => update("businessName", event.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className={FORM_GRID_CLASS}>
-              <div>
-                <label className="text-xs text-zinc-400 mb-1 block">Email *</label>
-                <input
-                  required
-                  type="email"
-                  className={inputClass}
-                  value={form.email}
-                  onChange={(event) => update("email", event.target.value)}
-                />
-              </div>
-              <div>
-                <label className="text-xs text-zinc-400 mb-1 block">Phone</label>
-                <input
-                  className={inputClass}
-                  value={form.phone}
-                  onChange={(event) => update("phone", event.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className={FORM_GRID_CLASS}>
-              <div>
-                <label className="text-xs text-zinc-400 mb-1 block">Website</label>
-                <input
-                  className={inputClass}
-                  value={form.website}
-                  onChange={(event) => update("website", event.target.value)}
-                  placeholder="https://"
-                />
-              </div>
-              <div>
-                <label className="text-xs text-zinc-400 mb-1 block">Theme color</label>
-                <div className="flex items-center gap-2">
+            <section className={SECTION_CLASS}>
+              <h2 className={SECTION_TITLE_CLASS}>Basic Information</h2>
+              <div className={FORM_GRID_CLASS}>
+                <div>
+                  <label className="text-xs text-zinc-400 mb-1 block">Full name *</label>
                   <input
-                    type="color"
-                    className="w-10 h-10 rounded border border-white/10 bg-transparent"
-                    value={form.themeColor}
-                    onChange={(event) => update("themeColor", event.target.value)}
+                    required
+                    className={inputClass}
+                    value={form.fullName}
+                    onChange={(event) => update("fullName", event.target.value)}
                   />
+                </div>
+                <div>
+                  <label className="text-xs text-zinc-400 mb-1 block">Business</label>
                   <input
                     className={inputClass}
-                    value={form.themeColor}
-                    onChange={(event) => update("themeColor", event.target.value)}
+                    value={form.businessName}
+                    onChange={(event) => update("businessName", event.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className="text-xs text-zinc-400 mb-1 block">Email *</label>
+                  <input
+                    required
+                    type="email"
+                    className={inputClass}
+                    value={form.email}
+                    onChange={(event) => update("email", event.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className="text-xs text-zinc-400 mb-1 block">Phone</label>
+                  <input
+                    className={inputClass}
+                    value={form.phone}
+                    onChange={(event) => update("phone", event.target.value)}
                   />
                 </div>
               </div>
-            </div>
+            </section>
 
-            <div className={FORM_GRID_CLASS}>
-              <div>
-                <label className="text-xs text-zinc-400 mb-1 block">LinkedIn</label>
-                <input
-                  className={inputClass}
-                  value={form.linkedin}
-                  onChange={(event) => update("linkedin", event.target.value)}
-                />
+            <section className={SECTION_CLASS}>
+              <h2 className={SECTION_TITLE_CLASS}>Online Presence</h2>
+              <div className={FORM_GRID_CLASS}>
+                <div>
+                  <label className="text-xs text-zinc-400 mb-1 block">Website</label>
+                  <input
+                    className={inputClass}
+                    value={form.website}
+                    onChange={(event) => update("website", event.target.value)}
+                    placeholder="https://"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs text-zinc-400 mb-1 block">Theme color</label>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="color"
+                      className="w-10 h-10 rounded border border-white/10 bg-transparent"
+                      value={form.themeColor}
+                      onChange={(event) => update("themeColor", event.target.value)}
+                    />
+                    <input
+                      className={inputClass}
+                      value={form.themeColor}
+                      onChange={(event) => update("themeColor", event.target.value)}
+                    />
+                  </div>
+                </div>
               </div>
-              <div>
-                <label className="text-xs text-zinc-400 mb-1 block">Instagram</label>
-                <input
-                  className={inputClass}
-                  value={form.instagram}
-                  onChange={(event) => update("instagram", event.target.value)}
-                />
+            </section>
+
+            <section className={SECTION_CLASS}>
+              <h2 className={SECTION_TITLE_CLASS}>Social Media</h2>
+              <div className={FORM_GRID_CLASS}>
+                <div>
+                  <label className="text-xs text-zinc-400 mb-1 block">LinkedIn</label>
+                  <input
+                    className={inputClass}
+                    value={form.linkedin}
+                    onChange={(event) => update("linkedin", event.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className="text-xs text-zinc-400 mb-1 block">Instagram</label>
+                  <input
+                    className={inputClass}
+                    value={form.instagram}
+                    onChange={(event) => update("instagram", event.target.value)}
+                  />
+                </div>
               </div>
-            </div>
+            </section>
 
             <div>
               <label className="text-xs text-zinc-400 mb-1 block">Short bio</label>

@@ -101,11 +101,11 @@ export default function DigitalCardEditPage() {
     }
   };
 
-  if (loading) return <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center text-zinc-300">Loading editor...</div>;
-  if (error && !form) return <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center text-red-300">{error}</div>;
+  if (loading) return <div className="py-16 flex items-center justify-center text-zinc-300">Loading editor...</div>;
+  if (error && !form) return <div className="py-16 flex items-center justify-center text-red-300">{error}</div>;
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] py-10 px-6 bg-void text-white">
+    <div className="py-16 px-6 bg-void text-white">
       <div className="max-w-4xl mx-auto rounded-2xl border border-white/10 bg-zinc-900/60 p-6 md:p-8">
         <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
           <h1 className="font-heading text-3xl font-bold">Edit your digital card</h1>
