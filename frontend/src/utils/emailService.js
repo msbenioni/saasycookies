@@ -34,11 +34,11 @@ export const sendContactEmail = async (formData) => {
   }
 };
 
-export const sendQuoteRequestEmail = async (formData) => {
+export const sendProjectBriefEmail = async (formData) => {
   try {
     // In development, simulate success without actually sending email
     if (isDevelopment) {
-      console.log('Development mode: Simulating quote email send', formData);
+      console.log('Development mode: Simulating project brief email send', formData);
       // Simulate network delay
       await new Promise(resolve => setTimeout(resolve, 1000));
       return { success: true, data: { id: 'dev-simulated' } };
@@ -50,7 +50,7 @@ export const sendQuoteRequestEmail = async (formData) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        type: 'quote',
+        type: 'project_brief',
         formData
       }),
     });

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, AlertTriangle, CheckCircle, CheckCircle2, Layers } from "lucide-react";
-import { sendQuoteRequestEmail } from "../utils/emailService";
+import { sendProjectBriefEmail } from "../utils/emailService";
 import { INPUT_CLASS, SELECT_CLASS, CHECKBOX_LABEL_CLASS, CHECKBOX_INPUT_CLASS, BADGE_CLASS, MESSAGE_BOX_CLASS, FOCUS_COLORS, TEXT_COLORS, BG_COLORS, PAGE_HEADER_CLASS, PAGE_HEADER_ICON_CLASS, PAGE_HEADER_TITLE_CLASS, PAGE_HEADER_DESC_CLASS, ICON_BG_COLORS, SECTION_CLASS, SECTION_TITLE_CLASS, FORM_GRID_CLASS, PAGE_BACKGROUND_STYLES, PAGE_CONTAINER_STYLES, PAGE_HEADER_TO_FORM_SPACING, FORM_LABEL_SPACING, FORM_SECTION_LABEL_SPACING, FORM_CHECKBOX_LABEL_SPACING } from "../constants/formStyles";
 
 function encode(data) {
@@ -99,7 +99,7 @@ function CheckboxGroup({ label, name, options, hint }) {
   );
 }
 
-export default function RequestWebsiteQuotePage() {
+export default function RequestAISaaSBriefPage() {
   const [status, setStatus] = useState("idle");
   const navigate = useNavigate();
 
@@ -109,16 +109,23 @@ export default function RequestWebsiteQuotePage() {
 
     const form = event.currentTarget;
     const formData = new FormData(form);
-    const payload = { "form-name": "website-discovery" };
+    const payload = { "form-name": "ai-saas-project-brief" };
 
     formData.forEach((value, key) => {
-      payload[key] = String(value);
+      if (key === "form-name") return;
+
+      if (Object.prototype.hasOwnProperty.call(payload, key)) {
+        payload[key] = Array.isArray(payload[key])
+          ? [...payload[key], String(value)]
+          : [payload[key], String(value)];
+      } else {
+        payload[key] = String(value);
+      }
     });
 
     try {
-      await sendQuoteRequestEmail(payload);
-      // Redirect to thank you page on success
-      navigate("/quote-thank-you");
+      await sendProjectBriefEmail(payload);
+      navigate("/project-brief-thank-you");
     } catch (error) {
       console.error("Form submission error:", error);
       setStatus("error");
@@ -140,12 +147,12 @@ export default function RequestWebsiteQuotePage() {
               <Layers className={`w-5 h-5 ${TEXT_COLORS.emerald}`} strokeWidth={1.5} />
             </div>
             <h1 className={PAGE_HEADER_TITLE_CLASS}>
-              Website Quote
+              AI & SaaS Project Brief
             </h1>
           </div>
 
           <p className={PAGE_HEADER_DESC_CLASS}>
-            Tell us about your project and we'll get back to you within 24 hours with a detailed proposal.
+            Tell us what you are building and where AI or SaaS can unlock growth. We review every brief and reply with scope direction.
           </p>
         </div>
 
@@ -162,14 +169,14 @@ export default function RequestWebsiteQuotePage() {
         )}
 
         <form
-          name="website-discovery"
+          name="ai-saas-project-brief"
           method="POST"
           data-netlify="true"
           data-netlify-honeypot="bot-field"
           onSubmit={handleSubmit}
           className="space-y-6 rounded-2xl bg-zinc-900/40 border border-white/10 p-6 md:p-8"
         >
-          <input type="hidden" name="form-name" value="website-discovery" />
+          <input type="hidden" name="form-name" value="ai-saas-project-brief" />
 
           <p className="hidden">
             <label>
@@ -190,10 +197,10 @@ export default function RequestWebsiteQuotePage() {
           <section className={SECTION_CLASS}>
             <h2 className={SECTION_TITLE_CLASS}>Business overview</h2>
             <div className={FORM_GRID_CLASS}>
-              <Field label="Current website URL" name="websiteUrl" placeholder="https://" />
+              <Field label="Current website or product URL" name="currentUrl" placeholder="https://" />
               <Field label="Industry" name="industry" placeholder="e.g. Retail, coaching" />
-              <Field label="Primary goal this year" name="primaryGoalThisYear" />
-              <Field label="Primary goal (other)" name="primaryGoalOther" />
+              <Field label="Primary growth goal this year" name="primaryGoal" />
+              <Field label="Primary growth goal (other)" name="primaryGoalOther" />
             </div>
             <Textarea
               label="Business description"
@@ -205,62 +212,62 @@ export default function RequestWebsiteQuotePage() {
           </section>
 
           <section className={SECTION_CLASS}>
-            <h2 className={SECTION_TITLE_CLASS}>Website purpose & goals</h2>
+            <h2 className={SECTION_TITLE_CLASS}>Project scope</h2>
             <Textarea
-              label="Why do you need a new website?"
-              name="whyNewWebsite"
+              label="What are you building or improving?"
+              name="projectVision"
               required
               rows={3}
             />
             <CheckboxGroup
-              label="Top goals (pick all that apply)"
-              name="websiteGoals"
+              label="Project type"
+              name="projectType"
               hint="Select up to 3"
               options={[
-                "Get more leads",
-                "Explain services clearly",
-                "Sell products",
-                "Build credibility",
-                "Drive bookings",
-                "Promote events",
+                "AI automation workflow",
+                "AI feature in existing platform",
+                "New SaaS product (MVP)",
+                "Website (New or Redesign)",
+                "Internal operations tool",
+                "Not sure yet",
               ]}
             />
-            <Field label="Goals (other)" name="websiteGoalsOther" placeholder="Anything else?" />
+            <Field label="Project type (other)" name="projectTypeOther" placeholder="Anything else?" />
           </section>
 
           <section className={SECTION_CLASS}>
-            <h2 className={SECTION_TITLE_CLASS}>Target audience</h2>
+            <h2 className={SECTION_TITLE_CLASS}>Users & outcomes</h2>
             <Textarea
-              label="Ideal customer"
-              name="idealCustomer"
+              label="Who are the primary users?"
+              name="primaryUsers"
               required
               rows={3}
             />
             <div className={FORM_GRID_CLASS}>
               <Field label="Desired user action" name="desiredUserAction" />
-              <Field label="Desired action (other)" name="desiredUserActionOther" />
+              <Field label="Primary success metric" name="successMetric" placeholder="e.g. time saved, leads, conversion lift" />
             </div>
           </section>
 
           <section className={SECTION_CLASS}>
-            <h2 className={SECTION_TITLE_CLASS}>Features & functionality</h2>
+            <h2 className={SECTION_TITLE_CLASS}>Capabilities needed</h2>
             <CheckboxGroup
-              label="Required features"
-              name="requiredFeatures"
+              label="Required capabilities"
+              name="requiredCapabilities"
               options={[
-                "Contact form",
-                "Booking / scheduling",
-                "Payments",
-                "Blog / news",
-                "Membership / login",
-                "Online store",
-                "Analytics",
+                "AI assistant or recommendations",
+                "Workflow automation",
+                "Customer portal / dashboard",
+                "Authentication / user roles",
+                "Payments / subscriptions",
+                "3rd-party integrations / APIs",
+                "Analytics / reporting",
               ]}
             />
-            <Field label="Required features (other)" name="requiredFeaturesOther" />
+            <Field label="Required capabilities (other)" name="requiredCapabilitiesOther" />
             <Select
-              label="Ongoing content updates needed"
-              name="needsContentUpdates"
+              label="Ongoing support needed after launch"
+              name="needsOngoingSupport"
               options={[
                 { label: "Yes, regularly", value: "yes" },
                 { label: "Occasionally", value: "sometimes" },
@@ -270,10 +277,10 @@ export default function RequestWebsiteQuotePage() {
           </section>
 
           <section className={SECTION_CLASS}>
-            <h2 className={SECTION_TITLE_CLASS}>Brand & design</h2>
+            <h2 className={SECTION_TITLE_CLASS}>Product & interface direction</h2>
             <Select
-              label="Brand guidelines available?"
-              name="hasBrandGuidelines"
+              label="Existing product or codebase available?"
+              name="hasExistingProduct"
               options={[
                 { label: "Yes", value: "yes" },
                 { label: "No", value: "no" },
@@ -281,32 +288,32 @@ export default function RequestWebsiteQuotePage() {
               ]}
             />
             <CheckboxGroup
-              label="Design style"
-              name="designStyle"
+              label="Interface direction"
+              name="interfaceDirection"
               options={[
                 "Minimal",
+                "Data-heavy",
+                "Clean enterprise",
                 "Bold / high contrast",
-                "Editorial",
-                "Elegant",
-                "Playful",
+                "Mobile-first",
                 "Futuristic",
               ]}
             />
-            <Field label="Design style (other)" name="designStyleOther" />
+            <Field label="Interface direction (other)" name="interfaceDirectionOther" />
             <Textarea
-              label="Inspiration sites + why"
-              name="designInspo"
+              label="Reference products or tools + why"
+              name="productReferences"
               rows={3}
-              placeholder="Share a few examples and what you like about them"
+              placeholder="Share examples and what you want to replicate or avoid"
             />
           </section>
 
           <section className={SECTION_CLASS}>
-            <h2 className={SECTION_TITLE_CLASS}>Content & SEO</h2>
+            <h2 className={SECTION_TITLE_CLASS}>Data & readiness</h2>
             <div className={FORM_GRID_CLASS}>
               <Select
-                label="Content ready?"
-                name="contentReady"
+                label="Data sources ready?"
+                name="dataReadiness"
                 options={[
                   { label: "Yes", value: "yes" },
                   { label: "No", value: "no" },
@@ -314,8 +321,8 @@ export default function RequestWebsiteQuotePage() {
                 ]}
               />
               <Select
-                label="Need copywriting help?"
-                name="needsCopywriting"
+                label="Internal owner assigned for this project?"
+                name="hasInternalOwner"
                 options={[
                   { label: "Yes", value: "yes" },
                   { label: "No", value: "no" },
@@ -324,20 +331,20 @@ export default function RequestWebsiteQuotePage() {
               />
             </div>
             <Textarea
-              label="Target keywords"
-              name="seoKeywords"
+              label="Known constraints or risks"
+              name="constraintsAndRisks"
               rows={3}
-              placeholder="List keywords or phrases you care about"
+              placeholder="Compliance, deadlines, technical limits, team bandwidth, etc."
             />
           </section>
 
           <section className={SECTION_CLASS}>
             <h2 className={SECTION_TITLE_CLASS}>Technical</h2>
             <div className={FORM_GRID_CLASS}>
-              <Field label="Domain host" name="domainHost" />
-              <Field label="Current platform" name="currentPlatform" />
-              <Field label="Email provider" name="emailProvider" />
+              <Field label="Current stack / platform" name="currentStack" />
               <Field label="Integrations needed" name="integrationsNeeded" />
+              <Field label="Authentication requirements" name="authRequirements" />
+              <Field label="Security / compliance requirements" name="securityRequirements" />
             </div>
           </section>
 
@@ -351,11 +358,11 @@ export default function RequestWebsiteQuotePage() {
               label="Budget range"
               name="budgetRange"
               options={[
-                { label: "$2k–$7k (standard custom website)", value: "2k-7k" },
-                { label: "$7k+ (complex website with AI/backend)", value: "7k+" },
-                { label: "$39.99/month (subscription - standard)", value: "39.99-monthly" },
-                { label: "$99/month (subscription - complex)", value: "99-monthly" },
-                { label: "Not sure - need guidance", value: "not-sure" },
+                { label: "$2k–$7k (implementation sprint)", value: "2k-7k" },
+                { label: "$7k+ (AI or SaaS build)", value: "7k-plus" },
+                { label: "$39.99/month (standard managed plan)", value: "39.99-monthly" },
+                { label: "$99/month (advanced managed plan)", value: "99-monthly" },
+                { label: "Not sure — need guidance", value: "not-sure" },
               ]}
             />
           </section>
@@ -370,7 +377,7 @@ export default function RequestWebsiteQuotePage() {
               disabled={status === "sending"}
               className={"inline-flex items-center justify-center gap-2 rounded-md " + BG_COLORS.emerald + " text-black font-semibold px-6 py-3 hover:opacity-90 transition disabled:opacity-50 flex-1 sm:flex-none"}
             >
-              {status === "sending" ? "Sending..." : "Submit request"}
+              {status === "sending" ? "Sending..." : "Submit project brief"}
               <ArrowRight className="w-4 h-4" strokeWidth={2} />
             </button>
             <p className="text-xs text-zinc-500 sm:ml-4">

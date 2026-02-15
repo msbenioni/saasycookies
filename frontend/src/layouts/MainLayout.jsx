@@ -21,7 +21,7 @@ const navLinks = [
     hasLogo: true,
     logoKey: "PACIFIC_MARKET"
   },
-  { to: "/services/websites", label: "Website Quote", icon: Layers, color: "text-emerald-400" },
+  { to: "/services/ai-saas", label: "AI & SaaS Project Brief", icon: Layers, color: "text-emerald-400" },
   { to: "/tools/digital-card", label: "Digital BusinessCard", icon: CreditCard, color: "text-cyan-400" },
   { to: "/tools/invoice-generator", label: "Invoice Generator", icon: FileText, color: "text-purple-500" },
   { to: "/tools/qr-generator", label: "QR Code Generator", icon: QrCode, color: "text-pink-500" },

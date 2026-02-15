@@ -15,8 +15,8 @@ import DigitalCardCancelPage from "./pages/products/DigitalCardCancelPage";
 import ContactPage from "./pages/ContactPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
-import RequestWebsiteQuotePage from "./pages/RequestWebsiteQuotePage";
-import QuoteThankYouPage from "./pages/QuoteThankYouPage";
+import RequestAISaaSBriefPage from "./pages/RequestAISaaSBriefPage";
+import ProjectBriefThankYouPage from "./pages/ProjectBriefThankYouPage";
 import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
@@ -39,8 +39,8 @@ function App() {
           <Route path="/tools/digital-card/cancel" element={<DigitalCardCancelPage />} />
           <Route path="/card/:slug" element={<DigitalCardPublicPage />} />
           <Route path="/edit/:token" element={<DigitalCardEditPage />} />
-          <Route path="/services/websites" element={<RequestWebsiteQuotePage />} />
-          <Route path="/quote-thank-you" element={<QuoteThankYouPage />} />
+          <Route path="/services/ai-saas" element={<RequestAISaaSBriefPage />} />
+          <Route path="/project-brief-thank-you" element={<ProjectBriefThankYouPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />

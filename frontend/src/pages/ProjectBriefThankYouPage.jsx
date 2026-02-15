@@ -2,7 +2,7 @@ import { CheckCircle, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 
-export default function QuoteThankYouPage() {
+export default function ProjectBriefThankYouPage() {
   useEffect(() => {
     // Force scroll to top with multiple attempts
     const scrollToTop = () => {
@@ -52,11 +52,11 @@ export default function QuoteThankYouPage() {
           </div>
           
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Quote Request Received! 🎉
+            Project Brief Received! 🎉
           </h1>
           
           <p className="text-xl text-zinc-300 mb-8 max-w-2xl mx-auto">
-            Thank you for your detailed website quote request. We've received all your information and will review it carefully.
+            Thank you for sharing your AI & SaaS projectbrief. We have received your details and will review your scope carefully.
           </p>
           
           <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-6 mb-8 max-w-2xl mx-auto">
@@ -64,15 +64,15 @@ export default function QuoteThankYouPage() {
             <ul className="text-zinc-300 space-y-2 text-left">
               <li className="flex items-start gap-3">
                 <span className="text-emerald-400 mt-1">•</span>
-                <span>We'll review your requirements and business goals</span>
+                <span>We will review your requirements, outcomes, and constraints</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-emerald-400 mt-1">•</span>
-                <span>Prepare a detailed scope and timeline estimate</span>
+                <span>Prepare a recommended scope with technical direction</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-emerald-400 mt-1">•</span>
-                <span>Send you a comprehensive quote within 2-3 business days</span>
+                <span>Send a project brief response within 2–3 business days</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-emerald-400 mt-1">•</span>

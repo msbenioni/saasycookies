@@ -10,7 +10,7 @@ const categoryCards = [
   {
     icon: Brain,
     title: "AI Products",
-    desc: "Intelligent tools that think with you, not for you.",
+    desc: "Proprietary AI platforms designed to improve clarity, decision-making, and productivity.",
     color: "text-senseai",
     ring: "hover:ring-senseai/40",
     hasLogo: true,
@@ -19,7 +19,7 @@ const categoryCards = [
   {
     icon: Globe,
     title: "Community Platforms",
-    desc: "Connecting creators and businesses across the Pacific.",
+    desc: "Scalable digital ecosystems that connect people, businesses, and opportunity.",
     color: "text-pacific",
     ring: "hover:ring-pacific/40",
     hasLogo: true,
@@ -28,7 +28,7 @@ const categoryCards = [
   {
     icon: Code2,
     title: "Developer Tools",
-    desc: "Free utilities built for speed, simplicity, and real work.",
+    desc: "High-performance utilities built for speed, efficiency, and real business workflows.",
     color: "text-brand-primary",
     ring: "hover:ring-brand-primary/40",
     hasLogo: false
@@ -53,7 +53,7 @@ export default function HomePage() {
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-xs font-medium mb-8 opacity-0 animate-fade-in">
               <Sparkles className="w-3 h-3" strokeWidth={1.5} />
-              Product Studio
+              AI Systems Company
             </div>
 
             <h1
@@ -71,8 +71,7 @@ export default function HomePage() {
               data-testid="hero-description"
               className="text-lg md:text-xl text-zinc-400 leading-relaxed max-w-xl mb-10 opacity-0 animate-fade-in-delay-2"
             >
-              SaaSy Cookies is a product studio crafting AI-powered apps,
-              community platforms, and free developer utilities from New Zealand.
+              SaaSy Cookies builds AI-powered products and scalable SaaS platforms — and partners with founders and organisations to design intelligent systems that create measurable impact.
             </p>
 
             <div className="flex flex-wrap gap-4 opacity-0 animate-fade-in-delay-3">
@@ -91,6 +90,14 @@ export default function HomePage() {
               >
                 <Globe className="w-4 h-4" strokeWidth={1.5} />
                 Pacific Market
+              </Link>
+              <Link
+                to="/services/ai-saas"
+                data-testid="cta-new-project-request"
+                className="inline-flex items-center gap-2 bg-zinc-900 text-white border border-zinc-700 hover:bg-zinc-800 hover:border-zinc-600 font-medium px-8 py-3 rounded-md transition-all"
+              >
+                <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+                New Project
               </Link>
             </div>
           </div>
@@ -111,16 +118,15 @@ export default function HomePage() {
             data-testid="services-title"
             className={SECTION_TITLE_STYLES.main}
           >
-            Custom websites built for clarity and conversion
+            Custom AI & SaaS Systems
           </h2>
           <p className={SECTION_DESCRIPTION_STYLES}>
-            From strategy to launch, we design and ship websites that show your value and
-            turn visitors into customers.
+            We partner on a limited number of custom AI and SaaS builds each year — designing scalable systems, automation workflows, and intelligent platforms built for long-term growth.
           </p>
 
           <Link
-            to="/services/websites"
-            data-testid="service-website-card"
+            to="/services/ai-saas"
+            data-testid="service-ai-saas-card"
             className={`${CARD_STYLES.base} hover:ring-emerald-400/40`}
           >
             <div className={CARD_STYLES.padding}>
@@ -128,14 +134,13 @@ export default function HomePage() {
                 <div className="w-12 h-12 rounded-xl bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center">
                   <Layers className="w-6 h-6 text-emerald-400" strokeWidth={1.5} />
                 </div>
-                <span className="font-heading text-2xl font-bold text-emerald-400">Website Development</span>
+                <span className="font-heading text-2xl font-bold text-emerald-400">AI & SaaS Development</span>
               </div>
               <p className="text-zinc-200 leading-relaxed mb-6 max-w-md">
-                From strategy to launch, we design and ship websites that show your value and
-                turn visitors into customers. A guided discovery + build process tailored to your brand, goals, and audience.
+                From architecture to deployment, we design and build custom AI-powered platforms, automation systems, and SaaS products for founders and organisations ready to scale.
               </p>
               <div className="inline-flex items-center gap-2 text-emerald-400 text-sm font-medium group-hover:gap-3 transition-all">
-                Request a quote <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+                Request project brief <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
               </div>
             </div>
             <div className="h-1 bg-gradient-to-r from-emerald-400/50 via-emerald-400/20 to-transparent" />
@@ -209,6 +214,9 @@ export default function HomePage() {
           >
             Flagship launches
           </h2>
+          <p className="text-zinc-200 text-base md:text-lg mb-4">
+            Our proprietary platforms, built to scale.
+          </p>
           <p className={SECTION_DESCRIPTION_STYLES}>
             Our signature products that showcase what's possible when design meets functionality.
             Each one solves real problems with thoughtful, user-centered experiences.
