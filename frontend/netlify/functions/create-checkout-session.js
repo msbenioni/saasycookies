@@ -98,6 +98,7 @@ exports.handler = async (event) => {
     const {
       cardId,
       fullName,
+      title,
       businessName,
       email,
       phone,
@@ -144,6 +145,7 @@ exports.handler = async (event) => {
 
       const cardJson = {
         fullName,
+        title: title || "",
         businessName: businessName || "",
         email,
         phone: phone || "",

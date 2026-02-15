@@ -23,6 +23,7 @@ const inputClass = `${INPUT_CLASS} ${FOCUS_COLORS.cyan}`;
 
 const initialForm = {
   fullName: "",
+  title: "",
   businessName: "",
   email: "",
   phone: "",
@@ -88,6 +89,15 @@ export default function DigitalCardPage() {
                     className={inputClass}
                     value={form.fullName}
                     onChange={(event) => update("fullName", event.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className={`text-xs text-zinc-400 ${FORM_LABEL_SPACING} block`}>Title</label>
+                  <input
+                    className={inputClass}
+                    value={form.title}
+                    onChange={(event) => update("title", event.target.value)}
+                    placeholder="e.g. Founder, CEO, Developer"
                   />
                 </div>
                 <div>
