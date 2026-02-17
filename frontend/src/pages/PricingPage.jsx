@@ -151,6 +151,13 @@ export default function PricingPage() {
             </Link>
             .
           </p>
+          <p className="text-sm text-pacific/90 mb-6">
+            <span className="font-semibold">Pacific Market business owners:</span> Get 50% off all plans for 3 months.{" "}
+            <Link to="https://pacificmarket.co.nz/list-your-business" target="_blank" rel="noopener noreferrer" className="text-pacific hover:text-pacific/80 underline underline-offset-2">
+              List your business
+            </Link>{" "}
+            to qualify.
+          </p>
           <a
             href="#plans"
             className="inline-flex items-center gap-2 rounded-md bg-emerald-400 text-black font-semibold px-7 py-3 hover:bg-emerald-300 transition"
@@ -186,20 +193,20 @@ export default function PricingPage() {
             {tiers.map((tier) => (
               <article
                 key={tier.name}
-                className={`${CARD_STYLES.base} ${tier.highlight ? "ring-emerald-400/70 shadow-[0_0_0_1px_rgba(52,211,153,0.4)]" : ""}`}
+                className={`${CARD_STYLES.base} ${tier.highlight ? "ring-emerald-400/70 shadow-[0_0_0_1px_rgba(52,211,153,0.4)]" : ""} flex flex-col h-full`}
               >
-                <div className={CARD_STYLES.padding}>
+                <div className={`${CARD_STYLES.padding} flex-1 flex flex-col`}>
                   {tier.highlight ? (
                     <span className="inline-flex mb-4 text-xs font-semibold uppercase tracking-wider text-emerald-300 bg-emerald-400/10 border border-emerald-400/30 rounded-full px-3 py-1">
                       Most Popular
                     </span>
                   ) : null}
-                  <h3 className="font-heading text-2xl font-bold mb-2">{tier.name}</h3>
+                  <h3 className="font-heading text-2xl font-bold mb-2 text-white">{tier.name}</h3>
                   <p className="text-3xl font-extrabold mb-1">{tier.price}</p>
                   <p className="text-sm text-zinc-400 mb-4">{tier.subtitle}</p>
                   <p className="text-zinc-200/90 mb-6">{tier.description}</p>
 
-                  <ul className="space-y-2 mb-6 text-sm text-zinc-200">
+                  <ul className="space-y-2 mb-6 text-sm text-zinc-200 flex-1">
                     {tier.includes.map((item) => (
                       <li key={item} className="flex items-start gap-2">
                         <Check className="w-4 h-4 mt-0.5 text-emerald-400" strokeWidth={2} />
@@ -228,17 +235,19 @@ export default function PricingPage() {
                     </p>
                   ) : null}
 
-                  <Link
-                    to="/services/ai-saas"
-                    className={`inline-flex items-center justify-center w-full gap-2 rounded-md px-5 py-3 font-semibold transition ${
-                      tier.highlight
-                        ? "bg-emerald-400 text-black hover:bg-emerald-300"
-                        : "bg-zinc-900 border border-zinc-700 text-white hover:bg-zinc-800"
-                    }`}
-                  >
-                    {tier.cta}
-                    <ArrowRight className="w-4 h-4" strokeWidth={2} />
-                  </Link>
+                  <div className="mt-auto">
+                    <Link
+                      to="/services/ai-saas"
+                      className={`inline-flex items-center justify-center w-full gap-2 rounded-md px-5 py-3 font-semibold transition ${
+                        tier.highlight
+                          ? "bg-emerald-400 text-black hover:bg-emerald-300"
+                          : "bg-zinc-900 border border-zinc-700 text-white hover:bg-zinc-800"
+                      }`}
+                    >
+                      {tier.cta}
+                      <ArrowRight className="w-4 h-4" strokeWidth={2} />
+                    </Link>
+                  </div>
                 </div>
               </article>
             ))}

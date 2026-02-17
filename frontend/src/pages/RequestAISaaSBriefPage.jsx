@@ -211,7 +211,7 @@ export default function RequestAISaaSBriefPage() {
               <Field label="Full name" name="fullName" required />
               <Field label="Email" name="email" type="email" required />
               <Field label="Phone (optional)" name="phone" />
-              <Field label="Business / organisation" name="businessName" required />
+              <Field label="Business / organisation" name="businessName" required placeholder="Your company or brand name" />
             </div>
           </section>
 
@@ -220,8 +220,8 @@ export default function RequestAISaaSBriefPage() {
             <div className={FORM_GRID_CLASS}>
               <Field label="Current website or product URL" name="currentUrl" placeholder="https://" />
               <Field label="Industry" name="industry" placeholder="e.g. Retail, coaching" />
-              <Field label="Primary growth goal this year" name="primaryGoal" />
-              <Field label="Primary growth goal (other)" name="primaryGoalOther" />
+              <Field label="Primary growth goal this year" name="primaryGoal" placeholder="e.g. Increase leads, improve retention, launch new offer" />
+              <Field label="Primary growth goal (other)" name="primaryGoalOther" placeholder="If other, please specify" />
             </div>
             <Textarea
               label="Business description"
@@ -248,6 +248,7 @@ export default function RequestAISaaSBriefPage() {
               name="projectVision"
               required
               rows={3}
+              placeholder="Describe the product, platform, or system you want to build"
             />
             <CheckboxGroup
               label="Project type"
@@ -274,7 +275,7 @@ export default function RequestAISaaSBriefPage() {
               rows={3}
             />
             <div className={FORM_GRID_CLASS}>
-              <Field label="Desired user action" name="desiredUserAction" />
+              <Field label="Desired user action" name="desiredUserAction" placeholder="e.g. Sign up, purchase, book a call, submit a form" />
               <Field label="Primary success metric" name="successMetric" placeholder="e.g. time saved, leads, conversion lift" />
             </div>
           </section>
@@ -294,7 +295,7 @@ export default function RequestAISaaSBriefPage() {
                 "Analytics / reporting",
               ]}
             />
-            <Field label="Required capabilities (other)" name="requiredCapabilitiesOther" />
+            <Field label="Required capabilities (other)" name="requiredCapabilitiesOther" placeholder="Any other features or integrations needed" />
             <Select
               label="Ongoing support needed after launch"
               name="needsOngoingSupport"
@@ -339,24 +340,24 @@ export default function RequestAISaaSBriefPage() {
           </section>
 
           <section className={SECTION_CLASS}>
-            <h2 className={SECTION_TITLE_CLASS}>Data & readiness</h2>
+            <h2 className={SECTION_TITLE_CLASS}>Assets & readiness</h2>
             <div className={FORM_GRID_CLASS}>
               <Select
-                label="Data sources ready?"
-                name="dataReadiness"
+                label="Do you have existing content/assets ready?"
+                name="contentReadiness"
                 options={[
-                  { label: "Yes", value: "yes" },
-                  { label: "No", value: "no" },
-                  { label: "Some", value: "some" },
+                  { label: "Yes, ready to go", value: "yes" },
+                  { label: "Some, need help", value: "some" },
+                  { label: "No, starting from scratch", value: "no" },
                 ]}
               />
               <Select
-                label="Internal owner assigned for this project?"
-                name="hasInternalOwner"
+                label="Is your brand/visual identity finalized?"
+                name="brandReadiness"
                 options={[
-                  { label: "Yes", value: "yes" },
-                  { label: "No", value: "no" },
-                  { label: "Not sure yet", value: "unsure" },
+                  { label: "Yes, brand guidelines ready", value: "yes" },
+                  { label: "Partial, need refinement", value: "partial" },
+                  { label: "No, need brand development", value: "no" },
                 ]}
               />
             </div>
@@ -424,23 +425,35 @@ export default function RequestAISaaSBriefPage() {
                   I&apos;d like to be considered for the Launch Offer (50% off for the first 3 months, selected clients only).
                 </span>
               </label>
+
+              <label className={CHECKBOX_LABEL_CLASS}>
+                <input
+                  type="checkbox"
+                  name="pacificMarketDiscount"
+                  value="Pacific Market business owner discount"
+                  className={CHECKBOX_INPUT_CLASS + " " + TEXT_COLORS.emerald + " focus:ring-emerald-400/40"}
+                />
+                <span>
+                  I&apos;m listed on <Link to="https://pacificmarket.co.nz/list-your-business" target="_blank" rel="noopener noreferrer" className="text-pacific hover:text-pacific/80 underline underline-offset-2">Pacific Market</Link> and want the 50% off for 3 months discount.
+                </span>
+              </label>
             </div>
           </section>
 
           <section className={SECTION_CLASS}>
             <h2 className={SECTION_TITLE_CLASS}>Technical</h2>
             <div className={FORM_GRID_CLASS}>
-              <Field label="Current stack / platform" name="currentStack" />
-              <Field label="Integrations needed" name="integrationsNeeded" />
-              <Field label="Authentication requirements" name="authRequirements" />
-              <Field label="Security / compliance requirements" name="securityRequirements" />
+              <Field label="Current stack / platform" name="currentStack" placeholder="e.g. WordPress, Webflow, custom, none" />
+              <Field label="Integrations needed" name="integrationsNeeded" placeholder="e.g. Stripe, Mailchimp, Zapier, custom APIs" />
+              <Field label="Authentication requirements" name="authRequirements" placeholder="e.g. Email/password, SSO, social login, none" />
+              <Field label="Security / compliance requirements" name="securityRequirements" placeholder="e.g. GDPR, HIPAA, SOC2, PCI" />
             </div>
           </section>
 
           <section className={SECTION_CLASS}>
             <h2 className={SECTION_TITLE_CLASS}>Budget & timeline</h2>
             <div className={FORM_GRID_CLASS}>
-              <Field label="Desired launch date" name="desiredLaunchDate" />
+              <Field label="Desired launch date" name="desiredLaunchDate" placeholder="e.g. Q2 2025, June, ASAP" />
               <Field label="Timeline" name="timeline" placeholder="e.g. 4–6 weeks" />
             </div>
             <Select
@@ -466,7 +479,7 @@ export default function RequestAISaaSBriefPage() {
 
           <section className={SECTION_CLASS}>
             <h2 className={SECTION_TITLE_CLASS}>Final notes</h2>
-            <Textarea label="Anything else?" name="anythingElse" rows={4} />
+            <Textarea label="Anything else?" name="anythingElse" rows={4} placeholder="Any additional context, questions, or requirements" />
           </section>
 
           <div className="flex flex-col sm:flex-row sm:items-center gap-3">

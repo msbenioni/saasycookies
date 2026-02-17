@@ -1,6 +1,6 @@
 export const INPUT_CLASS = "w-full bg-zinc-950/50 border border-zinc-800 px-4 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 rounded-md transition-all outline-none";
 
-export const SELECT_CLASS = "w-full bg-zinc-950/50 border border-zinc-800 px-4 py-3 text-white focus:outline-none focus:ring-2 rounded-md transition-all outline-none";
+export const SELECT_CLASS = "w-full bg-zinc-950/50 border border-zinc-800 px-4 py-3 text-white focus:outline-none focus:ring-2 rounded-md transition-all outline-none [&>option]:bg-zinc-900 [&>option]:text-white appearance-none cursor-pointer bg-[url('data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20fill=%22none%22%20viewBox=%220%200%2024%2024%22%20stroke=%22%23D1D5DB%22%3E%3Cpath%20stroke-linecap=%22round%22%20stroke-linejoin=%22round%22%20stroke-width=%222%22%20d=%22M19%209l-7%207-7-7%22/%3E%3C/svg%3E')] bg-no-repeat bg-[right_1rem_center] bg-[length:1.25rem] pr-12";
 
 export const CHECKBOX_LABEL_CLASS = "flex items-center gap-2 rounded-md border border-zinc-800 bg-zinc-950/50 px-3 py-2 text-sm text-zinc-300 cursor-pointer hover:bg-zinc-950/70 transition-colors";
 
