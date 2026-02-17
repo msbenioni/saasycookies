@@ -1,6 +1,6 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { useState } from "react";
-import { Brain, Globe, FileText, QrCode, Menu, X, Layers, CreditCard } from "lucide-react";
+import { Brain, Globe, FileText, QrCode, Menu, X, Layers, CreditCard, DollarSign } from "lucide-react";
 import { LOGO_CLASSES } from "../constants/logo";
 import { PRODUCT_LOGOS } from "../constants/productLogos";
 
@@ -21,7 +21,8 @@ const navLinks = [
     hasLogo: true,
     logoKey: "PACIFIC_MARKET"
   },
-  { to: "/services/ai-saas", label: "AI & SaaS Project Brief", icon: Layers, color: "text-emerald-400" },
+  { to: "/pricing", label: "Managed Infrastructure", icon: DollarSign, color: "text-emerald-300" },
+  { to: "/services/ai-saas", label: "Custom AI & SaaS", icon: Layers, color: "text-cyan-300" },
   { to: "/tools/digital-card", label: "Digital BusinessCard", icon: CreditCard, color: "text-cyan-400" },
   { to: "/tools/invoice-generator", label: "Invoice Generator", icon: FileText, color: "text-purple-500" },
   { to: "/tools/qr-generator", label: "QR Code Generator", icon: QrCode, color: "text-pink-500" },

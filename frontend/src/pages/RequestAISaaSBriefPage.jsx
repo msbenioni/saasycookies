@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, AlertTriangle, CheckCircle, CheckCircle2, Layers } from "lucide-react";
 import { sendProjectBriefEmail } from "../utils/emailService";
 import { INPUT_CLASS, SELECT_CLASS, CHECKBOX_LABEL_CLASS, CHECKBOX_INPUT_CLASS, BADGE_CLASS, MESSAGE_BOX_CLASS, FOCUS_COLORS, TEXT_COLORS, BG_COLORS, PAGE_HEADER_CLASS, PAGE_HEADER_ICON_CLASS, PAGE_HEADER_TITLE_CLASS, PAGE_HEADER_DESC_CLASS, ICON_BG_COLORS, SECTION_CLASS, SECTION_TITLE_CLASS, FORM_GRID_CLASS, PAGE_BACKGROUND_STYLES, PAGE_CONTAINER_STYLES, PAGE_HEADER_TO_FORM_SPACING, FORM_LABEL_SPACING, FORM_SECTION_LABEL_SPACING, FORM_CHECKBOX_LABEL_SPACING } from "../constants/formStyles";
@@ -147,12 +147,21 @@ export default function RequestAISaaSBriefPage() {
               <Layers className={`w-5 h-5 ${TEXT_COLORS.emerald}`} strokeWidth={1.5} />
             </div>
             <h1 className={PAGE_HEADER_TITLE_CLASS}>
-              AI & SaaS Project Brief
+              Custom AI & SaaS Systems
             </h1>
           </div>
 
           <p className={PAGE_HEADER_DESC_CLASS}>
-            Tell us what you are building and where AI or SaaS can unlock growth. We review every brief and reply with scope direction.
+            Tell us what you&apos;re building. We review every brief and reply with strategic direction.
+            For subscription plans, we confirm the right tier first - then send a payment link to begin.
+            Where relevant, we may also send a visual preview of our vision for your build so you can decide with confidence.
+          </p>
+          <p className="text-sm text-zinc-400 mb-6 ml-[52px]">
+            For subscription website plans, see{" "}
+            <Link to="/pricing" className="text-emerald-300 hover:text-emerald-200 transition">
+              Managed Infrastructure
+            </Link>
+            .
           </p>
         </div>
 
@@ -167,6 +176,18 @@ export default function RequestAISaaSBriefPage() {
             </div>
           </div>
         )}
+
+        <section className={`${PAGE_HEADER_TO_FORM_SPACING} rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-6`}>
+          <h2 className="font-heading text-2xl font-semibold text-white mb-3">What Happens After You Submit</h2>
+          <ul className="space-y-2 text-zinc-200 text-sm md:text-base">
+            <li>- We review your project and confirm the right plan.</li>
+            <li>- You receive inclusions, timeline, and a payment link.</li>
+            <li>- Where relevant, we may also send a visual preview of our proposed direction.</li>
+            <li>- Once confirmed, we begin your build.</li>
+            <li>- Subscription plans typically launch within 2 weeks.</li>
+          </ul>
+          <p className="text-zinc-300 text-sm mt-4">No payment is taken until plan confirmation.</p>
+        </section>
 
         <form
           name="ai-saas-project-brief"
@@ -213,6 +234,15 @@ export default function RequestAISaaSBriefPage() {
 
           <section className={SECTION_CLASS}>
             <h2 className={SECTION_TITLE_CLASS}>Project scope</h2>
+            <Select
+              label="Which service are you applying for?"
+              name="servicePath"
+              required
+              options={[
+                { label: "Managed Digital Infrastructure (subscription website plans)", value: "managed" },
+                { label: "Custom AI & SaaS Systems (quoted project)", value: "custom" },
+              ]}
+            />
             <Textarea
               label="What are you building or improving?"
               name="projectVision"
@@ -339,6 +369,65 @@ export default function RequestAISaaSBriefPage() {
           </section>
 
           <section className={SECTION_CLASS}>
+            <h2 className={SECTION_TITLE_CLASS}>Pricing acknowledgement</h2>
+
+            <div className="space-y-3">
+              <label className={CHECKBOX_LABEL_CLASS}>
+                <input
+                  type="checkbox"
+                  name="pricingAcknowledgement"
+                  value="Reviewed pricing page"
+                  required
+                  className={CHECKBOX_INPUT_CLASS + " " + TEXT_COLORS.emerald + " focus:ring-emerald-400/40"}
+                />
+                <span>
+                  I have reviewed the pricing and understand plans are fixed-price subscriptions (when applicable).{" "}
+                  <Link to="/pricing" className="text-emerald-300 hover:text-emerald-200 underline underline-offset-2">
+                    View pricing
+                  </Link>
+                </span>
+              </label>
+
+              <label className={CHECKBOX_LABEL_CLASS}>
+                <input
+                  type="checkbox"
+                  name="paymentProcessAcknowledgement"
+                  value="Payment occurs after confirmation"
+                  required
+                  className={CHECKBOX_INPUT_CLASS + " " + TEXT_COLORS.emerald + " focus:ring-emerald-400/40"}
+                />
+                <span>
+                  I understand I will receive a plan confirmation + payment link from SaaSy Cookies before any payment is taken.
+                </span>
+              </label>
+
+              <label className={CHECKBOX_LABEL_CLASS}>
+                <input
+                  type="checkbox"
+                  name="termAcknowledgement"
+                  value="12-month minimum term"
+                  className={CHECKBOX_INPUT_CLASS + " " + TEXT_COLORS.emerald + " focus:ring-emerald-400/40"}
+                />
+                <span>
+                  If I choose a subscription plan, I understand the minimum term is 12 months.
+                </span>
+              </label>
+
+              <label className={CHECKBOX_LABEL_CLASS}>
+                <input
+                  type="checkbox"
+                  name="launchOfferRequest"
+                  value="Wants launch offer consideration"
+                  className={CHECKBOX_INPUT_CLASS + " " + TEXT_COLORS.emerald + " focus:ring-emerald-400/40"}
+                />
+                <span>
+                  I&apos;d like to be considered for the Launch Offer (50% off for the first 3 months, selected clients only).
+                </span>
+              </label>
+            </div>
+          </section>
+
+          <section className={SECTION_CLASS}>
             <h2 className={SECTION_TITLE_CLASS}>Technical</h2>
             <div className={FORM_GRID_CLASS}>
               <Field label="Current stack / platform" name="currentStack" />
@@ -355,14 +444,22 @@ export default function RequestAISaaSBriefPage() {
               <Field label="Timeline" name="timeline" placeholder="e.g. 4–6 weeks" />
             </div>
             <Select
-              label="Budget range"
-              name="budgetRange"
+              label="For subscriptions: which plan do you think fits best?"
+              name="planPreference"
               options={[
+                { label: "Not sure — recommend one for me", value: "not-sure" },
+                { label: "Starter Presence ($79/month)", value: "starter-79" },
+                { label: "Growth Engine ($149/month)", value: "growth-149" },
+                { label: "Authority System ($249/month)", value: "authority-249" },
+              ]}
+            />
+            <Select
+              label="For custom AI/SaaS projects: estimated budget range"
+              name="customBudgetRange"
+              options={[
+                { label: "Not sure — need guidance", value: "not-sure" },
                 { label: "$2k–$7k (implementation sprint)", value: "2k-7k" },
                 { label: "$7k+ (AI or SaaS build)", value: "7k-plus" },
-                { label: "$39.99/month (standard managed plan)", value: "39.99-monthly" },
-                { label: "$99/month (advanced managed plan)", value: "99-monthly" },
-                { label: "Not sure — need guidance", value: "not-sure" },
               ]}
             />
           </section>

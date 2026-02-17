@@ -1,39 +1,10 @@
 import { Link } from "react-router-dom";
 import {
-  Brain, Globe, FileText, QrCode, ArrowRight, Zap,
-  Layers, Sparkles, Code2, Rocket, ChevronRight, CreditCard
+  FileText, QrCode, ArrowRight,
+  Sparkles, ChevronRight, CreditCard
 } from "lucide-react";
 import { PRODUCT_LOGOS } from "../constants/productLogos";
 import { SECTION_TITLE_STYLES, SECTION_LABEL_STYLES, CARD_STYLES, SECTION_DESCRIPTION_STYLES } from "../constants/formStyles";
-
-const categoryCards = [
-  {
-    icon: Brain,
-    title: "AI Products",
-    desc: "Proprietary AI platforms designed to improve clarity, decision-making, and productivity.",
-    color: "text-senseai",
-    ring: "hover:ring-senseai/40",
-    hasLogo: true,
-    logoKey: "SENSEAI"
-  },
-  {
-    icon: Globe,
-    title: "Community Platforms",
-    desc: "Scalable digital ecosystems that connect people, businesses, and opportunity.",
-    color: "text-pacific",
-    ring: "hover:ring-pacific/40",
-    hasLogo: true,
-    logoKey: "PACIFIC_MARKET"
-  },
-  {
-    icon: Code2,
-    title: "Developer Tools",
-    desc: "High-performance utilities built for speed, efficiency, and real business workflows.",
-    color: "text-brand-primary",
-    ring: "hover:ring-brand-primary/40",
-    hasLogo: false
-  },
-];
 
 export default function HomePage() {
   return (
@@ -60,10 +31,10 @@ export default function HomePage() {
               data-testid="hero-title"
               className="font-heading text-5xl md:text-7xl font-extrabold tracking-tight leading-none mb-6 opacity-0 animate-fade-in-delay-1"
             >
-              We build tools
+              We Build Revenue-Ready
               <br />
-              <span className="bg-gradient-to-r from-brand-primary via-brand-secondary to-senseai bg-clip-text text-transparent">
-                that matter.
+              <span className="bg-gradient-to-r from-emerald-300 via-cyan-300 to-senseai bg-clip-text text-transparent">
+                Digital Infrastructure.
               </span>
             </h1>
 
@@ -71,135 +42,127 @@ export default function HomePage() {
               data-testid="hero-description"
               className="text-lg md:text-xl text-zinc-400 leading-relaxed max-w-xl mb-10 opacity-0 animate-fade-in-delay-2"
             >
-              SaaSy Cookies builds AI-powered products and scalable SaaS platforms — and partners with founders and organisations to design intelligent systems that create measurable impact.
+              Websites, funnels, automation, and AI systems - designed, deployed, and managed for founders who are scaling.
+              <br className="hidden sm:block" />
+              No DIY tools. No duct-taped tech stacks. Just clean systems that grow with you.
             </p>
 
             <div className="flex flex-wrap gap-4 opacity-0 animate-fade-in-delay-3">
               <Link
-                to="/senseai"
-                data-testid="cta-senseai"
-                className="inline-flex items-center gap-2 bg-senseai text-black font-semibold px-8 py-3 rounded-md transition-all duration-300 hover:bg-senseai/80 hover:scale-[1.02]"
+                to="/pricing"
+                data-testid="cta-view-subscription-plans"
+                className="inline-flex items-center gap-2 bg-emerald-400 text-black font-semibold px-8 py-3 rounded-md transition-all duration-300 hover:bg-emerald-300 hover:scale-[1.02]"
               >
-                <Brain className="w-4 h-4" strokeWidth={1.5} />
-                Explore SenseAI
-              </Link>
-              <Link
-                to="/pacificmarket"
-                data-testid="cta-pacific"
-                className="inline-flex items-center gap-2 bg-pacific text-black border border-pacific/40 hover:bg-pacific/80 hover:border-pacific/60 font-medium px-8 py-3 rounded-md transition-all"
-              >
-                <Globe className="w-4 h-4" strokeWidth={1.5} />
-                Pacific Market
+                <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+                View Subscription Plans
               </Link>
               <Link
                 to="/services/ai-saas"
-                data-testid="cta-new-project-request"
+                data-testid="cta-start-custom-ai-project"
                 className="inline-flex items-center gap-2 bg-zinc-900 text-white border border-zinc-700 hover:bg-zinc-800 hover:border-zinc-600 font-medium px-8 py-3 rounded-md transition-all"
               >
                 <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
-                New Project
+                Start a Custom AI Project
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Services */}
-      <section data-testid="services-section" className="py-24 md:py-32 relative">
-        <div className="absolute inset-0 opacity-30" style={{ background: "radial-gradient(circle at 20% 20%, rgba(16,185,129,0.16) 0%, transparent 55%), radial-gradient(circle at 80% 40%, rgba(6,182,212,0.12) 0%, transparent 55%)" }} />
-        <div className="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
-            <span className={SECTION_LABEL_STYLES.primary}>
-              Services
-            </span>
-          </div>
-          <h2
-            data-testid="services-title"
-            className={SECTION_TITLE_STYLES.main}
-          >
-            Custom AI & SaaS Systems
-          </h2>
-          <p className={SECTION_DESCRIPTION_STYLES}>
-            We partner on a limited number of custom AI and SaaS builds each year — designing scalable systems, automation workflows, and intelligent platforms built for long-term growth.
-          </p>
-
-          <Link
-            to="/services/ai-saas"
-            data-testid="service-ai-saas-card"
-            className={`${CARD_STYLES.base} hover:ring-emerald-400/40`}
-          >
-            <div className={CARD_STYLES.padding}>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-xl bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center">
-                  <Layers className="w-6 h-6 text-emerald-400" strokeWidth={1.5} />
-                </div>
-                <span className="font-heading text-2xl font-bold text-emerald-400">AI & SaaS Development</span>
-              </div>
-              <p className="text-zinc-200 leading-relaxed mb-6 max-w-md">
-                From architecture to deployment, we design and build custom AI-powered platforms, automation systems, and SaaS products for founders and organisations ready to scale.
-              </p>
-              <div className="inline-flex items-center gap-2 text-emerald-400 text-sm font-medium group-hover:gap-3 transition-all">
-                Request project brief <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
-              </div>
-            </div>
-            <div className="h-1 bg-gradient-to-r from-emerald-400/50 via-emerald-400/20 to-transparent" />
-          </Link>
-        </div>
-      </section>
-
-      {/* What We Build */}
-      <section data-testid="what-we-build-section" className="py-24 md:py-32 relative bg-white/[0.02]">
+      {/* Choose Your Path */}
+      <section className="py-20 md:py-24 bg-white/[0.02]">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <div className="flex items-center gap-3 mb-4">
-            <div className="h-px flex-1 max-w-[40px] bg-brand-primary/50" />
-            <span className={SECTION_LABEL_STYLES.primary}>
-              What We Build
-            </span>
+            <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
+            <span className={SECTION_LABEL_STYLES.emerald}>Choose Your Path</span>
           </div>
-          <h2
-            data-testid="what-we-build-title"
-            className={SECTION_TITLE_STYLES.main}
-          >
-            Products with purpose
-          </h2>
-          <p className={SECTION_DESCRIPTION_STYLES}>
-            Every tool we ship solves a real problem. We focus on craft,
-            usability, and impact over vanity metrics.
+          <h2 className={SECTION_TITLE_STYLES.main}>Two Ways to Work With SaaSy Cookies</h2>
+          <p className={`${SECTION_DESCRIPTION_STYLES} max-w-3xl`}>
+            Choose the model that matches your stage: predictable managed infrastructure or a custom AI/SaaS product build.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {categoryCards.map((card) => {
-              const Icon = card.icon;
-              return (
-                <div
-                  key={card.title}
-                  className={`${CARD_STYLES.base} ${card.ring} rounded-xl`}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <article className={`${CARD_STYLES.base} hover:ring-emerald-400/40`}>
+              <div className={CARD_STYLES.padding}>
+                <h3 className="font-heading text-2xl font-bold text-emerald-300 mb-3">Managed Digital Infrastructure</h3>
+                <p className="text-zinc-200 mb-5">
+                  For founders who need website, funnels, payments, automation, and ongoing system management.
+                </p>
+                <ul className="space-y-2 text-sm text-zinc-300 mb-6">
+                  <li>Predictable subscription.</li>
+                  <li>Launched in 2 weeks.</li>
+                  <li>No upfront build fees.</li>
+                </ul>
+                <Link
+                  to="/pricing"
+                  className="inline-flex items-center gap-2 rounded-md bg-emerald-400 text-black font-semibold px-6 py-3 hover:bg-emerald-300 transition"
                 >
-                  <div className="absolute -top-12 -right-12 w-32 h-32 rounded-full bg-gradient-to-br from-white/[0.02] to-transparent" />
-                  <div className={CARD_STYLES.categoryLayout}>
-                    <div className={`w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center mb-5 ${card.color}`}>
-                      {card.hasLogo ? (
-                        <img
-                          src={PRODUCT_LOGOS[card.logoKey].src}
-                          alt={PRODUCT_LOGOS[card.logoKey].alt}
-                          className="w-8 h-8 object-contain"
-                        />
-                      ) : (
-                        <Icon className="w-5 h-5" strokeWidth={1.5} />
-                      )}
-                    </div>
-                    <h3 className={SECTION_TITLE_STYLES.card}>{card.title}</h3>
-                    <p className="text-zinc-200/80 text-sm leading-relaxed">{card.desc}</p>
-                  </div>
-                </div>
-              );
-            })}
+                  View Plans
+                  <ArrowRight className="w-4 h-4" strokeWidth={2} />
+                </Link>
+              </div>
+            </article>
+
+            <article className={`${CARD_STYLES.base} hover:ring-cyan-400/40`}>
+              <div className={CARD_STYLES.padding}>
+                <h3 className="font-heading text-2xl font-bold text-cyan-300 mb-3">Custom AI & SaaS Systems</h3>
+                <p className="text-zinc-200 mb-5">
+                  For founders building AI tools, marketplaces, member platforms, and full SaaS products.
+                </p>
+                <p className="text-sm text-cyan-200/90 mb-6">Architecture {"->"} Design {"->"} Build {"->"} Deploy.</p>
+                <Link
+                  to="/services/ai-saas"
+                  className="inline-flex items-center gap-2 rounded-md border border-cyan-400/40 text-cyan-200 font-semibold px-6 py-3 hover:bg-cyan-500/10 transition"
+                >
+                  Submit Project Brief
+                  <ArrowRight className="w-4 h-4" strokeWidth={2} />
+                </Link>
+              </div>
+            </article>
           </div>
         </div>
       </section>
 
-      {/* Featured Products */}
+      {/* What Makes Us Different */}
+      <section data-testid="difference-section" className="py-24 md:py-32 relative">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
+            <span className={SECTION_LABEL_STYLES.primary}>Difference</span>
+          </div>
+          <h2 className={SECTION_TITLE_STYLES.main}>We Don&apos;t Build Pages. We Build Systems.</h2>
+          <p className={`${SECTION_DESCRIPTION_STYLES} max-w-3xl`}>
+            Because growth doesn&apos;t come from design alone. It comes from architecture.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <article className={CARD_STYLES.base}>
+              <div className={CARD_STYLES.padding}>
+                <h3 className="font-heading text-2xl font-bold text-zinc-200 mb-4">Most builders focus on</h3>
+                <ul className="space-y-3 text-zinc-300">
+                  <li>How it looks</li>
+                  <li>What theme to use</li>
+                  <li>How many pages</li>
+                </ul>
+              </div>
+            </article>
+
+            <article className={`${CARD_STYLES.base} ring-emerald-400/30`}>
+              <div className={CARD_STYLES.padding}>
+                <h3 className="font-heading text-2xl font-bold text-emerald-300 mb-4">We focus on</h3>
+                <ul className="space-y-3 text-zinc-100">
+                  <li>Revenue flow</li>
+                  <li>Automation</li>
+                  <li>Infrastructure</li>
+                  <li>Scalability</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      {/* Flagship Products */}
       <section data-testid="featured-products-section" className="py-24 md:py-32 relative bg-white/[0.02]">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <div className="flex items-center gap-3 mb-4">
@@ -212,14 +175,11 @@ export default function HomePage() {
             data-testid="featured-products-title"
             className={SECTION_TITLE_STYLES.main}
           >
-            Flagship launches
+            We Build What We Believe In.
           </h2>
-          <p className="text-zinc-200 text-base md:text-lg mb-4">
-            Our proprietary platforms, built to scale.
-          </p>
           <p className={SECTION_DESCRIPTION_STYLES}>
-            Our signature products that showcase what's possible when design meets functionality.
-            Each one solves real problems with thoughtful, user-centered experiences.
+            We don&apos;t just build for clients. We build our own platforms too.
+            This is how we think: systems, not templates.
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -240,8 +200,7 @@ export default function HomePage() {
                   <span className="font-heading text-2xl font-bold text-senseai">SenseAI</span>
                 </div>
                 <p className="text-zinc-200 leading-relaxed mb-6 max-w-md">
-                  AI-powered journaling that helps you think clearly, reflect deeply,
-                  and grow intentionally. Your thoughts, amplified.
+                  AI-powered journaling that turns reflection into clarity and decision momentum.
                 </p>
                 <div className="inline-flex items-center gap-2 text-senseai text-sm font-medium group-hover:gap-3 transition-all">
                   Learn more <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
@@ -267,8 +226,7 @@ export default function HomePage() {
                   <span className="font-heading text-2xl font-bold text-pacific">Pacific Market</span>
                 </div>
                 <p className="text-zinc-200 leading-relaxed mb-6 max-w-md">
-                  Connecting Pacific creators, businesses, and communities.
-                  A marketplace built for visibility, impact, and growth.
+                  A global directory and marketplace supporting Pacific creators.
                 </p>
                 <div className="inline-flex items-center gap-2 text-pacific text-sm font-medium group-hover:gap-3 transition-all">
                   Learn more <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
@@ -280,23 +238,23 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Free Business Tools */}
+      {/* Business Utilities */}
       <section data-testid="tools-section" className="py-24 md:py-32 relative bg-white/[0.05]">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <div className="flex items-center gap-3 mb-4">
             <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
             <span className={SECTION_LABEL_STYLES.primary}>
-              Tools
+              Business Utilities
             </span>
           </div>
           <h2
             data-testid="tools-title"
             className={SECTION_TITLE_STYLES.main}
           >
-            Business utilities, on the house
+            Practical Tools. No Gatekeeping.
           </h2>
           <p className={SECTION_DESCRIPTION_STYLES}>
-            A mix of free and premium tools built with care for real business workflows.
+            Free and premium utilities built for real business workflows.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -371,33 +329,75 @@ export default function HomePage() {
               </div>
             </Link>
           </div>
+          <p className="text-zinc-400 text-sm mt-6">We believe infrastructure should be accessible.</p>
         </div>
       </section>
 
-      {/* More Tools Coming Soon */}
-      <section data-testid="coming-soon-section" className="py-24 md:py-32 relative bg-white/[0.02]">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 text-center">
-          <div className="max-w-2xl mx-auto">
-            <div className="w-14 h-14 rounded-2xl bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center mx-auto mb-8">
-              <Rocket className="w-7 h-7 text-brand-primary" strokeWidth={1.5} />
+      {/* Infrastructure Philosophy */}
+      <section data-testid="infrastructure-first-section" className="py-24 md:py-32 relative bg-white/[0.02]">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+          <div className="max-w-4xl">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
+              <span className={SECTION_LABEL_STYLES.primary}>Infrastructure First</span>
             </div>
-            <h2
-              data-testid="coming-soon-title"
-              className={SECTION_TITLE_STYLES.small}
-            >
-              More tools on the way
-            </h2>
-            <p className="text-zinc-200 text-lg leading-relaxed mb-10">
-              We&apos;re always building. Templates, trackers, and
-              more free tools are in the pipeline.
+            <h2 className={SECTION_TITLE_STYLES.main}>Your website is not your business. Your systems are.</h2>
+            <p className={`${SECTION_DESCRIPTION_STYLES} mb-6`}>
+              We design infrastructure that removes friction - so you can focus on leadership and growth.
             </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-zinc-200 mb-10">
+              <div className="rounded-lg border border-white/10 bg-zinc-900/30 p-4">You move faster</div>
+              <div className="rounded-lg border border-white/10 bg-zinc-900/30 p-4">You scale smoother</div>
+              <div className="rounded-lg border border-white/10 bg-zinc-900/30 p-4">You sell with confidence</div>
+              <div className="rounded-lg border border-white/10 bg-zinc-900/30 p-4">You stop firefighting backend problems</div>
+            </div>
+
+            <div className="overflow-x-auto rounded-2xl border border-white/10 bg-zinc-900/40">
+              <table className="w-full text-left min-w-[620px]">
+                <thead className="border-b border-white/10">
+                  <tr>
+                    <th className="px-6 py-4 text-zinc-400 font-medium">DIY Builder</th>
+                    <th className="px-6 py-4 text-emerald-300 font-medium">SaaSy Cookies</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    ["You manage everything", "We manage everything"],
+                    ["You learn automation", "We build automation"],
+                    ["You fix integrations", "We fix integrations"],
+                    ["$80-$150 in tools", "One predictable subscription"],
+                  ].map((row) => (
+                    <tr key={row[0]} className="border-b border-white/5 last:border-0">
+                      <td className="px-6 py-4 text-zinc-300">{row[0]}</td>
+                      <td className="px-6 py-4 text-zinc-100">{row[1]}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-20 md:py-24">
+        <div className="max-w-4xl mx-auto px-6 md:px-12 text-center">
+          <h2 className={SECTION_TITLE_STYLES.small}>Stop Managing Your Website. Start Running Your Business.</h2>
+          <p className="text-zinc-300 text-lg mb-8">Let us handle the backend.</p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link
-              to="/contact"
-              data-testid="cta-stay-updated"
-              className="inline-flex items-center gap-2 bg-zinc-900 text-white border border-zinc-800 hover:bg-zinc-800 hover:border-zinc-700 font-medium px-8 py-3 rounded-md transition-all"
+              to="/pricing"
+              className="inline-flex items-center justify-center gap-2 rounded-md bg-emerald-400 text-black font-semibold px-7 py-3 hover:bg-emerald-300 transition"
             >
-              <Zap className="w-4 h-4" strokeWidth={1.5} />
-              Get in touch
+              View Subscription Plans
+              <ArrowRight className="w-4 h-4" strokeWidth={2} />
+            </Link>
+            <Link
+              to="/services/ai-saas"
+              className="inline-flex items-center justify-center gap-2 rounded-md border border-zinc-700 text-white font-semibold px-7 py-3 hover:bg-zinc-800 transition"
+            >
+              Start a Custom AI Project
             </Link>
           </div>
         </div>

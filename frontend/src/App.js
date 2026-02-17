@@ -17,6 +17,7 @@ import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
 import RequestAISaaSBriefPage from "./pages/RequestAISaaSBriefPage";
 import ProjectBriefThankYouPage from "./pages/ProjectBriefThankYouPage";
+import PricingPage from "./pages/PricingPage";
 import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
           <Route path="/card/:slug" element={<DigitalCardPublicPage />} />
           <Route path="/edit/:token" element={<DigitalCardEditPage />} />
           <Route path="/services/ai-saas" element={<RequestAISaaSBriefPage />} />
+          <Route path="/pricing" element={<PricingPage />} />
           <Route path="/project-brief-thank-you" element={<ProjectBriefThankYouPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
