@@ -64,6 +64,7 @@ const tiers = [
       "Monthly system review",
     ],
     excludes: [],
+    launchOffer: "50% off first 3 months. Then standard rate applies.",
   },
 ];
 
@@ -145,7 +146,7 @@ export default function PricingPage() {
             Websites, funnels, automation, and ongoing system support - built, deployed, and managed for you.
           </p>
           <p className="text-sm text-zinc-400 mb-8">
-            Launch in as little as 2 weeks. No upfront build fee. 12-month partnership.
+            Launch in as little as 2 weeks (most projects). No upfront build fee. 12-month partnership.
           </p>
           <p className={`${SECTION_DESCRIPTION_STYLES} max-w-3xl mb-6`}>
             Looking for a custom AI or SaaS build?{" "}
@@ -155,11 +156,15 @@ export default function PricingPage() {
             .
           </p>
           <p className="text-sm text-pacific/90 mb-6">
-            <span className="font-semibold">Pacific Market business owners:</span> Get 50% off all plans for 3 months.{" "}
+            <span className="font-semibold">Launch Offer:</span> 50% off all plans for 3 months. Available to selected clients, including all business owners listed on{" "}
             <Link to="https://pacificmarket.co.nz/list-your-business" target="_blank" rel="noopener noreferrer" className="text-pacific hover:text-pacific/80 underline underline-offset-2">
-              List your business
+              Pacific Market
+            </Link>
+            .{" "}
+            <Link to="/services/ai-saas" className="text-pacific hover:text-pacific/80 underline underline-offset-2">
+              Apply now
             </Link>{" "}
-            to qualify.
+            to see if you qualify.
           </p>
           <a
             href="#plans"
@@ -262,12 +267,13 @@ export default function PricingPage() {
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <h2 className={SECTION_TITLE_STYLES.small}>Launch Without Upfront Build Fees.</h2>
           <p className="text-zinc-200 max-w-3xl mb-6 leading-relaxed">
-            We deploy your website within 2 weeks. No setup fee. No large upfront invoice.
+            We deploy most websites within 2 weeks. No setup fee. No large upfront invoice.
             Instead, we operate on a 12-month partnership model.
           </p>
           <div className="rounded-2xl border border-emerald-400/30 bg-emerald-400/10 p-6 max-w-3xl">
-            <p className="text-emerald-200 font-medium mb-2">Launch Offer</p>
+            <p className="text-emerald-200 font-medium mb-2">Launch Offer Details</p>
             <p className="text-zinc-100 mb-2">50% off your first 3 months for selected clients.</p>
+            <p className="text-zinc-300 text-sm mb-2">Automatically available to all Pacific Market business owners.</p>
             <p className="text-zinc-300 text-sm">Autopay every 30 days. After month 3, standard subscription applies.</p>
           </div>
           <div className="mt-8">
@@ -349,7 +355,7 @@ export default function PricingPage() {
       <section className="py-20 md:py-24">
         <div className="max-w-4xl mx-auto px-6 md:px-12 text-center">
           <h2 className={SECTION_TITLE_STYLES.small}>Stop Managing Your Website. Start Running Your Business.</h2>
-          <p className="text-zinc-300 text-lg mb-8">Let us handle the infrastructure.</p>
+          <p className="text-zinc-300 text-lg mb-8">Let us handle the infrastructure while you focus on growth.</p>
           <p className="text-zinc-400 text-sm mb-8">
             Need something beyond these plans?{" "}
             <Link to="/services/ai-saas" className="text-cyan-300 hover:text-cyan-200 transition">

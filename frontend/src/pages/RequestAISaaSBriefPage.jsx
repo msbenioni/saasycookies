@@ -152,7 +152,7 @@ export default function RequestAISaaSBriefPage() {
           </div>
 
           <p className={PAGE_HEADER_DESC_CLASS}>
-            Tell us what you&apos;re building. We review every brief and reply with strategic direction.
+            Launch in as little as 2 weeks for most projects. No upfront build fee. 12-month partnership. We review every brief and reply with strategic direction.
             For subscription plans, we confirm the right tier first - then send a payment link to begin.
             Where relevant, we may also send a visual preview of our vision for your build so you can decide with confidence.
           </p>
@@ -184,7 +184,7 @@ export default function RequestAISaaSBriefPage() {
             <li>- You receive inclusions, timeline, and a payment link.</li>
             <li>- Where relevant, we may also send a visual preview of our proposed direction.</li>
             <li>- Once confirmed, we begin your build.</li>
-            <li>- Subscription plans typically launch within 2 weeks.</li>
+            <li>- Subscription plans typically launch within 2 weeks (most projects).</li>
           </ul>
           <p className="text-zinc-300 text-sm mt-4">No payment is taken until plan confirmation.</p>
         </section>

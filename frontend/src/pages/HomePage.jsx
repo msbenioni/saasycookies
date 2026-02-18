@@ -90,7 +90,7 @@ export default function HomePage() {
                 </p>
                 <ul className="space-y-2 text-sm text-zinc-300 mb-6">
                   <li>Predictable subscription.</li>
-                  <li>Launched in 2 weeks.</li>
+                  <li>Launched in 2 weeks (most projects).</li>
                   <li>No upfront build fees.</li>
                 </ul>
                 <Link
