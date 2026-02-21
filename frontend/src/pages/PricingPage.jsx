@@ -6,72 +6,92 @@ const tiers = [
   {
     name: "Starter Presence",
     price: "$79/month",
-    subtitle: "12-month minimum",
+    subtitle: "12-month minimum | 30-Day Build Phase",
     description: "For service providers who need a clean, professional online presence.",
     cta: "Start Starter Plan",
     planId: "starter",
     highlight: false,
+    scopeLimits: {
+      maxPages: 5,
+      maxFunnels: 0,
+      contentUpdates: "2 minor edits/month",
+      supportResponse: "48h"
+    },
     includes: [
       "Up to 5-page website",
-      "Monthly content updates (2/month)",
+      "2 minor content edits/month",
       "Basic SEO setup",
       "Email capture + basic automation",
       "Monthly performance report",
       "Support response within 48h",
+      "30-Day Build Phase",
     ],
     excludes: [],
-    launchOffer: "50% off first 3 months. Then standard rate applies.",
   },
   {
     name: "Growth Engine",
     price: "$149/month",
-    subtitle: "12-month minimum",
+    subtitle: "12-month minimum | 30-Day Build Phase",
     description: "For coaches, consultants, and personal brands selling offers.",
     cta: "Launch Growth Plan",
     planId: "growth",
     highlight: true,
+    scopeLimits: {
+      maxPages: 10,
+      maxFunnels: 1,
+      contentUpdates: "4 edits/month",
+      supportResponse: "48h"
+    },
     includes: [
       "Everything in Starter",
       "Up to 10-page website",
       "Lead magnet delivery system",
       "Email marketing automation",
-      "Basic funnel optimization",
-      "2 content updates per month",
+      "Basic funnel optimization (1 funnel)",
+      "4 content edits/month",
       "Podcast/blog posting support (1/month)",
       "Funnel tweaks + automation support",
       "Basic analytics setup",
+      "30-Day Build Phase",
     ],
     excludes: [],
-    launchOffer: "50% off first 3 months. Then standard rate applies.",
   },
   {
     name: "Authority System",
     price: "$249/month",
-    subtitle: "12-month minimum",
+    subtitle: "12-month minimum | 30-Day Build Phase",
     description: "For founders building a full ecosystem.",
     cta: "Build Authority System",
     planId: "authority",
     highlight: false,
+    scopeLimits: {
+      maxPages: 15,
+      maxFunnels: 3,
+      contentUpdates: "8 edits/month",
+      supportResponse: "24h"
+    },
     includes: [
       "Everything in Growth",
+      "Up to 15-page website",
+      "Multi-funnel architecture (up to 3 funnels)",
       "Member portal management",
-      "Multi-funnel architecture",
+      "Payment lifecycle management (Stripe setup)",
       "Advanced automation flows",
-      "Payment lifecycle management",
+      "8 content edits/month",
       "Podcast upload support (up to 4/month)",
       "Testimonial uploads",
-      "Priority support",
+      "Priority support (24h response)",
       "Monthly system review",
+      "30-Day Build Phase",
     ],
     excludes: [],
-    launchOffer: "50% off first 3 months. Then standard rate applies.",
   },
 ];
 
 const journeySteps = [
   {
     title: "Choose your path",
-    description: "Select Managed Infrastructure or Custom AI & SaaS based on your stage.",
+    description: "View Pricing Plans or Custom AI & SaaS based on your stage.",
   },
   {
     title: "Submit your brief",
@@ -79,7 +99,7 @@ const journeySteps = [
   },
   {
     title: "Receive plan confirmation",
-    description: "We send recommended scope, inclusions, timeline, and payment instructions.",
+    description: "We send recommended scope, inclusions, and timeline for your build.",
   },
   {
     title: "Secure your build",
@@ -105,8 +125,8 @@ const fitChecks = [
 
 const faqItems = [
   {
-    q: "Is there a setup fee?",
-    a: "No. We operate on a 12-month subscription model instead.",
+    q: "What is the 30-Day Build Phase?",
+    a: "We build your system during the first 30 days. Billing begins after successful launch. This protects both parties - you get a working system before paying, we get commitment to the partnership.",
   },
   {
     q: "What happens if I cancel early?",
@@ -114,11 +134,19 @@ const faqItems = [
   },
   {
     q: "Can I upgrade tiers?",
-    a: "Yes, you can upgrade anytime.",
+    a: "Yes, you can upgrade anytime. Price adjusts pro-rata.",
+  },
+  {
+    q: "What's included in 'Payment lifecycle management'?",
+    a: "Stripe setup, checkout optimization, subscription handling, webhook processing, and basic CRM integration for Authority plan.",
   },
   {
     q: "Is copywriting included?",
     a: "Light refinement is included. Full copywriting projects are quoted separately.",
+  },
+  {
+    q: "What are the scope limits?",
+    a: "Starter: 5 pages, Growth: 10 pages + 1 funnel, Authority: 15 pages + 3 funnels. Additional scope quoted separately.",
   },
   {
     q: "What is not included?",
@@ -138,15 +166,18 @@ export default function PricingPage() {
           }}
         />
         <div className="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
-          <span className={SECTION_LABEL_STYLES.primary}>Managed Infrastructure Plans</span>
+          <span className={SECTION_LABEL_STYLES.primary}>Pricing Plans</span>
           <h1 className={`${SECTION_TITLE_STYLES.main} mt-4 max-w-4xl`}>
-            Managed Digital Infrastructure for Founders.
+            Website & Funnel Management for Founders.
           </h1>
           <p className="text-zinc-200 text-lg md:text-xl leading-relaxed max-w-3xl mb-6">
-            Websites, funnels, automation, and ongoing system support - built, deployed, and managed for you.
+            Complete digital infrastructure built and managed for you - websites, funnels, automation, and ongoing support.
           </p>
           <p className="text-sm text-zinc-400 mb-8">
-            Launch in as little as 2 weeks (most projects). No upfront build fee. 12-month partnership.
+            Launch in as little as 2 weeks (most projects). $10 build-fee. 12-month partnership.
+          </p>
+          <p className="text-zinc-300 text-sm mb-4">
+            <span className="font-semibold">Managed Infrastructure:</span> We handle the technical setup, hosting, security, and maintenance so you can focus on growing your business.
           </p>
           <p className={`${SECTION_DESCRIPTION_STYLES} max-w-3xl mb-6`}>
             Looking for a custom AI or SaaS build?{" "}
@@ -154,17 +185,6 @@ export default function PricingPage() {
               Submit a Project Brief
             </Link>
             .
-          </p>
-          <p className="text-sm text-pacific/90 mb-6">
-            <span className="font-semibold">Launch Offer:</span> 50% off all plans for 3 months. Available to selected clients, including all business owners listed on{" "}
-            <Link to="https://pacificmarket.co.nz/list-your-business" target="_blank" rel="noopener noreferrer" className="text-pacific hover:text-pacific/80 underline underline-offset-2">
-              Pacific Market
-            </Link>
-            .{" "}
-            <Link to="/services/ai-saas" className="text-pacific hover:text-pacific/80 underline underline-offset-2">
-              Apply now
-            </Link>{" "}
-            to see if you qualify.
           </p>
           <a
             href="#plans"
@@ -237,11 +257,6 @@ export default function PricingPage() {
                     </div>
                   ) : null}
 
-                  {tier.launchOffer ? (
-                    <p className="mb-6 text-sm text-emerald-300 bg-emerald-400/10 border border-emerald-400/30 rounded-md p-3">
-                      {tier.launchOffer}
-                    </p>
-                  ) : null}
 
                   <div className="mt-auto">
                     <Link
@@ -265,23 +280,17 @@ export default function PricingPage() {
 
       <section className="py-16 md:py-20 bg-white/[0.02]">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
-          <h2 className={SECTION_TITLE_STYLES.small}>Launch Without Upfront Build Fees.</h2>
+          <h2 className={SECTION_TITLE_STYLES.small}>Launch With A $10 Build-Fee.</h2>
           <p className="text-zinc-200 max-w-3xl mb-6 leading-relaxed">
-            We deploy most websites within 2 weeks. No setup fee. No large upfront invoice.
-            Instead, we operate on a 12-month partnership model.
+            We deploy most websites within 2 weeks. Just $10 to begin your build.
+            Then start your monthly plan after 30 days. We operate on a 12-month partnership model.
           </p>
-          <div className="rounded-2xl border border-emerald-400/30 bg-emerald-400/10 p-6 max-w-3xl">
-            <p className="text-emerald-200 font-medium mb-2">Launch Offer Details</p>
-            <p className="text-zinc-100 mb-2">50% off your first 3 months for selected clients.</p>
-            <p className="text-zinc-300 text-sm mb-2">Automatically available to all Pacific Market business owners.</p>
-            <p className="text-zinc-300 text-sm">Autopay every 30 days. After month 3, standard subscription applies.</p>
-          </div>
           <div className="mt-8">
             <Link
               to="/services/ai-saas"
               className="inline-flex items-center gap-2 rounded-md bg-emerald-400 text-black font-semibold px-7 py-3 hover:bg-emerald-300 transition"
             >
-              Apply for Launch Offer
+              Submit Project Brief
               <ArrowRight className="w-4 h-4" strokeWidth={2} />
             </Link>
           </div>

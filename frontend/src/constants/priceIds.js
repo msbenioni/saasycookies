@@ -19,3 +19,9 @@ export const PRICE_IDS = {
     USD: "price_1T24ToLWHkuDViMmVSJMRGeQ",
   },
 };
+
+export const BUILD_FEE_PRICE_IDS = {
+  NZD: "price_1T3NLsLWHkuDViMmi13ED0tK", 
+  AUD: "price_1T3NMZLWHkuDViMmNK2R5UpG",
+  USD: "price_1T3NMJLWHkuDViMmNttpc8l4",
+};

@@ -19,8 +19,17 @@ export function getCurrencySymbol(currency) {
   }
 }
 
-// Format price with currency
-export function formatPrice(amount, currency) {
-  const symbol = getCurrencySymbol(currency);
-  return `${symbol}${amount}`;
+// Format price with currency symbol and proper locale
+export function formatPrice(amount, currency = 'USD') {
+  const locale =
+    currency === 'NZD' ? 'en-NZ' :
+    currency === 'AUD' ? 'en-AU' :
+    'en-US';
+
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: currency,
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(amount);
 }

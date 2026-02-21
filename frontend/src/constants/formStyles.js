@@ -10,6 +10,8 @@ export const BADGE_CLASS = "inline-flex items-center gap-2 px-3 py-1 rounded-md 
 
 export const MESSAGE_BOX_CLASS = "mb-8 rounded-md border border-zinc-800 bg-zinc-950/50 p-5 flex items-start gap-3";
 
+export const FORM_CONTAINER_CLASS = "max-w-4xl mx-auto space-y-8";
+
 export const PREVIEW_CONTAINER_CLASS = "rounded-xl bg-white text-gray-900 p-6 sm:p-8 md:p-10 shadow-2xl sticky top-24 min-w-[320px] sm:min-w-[640px]";
 
 export const QR_PREVIEW_CONTAINER_CLASS = "rounded-2xl bg-zinc-900/40 border border-white/5 p-6 sm:p-8 md:p-12 flex flex-col items-center gap-6 sticky top-24 min-w-[320px] sm:min-w-[400px]";

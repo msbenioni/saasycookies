@@ -78,7 +78,7 @@ export default function HomePage() {
           </div>
           <h2 className={SECTION_TITLE_STYLES.main}>Two Ways to Work With SaaSy Cookies</h2>
           <p className={`${SECTION_DESCRIPTION_STYLES} max-w-3xl`}>
-            Choose the model that matches your stage: predictable managed infrastructure or a custom AI/SaaS product build.
+            Choose the model that matches your stage: predictable pricing plans or a custom AI/SaaS product build.
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -91,7 +91,7 @@ export default function HomePage() {
                 <ul className="space-y-2 text-sm text-zinc-300 mb-6">
                   <li>Predictable subscription.</li>
                   <li>Launched in 2 weeks (most projects).</li>
-                  <li>No upfront build fees.</li>
+                  <li>$10 build-fee to begin your build.</li>
                 </ul>
                 <Link
                   to="/pricing"
