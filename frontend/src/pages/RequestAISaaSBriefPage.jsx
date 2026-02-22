@@ -12,6 +12,7 @@ import {
 import { sendProjectBriefEmail } from "../utils/emailService";
 import { recommendPlan, generateBuildPrompt } from "../utils/planRecommendation";
 import { clientIntakeAPI } from "../utils/supabaseClient";
+import { PRICING_TIERS } from "../constants/pricingConstants";
 import {
   INPUT_CLASS,
   SELECT_CLASS,
@@ -139,7 +140,11 @@ export default function RequestAISaaSBriefPage() {
   const [stage, setStage] = useState(1); // 1 = Qualification, 2 = Technical Details
   const [planRecommendation, setPlanRecommendation] = useState(null);
   const [showRecommendation, setShowRecommendation] = useState(false);
+  const [showPlanComparison, setShowPlanComparison] = useState(false);
   const [stage1Payload, setStage1Payload] = useState(null);
+  const [processing, setProcessing] = useState(false);
+  const [processingPlan, setProcessingPlan] = useState(null);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   async function handleStage1Submit(event) {
@@ -253,11 +258,112 @@ export default function RequestAISaaSBriefPage() {
     setShowRecommendation(false);
   }
 
+  async function proceedToStripeCheckout() {
+    setProcessing(true);
+    
+    try {
+      // Store plan recommendation for Stripe checkout
+      if (planRecommendation) {
+        sessionStorage.setItem("planRecommendation", JSON.stringify(planRecommendation));
+        sessionStorage.setItem("selectedPlan", planRecommendation.planName);
+      }
+      
+      // Save to database and send email BEFORE navigating
+      const payload = {
+        ...stage1Payload,
+        "form-name": "ai-saas-project-brief",
+        planRecommendation,
+        selectedPlan: planRecommendation?.planName,
+        action: "stripe-checkout",
+        detected_currency: localStorage.getItem("geo_currency") || null,
+        detected_country: localStorage.getItem("geo_country") || null,
+        user_agent: navigator.userAgent,
+        referrer: document.referrer,
+      };
+
+      // Save to Supabase
+      const clientIntake = await clientIntakeAPI.createClientIntake(payload);
+      console.log("Client intake saved for checkout:", clientIntake.id);
+
+      // Send email notification
+      await sendProjectBriefEmail(payload);
+
+      // Store intake ID for payment completion
+      sessionStorage.setItem("currentIntakeId", clientIntake.id);
+      
+      // Navigate to Stripe checkout
+      navigate('/stripe-checkout');
+    } catch (error) {
+      console.error("Error preparing checkout:", error);
+      setError("There was an error preparing your checkout. Please try again.");
+      setProcessing(false);
+    }
+  }
+
   function viewOtherPlans() {
+    // Store plan recommendation for later use
     if (planRecommendation) {
       sessionStorage.setItem("planRecommendation", JSON.stringify(planRecommendation));
     }
-    navigate("/plan-recommendation");
+    // Show plan comparison modal
+    setShowPlanComparison(true);
+  }
+
+  async function selectPlanForCheckout(planName, planPrice) {
+    console.log("selectPlanForCheckout called with:", { planName, planPrice });
+    console.log("stage1Payload:", stage1Payload);
+    console.log("planRecommendation:", planRecommendation);
+    
+    setProcessingPlan(planName);
+    setError(null);
+    
+    try {
+      // Create payload with selected plan
+      const payload = {
+        ...stage1Payload,
+        "form-name": "ai-saas-project-brief",
+        planRecommendation: {
+          ...planRecommendation,
+          planName,
+          price: planPrice,
+        },
+        selectedPlan: planName,
+        action: "plan-selection-checkout",
+        detected_currency: localStorage.getItem("geo_currency") || null,
+        detected_country: localStorage.getItem("geo_country") || null,
+        user_agent: navigator.userAgent,
+        referrer: document.referrer,
+      };
+
+      console.log("Payload created:", payload);
+
+      // Save to Supabase
+      const clientIntake = await clientIntakeAPI.createClientIntake(payload);
+      console.log("Client intake saved for plan selection:", clientIntake.id);
+
+      // Send email notification
+      await sendProjectBriefEmail(payload);
+      console.log("Email sent successfully");
+
+      // Store intake ID and selected plan for checkout
+      sessionStorage.setItem("currentIntakeId", clientIntake.id);
+      sessionStorage.setItem("selectedPlan", planName);
+      sessionStorage.setItem("planRecommendation", JSON.stringify({
+        ...planRecommendation,
+        planName,
+        price: planPrice,
+      }));
+      
+      console.log("Session storage updated, navigating to checkout...");
+      
+      // Close modal and navigate to Stripe checkout
+      setShowPlanComparison(false);
+      navigate('/stripe-checkout');
+    } catch (error) {
+      console.error("Error preparing checkout for selected plan:", error);
+      setError("There was an error preparing your checkout. Please try again.");
+      setProcessingPlan(null);
+    }
   }
 
   return (
@@ -538,6 +644,18 @@ export default function RequestAISaaSBriefPage() {
                   <h2 className="text-2xl font-bold text-white">Your Recommended Plan</h2>
                 </div>
 
+                {error && (
+                  <div className={`${CARD_STYLES.base} p-4 mb-4 border-red-400/30 bg-red-400/10`}>
+                    <div className="flex items-start gap-3">
+                      <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <div className="font-semibold text-red-200 mb-1">Error</div>
+                        <div className="text-red-200/80 text-sm">{error}</div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 <div className={`${CARD_STYLES.base} p-6 mb-6 border-emerald-400/30 bg-emerald-400/10`}>
                   <div className="flex items-center justify-between mb-4">
                     <div>
@@ -646,16 +764,27 @@ export default function RequestAISaaSBriefPage() {
                 <div className="flex flex-col sm:flex-row gap-3">
                   <button
                     type="button"
-                    onClick={acceptRecommendedPlan}
-                    className="flex-1 inline-flex items-center justify-center gap-2 rounded-md bg-emerald-400 text-black font-semibold px-6 py-3 hover:bg-emerald-300 transition"
+                    onClick={proceedToStripeCheckout}
+                    disabled={processing}
+                    className="flex-1 inline-flex items-center justify-center gap-2 rounded-md bg-emerald-400 text-black font-semibold px-6 py-3 hover:bg-emerald-300 transition disabled:opacity-50"
                   >
-                    Accept Recommended Plan
-                    <ArrowRight className="w-4 h-4" strokeWidth={2} />
+                    {processing ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-black"></div>
+                        Processing...
+                      </>
+                    ) : (
+                      <>
+                        Accept Recommended Plan
+                        <ArrowRight className="w-4 h-4" strokeWidth={2} />
+                      </>
+                    )}
                   </button>
                   <button
                     type="button"
                     onClick={viewOtherPlans}
-                    className="flex-1 inline-flex items-center justify-center gap-2 rounded-md border border-zinc-700 text-white font-semibold px-6 py-3 hover:bg-zinc-800 transition"
+                    disabled={processing}
+                    className="flex-1 inline-flex items-center justify-center gap-2 rounded-md border border-zinc-700 text-white font-semibold px-6 py-3 hover:bg-zinc-800 transition disabled:opacity-50"
                   >
                     View Other Plans
                   </button>
@@ -837,6 +966,95 @@ export default function RequestAISaaSBriefPage() {
           </div>
         </form>
       </div>
+
+      {/* Plan Comparison Modal */}
+      {showPlanComparison && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className={`${CARD_STYLES.base} p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto`}>
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className={`${PAGE_HEADER_ICON_CLASS} ${ICON_BG_COLORS.cyan}`}>
+                  <Layers className={`w-5 h-5 ${TEXT_COLORS.cyan}`} strokeWidth={1.5} />
+                </div>
+                <h2 className="text-2xl font-bold text-white">Choose Your Plan</h2>
+              </div>
+              <button
+                onClick={() => setShowPlanComparison(false)}
+                className="text-zinc-400 hover:text-white transition"
+              >
+                ×
+              </button>
+            </div>
+
+            {error && (
+              <div className={`${CARD_STYLES.base} p-4 mb-4 border-red-400/30 bg-red-400/10`}>
+                <div className="flex items-start gap-3">
+                  <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold text-red-200 mb-1">Error</div>
+                    <div className="text-red-200/80 text-sm">{error}</div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {PRICING_TIERS.map((tier) => (
+              <div key={tier.name} className={`${CARD_STYLES.base} p-6 ${tier.highlight ? "border-emerald-400/30 bg-emerald-400/5" : tier.planId === "authority" ? "border-purple-400/30 bg-purple-400/5" : "border-zinc-700/50"}`}>
+                <div className="text-center mb-6">
+                  {tier.highlight && (
+                    <div className="inline-flex items-center gap-2 bg-emerald-400/20 text-emerald-300 text-xs font-medium px-3 py-1 rounded-full mb-3">
+                      <CheckCircle className="w-3 h-3" />
+                      RECOMMENDED
+                    </div>
+                  )}
+                  <h3 className="text-xl font-bold text-white mb-2">{tier.name}</h3>
+                  <p className={`text-3xl font-bold mb-1 ${tier.planId === "authority" ? "text-purple-300" : "text-emerald-300"}`}>{tier.price}</p>
+                  <p className="text-zinc-400 text-sm">{tier.description}</p>
+                </div>
+                
+                <ul className="space-y-3 mb-6 text-sm">
+                  {tier.includes.map((feature, index) => (
+                    <li key={index} className="flex items-start gap-2">
+                      <CheckCircle className={`w-4 h-4 mt-0.5 flex-shrink-0 ${tier.planId === "authority" ? "text-purple-400" : "text-emerald-400"}`} />
+                      <span className="text-zinc-300">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <button
+                  onClick={() => selectPlanForCheckout(tier.name, tier.price)}
+                  disabled={processingPlan === tier.name}
+                  className={`w-full font-semibold px-4 py-3 rounded-lg transition disabled:opacity-50 flex items-center justify-center gap-2 ${
+                    tier.planId === "authority" 
+                      ? "bg-purple-400 text-black hover:bg-purple-300" 
+                      : BG_COLORS.emerald + " text-black hover:opacity-90"
+                  }`}
+                >
+                  {processingPlan === tier.name ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-black"></div>
+                      Processing...
+                    </>
+                  ) : (
+                    <>
+                      Choose {tier.name.split(' ')[0]}
+                      <ArrowRight className="w-4 h-4" />
+                    </>
+                  )}
+                </button>
+              </div>
+            ))}
+            </div>
+
+            <div className="mt-6 text-center">
+              <p className="text-zinc-400 text-sm">
+                All plans include 30-day build phase and 12-month partnership commitment
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

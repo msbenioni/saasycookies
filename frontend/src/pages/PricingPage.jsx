@@ -1,92 +1,7 @@
 import { Link } from "react-router-dom";
 import { Check, X, ArrowRight, AlertTriangle, CheckCircle } from "lucide-react";
 import { SECTION_LABEL_STYLES, SECTION_TITLE_STYLES, CARD_STYLES, SECTION_DESCRIPTION_STYLES } from "../constants/formStyles";
-
-const tiers = [
-  {
-    name: "Starter Presence",
-    price: "$79/month",
-    subtitle: "12-month minimum | 30-Day Build Phase",
-    description: "For service providers who need a clean, professional online presence.",
-    cta: "Start Starter Plan",
-    planId: "starter",
-    highlight: false,
-    scopeLimits: {
-      maxPages: 5,
-      maxFunnels: 0,
-      contentUpdates: "2 minor edits/month",
-      supportResponse: "48h"
-    },
-    includes: [
-      "Up to 5-page website",
-      "2 minor content edits/month",
-      "Basic SEO setup",
-      "Email capture + basic automation",
-      "Monthly performance report",
-      "Support response within 48h",
-      "30-Day Build Phase",
-    ],
-    excludes: [],
-  },
-  {
-    name: "Growth Engine",
-    price: "$149/month",
-    subtitle: "12-month minimum | 30-Day Build Phase",
-    description: "For coaches, consultants, and personal brands selling offers.",
-    cta: "Launch Growth Plan",
-    planId: "growth",
-    highlight: true,
-    scopeLimits: {
-      maxPages: 10,
-      maxFunnels: 1,
-      contentUpdates: "4 edits/month",
-      supportResponse: "48h"
-    },
-    includes: [
-      "Everything in Starter",
-      "Up to 10-page website",
-      "Lead magnet delivery system",
-      "Email marketing automation",
-      "Basic funnel optimization (1 funnel)",
-      "4 content edits/month",
-      "Podcast/blog posting support (1/month)",
-      "Funnel tweaks + automation support",
-      "Basic analytics setup",
-      "30-Day Build Phase",
-    ],
-    excludes: [],
-  },
-  {
-    name: "Authority System",
-    price: "$249/month",
-    subtitle: "12-month minimum | 30-Day Build Phase",
-    description: "For founders building a full ecosystem.",
-    cta: "Build Authority System",
-    planId: "authority",
-    highlight: false,
-    scopeLimits: {
-      maxPages: 15,
-      maxFunnels: 3,
-      contentUpdates: "8 edits/month",
-      supportResponse: "24h"
-    },
-    includes: [
-      "Everything in Growth",
-      "Up to 15-page website",
-      "Multi-funnel architecture (up to 3 funnels)",
-      "Member portal management",
-      "Payment lifecycle management (Stripe setup)",
-      "Advanced automation flows",
-      "8 content edits/month",
-      "Podcast upload support (up to 4/month)",
-      "Testimonial uploads",
-      "Priority support (24h response)",
-      "Monthly system review",
-      "30-Day Build Phase",
-    ],
-    excludes: [],
-  },
-];
+import { PRICING_TIERS } from "../constants/pricingConstants";
 
 const journeySteps = [
   {
@@ -222,7 +137,7 @@ export default function PricingPage() {
           <h2 className={SECTION_TITLE_STYLES.main}>Subscription Plans</h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {tiers.map((tier) => (
+            {PRICING_TIERS.map((tier) => (
               <article
                 key={tier.name}
                 className={`${CARD_STYLES.base} ${tier.highlight ? "ring-emerald-400/70 shadow-[0_0_0_1px_rgba(52,211,153,0.4)]" : ""} flex flex-col h-full`}
