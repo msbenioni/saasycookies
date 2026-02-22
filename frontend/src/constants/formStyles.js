@@ -1,20 +1,30 @@
-export const INPUT_CLASS = "w-full bg-zinc-950/50 border border-zinc-800 px-4 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 rounded-md transition-all outline-none";
+// Shared background colors for consistency
+export const SHARED_BACKGROUNDS = {
+  // Card background (used by CARD_STYLES and form inputs)
+  card: "bg-zinc-800/80",
+  // Darker backgrounds for specific elements
+  dark: "bg-zinc-950/50",
+  // Lighter backgrounds for overlays
+  light: "bg-zinc-900/40",
+};
 
-export const SELECT_CLASS = "w-full bg-zinc-950/50 border border-zinc-800 px-4 py-3 text-white focus:outline-none focus:ring-2 rounded-md transition-all outline-none [&>option]:bg-zinc-900 [&>option]:text-white appearance-none cursor-pointer bg-[url('data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20fill=%22none%22%20viewBox=%220%200%2024%2024%22%20stroke=%22%23D1D5DB%22%3E%3Cpath%20stroke-linecap=%22round%22%20stroke-linejoin=%22round%22%20stroke-width=%222%22%20d=%22M19%209l-7%207-7-7%22/%3E%3C/svg%3E')] bg-no-repeat bg-[right_1rem_center] bg-[length:1.25rem] pr-12";
+export const INPUT_CLASS = `w-full ${SHARED_BACKGROUNDS.card} border border-zinc-800 px-4 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 rounded-md transition-all outline-none`;
 
-export const CHECKBOX_LABEL_CLASS = "flex items-center gap-2 rounded-md border border-zinc-800 bg-zinc-950/50 px-3 py-2 text-sm text-zinc-300 cursor-pointer hover:bg-zinc-950/70 transition-colors";
+export const SELECT_CLASS = `w-full ${SHARED_BACKGROUNDS.card} border border-zinc-800 px-4 py-3 text-white focus:outline-none focus:ring-2 rounded-md transition-all outline-none [&>option]:bg-zinc-900 [&>option]:text-white appearance-none cursor-pointer bg-[url('data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20fill=%22none%22%20viewBox=%220%200%2024%2024%22%20stroke=%22%23D1D5DB%22%3E%3Cpath%20stroke-linecap=%22round%22%20stroke-linejoin=%22round%22%20stroke-width=%222%22%20d=%22M19%209l-7%207-7-7%22/%3E%3C/svg%3E')] bg-no-repeat bg-[right_1rem_center] bg-[length:1.25rem] pr-12`;
 
-export const CHECKBOX_INPUT_CLASS = "h-4 w-4 rounded border-zinc-600 bg-zinc-950/50 focus:ring-2 cursor-pointer";
+export const CHECKBOX_LABEL_CLASS = `flex items-center gap-2 rounded-md border border-zinc-800 ${SHARED_BACKGROUNDS.card} px-3 py-2 text-sm text-zinc-300 cursor-pointer hover:bg-zinc-800/90 transition-colors`;
 
-export const BADGE_CLASS = "inline-flex items-center gap-2 px-3 py-1 rounded-md bg-zinc-950/50 border border-zinc-800 text-xs font-medium";
+export const CHECKBOX_INPUT_CLASS = `h-4 w-4 rounded border-zinc-600 ${SHARED_BACKGROUNDS.card} focus:ring-2 cursor-pointer`;
 
-export const MESSAGE_BOX_CLASS = "mb-8 rounded-md border border-zinc-800 bg-zinc-950/50 p-5 flex items-start gap-3";
+export const BADGE_CLASS = `inline-flex items-center gap-2 px-3 py-1 rounded-md ${SHARED_BACKGROUNDS.card} border border-zinc-800 text-xs font-medium`;
+
+export const MESSAGE_BOX_CLASS = `mb-8 rounded-md border border-zinc-800 ${SHARED_BACKGROUNDS.dark} p-5 flex items-start gap-3`;
 
 export const FORM_CONTAINER_CLASS = "max-w-4xl mx-auto space-y-8";
 
 export const PREVIEW_CONTAINER_CLASS = "rounded-xl bg-white text-gray-900 p-6 sm:p-8 md:p-10 shadow-2xl sticky top-24 min-w-[320px] sm:min-w-[640px]";
 
-export const QR_PREVIEW_CONTAINER_CLASS = "rounded-2xl bg-zinc-900/40 border border-white/5 p-6 sm:p-8 md:p-12 flex flex-col items-center gap-6 sticky top-24 min-w-[320px] sm:min-w-[400px]";
+export const QR_PREVIEW_CONTAINER_CLASS = `rounded-2xl ${SHARED_BACKGROUNDS.light} border border-white/5 p-6 sm:p-8 md:p-12 flex flex-col items-center gap-6 sticky top-24 min-w-[320px] sm:min-w-[400px]`;
 
 export const PAGE_HEADER_CLASS = "max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 py-16 md:py-24";
 
@@ -84,7 +94,7 @@ export const SECTION_LABEL_STYLES = {
 // Card styles for consistency across pages
 export const CARD_STYLES = {
   // Base card style with premium ring instead of border
-  base: "group block relative overflow-hidden rounded-2xl bg-zinc-800/80 ring-1 ring-white/10 hover:ring-brand-primary/40 transition-all duration-500 shadow-xl shadow-black/20 backdrop-blur-sm",
+  base: `group block relative overflow-hidden rounded-2xl ${SHARED_BACKGROUNDS.card} ring-1 ring-white/10 hover:ring-brand-primary/40 transition-all duration-500 shadow-xl shadow-black/20 backdrop-blur-sm`,
   
   // Hover overlay effect
   overlay: "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700",

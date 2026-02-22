@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Check, X, ArrowRight } from "lucide-react";
+import { Check, X, ArrowRight, AlertTriangle, CheckCircle } from "lucide-react";
 import { SECTION_LABEL_STYLES, SECTION_TITLE_STYLES, CARD_STYLES, SECTION_DESCRIPTION_STYLES } from "../constants/formStyles";
 
 const tiers = [
@@ -168,15 +168,16 @@ export default function PricingPage() {
         <div className="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <span className={SECTION_LABEL_STYLES.primary}>Pricing Plans</span>
           <h1 className={`${SECTION_TITLE_STYLES.main} mt-4 max-w-4xl`}>
-            Website & Funnel Management for Founders.
+            <span className="text-emerald-400 font-extrabold">Website & Funnel</span>{" "}
+            <span className="text-white font-light">Management for Founders.</span>
           </h1>
-          <p className="text-zinc-200 text-lg md:text-xl leading-relaxed max-w-3xl mb-6">
+          <p className={`${SECTION_DESCRIPTION_STYLES} max-w-3xl mb-6`}>
             Complete digital infrastructure built and managed for you - websites, funnels, automation, and ongoing support.
           </p>
-          <p className="text-sm text-zinc-400 mb-8">
+          <p className={`${SECTION_DESCRIPTION_STYLES} mb-8`}>
             Launch in as little as 2 weeks (most projects). $10 build-fee. 12-month partnership.
           </p>
-          <p className="text-zinc-300 text-sm mb-4">
+          <p className={`${SECTION_DESCRIPTION_STYLES} mb-6`}>
             <span className="font-semibold">Managed Infrastructure:</span> We handle the technical setup, hosting, security, and maintenance so you can focus on growing your business.
           </p>
           <p className={`${SECTION_DESCRIPTION_STYLES} max-w-3xl mb-6`}>
@@ -198,12 +199,15 @@ export default function PricingPage() {
 
       <section className="py-16 md:py-20 bg-white/[0.02]">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
-          <h2 className={SECTION_TITLE_STYLES.small}>This is for you if...</h2>
+          <h2 className={SECTION_TITLE_STYLES.main}>
+            <span className="text-emerald-400 font-extrabold">This is for you if</span>{" "}
+            <span className="text-white font-light">...</span>
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mb-8">
             {fitChecks.map((item) => (
-              <div key={item} className="flex items-start gap-3 text-zinc-200">
-                <Check className="w-5 h-5 mt-0.5 text-emerald-400" strokeWidth={2} />
-                <span>{item}</span>
+              <div key={item} className={`${CARD_STYLES.base} p-4 flex items-start gap-3`}>
+                <Check className="w-5 h-5 mt-0.5 text-emerald-400 flex-shrink-0" strokeWidth={2} />
+                <span className="text-zinc-200">{item}</span>
               </div>
             ))}
           </div>
@@ -299,16 +303,19 @@ export default function PricingPage() {
 
       <section className="py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
-          <h2 className={SECTION_TITLE_STYLES.small}>How It Works</h2>
+          <h2 className={SECTION_TITLE_STYLES.main}>
+            <span className="text-emerald-400 font-extrabold">How It</span>{" "}
+            <span className="text-white font-light">Works</span>
+          </h2>
           <p className={`${SECTION_DESCRIPTION_STYLES} max-w-3xl`}>
             Structured onboarding from qualification to launch - no random checkout, no scope ambiguity.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {journeySteps.map((step, index) => (
-              <article key={step.title} className="rounded-xl border border-white/10 bg-zinc-900/40 p-5">
-                <p className="text-xs uppercase tracking-widest text-emerald-300 mb-2">Step {index + 1}</p>
-                <h3 className="font-semibold text-white mb-2">{step.title}</h3>
+              <article key={step.title} className={`${CARD_STYLES.base} p-6`}>
+                <p className="text-xs uppercase tracking-widest text-emerald-300 mb-3">Step {index + 1}</p>
+                <h3 className="font-semibold text-white mb-3">{step.title}</h3>
                 <p className="text-sm text-zinc-300 leading-relaxed">{step.description}</p>
               </article>
             ))}
@@ -318,30 +325,70 @@ export default function PricingPage() {
 
       <section className="py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
-          <h2 className={SECTION_TITLE_STYLES.small}>Why Not Just Use Wix?</h2>
-          <div className="overflow-x-auto rounded-2xl border border-white/10 bg-zinc-900/40">
-            <table className="w-full text-left min-w-[640px]">
-              <thead className="border-b border-white/10">
-                <tr>
-                  <th className="px-6 py-4 text-zinc-400 font-medium">DIY Builder</th>
-                  <th className="px-6 py-4 text-emerald-300 font-medium">SaaSy Cookies</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  ["You manage everything", "We manage everything"],
-                  ["You build funnels", "We build funnels"],
-                  ["You fix problems", "We fix problems"],
-                  ["You learn automation", "We run automation"],
-                  ["$80-$150 tool stack", "One predictable subscription"],
-                ].map((row) => (
-                  <tr key={row[0]} className="border-b border-white/5 last:border-0">
-                    <td className="px-6 py-4 text-zinc-300">{row[0]}</td>
-                    <td className="px-6 py-4 text-zinc-100">{row[1]}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <h2 className={SECTION_TITLE_STYLES.main}>
+            <span className="text-red-400 font-extrabold">Why Not Just Use</span>{" "}
+            <span className="text-white font-light">Wix?</span>
+          </h2>
+          <div className={`${CARD_STYLES.base} p-8 mt-8`}>
+            <div className="flex items-center justify-center mb-8">
+              <div className="text-center">
+                <h3 className="text-2xl font-bold text-white mb-2">The Better Way to Build</h3>
+                <p className="text-zinc-400">Compare DIY vs Done-For-You Infrastructure</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* DIY Column */}
+              <div className="text-center">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/20 border border-red-500/30 text-red-300 font-medium mb-4">
+                  <AlertTriangle className="w-4 h-4" />
+                  DIY Builder
+                </div>
+                <div className="space-y-3">
+                  {[
+                    "You manage everything",
+                    "You build funnels", 
+                    "You fix problems",
+                    "You handle payments",
+                    "You deal with hosting",
+                    "You figure out SEO"
+                  ].map((item, index) => (
+                    <div key={index} className="bg-zinc-800/50 rounded-lg p-3 text-sm text-zinc-300">
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* SaaSy Cookies Column */}
+              <div className="text-center">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 font-medium mb-4">
+                  <CheckCircle className="w-4 h-4" />
+                  SaaSy Cookies
+                </div>
+                <div className="space-y-3">
+                  {[
+                    "We manage everything",
+                    "We build funnels",
+                    "We fix problems", 
+                    "We handle payments",
+                    "We deal with hosting",
+                    "We optimize SEO"
+                  ].map((item, index) => (
+                    <div key={index} className="bg-zinc-800/50 rounded-lg p-3 text-sm text-emerald-300">
+                      {item}
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-6">
+                  <Link
+                    to="/pricing"
+                    className="inline-flex items-center gap-2 rounded-md bg-emerald-400 text-black font-semibold px-6 py-3 hover:bg-emerald-300 transition w-full justify-center"
+                  >
+                    Choose the Better Way
+                    <ArrowRight className="w-4 h-4" strokeWidth={2} />
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
           <p className="mt-4 text-zinc-300">We don't sell tools. We manage outcomes.</p>
         </div>
@@ -349,11 +396,14 @@ export default function PricingPage() {
 
       <section className="py-16 md:py-20 bg-white/[0.02]">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
-          <h2 className={SECTION_TITLE_STYLES.small}>FAQ</h2>
+          <h2 className={SECTION_TITLE_STYLES.main}>
+            <span className="text-cyan-400 font-extrabold">Frequently Asked</span>{" "}
+            <span className="text-white font-light">Questions</span>
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {faqItems.map((item) => (
-              <div key={item.q} className="rounded-xl border border-white/10 bg-zinc-900/40 p-5">
-                <h3 className="font-semibold text-white mb-2">{item.q}</h3>
+              <div key={item.q} className={`${CARD_STYLES.base} p-6`}>
+                <h3 className="font-semibold text-white mb-3">{item.q}</h3>
                 <p className="text-zinc-300 text-sm leading-relaxed">{item.a}</p>
               </div>
             ))}

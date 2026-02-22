@@ -33,6 +33,7 @@ import {
   FORM_LABEL_SPACING,
   FORM_CHECKBOX_LABEL_SPACING,
   FORM_CONTAINER_CLASS,
+  CARD_STYLES,
 } from "../constants/formStyles";
 
 // NOTE: encode() not used in this file right now, but safe to keep if you’ll use later.
@@ -294,7 +295,7 @@ export default function RequestAISaaSBriefPage() {
 
           {stage === 1 && (
             <div
-              className={`${PAGE_HEADER_TO_FORM_SPACING} rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-6`}
+              className={`${PAGE_HEADER_TO_FORM_SPACING} ${CARD_STYLES.base} p-6 border-emerald-400/20 bg-emerald-400/10`}
             >
               <h2 className="font-heading text-lg font-semibold text-white mb-3">
                 Stage 1: Quick Qualification
@@ -320,9 +321,7 @@ export default function RequestAISaaSBriefPage() {
           )}
 
           {stage === 2 && (
-            <div
-              className={`${PAGE_HEADER_TO_FORM_SPACING} rounded-2xl border border-cyan-400/20 bg-cyan-400/10 p-6`}
-            >
+              <div className={`${PAGE_HEADER_TO_FORM_SPACING} ${CARD_STYLES.base} p-6 border-cyan-400/20 bg-cyan-400/10`}>
               <h2 className="font-heading text-lg font-semibold text-white mb-3">
                 Stage 2: Technical Details
               </h2>
@@ -353,7 +352,7 @@ export default function RequestAISaaSBriefPage() {
         )}
 
         <section
-          className={`${PAGE_HEADER_TO_FORM_SPACING} rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-6`}
+          className={`${PAGE_HEADER_TO_FORM_SPACING} ${CARD_STYLES.base} p-6 border-emerald-400/20 bg-emerald-400/10`}
         >
           <h2 className="font-heading text-2xl font-semibold text-white mb-3">
             What Happens After You Submit
@@ -528,7 +527,7 @@ export default function RequestAISaaSBriefPage() {
           {/* Plan Recommendation Modal */}
           {showRecommendation && planRecommendation && (
             <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-              <div className="bg-zinc-900 border border-white/20 rounded-2xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+              <div className={`${CARD_STYLES.base} p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto`}>
                 <div className="flex items-center gap-3 mb-4">
                   <div className={`${PAGE_HEADER_ICON_CLASS} ${ICON_BG_COLORS.emerald}`}>
                     <TrendingUp
@@ -539,7 +538,7 @@ export default function RequestAISaaSBriefPage() {
                   <h2 className="text-2xl font-bold text-white">Your Recommended Plan</h2>
                 </div>
 
-                <div className="bg-emerald-400/10 border border-emerald-400/30 rounded-xl p-6 mb-6">
+                <div className={`${CARD_STYLES.base} p-6 mb-6 border-emerald-400/30 bg-emerald-400/10`}>
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <h3 className="text-xl font-bold text-white mb-1">
@@ -575,18 +574,18 @@ export default function RequestAISaaSBriefPage() {
                   </div>
 
                   <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div className="bg-zinc-800/50 rounded-lg p-3">
+                    <div className={`${CARD_STYLES.base} p-3`}>
                       <p className="text-zinc-400 mb-1">Build Phase</p>
                       <p className="text-white font-semibold">30-Day System Build</p>
                     </div>
-                    <div className="bg-zinc-800/50 rounded-lg p-3">
+                    <div className={`${CARD_STYLES.base} p-3`}>
                       <p className="text-zinc-400 mb-1">Commitment</p>
                       <p className="text-white font-semibold">12-Month Partnership</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-zinc-800/50 rounded-xl p-4 mb-6">
+                <div className={`${CARD_STYLES.base} p-4 mb-6`}>
                   <h4 className="font-semibold text-white mb-3">Build Complexity Assessment</h4>
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div className="flex justify-between">
