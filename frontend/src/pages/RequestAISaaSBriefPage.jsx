@@ -236,8 +236,10 @@ export default function RequestAISaaSBriefPage() {
       
       console.log("Client intake saved for checkout:", clientIntake.id);
 
-      // Send email notification
-      await sendProjectBriefEmail(payload);
+      // Send email notification (non-blocking)
+      sendProjectBriefEmail(payload).catch(error => {
+        console.warn('Email notification failed (non-critical):', error);
+      });
 
       // Store intake ID for payment completion
       sessionStorage.setItem("currentIntakeId", clientIntake.id);
@@ -290,8 +292,10 @@ export default function RequestAISaaSBriefPage() {
       // Save to Supabase
       const clientIntake = await clientIntakeAPI.createClientIntake(payload);
 
-      // Send email notification
-      await sendProjectBriefEmail(payload);
+      // Send email notification (non-blocking)
+      sendProjectBriefEmail(payload).catch(error => {
+        console.warn('Email notification failed (non-critical):', error);
+      });
 
       // Store intake ID and selected plan for checkout
       sessionStorage.setItem("currentIntakeId", clientIntake.id);

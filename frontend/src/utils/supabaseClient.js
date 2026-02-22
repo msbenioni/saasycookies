@@ -4,11 +4,6 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
 const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY;
 
-// Debug environment variables
-console.log("SUPABASE URL:", supabaseUrl);
-console.log("HAS ANON KEY:", !!supabaseAnonKey);
-console.log("ANON KEY PREFIX:", (supabaseAnonKey || "").slice(0, 12));
-
 if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error("Missing Supabase env vars: REACT_APP_SUPABASE_URL or REACT_APP_SUPABASE_ANON_KEY");
 }
@@ -20,16 +15,6 @@ export const clientIntakeAPI = {
   // Create a new client intake record
   async createClientIntake(intakeData) {
     try {
-      // Debug: Check what role the request is using
-      console.log("=== DEBUG: Checking request context ===");
-      try {
-        const { data: contextData, error: contextError } = await supabase.rpc("debug_request_context");
-        console.log("Request context:", { contextData, contextError });
-      } catch (debugErr) {
-        console.log("Debug function failed:", debugErr);
-      }
-      console.log("=== END DEBUG ===");
-
       // Validate required fields
       const requiredFields = [
         'fullName', 'email', 'businessName', 'country', 'designVibe',
@@ -150,15 +135,11 @@ export const clientIntakeAPI = {
         Object.entries(supabaseData).filter(([key]) => ALLOWED_COLUMNS.includes(key))
       );
 
-      console.log('Exact data being sent to Supabase:', cleanedData);
-
       const { data, error } = await supabase
         .from('client_intakes')
         .insert([cleanedData])
         .select('id')
         .single();
-
-      console.log('Supabase response:', { data, error });
 
       if (error) {
         console.error('Supabase error creating client intake:', error);
@@ -176,7 +157,6 @@ export const clientIntakeAPI = {
         throw new Error("Insert succeeded but no ID was returned. Check .select() on insert.");
       }
 
-      console.log('Successfully created client intake with ID:', data.id);
       return data;
     } catch (error) {
       console.error('Client intake creation failed:', error);
