@@ -99,6 +99,16 @@ export const calculateComplexityScore = (formData) => {
       break;
   }
 
+  // Design Complexity Scoring (0-1 point)
+  const designVibe = formData.designVibe || '';
+  const brandColors = formData.brandColors || '';
+  const inspirationWebsites = formData.inspirationWebsites || '';
+  
+  // Add complexity if they have specific design requirements
+  if (designVibe.length > 100 || brandColors || inspirationWebsites) {
+    score += 1;
+  }
+
   // Required Capabilities Scoring (0-3 points)
   const capabilities = Array.isArray(formData.requiredCapabilities) 
     ? formData.requiredCapabilities 
@@ -162,6 +172,7 @@ export const recommendPlan = (formData) => {
   if (score <= 3) {
     return {
       recommendedPlan: 'starter',
+      planId: 'starter', // Add planId for Stripe service
       planName: 'Starter Presence',
       price: '$79/month',
       score,
@@ -176,6 +187,7 @@ export const recommendPlan = (formData) => {
   } else if (score <= 7) {
     return {
       recommendedPlan: 'growth',
+      planId: 'growth', // Add planId for Stripe service
       planName: 'Growth Engine',
       price: '$149/month',
       score,
@@ -190,6 +202,7 @@ export const recommendPlan = (formData) => {
   } else {
     return {
       recommendedPlan: 'authority',
+      planId: 'authority', // Add planId for Stripe service
       planName: 'Authority System',
       price: '$249/month',
       score,
@@ -225,6 +238,23 @@ export const generateBuildPrompt = (formData, planRecommendation) => {
 - **Lead Volume**: ${flags.leadVolume}
 - **Funnel Complexity**: ${flags.funnelComplexity}
 - **Offer Complexity**: ${flags.offerComplexity}
+
+## Design & Brand Requirements
+
+### Brand Identity
+- **Brand Colors**: ${formData.brandColors || 'Not specified'}
+- **Preferred Fonts**: ${formData.preferredFonts || 'Not specified'}
+- **Design Vibe**: ${formData.designVibe || 'Not specified'}
+- **Current Website**: ${formData.currentUrl || 'No current website'}
+
+### Design Inspiration
+${formData.inspirationWebsites ? formData.inspirationWebsites.split('\n').map((site, index) => `${index + 1}. ${site}`).join('\n') : 'No inspiration websites provided'}
+
+### Design Implementation Notes
+- Implement the specified color palette as CSS variables
+- Use the preferred fonts for typography hierarchy
+- Follow the design vibe for overall aesthetic direction
+- Study inspiration websites for UX patterns and interactions
 
 ## Technical Stack Recommendation
 ${flags.requiresPayments || flags.requiresMemberPortal ? 'Next.js' : 'Vite'} - ${flags.requiresPayments ? 'for payment processing and auth' : 'for faster development'}

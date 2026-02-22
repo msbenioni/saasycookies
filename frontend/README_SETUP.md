@@ -85,7 +85,7 @@ frontend/
 - ✅ **Analytics Ready** - Plausible/GA4/PostHog support
 - ✅ **Error Handling** - Global error boundary
 - ✅ **Loading States** - Skeletons and loading components
-- ✅ **Toast Notifications** - User feedback system
+- ✅ **Toast Notifications** - User feedback system (sonner)
 - ✅ **Accessibility** - ARIA labels, keyboard navigation
 - ✅ **Performance** - Lazy loading, optimized images
 

@@ -22,7 +22,6 @@ import TermsPage from "./pages/TermsPage";
 import RequestAISaaSBriefPage from "./pages/RequestAISaaSBriefPage";
 import ProjectBriefThankYouPage from "./pages/ProjectBriefThankYouPage";
 import PricingPage from "./pages/PricingPage";
-import StripeCheckoutPage from "./pages/StripeCheckoutPage";
 import CheckoutSuccessPage from "./pages/CheckoutSuccessPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ScrollToTop from "./components/ScrollToTop";
@@ -60,7 +59,6 @@ function AppContent() {
           <Route path="/edit/:token" element={<DigitalCardEditPage />} />
           <Route path="/services/ai-saas" element={<RequestAISaaSBriefPage />} />
           <Route path="/pricing" element={<PricingPage />} />
-          <Route path="/stripe-checkout" element={<StripeCheckoutPage />} />
           <Route path="/checkout-success" element={<CheckoutSuccessPage />} />
           <Route path="/project-brief-thank-you" element={<ProjectBriefThankYouPage />} />
           <Route path="/contact" element={<ContactPage />} />

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { ArrowRight, CheckCircle, TrendingUp, Users, Zap, ArrowLeft, Calculator, CreditCard, Clock, Loader2 } from "lucide-react";
 import { tiers } from "./PricingPage";
 import { SECTION_LABEL_STYLES, SECTION_TITLE_STYLES, CARD_STYLES, SECTION_DESCRIPTION_STYLES } from "../constants/formStyles";
-import { acceptPlanAndSubscribe, getAvailableDiscounts } from "../utils/stripeService";
+import { acceptPlanAndSubscribe } from "../utils/stripeService";
 
 export default function PlanRecommendationPage() {
   const navigate = useNavigate();
@@ -39,12 +39,11 @@ export default function PlanRecommendationPage() {
     setError(null);
     
     try {
-      // Get form data from session storage to check for discounts
+      // Get form data from session storage for country
       const stage1Payload = JSON.parse(sessionStorage.getItem('stage1Payload') || '{}');
-      const discounts = getAvailableDiscounts(stage1Payload);
       
-      // Create subscription and redirect to Stripe
-      const subscriptionData = await acceptPlanAndSubscribe(planId, discounts);
+      // Create subscription and redirect to Stripe with correct currency
+      const subscriptionData = await acceptPlanAndSubscribe(planId, stage1Payload.country || 'OTHER');
       
       // Redirect to Stripe checkout
       window.location.href = subscriptionData.checkoutUrl;

@@ -3,6 +3,11 @@ import { site } from '../config/site';
 
 export const useAnalytics = () => {
   useEffect(() => {
+    // Don't initialize analytics on localhost
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      return;
+    }
+
     // Initialize analytics based on provider
     if (site.analytics.provider === 'plausible') {
       // Plausible initialization
@@ -25,12 +30,26 @@ export const useAnalytics = () => {
       window.gtag('js', new Date());
       window.gtag('config', site.analytics.ids.ga4);
     } else if (site.analytics.provider === 'posthog') {
-      // PostHog initialization
-      (function(t,e){var o,n,p,r;window.__posthog=window.__posthog||[],window.__posthog.push(["init",site.analytics.ids.posthog,{api_host:"https://app.posthog.com"}]),function(){if(t.getElementById("posthog-script"))return;e=t.createElement("script"),e.id="posthog-script",e.type="text/javascript",e.async=!0,e.src="https://app.posthog.com/static/array.js",o=t.getElementsByTagName("script")[0],o.parentNode.insertBefore(e,o)}(document));
+      // PostHog initialization - simpler approach
+      const script = document.createElement('script');
+      script.src = 'https://app.posthog.com/static/array.js';
+      script.async = true;
+      script.id = 'posthog-script';
+      document.head.appendChild(script);
+      
+      window.posthog = window.posthog || [];
+      window.posthog.push(['init', site.analytics.ids.posthog, {
+        api_host: 'https://app.posthog.com'
+      }]);
     }
   }, []);
 
   const trackEvent = (eventName, properties = {}) => {
+    // Don't track events on localhost
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      return;
+    }
+
     if (site.analytics.provider === 'plausible') {
       // Plausible event tracking
       window.plausible?.(eventName, { props: properties });
@@ -44,6 +63,11 @@ export const useAnalytics = () => {
   };
 
   const trackPageView = (path) => {
+    // Don't track page views on localhost
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      return;
+    }
+
     if (site.analytics.provider === 'plausible') {
       window.plausible?.('pageview');
     } else if (site.analytics.provider === 'ga4') {

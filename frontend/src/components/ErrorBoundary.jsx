@@ -71,7 +71,7 @@ export default class ErrorBoundary extends Component {
                 <pre className="mt-4 p-4 bg-zinc-800 rounded-lg text-xs text-red-400 overflow-auto">
                   {this.state.error && this.state.error.toString()}
                   {'\n\n'}
-                  {this.state.errorInfo.componentStack}
+                  {this.state.errorInfo && this.state.errorInfo.componentStack}
                 </pre>
               </details>
             )}

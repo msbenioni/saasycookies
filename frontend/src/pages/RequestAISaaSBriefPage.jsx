@@ -12,7 +12,12 @@ import {
 import { sendProjectBriefEmail } from "../utils/emailService";
 import { recommendPlan, generateBuildPrompt } from "../utils/planRecommendation";
 import { clientIntakeAPI } from "../utils/supabaseClient";
-import { PRICING_TIERS } from "../constants/pricingConstants";
+import { acceptPlanAndSubscribe } from "../utils/stripeService";
+import { usePricing } from "../hooks/usePricing";
+import { 
+  formatPriceForCountry, 
+  getCurrencyForCountry
+} from "../utils/currencyMapping";
 import {
   INPUT_CLASS,
   SELECT_CLASS,
@@ -146,6 +151,7 @@ export default function RequestAISaaSBriefPage() {
   const [processingPlan, setProcessingPlan] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { pricingTiers, updateCountry, getBasePrice } = usePricing();
 
   async function handleStage1Submit(event) {
     event.preventDefault();
@@ -174,87 +180,17 @@ export default function RequestAISaaSBriefPage() {
 
     // Store stage 1 payload for later use in Stripe checkout
     sessionStorage.setItem("stage1Payload", JSON.stringify(payload));
+    
+    // Save country to localStorage for PricingPage
+    if (payload.country) {
+      localStorage.setItem('userCountry', payload.country);
+    }
 
     setShowRecommendation(true);
     setStatus("idle");
   }
 
-  async function handleFinalSubmit(event) {
-    event.preventDefault();
-    setStatus("sending");
-
-    const form = event.currentTarget;
-    const formData = new FormData(form);
-    const payload = { "form-name": "ai-saas-project-brief" };
-
-    // Include Stage 1 data
-    if (stage1Payload) {
-      Object.entries(stage1Payload).forEach(([key, value]) => {
-        if (key === "form-name") return;
-
-        if (Array.isArray(value)) {
-          value.forEach((val) => {
-            if (Object.prototype.hasOwnProperty.call(payload, key)) {
-              payload[key] = Array.isArray(payload[key])
-                ? [...payload[key], String(val)]
-                : [payload[key], String(val)];
-            } else {
-              payload[key] = String(val);
-            }
-          });
-        } else {
-          payload[key] = String(value);
-        }
-      });
-    }
-
-    // Include Stage 2 data
-    formData.forEach((value, key) => {
-      if (key === "form-name") return;
-
-      if (Object.prototype.hasOwnProperty.call(payload, key)) {
-        payload[key] = Array.isArray(payload[key])
-          ? [...payload[key], String(value)]
-          : [payload[key], String(value)];
-      } else {
-        payload[key] = String(value);
-      }
-    });
-
-    // Generate build prompt and add to payload
-    const buildPrompt = generateBuildPrompt(payload, planRecommendation);
-    payload.buildPrompt = buildPrompt;
-
-    // Keep planRecommendation as object
-    payload.planRecommendation = planRecommendation;
-
-    // Add browser-specific data for Supabase (client-only)
-    payload.detected_currency = localStorage.getItem("geo_currency") || null;
-    payload.detected_country = localStorage.getItem("geo_country") || null;
-    payload.user_agent = navigator.userAgent;
-    payload.referrer = document.referrer;
-
-    try {
-      // Save to Supabase first
-      const clientIntake = await clientIntakeAPI.createClientIntake(payload);
-      console.log("Client intake saved to database:", clientIntake.id);
-
-      // Send email notification
-      await sendProjectBriefEmail(payload);
-
-      // Store intake ID for potential Stripe integration
-      sessionStorage.setItem("currentIntakeId", clientIntake.id);
-
-      navigate("/project-brief-thank-you");
-    } catch (error) {
-      console.error("Form submission error:", error);
-      setStatus("error");
-    }
-  }
-
-  function acceptRecommendedPlan() {
-    // Always proceed to stage 2 (your logic collapses to this)
-    setStage(2);
+  function goBackToForm() {
     setShowRecommendation(false);
   }
 
@@ -262,27 +198,42 @@ export default function RequestAISaaSBriefPage() {
     setProcessing(true);
     
     try {
-      // Store plan recommendation for Stripe checkout
-      if (planRecommendation) {
-        sessionStorage.setItem("planRecommendation", JSON.stringify(planRecommendation));
-        sessionStorage.setItem("selectedPlan", planRecommendation.planName);
+      // Check if we have a plan recommendation
+      if (!planRecommendation) {
+        throw new Error("No plan recommendation available. Please complete the form first.");
       }
       
-      // Save to database and send email BEFORE navigating
+      // Store plan recommendation for Stripe checkout
+      sessionStorage.setItem("planRecommendation", JSON.stringify(planRecommendation));
+      sessionStorage.setItem("selectedPlan", planRecommendation.planName);
+      
+      // Get all form data from sessionStorage
+      const stage1Payload = JSON.parse(sessionStorage.getItem("stage1Payload") || "{}");
+      
+      if (!stage1Payload || Object.keys(stage1Payload).length === 0) {
+        throw new Error("No form data found. Please complete the form first.");
+      }
+      
+      // Create complete payload with all required fields
       const payload = {
         ...stage1Payload,
         "form-name": "ai-saas-project-brief",
         planRecommendation,
-        selectedPlan: planRecommendation?.planName,
+        selectedPlan: planRecommendation.planName,
         action: "stripe-checkout",
-        detected_currency: localStorage.getItem("geo_currency") || null,
-        detected_country: localStorage.getItem("geo_country") || null,
         user_agent: navigator.userAgent,
         referrer: document.referrer,
       };
 
+      console.log("Submitting payload to Supabase:", payload);
+
       // Save to Supabase
       const clientIntake = await clientIntakeAPI.createClientIntake(payload);
+      
+      if (!clientIntake || !clientIntake.id) {
+        throw new Error("Failed to create client intake record.");
+      }
+      
       console.log("Client intake saved for checkout:", clientIntake.id);
 
       // Send email notification
@@ -291,11 +242,17 @@ export default function RequestAISaaSBriefPage() {
       // Store intake ID for payment completion
       sessionStorage.setItem("currentIntakeId", clientIntake.id);
       
-      // Navigate to Stripe checkout
-      navigate('/stripe-checkout');
+      // Create Stripe checkout session and redirect to Stripe
+      const checkoutSession = await acceptPlanAndSubscribe(
+        planRecommendation.planId,
+        stage1Payload.country || 'OTHER'
+      );
+      
+      // Redirect to Stripe's hosted checkout
+      window.location.href = checkoutSession.checkoutUrl;
     } catch (error) {
       console.error("Error preparing checkout:", error);
-      setError("There was an error preparing your checkout. Please try again.");
+      setError(error.message || "There was an error preparing your checkout. Please try again.");
       setProcessing(false);
     }
   }
@@ -309,7 +266,7 @@ export default function RequestAISaaSBriefPage() {
     setShowPlanComparison(true);
   }
 
-  async function selectPlanForCheckout(planName, planPrice) {
+  async function selectPlanForCheckout(planName, planPrice, country) {
     setProcessingPlan(planName);
     setError(null);
     
@@ -321,12 +278,11 @@ export default function RequestAISaaSBriefPage() {
         planRecommendation: {
           ...planRecommendation,
           planName,
-          price: planPrice,
+          price: formatPriceForCountry(planPrice, country),
+          currency: getCurrencyForCountry(country).code,
         },
         selectedPlan: planName,
         action: "plan-selection-checkout",
-        detected_currency: localStorage.getItem("geo_currency") || null,
-        detected_country: localStorage.getItem("geo_country") || null,
         user_agent: navigator.userAgent,
         referrer: document.referrer,
       };
@@ -346,9 +302,20 @@ export default function RequestAISaaSBriefPage() {
         price: planPrice,
       }));
       
-      // Close modal and navigate to Stripe checkout
+      // Close modal and create Stripe checkout session
       setShowPlanComparison(false);
-      navigate('/stripe-checkout');
+      
+      // Get planId from planName
+      const planId = planName.toLowerCase().replace(' ', '-');
+      
+      // Create Stripe checkout session and redirect to Stripe
+      const checkoutSession = await acceptPlanAndSubscribe(
+        planId,
+        country || 'OTHER'
+      );
+      
+      // Redirect to Stripe's hosted checkout
+      window.location.href = checkoutSession.checkoutUrl;
     } catch (error) {
       console.error("Error preparing checkout for selected plan:", error);
       setError("There was an error preparing your checkout. Please try again.");
@@ -416,22 +383,7 @@ export default function RequestAISaaSBriefPage() {
             </div>
           )}
 
-          {stage === 2 && (
-              <div className={`${PAGE_HEADER_TO_FORM_SPACING} ${CARD_STYLES.base} p-6 border-cyan-400/20 bg-cyan-400/10`}>
-              <h2 className="font-heading text-lg font-semibold text-white mb-3">
-                Stage 2: Technical Details
-              </h2>
-              <p className="text-zinc-200 text-sm mb-4">
-                Recommended:{" "}
-                <span className="font-bold text-cyan-300">{planRecommendation?.planName}</span>{" "}
-                ({planRecommendation?.price})
-              </p>
-              <div className="text-xs text-zinc-400">
-                Complexity Score: {planRecommendation?.score}/10 | 30-Day Build Phase Applies
-              </div>
-            </div>
-          )}
-        </div>
+          </div>
 
         {status === "error" && (
           <div
@@ -447,30 +399,13 @@ export default function RequestAISaaSBriefPage() {
           </div>
         )}
 
-        <section
-          className={`${PAGE_HEADER_TO_FORM_SPACING} ${CARD_STYLES.base} p-6 border-emerald-400/20 bg-emerald-400/10`}
-        >
-          <h2 className="font-heading text-2xl font-semibold text-white mb-3">
-            What Happens After You Submit
-          </h2>
-          <ul className="space-y-2 text-zinc-200 text-sm md:text-base">
-            <li>- We review your project and confirm the right plan.</li>
-            <li>- You receive inclusions, timeline, and a payment link.</li>
-            <li>- Where relevant, we may also send a visual preview of our proposed direction.</li>
-            <li>- Once confirmed, we begin your build.</li>
-          </ul>
-        </section>
-
         <form
-          onSubmit={stage === 1 ? handleStage1Submit : handleFinalSubmit}
+          onSubmit={handleStage1Submit}
           className={FORM_CONTAINER_CLASS}
         >
           <input type="hidden" name="form-name" value="ai-saas-project-brief" />
 
-          {/* Stage 1 */}
-          {stage === 1 && (
-            <>
-              <section className={SECTION_CLASS}>
+          <section className={SECTION_CLASS}>
                 <h2 className={SECTION_TITLE_CLASS}>Basic Information</h2>
                 <div className={FORM_GRID_CLASS}>
                   <Field label="Full name" name="fullName" required />
@@ -482,17 +417,16 @@ export default function RequestAISaaSBriefPage() {
                     placeholder="Your company or brand name"
                   />
                   <Select
-                    label="Annual revenue range"
-                    name="annualRevenueRange"
+                    label="Country"
+                    name="country"
                     required
                     options={[
-                      { label: "Pre-revenue", value: "pre-revenue" },
-                      { label: "Under $50k", value: "under-50k" },
-                      { label: "$50k–$150k", value: "50k-150k" },
-                      { label: "$150k–$500k", value: "150k-500k" },
-                      { label: "$500k+", value: "500k-plus" },
+                      { label: "New Zealand", value: "NZ" },
+                      { label: "Australia", value: "AU" },
+                      { label: "Other", value: "OTHER" },
                     ]}
                   />
+                  <Field label="Phone (optional)" name="phone" />
                 </div>
               </section>
 
@@ -506,6 +440,18 @@ export default function RequestAISaaSBriefPage() {
                   placeholder="What do you do and who do you serve?"
                 />
                 <div className={FORM_GRID_CLASS}>
+                  <Select
+                    label="Annual revenue range"
+                    name="annualRevenueRange"
+                    required
+                    options={[
+                      { label: "Pre-revenue", value: "pre-revenue" },
+                      { label: "Under $50k", value: "under-50k" },
+                      { label: "$50k-$150k", value: "50k-150k" },
+                      { label: "$150k-$500k", value: "150k-500k" },
+                      { label: "$500k+", value: "500k-plus" },
+                    ]}
+                  />
                   <Select
                     label="Offer structure"
                     name="offerStructure"
@@ -617,8 +563,43 @@ export default function RequestAISaaSBriefPage() {
                   />
                 </div>
               </section>
-            </>
-          )}
+
+              <section className={SECTION_CLASS}>
+                <h2 className={SECTION_TITLE_CLASS}>Design & Brand</h2>
+                <div className={FORM_GRID_CLASS}>
+                  <Field label="Current website or product URL" name="currentUrl" placeholder="https://" />
+                  <Field label="Industry" name="industry" placeholder="e.g. Retail, coaching" />
+                </div>
+                <div className={FORM_GRID_CLASS}>
+                  <Textarea 
+                    label="Brand colors (hex codes)" 
+                    name="brandColors" 
+                    placeholder="e.g. #FF6B6B, #4ECDC4, #45B7D1 (separate with commas)" 
+                    rows={2}
+                  />
+                  <Textarea 
+                    label="Preferred fonts/typography" 
+                    name="preferredFonts" 
+                    placeholder="e.g. Inter, Poppins, Montserrat (separate with commas)" 
+                    rows={2}
+                  />
+                </div>
+                <div className={FORM_GRID_CLASS}>
+                  <Textarea 
+                    label="3 websites you like and why" 
+                    name="inspirationWebsites" 
+                    placeholder="e.g. apple.com (clean design), stripe.com (professional), notion.so (modern interface)" 
+                    rows={3}
+                  />
+                  <Textarea 
+                    label="How do you want your website to look, feel, or vibe?" 
+                    name="designVibe" 
+                    required
+                    placeholder="Describe the desired aesthetic, mood, and overall feeling you want to convey to visitors..." 
+                    rows={3}
+                  />
+                </div>
+              </section>
 
           {/* Plan Recommendation Modal */}
           {showRecommendation && planRecommendation && (
@@ -693,64 +674,6 @@ export default function RequestAISaaSBriefPage() {
                   </div>
                 </div>
 
-                <div className={`${CARD_STYLES.base} p-4 mb-6`}>
-                  <h4 className="font-semibold text-white mb-3">Build Complexity Assessment</h4>
-                  <div className="grid grid-cols-2 gap-3 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-zinc-400">Authentication:</span>
-                      <span
-                        className={
-                          planRecommendation.flags.requiresAuth
-                            ? "text-emerald-300"
-                            : "text-zinc-500"
-                        }
-                      >
-                        {planRecommendation.flags.requiresAuth ? "Required" : "Not Required"}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-zinc-400">Payments:</span>
-                      <span
-                        className={
-                          planRecommendation.flags.requiresPayments
-                            ? "text-emerald-300"
-                            : "text-zinc-500"
-                        }
-                      >
-                        {planRecommendation.flags.requiresPayments ? "Required" : "Not Required"}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-zinc-400">Member Portal:</span>
-                      <span
-                        className={
-                          planRecommendation.flags.requiresMemberPortal
-                            ? "text-emerald-300"
-                            : "text-zinc-500"
-                        }
-                      >
-                        {planRecommendation.flags.requiresMemberPortal
-                          ? "Required"
-                          : "Not Required"}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-zinc-400">Automation:</span>
-                      <span
-                        className={
-                          planRecommendation.flags.requiresAutomation
-                            ? "text-emerald-300"
-                            : "text-zinc-500"
-                        }
-                      >
-                        {planRecommendation.flags.requiresAutomation
-                          ? "Required"
-                          : "Not Required"}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
                 <div className="flex flex-col sm:flex-row gap-3">
                   <button
                     type="button"
@@ -785,103 +708,6 @@ export default function RequestAISaaSBriefPage() {
                 </p>
               </div>
             </div>
-          )}
-
-          {/* Stage 2 */}
-          {stage === 2 && (
-            <>
-              {/* Hidden inputs for Stage 1 values */}
-              {stage1Payload &&
-                Object.entries(stage1Payload).map(([key, value]) => {
-                  if (key === "form-name") return null;
-                  if (Array.isArray(value)) {
-                    return value.map((val, index) => (
-                      <input key={`${key}-${index}`} type="hidden" name={key} value={val} />
-                    ));
-                  }
-                  return <input key={key} type="hidden" name={key} value={value} />;
-                })}
-
-              <section className={SECTION_CLASS}>
-                <h2 className={SECTION_TITLE_CLASS}>Additional Details</h2>
-                <div className={FORM_GRID_CLASS}>
-                  <Field label="Phone (optional)" name="phone" />
-                  <Field label="Current website or product URL" name="currentUrl" placeholder="https://" />
-                  <Field label="Industry" name="industry" placeholder="e.g. Retail, coaching" />
-                  <Field label="Primary growth goal" name="primaryGoal" placeholder="e.g. Increase leads, improve retention" />
-                </div>
-
-                <Textarea
-                  label="Who are the primary users?"
-                  name="primaryUsers"
-                  required
-                  rows={3}
-                  placeholder="Describe your target audience"
-                />
-
-                <div className={FORM_GRID_CLASS}>
-                  <Field label="Desired user action" name="desiredUserAction" placeholder="e.g. Sign up, purchase, book a call" />
-                  <Field label="Primary success metric" name="successMetric" placeholder="e.g. leads, conversion lift" />
-                </div>
-              </section>
-
-              {/* Technical details only if needed */}
-              {planRecommendation?.flags?.requiresAuth ||
-              planRecommendation?.flags?.requiresPayments ||
-              planRecommendation?.flags?.requiresMemberPortal ? (
-                <section className={SECTION_CLASS}>
-                  <h2 className={SECTION_TITLE_CLASS}>Technical Requirements</h2>
-                  <div className={FORM_GRID_CLASS}>
-                    <Field label="Current stack / platform" name="currentStack" placeholder="e.g. WordPress, Webflow, custom, none" />
-                    <Field label="Integrations needed" name="integrationsNeeded" placeholder="e.g. Stripe, Mailchimp, Zapier" />
-                    <Field label="Authentication requirements" name="authRequirements" placeholder="e.g. Email/password, SSO, social login" />
-                    <Field label="Security requirements" name="securityRequirements" placeholder="e.g. GDPR, HIPAA, SOC2" />
-                  </div>
-                  <Textarea
-                    label="Additional technical requirements"
-                    name="technicalRequirements"
-                    rows={3}
-                    placeholder="Any other technical specifications, APIs, or constraints"
-                  />
-                </section>
-              ) : null}
-
-              <section className={SECTION_CLASS}>
-                <h2 className={SECTION_TITLE_CLASS}>Assets & Timeline</h2>
-                <div className={FORM_GRID_CLASS}>
-                  <Select
-                    label="Content readiness"
-                    name="contentReadiness"
-                    options={[
-                      { label: "Yes, ready to go", value: "yes" },
-                      { label: "Some, need help", value: "some" },
-                      { label: "No, starting from scratch", value: "no" },
-                    ]}
-                  />
-                  <Select
-                    label="Brand readiness"
-                    name="brandReadiness"
-                    options={[
-                      { label: "Yes, brand guidelines ready", value: "yes" },
-                      { label: "Partial, need refinement", value: "partial" },
-                      { label: "No, need brand development", value: "no" },
-                    ]}
-                  />
-                </div>
-
-                <div className={FORM_GRID_CLASS}>
-                  <Field label="Brand colors (hex codes)" name="brandColors" placeholder="e.g. #FF5733, #33FF57" />
-                  <Field label="Timeline" name="timeline" placeholder="e.g. 4–6 weeks" />
-                </div>
-
-                <Textarea
-                  label="Known constraints or risks"
-                  name="constraintsAndRisks"
-                  rows={3}
-                  placeholder="Compliance, deadlines, technical limits, etc."
-                />
-              </section>
-            </>
           )}
 
           {/* Pricing Acknowledgement */}
@@ -945,9 +771,7 @@ export default function RequestAISaaSBriefPage() {
                 ? "Sending..."
                 : status === "processing"
                 ? "Calculating..."
-                : stage === 1
-                ? "Get Plan Recommendation"
-                : "Submit Project Brief"}
+                : "Get Plan Recommendation"}
               <ArrowRight className="w-4 h-4" strokeWidth={2} />
             </button>
             <p className="text-xs text-zinc-500 sm:ml-4">
@@ -989,7 +813,7 @@ export default function RequestAISaaSBriefPage() {
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {PRICING_TIERS.map((tier) => (
+            {pricingTiers.map((tier) => (
               <div key={tier.name} className={`${CARD_STYLES.base} p-6 ${tier.highlight ? "border-emerald-400/30 bg-emerald-400/5" : tier.planId === "authority" ? "border-purple-400/30 bg-purple-400/5" : "border-zinc-700/50"}`}>
                 <div className="text-center mb-6">
                   {tier.highlight && (
@@ -1013,12 +837,17 @@ export default function RequestAISaaSBriefPage() {
                 </ul>
 
                 <button
-                  onClick={() => selectPlanForCheckout(tier.name, tier.price)}
+                  onClick={() => {
+                    const price = getPrice(tier.planId);
+                    selectPlanForCheckout(tier.name, price, stage1Payload.country || 'OTHER');
+                  }}
                   disabled={processingPlan === tier.name}
                   className={`w-full font-semibold px-4 py-3 rounded-lg transition disabled:opacity-50 flex items-center justify-center gap-2 ${
                     tier.planId === "authority" 
-                      ? "bg-purple-400 text-black hover:bg-purple-300" 
-                      : BG_COLORS.emerald + " text-black hover:opacity-90"
+                      ? "bg-purple-500 hover:bg-purple-600 text-white" 
+                      : tier.highlight 
+                        ? "bg-emerald-500 hover:bg-emerald-600 text-white"
+                        : "bg-zinc-700 hover:bg-zinc-600 text-white"
                   }`}
                 >
                   {processingPlan === tier.name ? (

@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS client_intakes (
   email TEXT NOT NULL,
   phone TEXT,
   business_name TEXT NOT NULL,
-  current_url TEXT,
+  country TEXT NOT NULL, -- User's country for currency determination
+  current_url TEXT, -- User's current website URL (if they have one)
   industry TEXT,
   
   -- Business Details
@@ -27,6 +28,12 @@ CREATE TABLE IF NOT EXISTS client_intakes (
   service_path TEXT NOT NULL, -- managed, custom
   project_vision TEXT NOT NULL,
   hosting_expectation TEXT NOT NULL, -- managed-hosting, owner-access, full-control
+  
+  -- Design & Brand (NEW)
+  brand_colors TEXT, -- Hex codes for brand colors
+  preferred_fonts TEXT, -- Preferred typography/fonts
+  inspiration_websites TEXT, -- 3 websites they like + why
+  design_vibe TEXT NOT NULL, -- How they want website to look/feel (MANDATORY)
   
   -- Project Details
   project_types TEXT[], -- Array of project types
@@ -44,7 +51,6 @@ CREATE TABLE IF NOT EXISTS client_intakes (
   -- Assets & Timeline
   content_readiness TEXT,
   brand_readiness TEXT,
-  brand_colors TEXT,
   timeline TEXT,
   constraints_and_risks TEXT,
   
@@ -68,13 +74,8 @@ CREATE TABLE IF NOT EXISTS client_intakes (
   stripe_customer_id TEXT,
   stripe_subscription_id TEXT,
   
-  -- Discounts & Offers
-  launch_offer_requested BOOLEAN DEFAULT FALSE,
-  pacific_market_discount BOOLEAN DEFAULT FALSE,
-  
   -- Metadata
   user_agent TEXT,
-  ip_address TEXT,
   referrer TEXT
 );
 
@@ -109,11 +110,16 @@ CREATE POLICY "Service role can access all client intakes" ON client_intakes
 
 -- Comments for documentation
 COMMENT ON TABLE client_intakes IS 'Tracks all client project submissions from qualification through launch';
+COMMENT ON COLUMN client_intakes.current_url IS 'User current website URL (if they have one)';
 COMMENT ON COLUMN client_intakes.annual_revenue_range IS 'Client revenue stage for plan recommendation';
 COMMENT ON COLUMN client_intakes.offer_structure IS 'Type of offer/client business model';
 COMMENT ON COLUMN client_intakes.monthly_leads_expected IS 'Expected monthly lead volume for complexity scoring';
 COMMENT ON COLUMN client_intakes.content_frequency IS 'How often client needs content updates';
 COMMENT ON COLUMN client_intakes.service_path IS 'Managed infrastructure vs custom AI/SaaS build';
+COMMENT ON COLUMN client_intakes.brand_colors IS 'Hex codes for brand colors';
+COMMENT ON COLUMN client_intakes.preferred_fonts IS 'Preferred typography/fonts';
+COMMENT ON COLUMN client_intakes.inspiration_websites IS '3 websites they like + why';
+COMMENT ON COLUMN client_intakes.design_vibe IS 'How they want website to look/feel (MANDATORY)';
 COMMENT ON COLUMN client_intakes.recommended_plan IS 'Automated plan recommendation: starter, growth, authority, or custom';
 COMMENT ON COLUMN client_intakes.complexity_score IS '0-10 score from automated complexity algorithm';
 COMMENT ON COLUMN client_intakes.plan_flags IS 'JSON object with build complexity flags';

@@ -1,149 +1,91 @@
 import { PRICE_IDS } from "../constants/priceIds";
-import { currencyFromCountry } from "./currencyUtils";
 import { clientIntakeAPI } from "./supabaseClient";
+import { currencyFromCountry } from "./currencyMapping";
 
-// Cache currency detection to avoid repeated API calls
-export async function getUserCountryCached() {
-  const cached = localStorage.getItem("geo_country");
-  if (cached) return cached;
-
+// Create Stripe checkout session
+export async function createStripeCheckoutSession(planId, clientIntakeId, successUrl, cancelUrl, country = 'OTHER') {
   try {
-    const res = await fetch("https://ipapi.co/json/");
-    const data = await res.json();
-    if (data?.country_code) {
-      localStorage.setItem("geo_country", data.country_code);
-      return data.country_code;
-    }
-  } catch (e) {
-    console.warn("Could not detect country:", e);
-  }
-  return null;
-}
-
-export async function getUserCurrencyCached() {
-  const cached = localStorage.getItem("geo_currency");
-  if (cached) return cached; // expects "NZD" | "AUD" | "USD"
-
-  const country = await getUserCountryCached();
-  const currency = currencyFromCountry(country) || "USD";
-  localStorage.setItem("geo_currency", currency);
-  return currency;
-}
-
-// Get user's country (client-side detection)
-export async function getUserCountry() {
-  try {
-    // Try to get country from IP geolocation API
-    const response = await fetch('https://ipapi.co/json/');
-    const data = await response.json();
-    return data.country_code;
-  } catch (error) {
-    console.warn('Could not detect country:', error);
-    return null;
-  }
-}
-
-// Get currency for user
-export async function getUserCurrency() {
-  const country = await getUserCountry();
-  return currencyFromCountry(country);
-}
-
-// Create SaaSy Cookies subscription checkout
-export async function createSaasySubscription(intakeId, planId, discounts = []) {
-  const currency = await getUserCurrencyCached(); // "NZD" | "AUD" | "USD"
-
-  try {
-    const response = await fetch('/.netlify/functions/create-saasy-subscription', {
+    // Get currency based on country
+    const currency = currencyFromCountry(country);
+    
+    const response = await fetch('/.netlify/functions/create-saasy-checkout', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ 
-        intakeId, 
-        planId, 
-        discounts, 
-        currency 
+      body: JSON.stringify({
+        priceId: PRICE_IDS[planId]?.[currency] || PRICE_IDS[planId]?.USD, // Fallback to USD
+        clientIntakeId,
+        successUrl,
+        cancelUrl,
+        currency, // Pass currency to backend for reference
       }),
     });
 
-    const data = await response.json();
-    
     if (!response.ok) {
-      throw new Error(data.error || 'Failed to create subscription');
+      throw new Error('Failed to create checkout session');
     }
 
-    return data;
+    const session = await response.json();
+    return session;
   } catch (error) {
-    console.error('SaaSy subscription error:', error);
-    throw error;
-  }
-}
-
-// Create subscription checkout session (legacy for digital cards)
-export async function createSubscriptionCheckout(plan) {
-  try {
-    const response = await fetch('/.netlify/functions/create-subscription-checkout', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ plan }),
-    });
-
-    const data = await response.json();
-    
-    if (!response.ok) {
-      throw new Error(data.error || 'Failed to create checkout session');
-    }
-
-    return data;
-  } catch (error) {
-    console.error('Stripe service error:', error);
-    throw error;
-  }
-}
-
-// Accept plan and create subscription
-export async function acceptPlanAndSubscribe(planId, discounts = []) {
-  try {
-    // Get current intake ID from session storage
-    const intakeId = sessionStorage.getItem('currentIntakeId');
-    
-    if (!intakeId) {
-      throw new Error('No intake ID found. Please complete the form first.');
-    }
-
-    // Create subscription
-    const subscriptionData = await createSaasySubscription(intakeId, planId, discounts);
-    
-    return subscriptionData;
-  } catch (error) {
-    console.error('Plan acceptance error:', error);
+    console.error('Stripe checkout error:', error);
     throw error;
   }
 }
 
 // Get price ID for plan and currency
-export function getPriceId(plan, currency) {
-  return PRICE_IDS[plan]?.[currency];
+export function getPriceId(planId, currency = 'USD') {
+  return PRICE_IDS[planId]?.[currency];
 }
 
-// Get available plans
-export function getAvailablePlans() {
-  return Object.keys(PRICE_IDS);
+// Get currency from client intake data
+export function getCurrencyFromIntake(clientIntake) {
+  const country = clientIntake.country || 'OTHER';
+  return currencyFromCountry(country);
 }
 
-// Get available currencies for a plan
-export function getAvailableCurrencies(plan) {
-  return Object.keys(PRICE_IDS[plan] || {});
+// Update client intake with payment information
+export async function updateClientIntakeWithPayment(clientIntakeId, paymentData) {
+  try {
+    const { data, error } = await clientIntakeAPI.updateStatus(clientIntakeId, 'payment_initiated', paymentData);
+    
+    if (error) {
+      throw error;
+    }
+    
+    return data;
+  } catch (error) {
+    console.error('Error updating client intake with payment:', error);
+    throw error;
+  }
 }
 
-// Check if user has any available discounts
-export function getAvailableDiscounts(formData) {
-  const discounts = [];
-  
-  // No discounts currently available
-  
-  return discounts;
+// Accept plan and create Stripe checkout session
+export async function acceptPlanAndSubscribe(planId, country = 'OTHER') {
+  try {
+    // Get current intake ID from session storage
+    const intakeId = sessionStorage.getItem('currentIntakeId');
+    
+    if (!intakeId) {
+      throw new Error('No intake ID found');
+    }
+
+    // Create checkout session with correct currency
+    const session = await createStripeCheckoutSession(
+      planId,
+      intakeId,
+      `${window.location.origin}/checkout-success`,
+      `${window.location.origin}/pricing`,
+      country
+    );
+
+    return {
+      checkoutUrl: session.url,
+      sessionId: session.id,
+    };
+  } catch (error) {
+    console.error('Error accepting plan and subscribing:', error);
+    throw error;
+  }
 }

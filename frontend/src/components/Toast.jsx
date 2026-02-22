@@ -1,4 +1,4 @@
-import { toast as sonnerToast } from 'sonner';
+import { toast as sonnerToast, Toaster as SonnerToaster } from 'sonner';
 import { CheckCircle, AlertCircle, AlertTriangle, Info, X } from 'lucide-react';
 
 export const toast = {
@@ -41,7 +41,7 @@ export const toast = {
 
 export function Toaster() {
   return (
-    <sonnerToast.Toaster
+    <SonnerToaster
       position="top-right"
       expand={false}
       richColors
@@ -54,3 +54,6 @@ export function Toaster() {
     />
   );
 }
+
+// Also export a default export for compatibility
+export default Toaster;

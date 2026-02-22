@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Check, X, ArrowRight, AlertTriangle, CheckCircle } from "lucide-react";
 import { SECTION_LABEL_STYLES, SECTION_TITLE_STYLES, CARD_STYLES, SECTION_DESCRIPTION_STYLES } from "../constants/formStyles";
-import { PRICING_TIERS } from "../constants/pricingConstants";
+import { usePricing } from "../hooks/usePricing";
 
 const journeySteps = [
   {
@@ -70,6 +70,8 @@ const faqItems = [
 ];
 
 export default function PricingPage() {
+  const { pricingTiers, country, currency } = usePricing();
+
   return (
     <div className="bg-void text-white">
       <section className="relative py-20 md:py-28 overflow-hidden">
@@ -137,7 +139,7 @@ export default function PricingPage() {
           <h2 className={SECTION_TITLE_STYLES.main}>Subscription Plans</h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {PRICING_TIERS.map((tier) => (
+            {pricingTiers.map((tier) => (
               <article
                 key={tier.name}
                 className={`${CARD_STYLES.base} ${tier.highlight ? "ring-emerald-400/70 shadow-[0_0_0_1px_rgba(52,211,153,0.4)]" : ""} flex flex-col h-full`}

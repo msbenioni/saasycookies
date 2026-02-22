@@ -2,7 +2,7 @@
 export const PRICING_TIERS = [
   {
     name: "Starter Presence",
-    price: "$79/month",
+    price: 79,
     subtitle: "12-month minimum | 30-Day Build Phase",
     description: "For service providers who need a clean, professional online presence.",
     cta: "Start Starter Plan",
@@ -27,7 +27,7 @@ export const PRICING_TIERS = [
   },
   {
     name: "Growth Engine",
-    price: "$149/month",
+    price: 149,
     subtitle: "12-month minimum | 30-Day Build Phase",
     description: "For coaches, consultants, and personal brands selling offers.",
     cta: "Launch Growth Plan",
@@ -55,7 +55,7 @@ export const PRICING_TIERS = [
   },
   {
     name: "Authority System",
-    price: "$249/month",
+    price: 249,
     subtitle: "12-month minimum | 30-Day Build Phase",
     description: "For founders building a full ecosystem.",
     cta: "Build Authority System",
@@ -84,6 +84,16 @@ export const PRICING_TIERS = [
     excludes: [],
   },
 ];
+
+import { formatPriceForCountry } from '../utils/currencyMapping';
+
+// Function to get pricing tiers with country-specific pricing (same price, different currency)
+export const getPricingTiersForCountry = (country) => {
+  return PRICING_TIERS.map(tier => ({
+    ...tier,
+    price: formatPriceForCountry(tier.price, country) + '/month',
+  }));
+};
 
 // Helper functions for pricing data
 export const getPlanByName = (name) => {
