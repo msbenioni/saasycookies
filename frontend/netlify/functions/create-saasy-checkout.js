@@ -56,12 +56,44 @@ exports.handler = async (event) => {
     }
 
     // Get currency based on country
-    const { currencyFromCountry } = require('../src/utils/currencyMapping');
-    const { BUILD_FEE_PRICE_IDS } = require('../src/constants/priceIds');
+    const getCurrencyFromCountry = (country) => {
+      const currencyMap = {
+        'NZ': 'NZD',
+        'AU': 'AUD', 
+        'US': 'USD',
+        'CA': 'USD',
+        'GB': 'USD',
+        'DEFAULT': 'USD'
+      };
+      return currencyMap[country] || currencyMap['DEFAULT'];
+    };
     
-    const currency = currencyFromCountry(country) || 'USD';
+    const currency = getCurrencyFromCountry(country) || 'USD';
     
-    // Get coupon code based on plan (for $10 first month)
+    // Get price ID based on plan and currency
+    const getPriceId = (planId, currency) => {
+      const priceMap = {
+        starter: {
+          'NZD': 'price_1T24X1LWHkuDViMmCeG8Kyw6',
+          'AUD': 'price_1T24YZLWHkuDViMm04DcARPi',
+          'USD': 'price_1T24YNLWHkuDViMmYSLza6B6'
+        },
+        growth: {
+          'NZD': 'price_1T24aYLWHkuDViMmUybhM4hx',
+          'AUD': 'price_1T24aoLWHkuDViMm0wMiHmF0',
+          'USD': 'price_1T24axLWHkuDViMmB2oFjJ6W'
+        },
+        authority: {
+          'NZD': 'price_1T24cFLWHkuDViMmO1qyBuTd',
+          'AUD': 'price_1T24caLWHkuDViMmERxwkpy6',
+          'USD': 'price_1T24cRLWHkuDViMm3rtOZ17f'
+        }
+      };
+      return priceMap[planId]?.[currency] || priceMap[planId]?.['USD'];
+    };
+
+    // Get the actual price ID for the plan
+    const actualPriceId = getPriceId(planId, currency);
     const getCouponForPlan = (planId) => {
       switch(planId) {
         case 'starter': return 'QvxfgbUc';  // $79 - $69 = $10
@@ -76,7 +108,7 @@ exports.handler = async (event) => {
       payment_method_types: ['card'],
       line_items: [
         {
-          price: priceId, // Standard plan price
+          price: actualPriceId, // Use the actual price ID from our mapping
           quantity: 1,
         },
       ],
@@ -95,7 +127,7 @@ exports.handler = async (event) => {
         full_name: intake.full_name,
         business_name: intake.business_name,
         country: intake.country,
-        plan_id: priceId,
+        plan_id: actualPriceId,
         currency: currency,
         first_month_price: '10',
       },
