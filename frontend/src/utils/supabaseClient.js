@@ -94,7 +94,6 @@ export const clientIntakeAPI = {
           user_agent: intakeData.user_agent || null,
           referrer: intakeData.referrer || null,
         }])
-        .select()
         .single();
 
       if (error) {

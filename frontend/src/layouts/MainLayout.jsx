@@ -1,4 +1,4 @@
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Brain, Globe, FileText, QrCode, Menu, X, Layers, CreditCard, DollarSign } from "lucide-react";
 import { LOGO_CLASSES } from "../constants/logo";
@@ -31,6 +31,12 @@ const navLinks = [
 export default function MainLayout() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleNavigation = (to) => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    navigate(to);
+  };
 
   return (
     <div className="min-h-screen bg-void text-white font-body">
@@ -59,9 +65,9 @@ export default function MainLayout() {
               const Icon = link.icon;
               const active = location.pathname === link.to;
               return (
-                <Link
+                <button
                   key={link.to}
-                  to={link.to}
+                  onClick={() => handleNavigation(link.to)}
                   data-testid={`nav-${link.label.toLowerCase().replace(/\s/g, "-")}`}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${
                     active
@@ -79,7 +85,7 @@ export default function MainLayout() {
                     <Icon className={`w-3.5 h-3.5 ${active ? link.color : ""}`} strokeWidth={1.5} />
                   )}
                   <span className={link.color}>{link.label}</span>
-                </Link>
+                </button>
               );
             })}
           </nav>
@@ -102,11 +108,13 @@ export default function MainLayout() {
               const Icon = link.icon;
               const active = location.pathname === link.to;
               return (
-                <Link
+                <button
                   key={link.to}
-                  to={link.to}
+                  onClick={() => {
+                    handleNavigation(link.to);
+                    setMobileOpen(false);
+                  }}
                   data-testid={`mobile-nav-${link.label.toLowerCase().replace(/\s/g, "-")}`}
-                  onClick={() => setMobileOpen(false)}
                   className={`flex items-center gap-2.5 px-4 py-3 rounded-lg text-sm font-medium transition-all ${
                     active
                       ? "bg-white/10 text-white"
@@ -115,7 +123,7 @@ export default function MainLayout() {
                 >
                   <Icon className={`w-4 h-4 ${active ? link.color : link.color}`} strokeWidth={1.5} />
                   <span className={link.color}>{link.label}</span>
-                </Link>
+                </button>
               );
             })}
           </div>
@@ -140,27 +148,27 @@ export default function MainLayout() {
             <span>&copy; {new Date().getFullYear()} SaaSy Cookies. All rights reserved.</span>
           </div>
           <div className="flex items-center gap-6">
-            <Link
-              to="/contact"
+            <button
+              onClick={() => handleNavigation("/contact")}
               data-testid="footer-contact"
               className="text-sm text-zinc-500 hover:text-white transition-colors"
             >
               Contact
-            </Link>
-            <Link
-              to="/privacy"
+            </button>
+            <button
+              onClick={() => handleNavigation("/privacy")}
               data-testid="footer-privacy"
               className="text-sm text-zinc-500 hover:text-white transition-colors"
             >
               Privacy
-            </Link>
-            <Link
-              to="/terms"
+            </button>
+            <button
+              onClick={() => handleNavigation("/terms")}
               data-testid="footer-terms"
               className="text-sm text-zinc-500 hover:text-white transition-colors"
             >
               Terms
-            </Link>
+            </button>
           </div>
         </div>
       </footer>

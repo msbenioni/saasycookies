@@ -1,6 +1,10 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { HelmetProvider } from 'react-helmet-async';
+import ErrorBoundary from "./components/ErrorBoundary";
+import SEO from "./components/SEO";
+import { Toaster } from "./components/Toast";
 import MainLayout from "./layouts/MainLayout";
 import HomePage from "./pages/HomePage";
 import SenseAIPage from "./pages/seo/SenseAIPage";
@@ -20,16 +24,28 @@ import ProjectBriefThankYouPage from "./pages/ProjectBriefThankYouPage";
 import PricingPage from "./pages/PricingPage";
 import StripeCheckoutPage from "./pages/StripeCheckoutPage";
 import CheckoutSuccessPage from "./pages/CheckoutSuccessPage";
+import NotFoundPage from "./pages/NotFoundPage";
 import ScrollToTop from "./components/ScrollToTop";
+import { useAnalytics } from "./hooks/useAnalytics";
+import { site } from "./config/site";
 
-function App() {
+function AppContent() {
+  const location = useLocation();
+  const { trackPageView } = useAnalytics();
+
+  useEffect(() => {
+    // Track page views
+    trackPageView(location.pathname);
+  }, [location.pathname, trackPageView]);
+
   useEffect(() => {
     // Disable browser scroll restoration
     window.history.scrollRestoration = 'manual';
   }, []);
 
   return (
-    <BrowserRouter>
+    <>
+      <SEO />
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />
@@ -51,9 +67,23 @@ function App() {
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />
         </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <ScrollToTop />
-    </BrowserRouter>
+      <Toaster />
+    </>
+  );
+}
+
+function App() {
+  return (
+    <HelmetProvider>
+      <BrowserRouter>
+        <ErrorBoundary>
+          <AppContent />
+        </ErrorBoundary>
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }
 

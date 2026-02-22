@@ -310,10 +310,6 @@ export default function RequestAISaaSBriefPage() {
   }
 
   async function selectPlanForCheckout(planName, planPrice) {
-    console.log("selectPlanForCheckout called with:", { planName, planPrice });
-    console.log("stage1Payload:", stage1Payload);
-    console.log("planRecommendation:", planRecommendation);
-    
     setProcessingPlan(planName);
     setError(null);
     
@@ -335,15 +331,11 @@ export default function RequestAISaaSBriefPage() {
         referrer: document.referrer,
       };
 
-      console.log("Payload created:", payload);
-
       // Save to Supabase
       const clientIntake = await clientIntakeAPI.createClientIntake(payload);
-      console.log("Client intake saved for plan selection:", clientIntake.id);
 
       // Send email notification
       await sendProjectBriefEmail(payload);
-      console.log("Email sent successfully");
 
       // Store intake ID and selected plan for checkout
       sessionStorage.setItem("currentIntakeId", clientIntake.id);
@@ -353,8 +345,6 @@ export default function RequestAISaaSBriefPage() {
         planName,
         price: planPrice,
       }));
-      
-      console.log("Session storage updated, navigating to checkout...");
       
       // Close modal and navigate to Stripe checkout
       setShowPlanComparison(false);
