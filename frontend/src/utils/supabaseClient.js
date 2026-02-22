@@ -169,23 +169,19 @@ export const clientIntakeAPI = {
     try {
       const { data, error } = await supabase
         .from('client_intakes')
-        .update({
-          status,
-          ...additionalData,
-          updated_at: new Date().toISOString()
+        .update({ 
+          status, 
+          updated_at: new Date().toISOString(),
+          ...additionalData 
         })
         .eq('id', intakeId)
         .select()
         .single();
 
-      if (error) {
-        console.error('Error updating client intake status:', error);
-        throw error;
-      }
-
+      if (error) throw error;
       return data;
     } catch (error) {
-      console.error('Status update failed:', error);
+      console.error('Error updating client intake status:', error);
       throw error;
     }
   },

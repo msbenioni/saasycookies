@@ -175,11 +175,14 @@ export default function RequestAISaaSBriefPage() {
 
     // Calculate plan recommendation
     const recommendation = recommendPlan(payload);
+    const buildPrompt = generateBuildPrompt(payload, recommendation);
+    
     setPlanRecommendation(recommendation);
     setStage1Payload(payload);
 
-    // Store stage 1 payload for later use in Stripe checkout
+    // Store stage 1 payload and build prompt for later use
     sessionStorage.setItem("stage1Payload", JSON.stringify(payload));
+    sessionStorage.setItem("buildPrompt", buildPrompt);
     
     // Save country to localStorage for PricingPage
     if (payload.country) {
@@ -214,18 +217,20 @@ export default function RequestAISaaSBriefPage() {
         throw new Error("No form data found. Please complete the form first.");
       }
       
+      // Get build prompt from sessionStorage
+      const buildPrompt = sessionStorage.getItem("buildPrompt");
+      
       // Create complete payload with all required fields
       const payload = {
         ...stage1Payload,
         "form-name": "ai-saas-project-brief",
         planRecommendation,
         selectedPlan: planRecommendation.planName,
+        buildPrompt,
         action: "stripe-checkout",
         user_agent: navigator.userAgent,
         referrer: document.referrer,
       };
-
-      console.log("Submitting payload to Supabase:", payload);
 
       // Save to Supabase
       const clientIntake = await clientIntakeAPI.createClientIntake(payload);
@@ -273,6 +278,9 @@ export default function RequestAISaaSBriefPage() {
     setError(null);
     
     try {
+      // Get build prompt from sessionStorage
+      const buildPrompt = sessionStorage.getItem("buildPrompt");
+      
       // Create payload with selected plan
       const payload = {
         ...stage1Payload,
@@ -284,6 +292,7 @@ export default function RequestAISaaSBriefPage() {
           currency: getCurrencyForCountry(country).code,
         },
         selectedPlan: planName,
+        buildPrompt,
         action: "plan-selection-checkout",
         user_agent: navigator.userAgent,
         referrer: document.referrer,
@@ -639,6 +648,9 @@ export default function RequestAISaaSBriefPage() {
                       </h3>
                       <p className="text-2xl font-bold text-emerald-300">
                         {planRecommendation.price}
+                        <span className="text-sm text-zinc-400 ml-2">
+                          (First month: $10)
+                        </span>
                       </p>
                     </div>
                     <div className="text-right">
