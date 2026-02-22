@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import {
   FileText, QrCode, ArrowRight,
-  Sparkles, ChevronRight, CreditCard
+  Sparkles, ChevronRight, CreditCard,
+  AlertTriangle, CheckCircle, Clock, BookOpen, Wrench, DollarSign, Users, Cpu, Plug, Zap, TrendingUp, Target, Shield
 } from "lucide-react";
 import { PRODUCT_LOGOS } from "../constants/productLogos";
 import { SECTION_TITLE_STYLES, SECTION_LABEL_STYLES, CARD_STYLES, SECTION_DESCRIPTION_STYLES } from "../constants/formStyles";
@@ -21,7 +22,7 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20200%20200%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cfilter%20id%3D%22n%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.65%22%20numOctaves%3D%223%22%20stitchTiles%3D%22stitch%22/%3E%3C/filter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url(%23n)%22%20opacity%3D%220.03%22/%3E%3C/svg%3E')]" />
 
         <div className="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-24 w-full">
-          <div className="max-w-3xl">
+          <div className="max-w-5xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-xs font-medium mb-8 opacity-0 animate-fade-in">
               <Sparkles className="w-3 h-3" strokeWidth={1.5} />
               AI Systems Company
@@ -29,7 +30,7 @@ export default function HomePage() {
 
             <h1
               data-testid="hero-title"
-              className="font-heading text-5xl md:text-7xl font-extrabold tracking-tight leading-none mb-6 opacity-0 animate-fade-in-delay-1"
+              className="font-heading text-3xl sm:text-5xl md:text-7xl font-extrabold tracking-tight leading-none mb-6 opacity-0 animate-fade-in-delay-1"
             >
               We Build Revenue-Ready
               <br />
@@ -76,47 +77,54 @@ export default function HomePage() {
             <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
             <span className={SECTION_LABEL_STYLES.emerald}>Choose Your Path</span>
           </div>
-          <h2 className={SECTION_TITLE_STYLES.main}>Two Ways to Work With SaaSy Cookies</h2>
+          <h2 className={SECTION_TITLE_STYLES.main}>
+            <span className="text-emerald-400 font-extrabold">Two Ways</span>{" "}
+            <span className="text-white font-light">to Work With SaaSy Cookies</span>
+          </h2>
           <p className={`${SECTION_DESCRIPTION_STYLES} max-w-3xl`}>
             Choose the model that matches your stage: predictable pricing plans or a custom AI/SaaS product build.
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <article className={`${CARD_STYLES.base} hover:ring-emerald-400/40`}>
-              <div className={CARD_STYLES.padding}>
-                <h3 className="font-heading text-2xl font-bold text-emerald-300 mb-3">Managed Digital Infrastructure</h3>
-                <p className="text-zinc-200 mb-5">
+            <article className={`${CARD_STYLES.base} hover:ring-emerald-400/40 flex flex-col h-full`}>
+              <div className={`${CARD_STYLES.padding} flex flex-col h-full`}>
+                <h3 className={`${CARD_STYLES.lightText.title} text-emerald-600`}>Managed Digital Infrastructure</h3>
+                <p className={CARD_STYLES.lightText.description}>
                   For founders who need website, funnels, payments, automation, and ongoing system management.
                 </p>
-                <ul className="space-y-2 text-sm text-zinc-300 mb-6">
+                <ul className={`space-y-2 ${CARD_STYLES.lightText.list} mb-6`}>
                   <li>Predictable subscription.</li>
                   <li>Launched in 2 weeks (most projects).</li>
-                  <li>$10 build-fee to begin your build.</li>
+                  <li>$10 build-fee to begin your project.</li>
                 </ul>
-                <Link
-                  to="/pricing"
-                  className="inline-flex items-center gap-2 rounded-md bg-emerald-400 text-black font-semibold px-6 py-3 hover:bg-emerald-300 transition"
-                >
-                  View Plans
-                  <ArrowRight className="w-4 h-4" strokeWidth={2} />
-                </Link>
+                <div className="mt-auto">
+                  <Link
+                    to="/pricing"
+                    className="inline-flex items-center gap-2 rounded-md bg-emerald-400 text-black font-semibold px-6 py-3 hover:bg-emerald-300 transition"
+                  >
+                    View Plans
+                    <ArrowRight className="w-4 h-4" strokeWidth={2} />
+                  </Link>
+                </div>
               </div>
             </article>
 
-            <article className={`${CARD_STYLES.base} hover:ring-cyan-400/40`}>
-              <div className={CARD_STYLES.padding}>
-                <h3 className="font-heading text-2xl font-bold text-cyan-300 mb-3">Custom AI & SaaS Systems</h3>
-                <p className="text-zinc-200 mb-5">
+            <article className={`${CARD_STYLES.base} hover:ring-cyan-400/40 flex flex-col h-full`}>
+              <div className={`${CARD_STYLES.padding} flex flex-col h-full`}>
+                <h3 className={`${CARD_STYLES.lightText.title} text-cyan-600`}>Custom AI & SaaS Systems</h3>
+                <p className={CARD_STYLES.lightText.description}>
                   For founders building AI tools, marketplaces, member platforms, and full SaaS products.
                 </p>
-                <p className="text-sm text-cyan-200/90 mb-6">Architecture {"->"} Design {"->"} Build {"->"} Deploy.</p>
-                <Link
-                  to="/services/ai-saas"
-                  className="inline-flex items-center gap-2 rounded-md border border-cyan-400/40 text-cyan-200 font-semibold px-6 py-3 hover:bg-cyan-500/10 transition"
-                >
-                  Submit Project Brief
-                  <ArrowRight className="w-4 h-4" strokeWidth={2} />
-                </Link>
+                <p className={`text-sm ${CARD_STYLES.lightText.muted} mb-6`}>Architecture {"->"} Design {"->"} Build {"->"} Deploy.</p>
+                <div className="mt-auto">
+                  <Link
+                    to="/services/ai-saas"
+                    className="inline-flex items-center gap-2 rounded-md border border-cyan-400/40 text-cyan-200 font-semibold px-6 py-3 hover:bg-cyan-500/10 transition"
+                  >
+                    Submit Project Brief
+                    <ArrowRight className="w-4 h-4" strokeWidth={2} />
+                  </Link>
+                </div>
               </div>
             </article>
           </div>
@@ -130,7 +138,12 @@ export default function HomePage() {
             <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
             <span className={SECTION_LABEL_STYLES.primary}>Difference</span>
           </div>
-          <h2 className={SECTION_TITLE_STYLES.main}>We Don&apos;t Build Pages. We Build Systems.</h2>
+          <h2 className={SECTION_TITLE_STYLES.main}>
+            <span className="text-white font-light">We Don&apos;t Build</span>{" "}
+            <span className="text-red-400 font-extrabold">Pages</span>{" "}
+            <span className="text-white font-light">. We Build</span>{" "}
+            <span className="text-emerald-400 font-extrabold">Systems</span>.
+          </h2>
           <p className={`${SECTION_DESCRIPTION_STYLES} max-w-3xl`}>
             Because growth doesn&apos;t come from design alone. It comes from architecture.
           </p>
@@ -175,7 +188,8 @@ export default function HomePage() {
             data-testid="featured-products-title"
             className={SECTION_TITLE_STYLES.main}
           >
-            We Build What We Believe In.
+            <span className="text-white font-light">We Build</span>{" "}
+            <span className="text-emerald-400 font-extrabold">What We Believe In</span>.
           </h2>
           <p className={SECTION_DESCRIPTION_STYLES}>
             We don&apos;t just build for clients. We build our own platforms too.
@@ -213,7 +227,7 @@ export default function HomePage() {
             <Link
               to="/pacificmarket"
               data-testid="featured-pacific-card"
-              className={`${CARD_STYLES.baseOverride} hover:ring-pacific/40`}
+              className={`${CARD_STYLES.base} hover:ring-pacific/40`}
             >
               <div className={CARD_STYLES.overlay} style={{ background: "radial-gradient(circle at 50% 50%, rgba(245,158,11,0.08) 0%, transparent 70%)" }} />
               <div className={CARD_STYLES.padding}>
@@ -251,7 +265,8 @@ export default function HomePage() {
             data-testid="tools-title"
             className={SECTION_TITLE_STYLES.main}
           >
-            Practical Tools. No Gatekeeping.
+            <span className="text-cyan-400 font-extrabold">Practical Tools.</span>{" "}
+            <span className="text-red-400 font-extrabold">No Gatekeeping</span>.
           </h2>
           <p className={SECTION_DESCRIPTION_STYLES}>
             Free and premium utilities built for real business workflows.
@@ -334,47 +349,127 @@ export default function HomePage() {
       </section>
 
       {/* Infrastructure Philosophy */}
-      <section data-testid="infrastructure-first-section" className="py-24 md:py-32 relative bg-white/[0.02]">
+      <section data-testid="infrastructure-first-section" className="py-24 md:py-32 relative">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <div className="max-w-4xl">
             <div className="flex items-center gap-3 mb-4">
               <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
               <span className={SECTION_LABEL_STYLES.primary}>Infrastructure First</span>
             </div>
-            <h2 className={SECTION_TITLE_STYLES.main}>Your website is not your business. Your systems are.</h2>
-            <p className={`${SECTION_DESCRIPTION_STYLES} mb-6`}>
+            <h2 className={SECTION_TITLE_STYLES.main}>
+              <span className="text-white font-light">Your</span>{" "}
+              <span className="text-red-400 font-extrabold">website</span>{" "}
+              <span className="text-white font-light">is not your business.</span>
+              <br />
+              <span className="text-white font-light">Your</span>{" "}
+              <span className="text-emerald-400 font-extrabold">systems</span>{" "}
+              <span className="text-white font-light">are.</span>
+            </h2>
+            <p className={`${SECTION_DESCRIPTION_STYLES} mb-12`}>
               We design infrastructure that removes friction - so you can focus on leadership and growth.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-zinc-200 mb-10">
-              <div className="rounded-lg border border-white/10 bg-zinc-900/30 p-4">You move faster</div>
-              <div className="rounded-lg border border-white/10 bg-zinc-900/30 p-4">You scale smoother</div>
-              <div className="rounded-lg border border-white/10 bg-zinc-900/30 p-4">You sell with confidence</div>
-              <div className="rounded-lg border border-white/10 bg-zinc-900/30 p-4">You stop firefighting backend problems</div>
+            {/* Benefits Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+              <div className={`${CARD_STYLES.base} p-6 text-center hover:scale-105 transition-transform duration-300`}>
+                <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-emerald-400/20 flex items-center justify-center">
+                  <Zap className="w-6 h-6 text-emerald-300" />
+                </div>
+                <h3 className={`font-semibold text-white mb-2`}>Move Faster</h3>
+                <p className={CARD_STYLES.lightText.muted}>Launch in weeks, not months</p>
+              </div>
+              <div className={`${CARD_STYLES.base} p-6 text-center hover:scale-105 transition-transform duration-300`}>
+                <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-cyan-400/20 flex items-center justify-center">
+                  <TrendingUp className="w-6 h-6 text-cyan-300" />
+                </div>
+                <h3 className={`font-semibold text-white mb-2`}>Scale Smoother</h3>
+                <p className={CARD_STYLES.lightText.muted}>Built for growth from day one</p>
+              </div>
+              <div className={`${CARD_STYLES.base} p-6 text-center hover:scale-105 transition-transform duration-300`}>
+                <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-purple-400/20 flex items-center justify-center">
+                  <Target className="w-6 h-6 text-purple-300" />
+                </div>
+                <h3 className={`font-semibold text-white mb-2`}>Sell With Confidence</h3>
+                <p className={CARD_STYLES.lightText.muted}>Reliable systems that convert</p>
+              </div>
+              <div className={`${CARD_STYLES.base} p-6 text-center hover:scale-105 transition-transform duration-300`}>
+                <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-pink-400/20 flex items-center justify-center">
+                  <Shield className="w-6 h-6 text-pink-300" />
+                </div>
+                <h3 className={`font-semibold text-white mb-2`}>Stop Firefighting</h3>
+                <p className={CARD_STYLES.lightText.muted}>No more backend emergencies</p>
+              </div>
             </div>
 
-            <div className="overflow-x-auto rounded-2xl border border-white/10 bg-zinc-900/40">
-              <table className="w-full text-left min-w-[620px]">
-                <thead className="border-b border-white/10">
-                  <tr>
-                    <th className="px-6 py-4 text-zinc-400 font-medium">DIY Builder</th>
-                    <th className="px-6 py-4 text-emerald-300 font-medium">SaaSy Cookies</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[
-                    ["You manage everything", "We manage everything"],
-                    ["You learn automation", "We build automation"],
-                    ["You fix integrations", "We fix integrations"],
-                    ["$80-$150 in tools", "One predictable subscription"],
-                  ].map((row) => (
-                    <tr key={row[0]} className="border-b border-white/5 last:border-0">
-                      <td className="px-6 py-4 text-zinc-300">{row[0]}</td>
-                      <td className="px-6 py-4 text-zinc-100">{row[1]}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            {/* Comparison Section */}
+            <div className={`${CARD_STYLES.base} p-8`}>
+              <div className="flex items-center justify-center mb-8">
+                <div className="text-center">
+                  <h3 className="text-2xl font-bold text-white mb-2">The Better Way to Build</h3>
+                  <p className={CARD_STYLES.lightText.muted}>Compare DIY vs Done-For-You Infrastructure</p>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* DIY Column */}
+                <div className="text-center">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/20 border border-red-500/30 text-red-300 font-medium mb-4">
+                    <AlertTriangle className="w-4 h-4" />
+                    DIY Builder
+                  </div>
+                  <div className="space-y-3">
+                    {[
+                      { icon: Clock, text: "You manage everything", subtext: "Endless maintenance" },
+                      { icon: BookOpen, text: "You learn automation", subtext: "Steep learning curve" },
+                      { icon: Wrench, text: "You fix integrations", subtext: "Constant debugging" },
+                      { icon: DollarSign, text: "$80-$150 in tools", subtext: "Multiple subscriptions" },
+                    ].map((item, index) => (
+                      <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-red-500/5 border border-red-500/10">
+                        <item.icon className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
+                        <div className="text-left">
+                          <p className="text-white font-medium">{item.text}</p>
+                          <p className="text-zinc-400 text-sm">{item.subtext}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* SaaSy Cookies Column */}
+                <div className="text-center">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 font-medium mb-4">
+                    <CheckCircle className="w-4 h-4" />
+                    SaaSy Cookies
+                  </div>
+                  <div className="space-y-3">
+                    {[
+                      { icon: Users, text: "We manage everything", subtext: "Hands-off solution" },
+                      { icon: Cpu, text: "We build automation", subtext: "Proven systems" },
+                      { icon: Plug, text: "We fix integrations", subtext: "Expert support" },
+                      { icon: CreditCard, text: "One predictable subscription", subtext: "All-inclusive pricing" },
+                    ].map((item, index) => (
+                      <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-emerald-500/5 border border-emerald-500/10">
+                        <item.icon className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                        <div className="text-left">
+                          <p className="text-white font-medium">{item.text}</p>
+                          <p className="text-zinc-400 text-sm">{item.subtext}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  {/* CTA Button under SaaSy Cookies column */}
+                  <div className="mt-6">
+                    <Link
+                      to="/pricing"
+                      className="inline-flex items-center gap-2 rounded-md bg-emerald-400 text-black font-semibold px-6 py-3 hover:bg-emerald-300 transition w-full justify-center"
+                    >
+                      Choose the Better Way
+                      <ArrowRight className="w-4 h-4" strokeWidth={2} />
+                    </Link>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -383,8 +478,14 @@ export default function HomePage() {
       {/* Final CTA */}
       <section className="py-20 md:py-24">
         <div className="max-w-4xl mx-auto px-6 md:px-12 text-center">
-          <h2 className={SECTION_TITLE_STYLES.small}>Stop Managing Your Website. Start Running Your Business.</h2>
-          <p className="text-zinc-300 text-lg mb-8">Let us handle the backend.</p>
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
+            <span className="text-red-400 font-extrabold">Stop</span>{" "}
+            <span className="text-zinc-300 font-light">Managing Your Website.</span>
+            <br className="block sm:hidden" />
+            <span className="text-emerald-400 font-extrabold">Start</span>{" "}
+            <span className="text-zinc-300 font-light">Running Your Business.</span>
+          </h2>
+          <p className="text-zinc-300 text-lg mb-8 font-medium">Let us handle the backend.</p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link
               to="/pricing"

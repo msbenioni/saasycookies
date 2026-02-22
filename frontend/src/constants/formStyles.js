@@ -84,13 +84,21 @@ export const SECTION_LABEL_STYLES = {
 // Card styles for consistency across pages
 export const CARD_STYLES = {
   // Base card style with premium ring instead of border
-  base: "group block relative overflow-hidden rounded-2xl bg-zinc-900/60 ring-1 ring-white/10 hover:ring-brand-primary/40 transition-all duration-500",
+  base: "group block relative overflow-hidden rounded-2xl bg-zinc-800/80 ring-1 ring-white/10 hover:ring-brand-primary/40 transition-all duration-500 shadow-xl shadow-black/20 backdrop-blur-sm",
   
   // Hover overlay effect
   overlay: "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700",
   
   // Card padding
   padding: "relative p-8 md:p-10",
+  
+  // Card text colors for darker backgrounds
+  lightText: {
+    title: "font-heading text-2xl font-bold text-white mb-3",
+    description: "text-zinc-200 mb-5",
+    list: "text-sm text-zinc-300",
+    muted: "text-zinc-400",
+  },
   
   // Alternative base style that allows hover ring overrides
   baseOverride: "group block relative overflow-hidden rounded-2xl bg-zinc-900/60 ring-1 ring-white/10 transition-all duration-500",

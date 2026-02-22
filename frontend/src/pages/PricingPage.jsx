@@ -282,7 +282,7 @@ export default function PricingPage() {
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <h2 className={SECTION_TITLE_STYLES.small}>Launch With A $10 Build-Fee.</h2>
           <p className="text-zinc-200 max-w-3xl mb-6 leading-relaxed">
-            We deploy most websites within 2 weeks. Just $10 to begin your build.
+            We deploy most websites within 2 weeks. Just $10 to begin your project.
             Then start your monthly plan after 30 days. We operate on a 12-month partnership model.
           </p>
           <div className="mt-8">
