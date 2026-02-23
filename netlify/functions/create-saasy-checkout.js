@@ -129,7 +129,6 @@ exports.handler = async (event) => {
         first_month_price: '10',
       },
       billing_address_collection: 'required',
-      allow_promotion_codes: false, // Disable other codes
     });
 
     return {
