@@ -9,7 +9,7 @@ import {
   TrendingUp,
   Zap,
 } from "lucide-react";
-import { sendProjectBriefEmail } from "../utils/emailService";
+import { sendProjectBriefEmail, sendUserConfirmationEmail } from "../utils/emailService";
 import { recommendPlan, generateBuildPrompt } from "../utils/planRecommendation";
 import { clientIntakeAPI } from "../utils/supabaseClient";
 import { acceptPlanAndSubscribe } from "../utils/stripeService";
@@ -241,9 +241,14 @@ export default function RequestAISaaSBriefPage() {
       
       console.log("Client intake saved for checkout:", clientIntake.id);
 
-      // Send email notification (non-blocking)
+      // Send email notifications (non-blocking)
       sendProjectBriefEmail(payload).catch(error => {
-        console.warn('Email notification failed (non-critical):', error);
+        console.warn('Admin email notification failed (non-critical):', error);
+      });
+      
+      // Send user confirmation email (non-blocking)
+      sendUserConfirmationEmail(payload).catch(error => {
+        console.warn('User confirmation email failed (non-critical):', error);
       });
 
       // Store intake ID for payment completion
@@ -301,9 +306,14 @@ export default function RequestAISaaSBriefPage() {
       // Save to Supabase
       const clientIntake = await clientIntakeAPI.createClientIntake(payload);
 
-      // Send email notification (non-blocking)
+      // Send email notifications (non-blocking)
       sendProjectBriefEmail(payload).catch(error => {
-        console.warn('Email notification failed (non-critical):', error);
+        console.warn('Admin email notification failed (non-critical):', error);
+      });
+      
+      // Send user confirmation email (non-blocking)
+      sendUserConfirmationEmail(payload).catch(error => {
+        console.warn('User confirmation email failed (non-critical):', error);
       });
 
       // Store intake ID and selected plan for checkout

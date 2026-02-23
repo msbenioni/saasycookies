@@ -313,8 +313,8 @@ exports.handler = async (event, context) => {
 
     if (type === 'contact') {
       emailConfig = {
-        from: 'noreply@saasycookies.com', // Use verified domain
-        to: 'saasycookies@gmail.com', // Temporary - change to support@saasycookies.com after domain verification
+        from: 'support@saasycookies.com',
+        to: 'admin@saasycookies.com',
         subject: `Contact Form: ${formData.subject || 'New message from website'}`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -340,8 +340,8 @@ exports.handler = async (event, context) => {
       const buildPrompt = generateBoltBuildPrompt(formData);
       
       emailConfig = {
-        from: 'noreply@saasycookies.com',
-        to: 'saasycookies@gmail.com',
+        from: 'support@saasycookies.com',
+        to: 'admin@saasycookies.com',
         subject: `AI & SaaS Project Brief: ${formData.businessName || 'New request'} - ${planRecommendation?.planName || 'Custom Build'}`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto;">
@@ -502,6 +502,116 @@ exports.handler = async (event, context) => {
                 ${planRecommendation ? `Complexity Score: ${planRecommendation.score}/10 | Recommended: ${planRecommendation.planName}` : 'Custom AI/SaaS Project'}
               </p>
             </div>
+          </div>
+        `,
+      };
+    } else if (type === 'user_confirmation') {
+      // Send confirmation email to user
+      const planRecommendation = formData.planRecommendation ? JSON.parse(formData.planRecommendation) : null;
+      
+      emailConfig = {
+        from: 'support@saasycookies.com',
+        to: formData.email,
+        subject: `Your SaaSy Cookies Project Brief - ${planRecommendation?.planName || 'Custom Build'} Plan`,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <div style="background: linear-gradient(135deg, #06b6d4 0%, #10b981 100%); padding: 30px; border-radius: 12px; margin-bottom: 20px;">
+              <h1 style="color: white; margin: 0; font-size: 28px;">✅ Project Brief Received!</h1>
+              <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0 0; font-size: 16px;">Thank you for choosing SaaSy Cookies</p>
+            </div>
+            
+            <div style="background: rgba(16,185,129,0.10); border: 2px solid rgba(16,185,129,0.30); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+              <h2 style="color: #10b981; margin: 0 0 15px 0; font-size: 20px;">📊 Your Recommended Plan</h2>
+              <div style="text-align: center; margin-bottom: 15px;">
+                <p style="margin: 0; font-size: 24px; font-weight: bold; color: #10b981;">${escapeHtml(planRecommendation?.planName || 'Custom Build')}</p>
+                <p style="margin: 5px 0; font-size: 18px;">${escapeHtml(planRecommendation?.price || 'Custom pricing')}</p>
+                <p style="margin: 5px 0; font-size: 16px; color: #666;">First month: <strong style="color: #10b981;">$10</strong> (special offer!)</p>
+              </div>
+            </div>
+            
+            <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+              <h2 style="color: #333; margin: 0 0 15px 0;">🎯 What Happens Next?</h2>
+              <ol style="margin: 0; padding-left: 20px;">
+                <li style="margin-bottom: 10px;"><strong>Complete Payment:</strong> Click the button below to secure your $10 first month</li>
+                <li style="margin-bottom: 10px;"><strong>Project Kickoff:</strong> We'll review your brief and start development</li>
+                <li style="margin-bottom: 10px;"><strong>30-Day Build Phase:</strong> Your custom SaaS solution will be built</li>
+                <li style="margin-bottom: 10px;"><strong>Launch & Support:</strong> Go live with ongoing support</li>
+              </ol>
+            </div>
+            
+            <div style="text-align: center; margin: 30px 0;">
+              <p style="margin: 0; font-size: 14px; color: #666;">Complete your payment in the browser tab you just opened</p>
+            </div>
+            
+            <div style="background: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+              <p style="margin: 0; color: #856404;"><strong>📞 Questions?</strong> Reply to this email or contact us at <a href="mailto:support@saasycookies.com">support@saasycookies.com</a></p>
+            </div>
+            
+            <p style="margin-top: 20px; font-size: 12px; color: #666; text-align: center;">
+              This email was sent from SaaSy Cookies automated system.<br>
+              <a href="#" style="color: #666;">Unsubscribe</a> | <a href="#" style="color: #666;">Privacy Policy</a>
+            </p>
+          </div>
+        `,
+      };
+    } else if (type === 'welcome_after_payment') {
+      // Send welcome email after successful payment
+      const planRecommendation = formData.planRecommendation ? JSON.parse(formData.planRecommendation) : null;
+      
+      emailConfig = {
+        from: 'hello@saasycookies.com',
+        to: formData.email,
+        subject: `🎉 Welcome to SaaSy Cookies - Your Project is Starting!`,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <div style="background: linear-gradient(135deg, #06b6d4 0%, #10b981 100%); padding: 30px; border-radius: 12px; margin-bottom: 20px;">
+              <h1 style="color: white; margin: 0; font-size: 28px;">🎉 Welcome to SaaSy Cookies!</h1>
+              <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0 0; font-size: 16px;">Your project journey begins now</p>
+            </div>
+            
+            <div style="background: rgba(16,185,129,0.10); border: 2px solid rgba(16,185,129,0.30); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+              <h2 style="color: #10b981; margin: 0 0 15px 0; font-size: 20px;">✅ Payment Confirmed</h2>
+              <div style="text-align: center; margin-bottom: 15px;">
+                <p style="margin: 0; font-size: 18px;">Your <strong>${escapeHtml(planRecommendation?.planName || 'Custom')}</strong> plan is active</p>
+                <p style="margin: 5px 0; font-size: 16px;">First month: <strong style="color: #10b981;">$10</strong> ✨</p>
+              </div>
+            </div>
+            
+            <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+              <h2 style="color: #333; margin: 0 0 15px 0;">🚀 What's Next?</h2>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div style="background: white; padding: 15px; border-radius: 8px;">
+                  <h3 style="color: #06b6d4; margin: 0 0 10px 0;">📋 Project Review</h3>
+                  <p style="margin: 0; font-size: 14px;">Our team is reviewing your project brief and will contact you within 24 hours.</p>
+                </div>
+                <div style="background: white; padding: 15px; border-radius: 8px;">
+                  <h3 style="color: #06b6d4; margin: 0 0 10px 0;">🛠️ Development</h3>
+                  <p style="margin: 0; font-size: 14px;">Your 30-day build phase will begin once we finalize the project scope.</p>
+                </div>
+              </div>
+            </div>
+            
+            <div style="background: #e3f2fd; border: 1px solid #bbdefb; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+              <h3 style="color: #1976d2; margin: 0 0 10px 0;">📞 Need Help?</h3>
+              <p style="margin: 0; color: #1976d2;">
+                <strong>Primary Contact:</strong> <a href="mailto:support@saasycookies.com">support@saasycookies.com</a><br>
+                <strong>Urgent Issues:</strong> Reply to this email for priority support
+              </p>
+            </div>
+            
+            <div style="text-align: center; margin: 30px 0;">
+              <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; display: inline-block;">
+                <h3 style="color: #333; margin: 0 0 10px 0;">Your Plan Details</h3>
+                <p style="margin: 5px 0;"><strong>Plan:</strong> ${escapeHtml(planRecommendation?.planName || 'Custom')}</p>
+                <p style="margin: 5px 0;"><strong>Business:</strong> ${escapeHtml(formData.businessName)}</p>
+                <p style="margin: 5px 0;"><strong>Contact:</strong> ${escapeHtml(formData.email)}</p>
+              </div>
+            </div>
+            
+            <p style="margin-top: 20px; font-size: 12px; color: #666; text-align: center;">
+              Welcome to the SaaSy Cookies family!<br>
+              <a href="#" style="color: #666;">Unsubscribe</a> | <a href="#" style="color: #666;">Privacy Policy</a>
+            </p>
           </div>
         `,
       };
