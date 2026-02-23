@@ -116,10 +116,9 @@ exports.handler = async (event) => {
       customer_email: intake.email,
       success_url: successUrl || `${process.env.PUBLIC_SITE_URL}/checkout-success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: cancelUrl || `${process.env.PUBLIC_SITE_URL}/pricing`,
-      // Temporarily remove coupons for debugging
-      // discounts: [{
-      //   coupon: getCouponForPlan(priceId) // Plan-specific coupon for $10 first month
-      // }],
+      discounts: [{
+        coupon: getCouponForPlan(priceId) // Plan-specific coupon for $10 first month
+      }],
       metadata: {
         client_intake_id: clientIntakeId,
         full_name: intake.full_name,
@@ -128,7 +127,6 @@ exports.handler = async (event) => {
         plan_id: priceId, // Use the original priceId (starter, growth, authority)
         currency: currency,
         first_month_price: '10',
-        debug_mode: 'true', // Add debug flag
       },
       billing_address_collection: 'required',
       allow_promotion_codes: false, // Disable other codes
