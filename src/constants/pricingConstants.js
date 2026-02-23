@@ -16,6 +16,8 @@ export const PRICING_TIERS = [
     },
     includes: [
       "Up to 5-page website",
+      "4 Professional Domain Emails (Cloudflare Email Routing)",
+      "Gmail Send-As configuration guide",
       "2 minor content edits/month",
       "Basic SEO setup",
       "Email capture + basic automation",
