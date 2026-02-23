@@ -103,7 +103,7 @@ exports.handler = async (event) => {
       }
     };
 
-    // Create checkout session with standard pricing + coupon
+    // Create checkout session with standard pricing (temporarily without coupons for debugging)
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -116,9 +116,10 @@ exports.handler = async (event) => {
       customer_email: intake.email,
       success_url: successUrl || `${process.env.PUBLIC_SITE_URL}/checkout-success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: cancelUrl || `${process.env.PUBLIC_SITE_URL}/pricing`,
-      discounts: [{
-        coupon: getCouponForPlan(planId) // Plan-specific coupon for $10 first month
-      }],
+      // Temporarily remove coupons for debugging
+      // discounts: [{
+      //   coupon: getCouponForPlan(planId) // Plan-specific coupon for $10 first month
+      // }],
       subscription_data: {
         trial_period_days: 0, // No trial - using coupon instead
       },
@@ -130,6 +131,7 @@ exports.handler = async (event) => {
         plan_id: actualPriceId,
         currency: currency,
         first_month_price: '10',
+        debug_mode: 'true', // Add debug flag
       },
       billing_address_collection: 'required',
       allow_promotion_codes: false, // Disable other codes
