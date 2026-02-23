@@ -187,15 +187,13 @@ export const clientIntakeAPI = {
   },
 
   // Update Stripe information
-  async updateStripeInfo(intakeId, stripeCustomerId, stripeSubscriptionId, trialStartDate, trialEndDate) {
+  async updateStripeInfo(intakeId, stripeCustomerId, stripeSubscriptionId) {
     try {
       const { data, error } = await supabase
         .from('client_intakes')
         .update({
           stripe_customer_id: stripeCustomerId,
           stripe_subscription_id: stripeSubscriptionId,
-          trial_start_date: trialStartDate,
-          trial_end_date: trialEndDate,
           accepted_plan: true,
           status: 'confirmed',
           updated_at: new Date().toISOString()

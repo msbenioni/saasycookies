@@ -69,8 +69,6 @@ CREATE TABLE IF NOT EXISTS client_intakes (
   accepted_plan BOOLEAN DEFAULT FALSE,
   
   -- Trial & Billing
-  trial_start_date TIMESTAMP WITH TIME ZONE,
-  trial_end_date TIMESTAMP WITH TIME ZONE,
   stripe_customer_id TEXT,
   stripe_subscription_id TEXT,
   
