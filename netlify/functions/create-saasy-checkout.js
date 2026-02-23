@@ -71,7 +71,7 @@ exports.handler = async (event) => {
     const currency = getCurrencyFromCountry(country) || 'USD';
     
     // Get price ID based on plan and currency
-    const getPriceId = (planId, currency) => {
+    const getPriceId = (priceId, currency) => {
       const priceMap = {
         starter: {
           'NZD': 'price_1T24X1LWHkuDViMmCeG8Kyw6',
@@ -89,13 +89,13 @@ exports.handler = async (event) => {
           'USD': 'price_1T24cRLWHkuDViMm3rtOZ17f'
         }
       };
-      return priceMap[planId]?.[currency] || priceMap[planId]?.['USD'];
+      return priceMap[priceId]?.[currency] || priceMap[priceId]?.['USD'];
     };
 
     // Get the actual price ID for the plan
-    const actualPriceId = getPriceId(planId, currency);
-    const getCouponForPlan = (planId) => {
-      switch(planId) {
+    const actualPriceId = getPriceId(priceId, currency);
+    const getCouponForPlan = (priceId) => {
+      switch(priceId) {
         case 'starter': return 'QvxfgbUc';  // $79 - $69 = $10
         case 'growth': return 'jZciXJxz';    // $149 - $139 = $10
         case 'authority': return 'otQ1W22C'; // $249 - $239 = $10
@@ -128,7 +128,7 @@ exports.handler = async (event) => {
         full_name: intake.full_name,
         business_name: intake.business_name,
         country: intake.country,
-        plan_id: actualPriceId,
+        plan_id: priceId, // Use the original priceId (starter, growth, authority)
         currency: currency,
         first_month_price: '10',
         debug_mode: 'true', // Add debug flag
