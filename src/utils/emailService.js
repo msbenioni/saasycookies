@@ -37,8 +37,7 @@ export const sendContactEmail = async (formData) => {
 export const sendProjectBriefEmail = async (formData) => {
   try {
     // In development, simulate success without actually sending email
-    // TEMPORARILY DISABLED FOR TESTING - Change back to: if (isDevelopment) {
-    if (false) {
+    if (isDevelopment) {
       console.log('Development mode: Simulating project brief email send', formData);
       // Simulate network delay
       await new Promise(resolve => setTimeout(resolve, 1000));
