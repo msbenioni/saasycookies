@@ -19,6 +19,284 @@ function escapeHtml(text) {
     .replace(/'/g, '&#039;');
 }
 
+// Bolt-ready build prompt generator
+const EMPTY_SENTINELS = new Set(["n/a", "na", "not specified", "none", "null", ""]);
+
+function normalizeValue(v) {
+  if (typeof v === "string") {
+    const trimmed = v.trim();
+    if (!trimmed) return "";
+    if (EMPTY_SENTINELS.has(trimmed.toLowerCase())) return "";
+    return trimmed;
+  }
+  if (Array.isArray(v)) {
+    const arr = v
+      .map(normalizeValue)
+      .filter((x) => (typeof x === "string" ? x.length > 0 : x != null));
+    return arr;
+  }
+  if (v && typeof v === "object") {
+    return v;
+  }
+  return v ?? "";
+}
+
+function isFilled(v) {
+  if (v == null) return false;
+  if (typeof v === "string") return v.trim().length > 0;
+  if (Array.isArray(v)) return v.length > 0;
+  if (typeof v === "object") return Object.keys(v).length > 0;
+  return true;
+}
+
+function line(label, value) {
+  const v = normalizeValue(value);
+  if (!isFilled(v)) return "";
+  if (Array.isArray(v)) return `- ${label}: ${v.join(", ")}`;
+  return `- ${label}: ${v}`;
+}
+
+function bullets(label, value) {
+  const v = normalizeValue(value);
+  if (!isFilled(v)) return "";
+  if (!Array.isArray(v)) return line(label, v);
+  if (v.length <= 3) return `- ${label}: ${v.join(", ")}`;
+  return [`- ${label}:`, ...v.map((x) => `  - ${x}`)].join("\n");
+}
+
+function mergeOther(main, other) {
+  const m = normalizeValue(main);
+  const o = normalizeValue(other);
+  if (!isFilled(m) && !isFilled(o)) return "";
+  if (isFilled(m) && isFilled(o)) return `${m} (Other: ${o})`;
+  return (isFilled(m) ? m : o);
+}
+
+function chooseStack(data) {
+  const servicePath = (normalizeValue(data.servicePath) || "").toLowerCase();
+  const projectType = Array.isArray(data.projectType)
+    ? (data.projectType || []).join(" ").toLowerCase()
+    : (normalizeValue(data.projectType) || "").toLowerCase();
+
+  const portalSignals = ["portal", "dashboard", "tool", "app", "saas", "members", "auth"];
+  const isPortalHeavy =
+    portalSignals.some((s) => servicePath.includes(s)) ||
+    portalSignals.some((s) => projectType.includes(s)) ||
+    normalizeValue(data.authRequirements) === "Yes" ||
+    normalizeValue(data.requiresAuthentication) === true;
+
+  if (isPortalHeavy) {
+    return `Build using React (Vite), TypeScript, Tailwind, React Router.`;
+  }
+  return `Build using Next.js 14+ App Router, TypeScript, Tailwind.`;
+}
+
+function renderSection(title, lines) {
+  const body = lines.filter(Boolean).join("\n");
+  if (!body.trim()) return "";
+  return `## ${title}\n\n${body}\n`;
+}
+
+function generateBoltBuildPrompt(raw) {
+  // Normalize top-level values
+  const data = {};
+  for (const k of Object.keys(raw || {})) data[k] = normalizeValue(raw[k]);
+
+  const primaryGoal = mergeOther(data.primaryGoal, data.primaryGoalOther);
+  const projectTypes = mergeOther(data.projectType, data.projectTypeOther);
+  const interfaceDirection = mergeOther(data.interfaceDirection, data.interfaceDirectionOther);
+  const requiredCapabilities = mergeOther(data.requiredCapabilities, data.requiredCapabilitiesOther);
+
+  const stackLine = chooseStack(data);
+
+  const header = [
+    `You are an expert product designer + senior frontend engineer. Build a production-ready web app based on the discovery data below.`,
+    ``,
+  ].join("\n");
+
+  const projectSummary = renderSection("Project Summary", [
+    line("Client", `${data.fullName || ""} | ${data.businessName || ""}`.trim().replace(/^\|\s*/, "")),
+    line("Contact", `${data.email || ""} | ${data.phone || ""}`.trim().replace(/^\|\s*/, "")),
+    line("Industry", data.industry),
+    line("Current URL", data.currentUrl),
+    line("Business description", data.businessDescription),
+    line("Primary goal", primaryGoal),
+    line("Vision", data.projectVision),
+    line("Service path", data.servicePath),
+    line("Project types (max 3)", projectTypes),
+  ]);
+
+  const usersOutcomes = renderSection("Users & Outcomes", [
+    bullets("Primary users", data.primaryUsers),
+    line("Desired user action", data.desiredUserAction),
+    line("Success metric", data.successMetric),
+  ]);
+
+  const capabilities = renderSection("Capabilities Required", [
+    bullets("Required capabilities", requiredCapabilities),
+    line("Ongoing support after launch", data.needsOngoingSupport),
+  ]);
+
+  const productInterface = renderSection("Product & Interface Direction", [
+    line("Existing product/codebase", data.hasExistingProduct),
+    line("Interface direction", interfaceDirection),
+    bullets("Reference products & why", data.productReferences),
+  ]);
+
+  const assetsReadiness = renderSection("Assets & Readiness", [
+    line("Content readiness", data.contentReadiness),
+    line("Brand readiness", data.brandReadiness),
+    bullets("Constraints/risks", data.constraintsAndRisks),
+  ]);
+
+  const technical = renderSection("Technical", [
+    line("Current stack/platform", data.currentStack),
+    bullets("Integrations needed", data.integrationsNeeded),
+    line("Auth requirements", data.authRequirements),
+    bullets("Security/compliance", data.securityRequirements),
+  ]);
+
+  const budgetTimeline = renderSection("Budget & Timeline", [
+    line("Desired launch date", data.desiredLaunchDate),
+    line("Timeline", data.timeline),
+    line("Subscription plan preference", data.planPreference),
+    line("Custom budget range", data.customBudgetRange),
+  ]);
+
+  const notes = renderSection("Notes", [
+    line("Pricing acknowledgement", data.pricingAcknowledgement),
+    line("Payment process acknowledgement", data.paymentProcessAcknowledgement),
+    line("Term acknowledgement (12 months)", data.termAcknowledgement),
+    line("Launch offer request", data.launchOfferRequest),
+    line("Pacific Market discount", data.pacificMarketDiscount),
+    line("Anything else", data.anythingElse),
+  ]);
+
+  const deliverable = [
+    `# Deliverable`,
+    ``,
+    `- ${stackLine}`,
+    ``,
+    `Build the app with:`,
+    `- A clean, conversion-focused marketing homepage + essential pages based on goals.`,
+    `- If the project includes dashboard/portal/auth, include appropriate routes and protected layouts.`,
+    `- Use a consistent design system and reusable components.`,
+    `- Provide final code only (no explanations), and include clear instructions to run locally.`,
+    ``,
+  ].join("\n");
+
+  const nonNegotiables = [
+    `# NON-NEGOTIABLE BUILD REQUIREMENTS (must be implemented)`,
+    ``,
+    `1) Routing UX`,
+    `- Scroll restoration on route change.`,
+    `- Scroll-to-top floating button with smooth scroll and hide/show behavior.`,
+    ``,
+    `2) Loading & Feedback`,
+    `- Global loading components: page loader + skeletons for content lists.`,
+    `- Replace ALL alert()/prompt()/confirm() with:`,
+    `  - Toast notifications for quick feedback`,
+    `  - Modal confirmation for destructive actions`,
+    ``,
+    `3) Brand System`,
+    `- Centralize design tokens in TWO places:`,
+    `  A) CSS variables for colors, radius, shadows, spacing`,
+    `  B) A single JS/TS config file exporting brand + navigation + SEO defaults`,
+    `- No hard-coded hex colors scattered in components.`,
+    ``,
+    `4) Cards: CTA Alignment Rule (critical)`,
+    `- Any grid of cards with CTAs must have perfectly aligned CTA buttons regardless of content height.`,
+    `- Implement cards as flex-column with h-full and push CTA to bottom via mt-auto.`,
+    `- Standardize CTA footer area with min-height so button baselines match across cards.`,
+    `- All card components must be display:flex; flex-direction:column; height:100%.`,
+    `- The CTA container inside the card must use margin-top:auto (Tailwind mt-auto) so it sits at the bottom.`,
+    `- The CTA container must have a consistent minimum height (e.g., min-h-[72px]) and align items to the bottom (items-end) to guarantee baseline alignment across cards.`,
+    `- In any card grid, the grid row must stretch items (default) and cards must use h-full.`,
+    ``,
+    `5) Accessibility Baseline`,
+    `- Visible focus states for keyboard users.`,
+    `- Respect prefers-reduced-motion.`,
+    `- Semantic headings (one H1 per page).`,
+    `- Proper labels + error messages for forms.`,
+    ``,
+    `6) SEO + Social`,
+    `- Per-page meta title/description.`,
+    `- OpenGraph + Twitter card tags.`,
+    `- Sitemap + robots.`,
+    `- Canonical URL.`,
+    `- Basic schema: Organization (and FAQ schema if FAQ exists).`,
+    ``,
+    `7) Performance`,
+    `- Lazy-load below-the-fold images.`,
+    `- Optimize image sizing and avoid layout shift.`,
+    `- Font loading strategy to prevent blocking.`,
+    ``,
+    `8) Analytics Hook`,
+    `- Include a single analytics abstraction so GA4/Plausible/PostHog can be plugged in later.`,
+    `- Track CTA clicks + form submissions + outbound links.`,
+    ``,
+    `9) Error Handling`,
+    `- Global ErrorBoundary and a friendly 404 page.`,
+    ``,
+    `10) Project Hygiene`,
+    `- Clear folder structure: components/, sections/, pages or routes/, lib/, hooks/, styles/, config/`,
+    `- ESLint/Prettier configured (or equivalent).`,
+    `- Include README with setup + deployment notes.`,
+    ``,
+  ].join("\n");
+
+  const configReq = [
+    `# Also include`,
+    ``,
+    `src/config/site.ts`,
+    ``,
+    `- brand tokens (in addition to CSS variables)`,
+    `- nav links`,
+    `- footer socials`,
+    `- SEO defaults`,
+    `- analytics provider placeholders`,
+    `- CTA labels`,
+    `- Example schema (conceptual)`,
+    ``,
+    `site.brand.name`,
+    `site.brand.tagline`,
+    `site.brand.colors (references CSS vars)`,
+    `site.nav.primary[]`,
+    `site.seo.defaultTitle, defaultDescription, ogImage`,
+    `site.analytics.provider + site.analytics.ids`,
+    `site.ctas.primary, site.ctas.secondary`,
+    `site.contact.email, phone, address`,
+    ``,
+  ].join("\n");
+
+  const outputFormat = [
+    `# Output format`,
+    `- Provide the full project code structure and key files with complete code.`,
+    `- Ensure code compiles and runs.`,
+    ``,
+  ].join("\n");
+
+  // Assemble — note: empty sections already return ""
+  return [
+    header,
+    projectSummary,
+    usersOutcomes,
+    capabilities,
+    productInterface,
+    assetsReadiness,
+    technical,
+    budgetTimeline,
+    notes,
+    deliverable,
+    nonNegotiables,
+    configReq,
+    outputFormat,
+  ]
+    .filter(Boolean)
+    .join("\n")
+    .trim();
+}
+
 exports.handler = async (event, context) => {
   // Only allow POST requests
   if (event.httpMethod !== 'POST') {
@@ -57,7 +335,9 @@ exports.handler = async (event, context) => {
       };
     } else if (type === 'project_brief') {
       const planRecommendation = formData.planRecommendation ? JSON.parse(formData.planRecommendation) : null;
-      const buildPrompt = formData.buildPrompt || '';
+      
+      // Generate Bolt-ready build prompt from form data
+      const buildPrompt = generateBoltBuildPrompt(formData);
       
       emailConfig = {
         from: 'noreply@saasycookies.com',
