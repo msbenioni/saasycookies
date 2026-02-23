@@ -118,11 +118,8 @@ exports.handler = async (event) => {
       cancel_url: cancelUrl || `${process.env.PUBLIC_SITE_URL}/pricing`,
       // Temporarily remove coupons for debugging
       // discounts: [{
-      //   coupon: getCouponForPlan(planId) // Plan-specific coupon for $10 first month
+      //   coupon: getCouponForPlan(priceId) // Plan-specific coupon for $10 first month
       // }],
-      subscription_data: {
-        trial_period_days: 0, // No trial - using coupon instead
-      },
       metadata: {
         client_intake_id: clientIntakeId,
         full_name: intake.full_name,
