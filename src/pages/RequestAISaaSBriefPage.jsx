@@ -454,6 +454,37 @@ export default function RequestAISaaSBriefPage() {
               </section>
 
               <section className={SECTION_CLASS}>
+                <h2 className={SECTION_TITLE_CLASS}>Professional Email Setup</h2>
+                <p className="text-sm text-gray-600 mb-4">
+                  Get up to 4 professional domain emails (e.g., hello@yourbusiness.com) forwarded to your Gmail - included free!
+                </p>
+                <div className={FORM_GRID_CLASS}>
+                  <Select
+                    label="Do you want professional domain emails?"
+                    name="wantProfessionalEmails"
+                    required
+                    options={[
+                      { label: "Yes, please set this up for me", value: "Yes" },
+                      { label: "No, I'll handle emails myself", value: "No" },
+                    ]}
+                  />
+                  <Field
+                    label="Primary Gmail address for forwarding"
+                    name="primaryGmailAddress"
+                    type="email"
+                    placeholder="yourname@gmail.com"
+                    hint="This is where all your professional emails will be forwarded"
+                  />
+                  <Field
+                    label="Custom email names (up to 4)"
+                    name="customEmailNames"
+                    placeholder="hello, support, bookings, admin"
+                    hint="Separate with commas. These will become @yourdomain.com emails"
+                  />
+                </div>
+              </section>
+
+              <section className={SECTION_CLASS}>
                 <h2 className={SECTION_TITLE_CLASS}>Business Overview</h2>
                 <Textarea
                   label="Business description"

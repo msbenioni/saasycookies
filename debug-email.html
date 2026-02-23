@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; }
+        button { background: #06b6d4; color: white; padding: 15px 30px; border: none; border-radius: 8px; cursor: pointer; }
+        button:hover { background: #0891b2; }
+        .result { margin: 20px 0; padding: 15px; border-radius: 8px; }
+        .success { background: #d1fae5; color: #065f46; }
+        .error { background: #fee2e2; color: #991b1b; }
+    </style>
+</head>
+<body>
+    <h1>📧 Email System Test</h1>
+    <p>Test the email system without Stripe redirect</p>
+    
+    <button onclick="testContactEmail()">Test Contact Email</button>
+    <button onclick="testProjectBrief()">Test Project Brief Email</button>
+    <button onclick="testUserConfirmation()">Test User Confirmation Email</button>
+    
+    <div id="result"></div>
+    
+    <script>
+        async function testContactEmail() {
+            const result = document.getElementById('result');
+            result.innerHTML = '<div class="result">Testing contact email...</div>';
+            
+            try {
+                const response = await fetch('/.netlify/functions/send-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        type: 'contact',
+                        formData: {
+                            name: 'Test User',
+                            email: 'test@example.com',
+                            subject: 'Test Subject',
+                            message: 'Test message from debug page'
+                        }
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    result.innerHTML = `<div class="result success">✅ Contact email sent successfully! ${JSON.stringify(data)}</div>`;
+                } else {
+                    result.innerHTML = `<div class="result error">❌ Contact email failed: ${data.error}</div>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<div class="result error">❌ Network error: ${error.message}</div>`;
+            }
+        }
+        
+        async function testProjectBrief() {
+            const result = document.getElementById('result');
+            result.innerHTML = '<div class="result">Testing project brief email...</div>';
+            
+            try {
+                const response = await fetch('/.netlify/functions/send-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        type: 'project_brief',
+                        formData: {
+                            fullName: 'Test User',
+                            email: 'test@example.com',
+                            businessName: 'Test Business',
+                            planRecommendation: JSON.stringify({
+                                planName: 'Starter',
+                                price: '$299/mo',
+                                score: 3
+                            })
+                        }
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    result.innerHTML = `<div class="result success">✅ Project brief email sent successfully! ${JSON.stringify(data)}</div>`;
+                } else {
+                    result.innerHTML = `<div class="result error">❌ Project brief email failed: ${data.error}</div>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<div class="result error">❌ Network error: ${error.message}</div>`;
+            }
+        }
+        
+        async function testUserConfirmation() {
+            const result = document.getElementById('result');
+            result.innerHTML = '<div class="result">Testing user confirmation email...</div>';
+            
+            try {
+                const response = await fetch('/.netlify/functions/send-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        type: 'user_confirmation',
+                        formData: {
+                            fullName: 'Test User',
+                            email: 'support@saasycookies.com', // Your actual email for testing
+                            businessName: 'Test Business',
+                            planRecommendation: JSON.stringify({
+                                planName: 'Starter',
+                                price: '$299/mo',
+                                score: 3
+                            })
+                        }
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    result.innerHTML = `<div class="result success">✅ User confirmation email sent successfully! ${JSON.stringify(data)}</div>`;
+                } else {
+                    result.innerHTML = `<div class="result error">❌ User confirmation email failed: ${data.error}</div>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<div class="result error">❌ Network error: ${error.message}</div>`;
+            }
+        }
+    </script>
+</body>
+</html>

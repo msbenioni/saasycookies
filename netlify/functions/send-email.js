@@ -156,6 +156,23 @@ function generateBoltBuildPrompt(raw) {
     bullets("Security/compliance", data.securityRequirements),
   ]);
 
+  // Add professional email setup section if requested
+  const emailSetup = data.wantProfessionalEmails === "Yes" ? renderSection("Professional Email Setup", [
+    line("Email routing required", "Yes - Cloudflare Email Routing"),
+    line("Primary Gmail destination", data.primaryGmailAddress),
+    line("Custom email addresses", data.customEmailNames),
+    line("Setup requirements", "Cloudflare Email Routing + Gmail Send-As configuration"),
+    line("Maximum addresses", "4 professional emails included"),
+    bullets("Setup checklist", [
+      "Enable Cloudflare Email Routing",
+      "Configure MX and SPF records", 
+      "Create forwarding rules for each custom address",
+      "Test email forwarding to primary Gmail",
+      "Provide Gmail Send-As setup instructions to client",
+      "Verify all addresses are working correctly"
+    ]),
+  ]) : "";
+
   const budgetTimeline = renderSection("Budget & Timeline", [
     line("Desired launch date", data.desiredLaunchDate),
     line("Timeline", data.timeline),
@@ -285,6 +302,7 @@ function generateBoltBuildPrompt(raw) {
     productInterface,
     assetsReadiness,
     technical,
+    emailSetup,
     budgetTimeline,
     notes,
     deliverable,
@@ -314,7 +332,7 @@ exports.handler = async (event, context) => {
     if (type === 'contact') {
       emailConfig = {
         from: 'onboarding@resend.dev',
-        to: 'onboarding@resend.dev',
+        to: 'saasycookies@gmail.com',
         subject: `Contact Form: ${formData.subject || 'New message from website'}`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -347,7 +365,7 @@ exports.handler = async (event, context) => {
       
       emailConfig = {
         from: 'onboarding@resend.dev',
-        to: 'onboarding@resend.dev',
+        to: 'saasycookies@gmail.com',
         subject: `AI & SaaS Project Brief: ${formData.businessName || 'New request'} - ${planRecommendation?.planName || 'Custom Build'}`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto;">
