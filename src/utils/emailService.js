@@ -37,7 +37,8 @@ export const sendContactEmail = async (formData) => {
 export const sendProjectBriefEmail = async (formData) => {
   try {
     // In development, simulate success without actually sending email
-    if (isDevelopment) {
+    // TEMPORARILY DISABLED FOR TESTING - Change back to: if (isDevelopment) {
+    if (false) {
       console.log('Development mode: Simulating project brief email send', formData);
       // Simulate network delay
       await new Promise(resolve => setTimeout(resolve, 1000));
@@ -71,7 +72,8 @@ export const sendProjectBriefEmail = async (formData) => {
 export const sendUserConfirmationEmail = async (formData) => {
   try {
     // In development, simulate success without actually sending email
-    if (isDevelopment) {
+    // TEMPORARILY DISABLED FOR TESTING - Change back to: if (isDevelopment) {
+    if (false) {
       console.log('Development mode: Simulating user confirmation email send', formData);
       // Simulate network delay
       await new Promise(resolve => setTimeout(resolve, 1000));
@@ -105,7 +107,8 @@ export const sendUserConfirmationEmail = async (formData) => {
 export const sendWelcomeEmail = async (formData) => {
   try {
     // In development, simulate success without actually sending email
-    if (isDevelopment) {
+    // TEMPORARILY DISABLED FOR TESTING - Change back to: if (isDevelopment) {
+    if (false) {
       console.log('Development mode: Simulating welcome email send', formData);
       // Simulate network delay
       await new Promise(resolve => setTimeout(resolve, 1000));
