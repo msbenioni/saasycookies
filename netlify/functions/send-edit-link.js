@@ -43,7 +43,7 @@ exports.handler = async (event) => {
 
     // Send email
     const { data: emailData, error: emailError } = await resend.emails.send({
-      from: "SaaSy Cards <noreply@saasycookies.com>",
+      from: "SaaSy Cards <support@saasycookies.com>",
       to: [email],
       subject: "Your Digital Card Edit Link",
       html: `
