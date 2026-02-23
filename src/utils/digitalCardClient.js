@@ -9,7 +9,6 @@ export const digitalCardAPI = {
         .insert([{
           slug: cardData.slug,
           edit_token: cardData.editToken,
-          email: cardData.email,
           card_json: cardData.cardJson || {},
           status: 'draft'
         }])
@@ -88,7 +87,6 @@ export const digitalCardAPI = {
           status: 'trialing',
           stripe_customer_id: stripeCustomerId,
           stripe_subscription_id: stripeSubscriptionId,
-          trial_started_at: new Date().toISOString(),
           trial_ends_at: trialEndDate,
           updated_at: new Date().toISOString()
         })
@@ -132,7 +130,7 @@ export const digitalCardAPI = {
       const { data, error } = await supabase
         .from('digital_cards')
         .update({
-          status: 'cancelled',
+          status: 'paused',
           updated_at: new Date().toISOString()
         })
         .eq('id', cardId)
