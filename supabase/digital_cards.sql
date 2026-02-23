@@ -4,20 +4,30 @@ create table if not exists digital_cards (
   id uuid primary key default gen_random_uuid(),
   slug text unique not null,
   edit_token text unique not null,
-  status text not null default 'draft', -- draft | trialing | active | paused
+  status text not null default 'draft', -- draft | trialing | active | paused | cancelled
   card_json jsonb not null default '{}'::jsonb,
   asset_path text,
+  
+  -- Customer & Subscription Info
+  email text not null, -- Customer email for trial notifications
   stripe_customer_id text,
   stripe_subscription_id text,
   stripe_price_id text,
-  trial_ends_at timestamptz,
-  current_period_end timestamptz,
+  
+  -- Trial Management
+  trial_started_at timestamptz, -- When 30-day free trial begins
+  trial_ends_at timestamptz, -- When 30-day free trial ends
+  current_period_end timestamptz, -- Current billing period end
+  
+  -- Metadata
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
 
 create index if not exists digital_cards_slug_idx on digital_cards (slug);
 create index if not exists digital_cards_edit_token_idx on digital_cards (edit_token);
+create index if not exists digital_cards_email_idx on digital_cards (email);
+create index if not exists digital_cards_status_idx on digital_cards (status);
 
 create or replace function set_updated_at()
 returns trigger as $$
