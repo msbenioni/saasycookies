@@ -313,8 +313,8 @@ exports.handler = async (event, context) => {
 
     if (type === 'contact') {
       emailConfig = {
-        from: 'support@saasycookies.com',
-        to: 'admin@saasycookies.com',
+        from: 'onboarding@resend.dev',
+        to: 'onboarding@resend.dev',
         subject: `Contact Form: ${formData.subject || 'New message from website'}`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -334,14 +334,20 @@ exports.handler = async (event, context) => {
         `,
       };
     } else if (type === 'project_brief') {
-      const planRecommendation = formData.planRecommendation ? JSON.parse(formData.planRecommendation) : null;
+      let planRecommendation = null;
+      try {
+        planRecommendation = formData.planRecommendation ? JSON.parse(formData.planRecommendation) : null;
+      } catch (error) {
+        console.warn('Failed to parse planRecommendation:', error);
+        planRecommendation = null;
+      }
       
       // Generate Bolt-ready build prompt from form data
       const buildPrompt = generateBoltBuildPrompt(formData);
       
       emailConfig = {
-        from: 'support@saasycookies.com',
-        to: 'admin@saasycookies.com',
+        from: 'onboarding@resend.dev',
+        to: 'onboarding@resend.dev',
         subject: `AI & SaaS Project Brief: ${formData.businessName || 'New request'} - ${planRecommendation?.planName || 'Custom Build'}`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto;">
@@ -507,10 +513,16 @@ exports.handler = async (event, context) => {
       };
     } else if (type === 'user_confirmation') {
       // Send confirmation email to user
-      const planRecommendation = formData.planRecommendation ? JSON.parse(formData.planRecommendation) : null;
+      let planRecommendation = null;
+      try {
+        planRecommendation = formData.planRecommendation ? JSON.parse(formData.planRecommendation) : null;
+      } catch (error) {
+        console.warn('Failed to parse planRecommendation:', error);
+        planRecommendation = null;
+      }
       
       emailConfig = {
-        from: 'support@saasycookies.com',
+        from: 'onboarding@resend.dev',
         to: formData.email,
         subject: `Your SaaSy Cookies Project Brief - ${planRecommendation?.planName || 'Custom Build'} Plan`,
         html: `
@@ -544,7 +556,7 @@ exports.handler = async (event, context) => {
             </div>
             
             <div style="background: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-              <p style="margin: 0; color: #856404;"><strong>📞 Questions?</strong> Reply to this email or contact us at <a href="mailto:support@saasycookies.com">support@saasycookies.com</a></p>
+              <p style="margin: 0; color: #856404;"><strong>📞 Questions?</strong> Reply to this email or contact us at <a href="mailto:onboarding@resend.dev">onboarding@resend.dev</a></p>
             </div>
             
             <p style="margin-top: 20px; font-size: 12px; color: #666; text-align: center;">
@@ -556,10 +568,16 @@ exports.handler = async (event, context) => {
       };
     } else if (type === 'welcome_after_payment') {
       // Send welcome email after successful payment
-      const planRecommendation = formData.planRecommendation ? JSON.parse(formData.planRecommendation) : null;
+      let planRecommendation = null;
+      try {
+        planRecommendation = formData.planRecommendation ? JSON.parse(formData.planRecommendation) : null;
+      } catch (error) {
+        console.warn('Failed to parse planRecommendation:', error);
+        planRecommendation = null;
+      }
       
       emailConfig = {
-        from: 'hello@saasycookies.com',
+        from: 'onboarding@resend.dev',
         to: formData.email,
         subject: `🎉 Welcome to SaaSy Cookies - Your Project is Starting!`,
         html: `
@@ -594,7 +612,7 @@ exports.handler = async (event, context) => {
             <div style="background: #e3f2fd; border: 1px solid #bbdefb; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
               <h3 style="color: #1976d2; margin: 0 0 10px 0;">📞 Need Help?</h3>
               <p style="margin: 0; color: #1976d2;">
-                <strong>Primary Contact:</strong> <a href="mailto:support@saasycookies.com">support@saasycookies.com</a><br>
+                <strong>Primary Contact:</strong> <a href="mailto:onboarding@resend.dev">onboarding@resend.dev</a><br>
                 <strong>Urgent Issues:</strong> Reply to this email for priority support
               </p>
             </div>
