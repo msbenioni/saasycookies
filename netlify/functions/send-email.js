@@ -158,17 +158,17 @@ function generateBoltBuildPrompt(raw) {
 
   // Add professional email setup section if requested
   const emailSetup = data.wantProfessionalEmails === "Yes" ? renderSection("Professional Email Setup", [
-    line("Email routing required", "Yes - Cloudflare Email Routing"),
-    line("Primary Gmail destination", data.primaryGmailAddress),
+    line("Email routing required", "Yes - Professional domain email setup"),
+    line("Primary email destination", data.primaryGmailAddress),
     line("Custom email addresses", data.customEmailNames),
-    line("Setup requirements", "Cloudflare Email Routing + Gmail Send-As configuration"),
+    line("Setup requirements", "Domain email forwarding + configuration"),
     line("Maximum addresses", "4 professional emails included"),
     bullets("Setup checklist", [
-      "Enable Cloudflare Email Routing",
-      "Configure MX and SPF records", 
-      "Create forwarding rules for each custom address",
-      "Test email forwarding to primary Gmail",
-      "Provide Gmail Send-As setup instructions to client",
+      "Configure domain email routing",
+      "Set up email forwarding rules", 
+      "Create custom email addresses",
+      "Test email delivery and forwarding",
+      "Provide setup instructions to client",
       "Verify all addresses are working correctly"
     ]),
   ]) : "";

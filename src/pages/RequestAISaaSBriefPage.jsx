@@ -456,7 +456,7 @@ export default function RequestAISaaSBriefPage() {
               <section className={SECTION_CLASS}>
                 <h2 className={SECTION_TITLE_CLASS}>Professional Email Setup</h2>
                 <p className="text-sm text-gray-600 mb-4">
-                  Get up to 4 professional domain emails (e.g., hello@yourbusiness.com) forwarded to your Gmail - included free!
+                  Get up to 4 professional domain emails (e.g., hello@yourbusiness.com) forwarded to your existing email - included free!
                 </p>
                 <div className={FORM_GRID_CLASS}>
                   <Select
@@ -469,10 +469,10 @@ export default function RequestAISaaSBriefPage() {
                     ]}
                   />
                   <Field
-                    label="Primary Gmail address for forwarding"
+                    label="Primary email address for forwarding"
                     name="primaryGmailAddress"
                     type="email"
-                    placeholder="yourname@gmail.com"
+                    placeholder="yourname@email.com"
                     hint="This is where all your professional emails will be forwarded"
                   />
                   <Field
