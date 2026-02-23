@@ -1,4 +1,3 @@
-import { PRICE_IDS } from "../constants/priceIds";
 import { clientIntakeAPI } from "./supabaseClient";
 import { currencyFromCountry } from "./currencyMapping";
 
@@ -14,11 +13,11 @@ export async function createStripeCheckoutSession(planId, clientIntakeId, succes
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        priceId: PRICE_IDS[planId]?.[currency] || PRICE_IDS[planId]?.USD, // Fallback to USD
+        priceId: planId, // Send planId (starter, growth, authority) - backend will map to actual price ID
         clientIntakeId,
         successUrl,
         cancelUrl,
-        currency, // Pass currency to backend for reference
+        country, // Pass country for currency mapping
       }),
     });
 
