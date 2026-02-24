@@ -1,4 +1,6 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
+import { motion, useScroll, useTransform } from "framer-motion";
 import {
   FileText, QrCode, ArrowRight,
   Sparkles, ChevronRight, CreditCard,
@@ -7,21 +9,83 @@ import {
 import { PRODUCT_LOGOS } from "../constants/productLogos";
 import { SECTION_TITLE_STYLES, SECTION_LABEL_STYLES, CARD_STYLES, SECTION_DESCRIPTION_STYLES } from "../constants/formStyles";
 
+const TOTAL_SECTIONS = 6;
+const NAV_OFFSET = 88;
+const STACK_PX = 30;
+const TAB_CLEARANCE_PX = 26;
+const FOOTER_HEIGHT = 112;
+const FOOTER_GAP_PX = 10;
+
+function StickyFolderCard({ id, tab, index, total, progress, footerHeight, children }) {
+  const isLast = index === total - 1;
+  const targetScale = 1 - (total - index - 1) * 0.045;
+  const rangeStart = index / total;
+  const rangeEnd = (index + 1) / total;
+  const scale = useTransform(progress, [rangeStart, 1], [1, targetScale]);
+  const opacity = useTransform(progress, [rangeStart - 0.05, rangeStart, rangeEnd], [0, 1, 1]);
+
+  return (
+    <div
+      className={[
+        "sticky flex justify-center",
+        isLast ? "items-end" : "items-start",
+      ].join(" ")}
+      style={{
+        top: NAV_OFFSET,
+        height: `calc(100vh - ${NAV_OFFSET + footerHeight + FOOTER_GAP_PX}px)`,
+        paddingBottom: isLast ? `${FOOTER_GAP_PX}px` : undefined,
+      }}
+    >
+      <motion.section
+        id={id}
+        style={{
+          scale,
+          opacity,
+          y: isLast ? 0 : TAB_CLEARANCE_PX + (index * STACK_PX),
+          zIndex: total - index,
+        }}
+        className="relative w-[min(1100px,92vw)] origin-top rounded-2xl border border-white/10 bg-[#0b1020]/90 backdrop-blur-md shadow-[0_18px_55px_rgba(0,0,0,0.45)]"
+      >
+        <div className="absolute -top-5 left-6 z-20">
+          <div className="inline-flex items-center gap-2 rounded-t-xl rounded-b-md border border-white/15 bg-[#0f172a]/95 px-4 py-2 text-sm font-semibold text-zinc-200 shadow-[0_10px_25px_rgba(0,0,0,0.35)] backdrop-blur-md">
+            <span>{tab}</span>
+            <span className="h-2 w-2 rounded-full bg-emerald-300" />
+          </div>
+        </div>
+
+        <div className="absolute top-0 left-0 right-0 h-px bg-white/10" />
+
+        <div className="px-6 pt-7 pb-8 md:px-10">{children}</div>
+
+        <div className="h-[2px] w-full bg-gradient-to-r from-emerald-400/30 via-cyan-400/10 to-transparent" />
+      </motion.section>
+    </div>
+  );
+}
+
 export default function HomePage() {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: [`start ${NAV_OFFSET}px`, "end end"],
+  });
+
   return (
     <div className="relative">
-      {/* Hero */}
-      <section data-testid="hero-section" className="relative min-h-[90vh] flex items-center overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-40 animate-glow-pulse"
-          style={{
-            background:
-              "radial-gradient(circle at 30% 40%, rgba(124,58,237,0.15) 0%, transparent 50%), radial-gradient(circle at 70% 60%, rgba(6,182,212,0.1) 0%, transparent 50%)",
-          }}
-        />
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20200%20200%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cfilter%20id%3D%22n%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.65%22%20numOctaves%3D%223%22%20stitchTiles%3D%22stitch%22/%3E%3C/filter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url(%23n)%22%20opacity%3D%220.03%22/%3E%3C/svg%3E')]" />
+      <div
+        className="absolute inset-0 opacity-40 animate-glow-pulse"
+        style={{
+          background:
+            "radial-gradient(circle at 30% 40%, rgba(124,58,237,0.15) 0%, transparent 50%), radial-gradient(circle at 70% 60%, rgba(6,182,212,0.1) 0%, transparent 50%)",
+        }}
+      />
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20200%20200%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cfilter%20id%3D%22n%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.65%22%20numOctaves%3D%223%22%20stitchTiles%3D%22stitch%22/%3E%3C/filter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url(%23n)%22%20opacity%3D%220.03%22/%3E%3C/svg%3E')]" />
 
-        <div className="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-24 w-full">
+      <div className="relative z-10">
+      {/* Hero */}
+      <header>
+      <section data-testid="hero-section" className="relative min-h-[80vh] flex items-center">
+        <div className="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-24 w-full py-8">
           <div className="max-w-5xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-xs font-medium mb-8 opacity-0 animate-fade-in">
               <Sparkles className="w-3 h-3" strokeWidth={1.5} />
@@ -69,10 +133,24 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      </header>
 
+      <main
+        ref={containerRef}
+        className="relative"
+      >
+      <section className="relative">
       {/* Choose Your Path */}
-      <section className="py-20 md:py-24 bg-white/[0.02]">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+      <StickyFolderCard
+        id="home-choose-path"
+        tab="Choose Your Path"
+        index={0}
+        total={TOTAL_SECTIONS}
+        progress={scrollYProgress}
+        footerHeight={FOOTER_HEIGHT}
+      >
+      <section className="py-10 md:py-14">
+        <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-3 mb-4">
             <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
             <span className={SECTION_LABEL_STYLES.emerald}>Choose Your Path</span>
@@ -130,10 +208,19 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      </StickyFolderCard>
 
       {/* What Makes Us Different */}
-      <section data-testid="difference-section" className="py-24 md:py-32 relative">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+      <StickyFolderCard
+        id="home-difference"
+        tab="Difference"
+        index={1}
+        total={TOTAL_SECTIONS}
+        progress={scrollYProgress}
+        footerHeight={FOOTER_HEIGHT}
+      >
+      <section data-testid="difference-section" className="py-10 md:py-14 relative">
+        <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-3 mb-4">
             <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
             <span className={SECTION_LABEL_STYLES.primary}>Difference</span>
@@ -174,10 +261,19 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      </StickyFolderCard>
 
       {/* Flagship Products */}
-      <section data-testid="featured-products-section" className="py-24 md:py-32 relative bg-white/[0.02]">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+      <StickyFolderCard
+        id="home-featured-products"
+        tab="Featured Products"
+        index={2}
+        total={TOTAL_SECTIONS}
+        progress={scrollYProgress}
+        footerHeight={FOOTER_HEIGHT}
+      >
+      <section data-testid="featured-products-section" className="py-10 md:py-14 relative">
+        <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-3 mb-4">
             <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
             <span className={SECTION_LABEL_STYLES.primary}>
@@ -251,10 +347,19 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      </StickyFolderCard>
 
       {/* Business Utilities */}
-      <section data-testid="tools-section" className="py-24 md:py-32 relative bg-white/[0.05]">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+      <StickyFolderCard
+        id="home-business-utilities"
+        tab="Business Utilities"
+        index={3}
+        total={TOTAL_SECTIONS}
+        progress={scrollYProgress}
+        footerHeight={FOOTER_HEIGHT}
+      >
+      <section data-testid="tools-section" className="py-10 md:py-14 relative">
+        <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-3 mb-4">
             <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
             <span className={SECTION_LABEL_STYLES.primary}>
@@ -347,10 +452,19 @@ export default function HomePage() {
           <p className="text-zinc-400 text-sm mt-6">We believe infrastructure should be accessible.</p>
         </div>
       </section>
+      </StickyFolderCard>
 
       {/* Infrastructure Philosophy */}
-      <section data-testid="infrastructure-first-section" className="py-24 md:py-32 relative">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+      <StickyFolderCard
+        id="home-infrastructure-first"
+        tab="Infrastructure First"
+        index={4}
+        total={TOTAL_SECTIONS}
+        progress={scrollYProgress}
+        footerHeight={FOOTER_HEIGHT}
+      >
+      <section data-testid="infrastructure-first-section" className="py-10 md:py-14 relative">
+        <div className="max-w-7xl mx-auto">
           <div className="max-w-4xl">
             <div className="flex items-center gap-3 mb-4">
               <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
@@ -474,10 +588,19 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      </StickyFolderCard>
 
       {/* Final CTA */}
-      <section className="py-20 md:py-24">
-        <div className="max-w-4xl mx-auto px-6 md:px-12 text-center">
+      <StickyFolderCard
+        id="home-final-cta"
+        tab="Ready to Launch"
+        index={5}
+        total={TOTAL_SECTIONS}
+        progress={scrollYProgress}
+        footerHeight={FOOTER_HEIGHT}
+      >
+      <section className="py-10 md:py-14">
+        <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
             <span className="text-red-400 font-extrabold">Stop</span>{" "}
             <span className="text-zinc-300 font-light">Managing Your Website.</span>
@@ -503,6 +626,11 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      </StickyFolderCard>
+
+      </section>
+      </main>
+      </div>
     </div>
   );
 }

@@ -32,6 +32,8 @@ export default function MainLayout() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const isHome = location.pathname === "/";
+  const FOOTER_HEIGHT = 112;
 
   const handleNavigation = (to) => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -130,15 +132,19 @@ export default function MainLayout() {
         )}
       </header>
 
-      <main className="pt-16">
+      <main className={["pt-16", isHome ? "pb-[112px]" : ""].join(" ")}>
         <Outlet />
       </main>
 
       <footer
         data-testid="main-footer"
-        className="border-t border-white/5 bg-void-paper"
+        style={isHome ? { height: `${FOOTER_HEIGHT}px` } : undefined}
+        className={[
+          "border-t border-white/5 bg-void-paper",
+          isHome ? "fixed bottom-0 left-0 right-0 z-[9999]" : "relative",
+        ].join(" ")}
       >
-        <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-6 h-full py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-zinc-500 text-sm">
             <img 
               src="/SAASY_logo_transparent.png" 

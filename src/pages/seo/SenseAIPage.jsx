@@ -210,15 +210,17 @@ export default function SenseAIPage() {
             SenseAI is the journaling tool for people who think deeply. Try it and
             discover what your mind has been trying to tell you.
           </p>
-          <Link
-            to="/"
+          <a
+            href="https://www.senseai.co.nz"
+            target="_blank"
+            rel="noopener noreferrer"
             data-testid="senseai-cta-button"
             className="inline-flex items-center gap-2 bg-senseai text-black font-semibold px-8 py-3 rounded-md transition-all duration-300 hover:bg-senseai/80 hover:scale-[1.02]"
           >
             <Brain className="w-4 h-4" strokeWidth={1.5} />
             Explore SenseAI
             <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
-          </Link>
+          </a>
         </div>
       </section>
     </div>

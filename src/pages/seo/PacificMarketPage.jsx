@@ -229,15 +229,17 @@ export default function PacificMarketPage() {
             Whether you&apos;re a creator, a business, or someone who believes in
             equitable commerce&mdash;Pacific Market needs you.
           </p>
-          <Link
-            to="/"
+          <a
+            href="https://www.pacificmarket.co.nz"
+            target="_blank"
+            rel="noopener noreferrer"
             data-testid="pacific-cta-button"
             className="inline-flex items-center gap-2 bg-pacific text-black font-semibold px-8 py-3 rounded-md transition-all duration-300 hover:bg-pacific/80 hover:scale-[1.02]"
           >
             <Globe className="w-4 h-4" strokeWidth={1.5} />
             Explore Pacific Market
             <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
-          </Link>
+          </a>
         </div>
       </section>
     </div>
