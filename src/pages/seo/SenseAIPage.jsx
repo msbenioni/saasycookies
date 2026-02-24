@@ -4,7 +4,7 @@ import {
   TrendingUp, MessageSquare, Sparkles, Heart
 } from "lucide-react";
 import { PRODUCT_LOGOS } from "../../constants/productLogos";
-import { BackgroundPattern, StickyFolderCard, useScrollProgress, TAB_LAYOUT_CONSTANTS } from "../../components/shared/TabLayout";
+import { ScrollDeckLayout } from "../../components/shared/ScrollDeckLayout";
 
 const useCases = [
   {
@@ -29,222 +29,172 @@ const useCases = [
   },
 ];
 
-const SENSEAI_SECTIONS = 5;
+const sections = [
+  { id: "senseai-hero", tab: "SenseAI", content: (
+    <div className="relative min-h-[80vh] flex items-center">
+      <div
+        className="absolute inset-0 animate-glow-pulse"
+        style={{
+          background:
+            "radial-gradient(circle at 40% 30%, rgba(6,182,212,0.12) 0%, transparent 50%)",
+        }}
+      />
+      <div className="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-24 w-full py-24">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+          <div className="flex-1 max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-senseai/10 border border-senseai/20 text-senseai text-xs font-medium mb-8">
+              <Brain className="w-3 h-3" strokeWidth={1.5} />
+              SenseAI by SaaSy Cookies
+            </div>
+
+            <h1
+              data-testid="senseai-title"
+              className="font-heading text-5xl md:text-7xl font-extrabold tracking-tight leading-none mb-6"
+            >
+              Journaling that
+              <br />
+              <span className="text-senseai">thinks with you.</span>
+            </h1>
+
+            <p className="text-lg md:text-xl text-zinc-400 leading-relaxed max-w-xl mb-10">
+              Most journals are just blank pages. SenseAI is an AI-powered
+              companion that helps you reflect deeper, think clearer, and grow
+              faster.
+            </p>
+          </div>
+
+          {/* Large Hero Logo - Right Side */}
+          <div className="flex-shrink-0">
+            <div className="relative p-2 rounded-2xl bg-gradient-to-r from-senseai/30 via-senseai/20 to-transparent shadow-[0_0_60px_rgba(6,182,212,0.6),0_0_120px_rgba(6,182,212,0.4)]">
+              <img
+                src={PRODUCT_LOGOS.SENSEAI.src}
+                alt={PRODUCT_LOGOS.SENSEAI.alt}
+                className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )},
+  { id: "senseai-problem", tab: "The Problem", content: (
+    <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <span className="text-xs font-medium text-senseai uppercase tracking-widest mb-4 block">
+            The Problem
+          </span>
+          <h2 className="font-heading text-4xl md:text-5xl font-bold tracking-tight mb-6">
+            We lost the art of thinking.
+          </h2>
+          <p className="text-zinc-200 text-lg leading-relaxed">
+            In a world of endless scrolling and instant answers, deep thinking
+            has become a lost skill. We consume more than we create. We react
+            more than we reflect. Journaling was supposed to help, but most
+            people quit within a week because staring at a blank page feels
+            pointless.
+          </p>
+        </div>
+        <div className="relative">
+          <div className="rounded-2xl overflow-hidden border border-white/10 bg-zinc-900/85 p-8">
+            <img
+              src="/senseai_art_of_thinking.png"
+              alt="Person thinking deeply"
+              className="w-full h-64 object-cover rounded-xl opacity-70"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  )},
+  { id: "senseai-shift", tab: "The Shift", content: (
+    <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+      <div className="max-w-3xl mx-auto text-center">
+        <span className="text-xs font-medium text-senseai uppercase tracking-widest mb-4 block">
+          The Shift
+        </span>
+        <h2 className="font-heading text-4xl md:text-5xl font-bold tracking-tight mb-6">
+          What if your journal <span className="text-senseai">talked back?</span>
+        </h2>
+        <p className="text-zinc-200 text-lg leading-relaxed mb-8">
+          SenseAI doesn&apos;t just store your words. It understands them. It
+          asks follow-up questions, surfaces patterns across weeks and months,
+          and helps you see your life from angles you&apos;d never consider alone.
+        </p>
+        <div className="flex items-center justify-center gap-4">
+          <div className="flex items-center gap-2 text-zinc-300/80 text-sm">
+            <MessageSquare className="w-4 h-4 text-senseai" strokeWidth={1.5} />
+            AI-guided prompts
+          </div>
+          <div className="w-1 h-1 rounded-full bg-zinc-600" />
+          <div className="flex items-center gap-2 text-zinc-300/80 text-sm">
+            <Sparkles className="w-4 h-4 text-senseai" strokeWidth={1.5} />
+            Pattern recognition
+          </div>
+          <div className="w-1 h-1 rounded-full bg-zinc-600" />
+          <div className="flex items-center gap-2 text-zinc-300/80 text-sm">
+            <Shield className="w-4 h-4 text-senseai" strokeWidth={1.5} />
+            Private & secure
+          </div>
+        </div>
+      </div>
+    </div>
+  )},
+  { id: "senseai-usecases", tab: "Use Cases", content: (
+    <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+      <span className="text-xs font-medium text-zinc-400 uppercase tracking-widest mb-4 block">
+        Use Cases
+      </span>
+      <h2 className="font-heading text-4xl md:text-5xl font-bold tracking-tight mb-16">
+        Built for how you actually think
+      </h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {useCases.map((uc) => {
+          const Icon = uc.icon;
+          return (
+            <div
+              key={uc.title}
+              data-testid={`usecase-${uc.title.toLowerCase().replace(/\s/g, "-")}`}
+              className="group relative overflow-hidden bg-zinc-900/85 border border-white/10 hover:border-senseai/20 transition-all duration-500 rounded-xl p-8"
+            >
+              <div className="w-10 h-10 rounded-lg bg-senseai/10 flex items-center justify-center mb-5">
+                <Icon className="w-5 h-5 text-senseai" strokeWidth={1.5} />
+              </div>
+              <h3 className="font-heading text-xl font-semibold mb-2">{uc.title}</h3>
+              <p className="text-zinc-200/80 text-sm leading-relaxed">{uc.desc}</p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  )},
+  { id: "senseai-cta", tab: "Get Started", content: (
+    <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+      <div className="text-center">
+        <h2 className="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-4">
+          Start journaling smarter
+        </h2>
+        <p className="text-zinc-200 text-lg mb-10 max-w-xl mx-auto">
+          SenseAI is the journaling tool for people who think deeply. Try it and
+          discover what your mind has been trying to tell you.
+        </p>
+        <a
+          href="https://www.senseai.app"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-testid="senseai-cta-button"
+          className="inline-flex items-center gap-2 bg-senseai text-black font-semibold px-8 py-3 rounded-md transition-all duration-300 hover:bg-senseai/80 hover:scale-[1.02]"
+        >
+          <Brain className="w-4 h-4" strokeWidth={1.5} />
+          Explore SenseAI
+          <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+        </a>
+      </div>
+    </div>
+  )},
+];
 
 export default function SenseAIPage() {
-  const { containerRef, scrollYProgress } = useScrollProgress();
-  
-  return (
-    <BackgroundPattern>
-      <div className="relative" ref={containerRef}>
-        {/* Hero */}
-        <StickyFolderCard
-          id="senseai-hero"
-          tab="SenseAI"
-          index={0}
-          total={SENSEAI_SECTIONS}
-          progress={scrollYProgress}
-          footerHeight={TAB_LAYOUT_CONSTANTS.FOOTER_HEIGHT}
-        >
-        <div className="relative min-h-[80vh] flex items-center">
-          <div
-            className="absolute inset-0 animate-glow-pulse"
-            style={{
-              background:
-                "radial-gradient(circle at 40% 30%, rgba(6,182,212,0.12) 0%, transparent 50%)",
-            }}
-          />
-          <div className="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-24 w-full py-24">
-            <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
-              <div className="flex-1 max-w-3xl">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-senseai/10 border border-senseai/20 text-senseai text-xs font-medium mb-8">
-                  <Brain className="w-3 h-3" strokeWidth={1.5} />
-                  SenseAI by SaaSy Cookies
-                </div>
-
-                <h1
-                  data-testid="senseai-title"
-                  className="font-heading text-5xl md:text-7xl font-extrabold tracking-tight leading-none mb-6"
-                >
-                  Journaling that
-                  <br />
-                  <span className="text-senseai">thinks with you.</span>
-                </h1>
-
-                <p className="text-lg md:text-xl text-zinc-400 leading-relaxed max-w-xl mb-10">
-                  Most journals are just blank pages. SenseAI is an AI-powered
-                  companion that helps you reflect deeper, think clearer, and grow
-                  faster.
-                </p>
-              </div>
-
-              {/* Large Hero Logo - Right Side */}
-              <div className="flex-shrink-0">
-                <div className="relative p-2 rounded-2xl bg-gradient-to-r from-senseai/30 via-senseai/20 to-transparent shadow-[0_0_60px_rgba(6,182,212,0.6),0_0_120px_rgba(6,182,212,0.4)]">
-                  <img
-                    src={PRODUCT_LOGOS.SENSEAI.src}
-                    alt={PRODUCT_LOGOS.SENSEAI.alt}
-                    className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </StickyFolderCard>
-
-      {/* Problem */}
-      <StickyFolderCard
-        id="senseai-problem"
-        tab="The Problem"
-        index={1}
-        total={SENSEAI_SECTIONS}
-        progress={scrollYProgress}
-        footerHeight={TAB_LAYOUT_CONSTANTS.FOOTER_HEIGHT}
-      >
-        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <span className="text-xs font-medium text-senseai uppercase tracking-widest mb-4 block">
-                The Problem
-              </span>
-              <h2 className="font-heading text-4xl md:text-5xl font-bold tracking-tight mb-6">
-                We lost the art of thinking.
-              </h2>
-              <p className="text-zinc-200 text-lg leading-relaxed">
-                In a world of endless scrolling and instant answers, deep thinking
-                has become a lost skill. We consume more than we create. We react
-                more than we reflect. Journaling was supposed to help, but most
-                people quit within a week because staring at a blank page feels
-                pointless.
-              </p>
-            </div>
-            <div className="relative">
-              <div className="rounded-2xl overflow-hidden border border-white/10 bg-zinc-900/85 p-8">
-                <img
-                  src="/senseai_art_of_thinking.png"
-                  alt="Person thinking deeply"
-                  className="w-full h-64 object-cover rounded-xl opacity-70"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </StickyFolderCard>
-
-      {/* The Shift */}
-      <StickyFolderCard
-        id="senseai-shift"
-        tab="The Shift"
-        index={2}
-        total={SENSEAI_SECTIONS}
-        progress={scrollYProgress}
-        footerHeight={TAB_LAYOUT_CONSTANTS.FOOTER_HEIGHT}
-      >
-        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
-          <div className="max-w-3xl mx-auto text-center">
-            <span className="text-xs font-medium text-senseai uppercase tracking-widest mb-4 block">
-              The Shift
-            </span>
-            <h2 className="font-heading text-4xl md:text-5xl font-bold tracking-tight mb-6">
-              What if your journal <span className="text-senseai">talked back?</span>
-            </h2>
-            <p className="text-zinc-200 text-lg leading-relaxed mb-8">
-              SenseAI doesn&apos;t just store your words. It understands them. It
-              asks follow-up questions, surfaces patterns across weeks and months,
-              and helps you see your life from angles you&apos;d never consider alone.
-            </p>
-            <div className="flex items-center justify-center gap-4">
-              <div className="flex items-center gap-2 text-zinc-300/80 text-sm">
-                <MessageSquare className="w-4 h-4 text-senseai" strokeWidth={1.5} />
-                AI-guided prompts
-              </div>
-              <div className="w-1 h-1 rounded-full bg-zinc-600" />
-              <div className="flex items-center gap-2 text-zinc-300/80 text-sm">
-                <Sparkles className="w-4 h-4 text-senseai" strokeWidth={1.5} />
-                Pattern recognition
-              </div>
-              <div className="w-1 h-1 rounded-full bg-zinc-600" />
-              <div className="flex items-center gap-2 text-zinc-300/80 text-sm">
-                <Shield className="w-4 h-4 text-senseai" strokeWidth={1.5} />
-                Private & secure
-              </div>
-            </div>
-          </div>
-        </div>
-      </StickyFolderCard>
-
-      {/* Use Cases */}
-      <StickyFolderCard
-        id="senseai-usecases"
-        tab="Use Cases"
-        index={3}
-        total={SENSEAI_SECTIONS}
-        progress={scrollYProgress}
-        footerHeight={TAB_LAYOUT_CONSTANTS.FOOTER_HEIGHT}
-      >
-        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
-          <span className="text-xs font-medium text-zinc-400 uppercase tracking-widest mb-4 block">
-            Use Cases
-          </span>
-          <h2 className="font-heading text-4xl md:text-5xl font-bold tracking-tight mb-16">
-            Built for how you actually think
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {useCases.map((uc) => {
-              const Icon = uc.icon;
-              return (
-                <div
-                  key={uc.title}
-                  data-testid={`usecase-${uc.title.toLowerCase().replace(/\s/g, "-")}`}
-                  className="group relative overflow-hidden bg-zinc-900/85 border border-white/10 hover:border-senseai/20 transition-all duration-500 rounded-xl p-8"
-                >
-                  <div className="w-10 h-10 rounded-lg bg-senseai/10 flex items-center justify-center mb-5">
-                    <Icon className="w-5 h-5 text-senseai" strokeWidth={1.5} />
-                  </div>
-                  <h3 className="font-heading text-xl font-semibold mb-2">{uc.title}</h3>
-                  <p className="text-zinc-200/80 text-sm leading-relaxed">{uc.desc}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </StickyFolderCard>
-
-      {/* CTA */}
-      <StickyFolderCard
-        id="senseai-cta"
-        tab="Get Started"
-        index={4}
-        total={SENSEAI_SECTIONS}
-        progress={scrollYProgress}
-        footerHeight={TAB_LAYOUT_CONSTANTS.FOOTER_HEIGHT}
-      >
-      <section data-testid="senseai-cta" className="py-24 md:py-32 text-center bg-white/[0.02]">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-4">
-            Start journaling smarter
-          </h2>
-          <p className="text-zinc-200 text-lg mb-10 max-w-xl mx-auto">
-            SenseAI is the journaling tool for people who think deeply. Try it and
-            discover what your mind has been trying to tell you.
-          </p>
-          <a
-            href="https://www.senseai.co.nz"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-testid="senseai-cta-button"
-            className="inline-flex items-center gap-2 bg-senseai text-black font-semibold px-8 py-3 rounded-md transition-all duration-300 hover:bg-senseai/80 hover:scale-[1.02]"
-          >
-            <Brain className="w-4 h-4" strokeWidth={1.5} />
-            Explore SenseAI
-            <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
-          </a>
-        </div>
-      </section>
-      </StickyFolderCard>
-      </div>
-    </BackgroundPattern>
-  );
+  return <ScrollDeckLayout sections={sections} topOffset={120} />;
 }
