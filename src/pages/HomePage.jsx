@@ -189,7 +189,7 @@ export default function HomePage() {
 
             <article className={`${CARD_STYLES.base} hover:ring-cyan-400/40 flex flex-col h-full`}>
               <div className={`${CARD_STYLES.padding} flex flex-col h-full`}>
-                <h3 className={`${CARD_STYLES.lightText.title} text-cyan-600`}>Custom AI & SaaS Systems</h3>
+                <h3 className={`${CARD_STYLES.lightText.title} text-cyan-600`}>Get Quote</h3>
                 <p className={CARD_STYLES.lightText.description}>
                   For founders building AI tools, marketplaces, member platforms, and full SaaS products.
                 </p>

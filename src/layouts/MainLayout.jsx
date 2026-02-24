@@ -22,7 +22,7 @@ const navLinks = [
     logoKey: "PACIFIC_MARKET"
   },
   { to: "/pricing", label: "Pricing Plans", icon: DollarSign, color: "text-emerald-300" },
-  { to: "/services/ai-saas", label: "Custom AI & SaaS", icon: Layers, color: "text-cyan-300" },
+  { to: "/services/ai-saas", label: "Get Quote", icon: Layers, color: "text-cyan-300" },
   { to: "/tools/digital-card", label: "Digital BusinessCard", icon: CreditCard, color: "text-cyan-400" },
   { to: "/tools/invoice-generator", label: "Invoice Generator", icon: FileText, color: "text-purple-500" },
   { to: "/tools/qr-generator", label: "QR Code Generator", icon: QrCode, color: "text-pink-500" },

@@ -6,7 +6,7 @@ import { usePricing } from "../hooks/usePricing";
 const journeySteps = [
   {
     title: "Choose your path",
-    description: "View Pricing Plans or Custom AI & SaaS based on your stage.",
+    description: "View Pricing Plans or Get Quote based on your stage.",
   },
   {
     title: "Submit your brief",
