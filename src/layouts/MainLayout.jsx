@@ -31,7 +31,7 @@ export default function MainLayout() {
   const location = useLocation();
   const navigate = useNavigate();
   const isHome = location.pathname === "/";
-  const FOOTER_HEIGHT = 112;
+  const FOOTER_HEIGHT = 80;
   const dropdownRefs = useRef({});
 
   const handleNavigation = (to) => {
@@ -289,7 +289,7 @@ export default function MainLayout() {
         )}
       </header>
 
-      <main className={["pt-16", isHome ? "pb-[112px]" : ""].join(" ")}>
+      <main className={["pt-16", isHome ? "pb-[80px]" : ""].join(" ")}>
         <Outlet />
       </main>
 
@@ -301,7 +301,7 @@ export default function MainLayout() {
           isHome ? "fixed bottom-0 left-0 right-0 z-[9999]" : "relative",
         ].join(" ")}
       >
-        <div className="max-w-7xl mx-auto px-6 h-full py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-6 h-full py-2 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-zinc-500 text-sm">
             <img 
               src="/SAASY_logo_transparent.png" 

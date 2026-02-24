@@ -13,7 +13,7 @@ const TOTAL_SECTIONS = 6;
 const NAV_OFFSET = 88;
 const STACK_PX = 30;
 const TAB_CLEARANCE_PX = 26;
-const FOOTER_HEIGHT = 112;
+const FOOTER_HEIGHT = 80;
 const FOOTER_GAP_PX = 10;
 
 function StickyFolderCard({ id, tab, index, total, progress, footerHeight, children }) {
@@ -377,74 +377,95 @@ export default function HomePage() {
             Free and premium utilities built for real business workflows.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+            {/* Digital Business Card */}
             <Link
               to="/tools/digital-card"
               data-testid="tool-digital-card"
-              className={`${CARD_STYLES.base} hover:ring-indigo-400/40`}
+              className={`${CARD_STYLES.base} hover:ring-indigo-400/40 flex flex-col h-full group`}
             >
-              <div className={CARD_STYLES.padding}>
-                <div className={CARD_STYLES.contentLayout}>
-                  <div className="w-12 h-12 rounded-xl bg-indigo-400/10 border border-indigo-400/20 flex items-center justify-center shrink-0">
-                    <CreditCard className="w-6 h-6 text-indigo-300" strokeWidth={1.5} />
+              <div className={`${CARD_STYLES.padding} flex flex-col h-full`}>
+                {/* Top content grows */}
+                <div className="flex-1">
+                  <div className={CARD_STYLES.contentLayout}>
+                    <div className="w-12 h-12 rounded-xl bg-indigo-400/10 border border-indigo-400/20 flex items-center justify-center shrink-0">
+                      <CreditCard className="w-6 h-6 text-indigo-300" strokeWidth={1.5} />
+                    </div>
+
+                    <div className="flex-1">
+                      <h3 className={SECTION_TITLE_STYLES.card}>Digital Business Card</h3>
+                      <p className="text-zinc-200/80 text-sm leading-relaxed">
+                        Create a shareable digital profile with contact save, QR code, and instant updates.
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex-1">
-                    <h3 className={SECTION_TITLE_STYLES.card}>Digital Business Card</h3>
-                    <p className="text-zinc-200/80 text-sm leading-relaxed mb-4">
-                      Create a shareable digital profile with contact save, QR code, and instant updates.
-                    </p>
-                    <span className="inline-flex items-center gap-1.5 text-indigo-300 text-sm font-medium group-hover:gap-2.5 transition-all">
-                      Start free trial <ChevronRight className="w-3.5 h-3.5" strokeWidth={2} />
-                    </span>
-                  </div>
+                </div>
+
+                {/* CTA pinned to bottom */}
+                <div className="pt-6 mt-auto">
+                  <span className="inline-flex items-center gap-1.5 text-indigo-300 text-sm font-medium group-hover:gap-2.5 transition-all">
+                    Start free trial <ChevronRight className="w-3.5 h-3.5" strokeWidth={2} />
+                  </span>
                 </div>
               </div>
             </Link>
 
+            {/* Invoice Generator */}
             <Link
               to="/tools/invoice-generator"
               data-testid="tool-invoice-card"
-              className={`${CARD_STYLES.base} hover:ring-violet-400/40`}
+              className={`${CARD_STYLES.base} hover:ring-violet-400/40 flex flex-col h-full group`}
             >
-              <div className={CARD_STYLES.padding}>
-                <div className={CARD_STYLES.contentLayout}>
-                  <div className={CARD_STYLES.iconContainer}>
-                    <FileText className="w-6 h-6 text-brand-primary" strokeWidth={1.5} />
+              <div className={`${CARD_STYLES.padding} flex flex-col h-full`}>
+                <div className="flex-1">
+                  <div className={CARD_STYLES.contentLayout}>
+                    <div className={CARD_STYLES.iconContainer}>
+                      <FileText className="w-6 h-6 text-brand-primary" strokeWidth={1.5} />
+                    </div>
+
+                    <div className="flex-1">
+                      <h3 className={SECTION_TITLE_STYLES.card}>Invoice Generator</h3>
+                      <p className="text-zinc-200/80 text-sm leading-relaxed">
+                        Create professional invoices in seconds. Add line items, taxes, and download as PDF.
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex-1">
-                    <h3 className={SECTION_TITLE_STYLES.card}>Invoice Generator</h3>
-                    <p className="text-zinc-200/80 text-sm leading-relaxed mb-4">
-                      Create professional invoices in seconds. Add line items, taxes,
-                      and download as PDF.
-                    </p>
-                    <span className="inline-flex items-center gap-1.5 text-brand-primary text-sm font-medium group-hover:gap-2.5 transition-all">
-                      Try it free <ChevronRight className="w-3.5 h-3.5" strokeWidth={2} />
-                    </span>
-                  </div>
+                </div>
+
+                <div className="pt-6 mt-auto">
+                  <span className="inline-flex items-center gap-1.5 text-brand-primary text-sm font-medium group-hover:gap-2.5 transition-all">
+                    Try it free <ChevronRight className="w-3.5 h-3.5" strokeWidth={2} />
+                  </span>
                 </div>
               </div>
             </Link>
 
+            {/* QR Code Generator */}
             <Link
               to="/tools/qr-generator"
               data-testid="tool-qr-card"
-              className={`${CARD_STYLES.base} hover:ring-pink-400/40`}
+              className={`${CARD_STYLES.base} hover:ring-pink-400/40 flex flex-col h-full group`}
             >
-              <div className={CARD_STYLES.padding}>
-                <div className={CARD_STYLES.contentLayout}>
-                  <div className="w-12 h-12 rounded-xl bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center shrink-0">
-                    <QrCode className="w-6 h-6 text-brand-accent" strokeWidth={1.5} />
+              <div className={`${CARD_STYLES.padding} flex flex-col h-full`}>
+                <div className="flex-1">
+                  <div className={CARD_STYLES.contentLayout}>
+                    <div className="w-12 h-12 rounded-xl bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center shrink-0">
+                      <QrCode className="w-6 h-6 text-brand-accent" strokeWidth={1.5} />
+                    </div>
+
+                    <div className="flex-1">
+                      <h3 className={SECTION_TITLE_STYLES.card}>QR Code Generator</h3>
+                      <p className="text-zinc-200/80 text-sm leading-relaxed">
+                        Generate QR codes for URLs, text, or contact info. Download as PNG in any size.
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex-1">
-                    <h3 className={SECTION_TITLE_STYLES.card}>QR Code Generator</h3>
-                    <p className="text-zinc-200/80 text-sm leading-relaxed mb-4">
-                      Generate QR codes for URLs, text, or contact info. Download as PNG
-                      in any size.
-                    </p>
-                    <span className="inline-flex items-center gap-1.5 text-brand-accent text-sm font-medium group-hover:gap-2.5 transition-all">
-                      Try it free <ChevronRight className="w-3.5 h-3.5" strokeWidth={2} />
-                    </span>
-                  </div>
+                </div>
+
+                <div className="pt-6 mt-auto">
+                  <span className="inline-flex items-center gap-1.5 text-brand-accent text-sm font-medium group-hover:gap-2.5 transition-all">
+                    Try it free <ChevronRight className="w-3.5 h-3.5" strokeWidth={2} />
+                  </span>
                 </div>
               </div>
             </Link>
