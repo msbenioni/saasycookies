@@ -31,6 +31,8 @@ export default function MainLayout() {
   const location = useLocation();
   const navigate = useNavigate();
   const isHome = location.pathname === "/";
+  const isSEOPage = location.pathname === "/senseai" || location.pathname === "/pacificmarket";
+  const shouldFixFooter = isHome || isSEOPage;
   const FOOTER_HEIGHT = 80;
   const dropdownRefs = useRef({});
 
@@ -289,16 +291,16 @@ export default function MainLayout() {
         )}
       </header>
 
-      <main className={["pt-16", isHome ? "pb-[80px]" : ""].join(" ")}>
+      <main className={["pt-16", shouldFixFooter ? "pb-[80px]" : ""].join(" ")}>
         <Outlet />
       </main>
 
       <footer
         data-testid="main-footer"
-        style={isHome ? { height: `${FOOTER_HEIGHT}px` } : undefined}
+        style={shouldFixFooter ? { height: `${FOOTER_HEIGHT}px` } : undefined}
         className={[
           "border-t border-white/5 bg-void-paper",
-          isHome ? "fixed bottom-0 left-0 right-0 z-[9999]" : "relative",
+          shouldFixFooter ? "fixed bottom-0 left-0 right-0 z-[9999]" : "relative",
         ].join(" ")}
       >
         <div className="max-w-7xl mx-auto px-6 h-full py-2 flex flex-col sm:flex-row items-center justify-between gap-4">

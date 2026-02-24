@@ -4,6 +4,7 @@ import {
   Heart, Compass, BarChart3, Handshake
 } from "lucide-react";
 import { PRODUCT_LOGOS } from "../../constants/productLogos";
+import { BackgroundPattern, StickyFolderCard, useScrollProgress, TAB_LAYOUT_CONSTANTS } from "../../components/shared/TabLayout";
 
 const visionPoints = [
   {
@@ -28,57 +29,78 @@ const visionPoints = [
   },
 ];
 
+const PACIFIC_SECTIONS = 5;
+
 export default function PacificMarketPage() {
+  const { containerRef, scrollYProgress } = useScrollProgress();
+  
   return (
-    <div className="relative">
-      {/* Hero */}
-      <section data-testid="pacific-hero" className="relative min-h-[80vh] flex items-center overflow-hidden">
-        <div
-          className="absolute inset-0 animate-glow-pulse"
-          style={{
-            background:
-              "radial-gradient(circle at 60% 30%, rgba(245,158,11,0.12) 0%, transparent 50%)",
-          }}
-        />
-        <div className="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-24 w-full py-24">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
-            <div className="flex-1 max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pacific/10 border border-pacific/20 text-pacific text-xs font-medium mb-8">
-                <Globe className="w-3 h-3" strokeWidth={1.5} />
-                Pacific Market by SaaSy Cookies
+    <BackgroundPattern>
+      <div className="relative" ref={containerRef}>
+        {/* Hero */}
+        <StickyFolderCard
+          id="pacific-hero"
+          tab="Pacific Market"
+          index={0}
+          total={PACIFIC_SECTIONS}
+          progress={scrollYProgress}
+          footerHeight={TAB_LAYOUT_CONSTANTS.FOOTER_HEIGHT}
+        >
+        <div className="relative min-h-[80vh] flex items-center">
+          <div
+            className="absolute inset-0 animate-glow-pulse"
+            style={{
+              background:
+                "radial-gradient(circle at 60% 30%, rgba(245,158,11,0.12) 0%, transparent 50%)",
+            }}
+          />
+          <div className="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-24 w-full py-24">
+            <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+              <div className="flex-1 max-w-3xl">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pacific/10 border border-pacific/20 text-pacific text-xs font-medium mb-8">
+                  <Globe className="w-3 h-3" strokeWidth={1.5} />
+                  Pacific Market by SaaSy Cookies
+                </div>
+
+                <h1
+                  data-testid="pacific-title"
+                  className="font-heading text-5xl md:text-7xl font-extrabold tracking-tight leading-none mb-6"
+                >
+                  The Pacific
+                  <br />
+                  <span className="text-pacific">deserves better.</span>
+                </h1>
+
+                <p className="text-lg md:text-xl text-zinc-400 leading-relaxed max-w-xl mb-10">
+                  A community marketplace connecting Pacific Island creators,
+                  businesses, and cultural voices to a global audience.
+                </p>
               </div>
 
-              <h1
-                data-testid="pacific-title"
-                className="font-heading text-5xl md:text-7xl font-extrabold tracking-tight leading-none mb-6"
-              >
-                The Pacific
-                <br />
-                <span className="text-pacific">deserves better.</span>
-              </h1>
-
-              <p className="text-lg md:text-xl text-zinc-400 leading-relaxed max-w-xl mb-10">
-                A community marketplace connecting Pacific Island creators,
-                businesses, and cultural voices to a global audience.
-              </p>
-            </div>
-
-            {/* Large Hero Logo - Right Side */}
-            <div className="flex-shrink-0">
-              <div className="relative p-2 rounded-2xl bg-gradient-to-r from-pacific/30 via-pacific/20 to-transparent shadow-[0_0_60px_rgba(245,158,11,0.6),0_0_120px_rgba(245,158,11,0.4)]">
-                <img
-                  src={PRODUCT_LOGOS.PACIFIC_MARKET.src}
-                  alt={PRODUCT_LOGOS.PACIFIC_MARKET.alt}
-                  className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain"
-                />
+              {/* Large Hero Logo - Right Side */}
+              <div className="flex-shrink-0">
+                <div className="relative p-2 rounded-2xl bg-gradient-to-r from-pacific/30 via-pacific/20 to-transparent shadow-[0_0_60px_rgba(245,158,11,0.6),0_0_120px_rgba(245,158,11,0.4)]">
+                  <img
+                    src={PRODUCT_LOGOS.PACIFIC_MARKET.src}
+                    alt={PRODUCT_LOGOS.PACIFIC_MARKET.alt}
+                    className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </StickyFolderCard>
 
       {/* The Gap */}
-      <section data-testid="pacific-gap" className="py-24 md:py-32 bg-white/[0.02]">
+      <StickyFolderCard
+        id="pacific-gap"
+        tab="The Gap"
+        index={1}
+        total={PACIFIC_SECTIONS}
+        progress={scrollYProgress}
+        footerHeight={TAB_LAYOUT_CONSTANTS.FOOTER_HEIGHT}
+      >
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -111,10 +133,17 @@ export default function PacificMarketPage() {
             </div>
           </div>
         </div>
-      </section>
+      </StickyFolderCard>
 
       {/* Vision */}
-      <section data-testid="pacific-vision" className="py-24 md:py-32 bg-void-paper/70">
+      <StickyFolderCard
+        id="pacific-vision"
+        tab="The Vision"
+        index={2}
+        total={PACIFIC_SECTIONS}
+        progress={scrollYProgress}
+        footerHeight={TAB_LAYOUT_CONSTANTS.FOOTER_HEIGHT}
+      >
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <span className="text-xs font-medium text-pacific uppercase tracking-widest mb-4 block">
@@ -149,10 +178,17 @@ export default function PacificMarketPage() {
             })}
           </div>
         </div>
-      </section>
+      </StickyFolderCard>
 
       {/* Tech as Enabler */}
-      <section data-testid="pacific-tech" className="py-24 md:py-32 bg-white/[0.02]">
+      <StickyFolderCard
+        id="pacific-tech"
+        tab="Tech as Enabler"
+        index={3}
+        total={PACIFIC_SECTIONS}
+        progress={scrollYProgress}
+        footerHeight={TAB_LAYOUT_CONSTANTS.FOOTER_HEIGHT}
+      >
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="order-2 lg:order-1">
@@ -193,10 +229,17 @@ export default function PacificMarketPage() {
             </div>
           </div>
         </div>
-      </section>
+      </StickyFolderCard>
 
-      {/* Founder Story */}
-      <section data-testid="pacific-founder" className="py-24 md:py-32 bg-void-paper/70">
+      {/* CTA */}
+      <StickyFolderCard
+        id="pacific-cta"
+        tab="Get Started"
+        index={4}
+        total={PACIFIC_SECTIONS}
+        progress={scrollYProgress}
+        footerHeight={TAB_LAYOUT_CONSTANTS.FOOTER_HEIGHT}
+      >
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <div className="max-w-3xl">
             <div className="flex items-center gap-3 mb-8">
@@ -217,31 +260,8 @@ export default function PacificMarketPage() {
             </p>
           </div>
         </div>
-      </section>
-
-      {/* CTA */}
-      <section data-testid="pacific-cta" className="py-24 md:py-32 text-center bg-white/[0.02]">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-4">
-            Join the Pacific movement
-          </h2>
-          <p className="text-zinc-200 text-lg mb-10 max-w-xl mx-auto">
-            Whether you&apos;re a creator, a business, or someone who believes in
-            equitable commerce&mdash;Pacific Market needs you.
-          </p>
-          <a
-            href="https://www.pacificmarket.co.nz"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-testid="pacific-cta-button"
-            className="inline-flex items-center gap-2 bg-pacific text-black font-semibold px-8 py-3 rounded-md transition-all duration-300 hover:bg-pacific/80 hover:scale-[1.02]"
-          >
-            <Globe className="w-4 h-4" strokeWidth={1.5} />
-            Explore Pacific Market
-            <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
-          </a>
-        </div>
-      </section>
-    </div>
+      </StickyFolderCard>
+      </div>
+    </BackgroundPattern>
   );
 }

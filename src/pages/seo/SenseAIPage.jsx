@@ -4,6 +4,7 @@ import {
   TrendingUp, MessageSquare, Sparkles, Heart
 } from "lucide-react";
 import { PRODUCT_LOGOS } from "../../constants/productLogos";
+import { BackgroundPattern, StickyFolderCard, useScrollProgress, TAB_LAYOUT_CONSTANTS } from "../../components/shared/TabLayout";
 
 const useCases = [
   {
@@ -28,58 +29,79 @@ const useCases = [
   },
 ];
 
+const SENSEAI_SECTIONS = 5;
+
 export default function SenseAIPage() {
+  const { containerRef, scrollYProgress } = useScrollProgress();
+  
   return (
-    <div className="relative">
-      {/* Hero */}
-      <section data-testid="senseai-hero" className="relative min-h-[80vh] flex items-center overflow-hidden">
-        <div
-          className="absolute inset-0 animate-glow-pulse"
-          style={{
-            background:
-              "radial-gradient(circle at 40% 30%, rgba(6,182,212,0.12) 0%, transparent 50%)",
-          }}
-        />
-        <div className="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-24 w-full py-24">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
-            <div className="flex-1 max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-senseai/10 border border-senseai/20 text-senseai text-xs font-medium mb-8">
-                <Brain className="w-3 h-3" strokeWidth={1.5} />
-                SenseAI by SaaSy Cookies
+    <BackgroundPattern>
+      <div className="relative" ref={containerRef}>
+        {/* Hero */}
+        <StickyFolderCard
+          id="senseai-hero"
+          tab="SenseAI"
+          index={0}
+          total={SENSEAI_SECTIONS}
+          progress={scrollYProgress}
+          footerHeight={TAB_LAYOUT_CONSTANTS.FOOTER_HEIGHT}
+        >
+        <div className="relative min-h-[80vh] flex items-center">
+          <div
+            className="absolute inset-0 animate-glow-pulse"
+            style={{
+              background:
+                "radial-gradient(circle at 40% 30%, rgba(6,182,212,0.12) 0%, transparent 50%)",
+            }}
+          />
+          <div className="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-24 w-full py-24">
+            <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+              <div className="flex-1 max-w-3xl">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-senseai/10 border border-senseai/20 text-senseai text-xs font-medium mb-8">
+                  <Brain className="w-3 h-3" strokeWidth={1.5} />
+                  SenseAI by SaaSy Cookies
+                </div>
+
+                <h1
+                  data-testid="senseai-title"
+                  className="font-heading text-5xl md:text-7xl font-extrabold tracking-tight leading-none mb-6"
+                >
+                  Journaling that
+                  <br />
+                  <span className="text-senseai">thinks with you.</span>
+                </h1>
+
+                <p className="text-lg md:text-xl text-zinc-400 leading-relaxed max-w-xl mb-10">
+                  Most journals are just blank pages. SenseAI is an AI-powered
+                  companion that helps you reflect deeper, think clearer, and grow
+                  faster.
+                </p>
               </div>
 
-              <h1
-                data-testid="senseai-title"
-                className="font-heading text-5xl md:text-7xl font-extrabold tracking-tight leading-none mb-6"
-              >
-                Journaling that
-                <br />
-                <span className="text-senseai">thinks with you.</span>
-              </h1>
-
-              <p className="text-lg md:text-xl text-zinc-400 leading-relaxed max-w-xl mb-10">
-                Most journals are just blank pages. SenseAI is an AI-powered
-                companion that helps you reflect deeper, think clearer, and grow
-                faster.
-              </p>
-            </div>
-
-            {/* Large Hero Logo - Right Side */}
-            <div className="flex-shrink-0">
-              <div className="relative p-2 rounded-2xl bg-gradient-to-r from-senseai/30 via-senseai/20 to-transparent shadow-[0_0_60px_rgba(6,182,212,0.6),0_0_120px_rgba(6,182,212,0.4)]">
-                <img
-                  src={PRODUCT_LOGOS.SENSEAI.src}
-                  alt={PRODUCT_LOGOS.SENSEAI.alt}
-                  className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain"
-                />
+              {/* Large Hero Logo - Right Side */}
+              <div className="flex-shrink-0">
+                <div className="relative p-2 rounded-2xl bg-gradient-to-r from-senseai/30 via-senseai/20 to-transparent shadow-[0_0_60px_rgba(6,182,212,0.6),0_0_120px_rgba(6,182,212,0.4)]">
+                  <img
+                    src={PRODUCT_LOGOS.SENSEAI.src}
+                    alt={PRODUCT_LOGOS.SENSEAI.alt}
+                    className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </StickyFolderCard>
 
       {/* Problem */}
-      <section data-testid="senseai-problem" className="py-24 md:py-32 bg-white/[0.02]">
+      <StickyFolderCard
+        id="senseai-problem"
+        tab="The Problem"
+        index={1}
+        total={SENSEAI_SECTIONS}
+        progress={scrollYProgress}
+        footerHeight={TAB_LAYOUT_CONSTANTS.FOOTER_HEIGHT}
+      >
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -100,7 +122,7 @@ export default function SenseAIPage() {
             <div className="relative">
               <div className="rounded-2xl overflow-hidden border border-white/10 bg-zinc-900/85 p-8">
                 <img
-                  src="https://images.unsplash.com/photo-1516383740770-fbcc5ccbece0?w=600&h=400&fit=crop"
+                  src="/senseai_art_of_thinking.png"
                   alt="Person thinking deeply"
                   className="w-full h-64 object-cover rounded-xl opacity-70"
                 />
@@ -108,10 +130,17 @@ export default function SenseAIPage() {
             </div>
           </div>
         </div>
-      </section>
+      </StickyFolderCard>
 
       {/* The Shift */}
-      <section data-testid="senseai-shift" className="py-24 md:py-32 bg-void-paper/70">
+      <StickyFolderCard
+        id="senseai-shift"
+        tab="The Shift"
+        index={2}
+        total={SENSEAI_SECTIONS}
+        progress={scrollYProgress}
+        footerHeight={TAB_LAYOUT_CONSTANTS.FOOTER_HEIGHT}
+      >
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <div className="max-w-3xl mx-auto text-center">
             <span className="text-xs font-medium text-senseai uppercase tracking-widest mb-4 block">
@@ -143,10 +172,17 @@ export default function SenseAIPage() {
             </div>
           </div>
         </div>
-      </section>
+      </StickyFolderCard>
 
       {/* Use Cases */}
-      <section data-testid="senseai-usecases" className="py-24 md:py-32 bg-white/[0.02]">
+      <StickyFolderCard
+        id="senseai-usecases"
+        tab="Use Cases"
+        index={3}
+        total={SENSEAI_SECTIONS}
+        progress={scrollYProgress}
+        footerHeight={TAB_LAYOUT_CONSTANTS.FOOTER_HEIGHT}
+      >
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <span className="text-xs font-medium text-zinc-400 uppercase tracking-widest mb-4 block">
             Use Cases
@@ -174,33 +210,17 @@ export default function SenseAIPage() {
             })}
           </div>
         </div>
-      </section>
-
-      {/* Founder POV */}
-      <section data-testid="senseai-founder" className="py-24 md:py-32 bg-void-paper/70">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
-          <div className="max-w-3xl">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-10 h-10 rounded-full bg-senseai/10 border border-senseai/20 flex items-center justify-center">
-                <Heart className="w-5 h-5 text-senseai" strokeWidth={1.5} />
-              </div>
-              <span className="text-xs font-medium text-zinc-400 uppercase tracking-widest">
-                From the Founder
-              </span>
-            </div>
-            <blockquote className="font-heading text-2xl md:text-3xl font-semibold leading-relaxed mb-6 text-zinc-200">
-              &ldquo;I built SenseAI because I needed it. I journaled for years
-              but never saw the bigger picture. AI changed that&mdash;it showed me
-              patterns in my thinking I was completely blind to.&rdquo;
-            </blockquote>
-            <p className="text-zinc-200/70">
-              &mdash; Founder, SaaSy Cookies
-            </p>
-          </div>
-        </div>
-      </section>
+      </StickyFolderCard>
 
       {/* CTA */}
+      <StickyFolderCard
+        id="senseai-cta"
+        tab="Get Started"
+        index={4}
+        total={SENSEAI_SECTIONS}
+        progress={scrollYProgress}
+        footerHeight={TAB_LAYOUT_CONSTANTS.FOOTER_HEIGHT}
+      >
       <section data-testid="senseai-cta" className="py-24 md:py-32 text-center bg-white/[0.02]">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           <h2 className="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-4">
@@ -223,6 +243,8 @@ export default function SenseAIPage() {
           </a>
         </div>
       </section>
-    </div>
+      </StickyFolderCard>
+      </div>
+    </BackgroundPattern>
   );
 }
