@@ -201,6 +201,7 @@ export function StickyFolderCard({
         top: TAB_LAYOUT_CONSTANTS.NAV_OFFSET,
         height: viewportHeight,
         zIndex,
+        scrollMarginTop: TAB_LAYOUT_CONSTANTS.NAV_OFFSET,
       }}
     >
       {/* This is the "screen" that hides anything behind */}
