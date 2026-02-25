@@ -28,68 +28,31 @@ export const SENSEAI_SECTION_LABELS = {
   CTA: "Begin",
 };
 
-// Hook for active section tracking (deterministic scroll-based)
-export function useActiveSection(sectionIds, navOffset = TAB_LAYOUT_CONSTANTS.NAV_OFFSET) {
+// Hook for active section tracking from scroll progress
+export function useActiveSectionFromProgress(scrollYProgress, sectionIds, total) {
   const [activeId, setActiveId] = useState(sectionIds?.[0] ?? "");
-  const activeIdRef = useRef(activeId);
-  const rafRef = useRef(null);
 
   useEffect(() => {
-    activeIdRef.current = activeId;
-  }, [activeId]);
+    if (!scrollYProgress || !sectionIds?.length || !total) return;
 
-  useEffect(() => {
-    if (!sectionIds?.length) return;
+    // Subscribe to progress changes
+    const unsub = scrollYProgress.on("change", (p) => {
+      // Clamp
+      const progress = Math.max(0, Math.min(1, p));
 
-    const getClosestToNavOffset = () => {
-      let bestId = sectionIds[0];
-      let bestDistance = Number.POSITIVE_INFINITY;
+      // Convert progress to index
+      // Using a tiny epsilon prevents edge flicker at exact boundaries
+      const eps = 1e-6;
+      const idx = Math.min(total - 1, Math.floor((progress + eps) * total));
 
-      for (const id of sectionIds) {
-        const el = document.getElementById(id);
-        if (!el) continue;
-
-        const rect = el.getBoundingClientRect();
-
-        // Distance from section top to the "active line" (navOffset)
-        const distance = Math.abs(rect.top - navOffset);
-
-        // Prefer sections whose top is at/above the nav line slightly
-        // so it feels natural when scrolling down AND up.
-        const bias = rect.top <= navOffset ? 0 : 8;
-        const score = distance + bias;
-
-        if (score < bestDistance) {
-          bestDistance = score;
-          bestId = id;
-        }
+      const nextId = sectionIds[idx];
+      if (nextId && nextId !== activeId) {
+        setActiveId(nextId);
       }
+    });
 
-      if (bestId && bestId !== activeIdRef.current) {
-        setActiveId(bestId);
-      }
-    };
-
-    const onScroll = () => {
-      if (rafRef.current) return;
-      rafRef.current = requestAnimationFrame(() => {
-        rafRef.current = null;
-        getClosestToNavOffset();
-      });
-    };
-
-    // Run once on mount
-    getClosestToNavOffset();
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, [sectionIds.join("|"), navOffset]);
+    return () => unsub();
+  }, [scrollYProgress, sectionIds.join("|"), total, activeId]);
 
   return activeId;
 }
@@ -236,10 +199,9 @@ export function StickyFolderCard({
 // Shared scroll deck layout component
 export function ScrollDeckLayout({ sections, topOffset = 120 }) {
   const { containerRef, scrollYProgress } = useScrollProgress();
-  const activeId = useActiveSection(
-    sections.map((s) => s.id),
-    TAB_LAYOUT_CONSTANTS.NAV_OFFSET
-  );
+
+  const ids = sections.map((s) => s.id);
+  const activeId = useActiveSectionFromProgress(scrollYProgress, ids, sections.length);
 
   return (
     <BackgroundPattern>
@@ -255,7 +217,7 @@ export function ScrollDeckLayout({ sections, topOffset = 120 }) {
               total={sections.length}
               progress={scrollYProgress}
               footerHeight={TAB_LAYOUT_CONSTANTS.FOOTER_HEIGHT}
-              scrollable={section.scrollable !== false}
+              scrollable={false}
             >
               {section.content}
             </StickyFolderCard>
