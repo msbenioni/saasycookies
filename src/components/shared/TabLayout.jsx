@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import { useScroll, useTransform } from "framer-motion";
+import { scrollToDeckSection } from "../../utils/scrollToSection";
 
 // Media query hook for responsive behavior
 export function useMediaQuery(query) {
@@ -95,17 +96,34 @@ export function MobileScrollLayout({ sections }) {
 }
 
 // Fixed left sidebar tab rail
-export function SideTabRail({ items, activeId, topOffset = 120 }) {
+export function SideTabRail({ items, activeId, topOffset = 120, containerRef }) {
   return (
     <div
       className="hidden md:fixed md:left-6 md:z-50 md:flex md:flex-col md:gap-3"
       style={{ top: topOffset }}
     >
-      {items.map((item) => {
+      {items.map((item, idx) => {
         const isActive = item.id === activeId;
 
         return (
-          <a key={item.id} href={`#${item.id}`} className="pointer-events-auto">
+          <a
+            key={item.id}
+            href={`#${item.id}`}
+            className="pointer-events-auto"
+            onClick={(e) => {
+              e.preventDefault();
+
+              // keep URL hash updating (optional but nice)
+              window.history.replaceState(null, "", `#${item.id}`);
+
+              scrollToDeckSection({
+                containerEl: containerRef?.current,
+                index: idx,
+                total: items.length,
+                behavior: "smooth",
+              });
+            }}
+          >
             <div
               className={[
                 "inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-semibold backdrop-blur-md shadow-[0_10px_25px_rgba(0,0,0,0.35)] transition",
@@ -254,7 +272,7 @@ export function ScrollDeckLayout({ sections, topOffset = 120 }) {
 
   return (
     <BackgroundPattern>
-      <SideTabRail items={sections} activeId={activeId} topOffset={topOffset} />
+      <SideTabRail items={sections} activeId={activeId} topOffset={topOffset} containerRef={containerRef} />
 
       <div className="relative" ref={containerRef}>
         <div className="flex flex-col">

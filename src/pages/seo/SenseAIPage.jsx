@@ -187,7 +187,7 @@ const sections = [
           Built for thoughtful humans.
         </p>
         <a
-          href="https://www.senseai.app"
+          href="https://www.senseai.co.nz"
           target="_blank"
           rel="noopener noreferrer"
           data-testid="senseai-cta-button"
