@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   ArrowRight,
@@ -151,12 +151,32 @@ export default function RequestAISaaSBriefPage() {
   const [processingPlan, setProcessingPlan] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { pricingTiers, updateCountry, getBasePrice } = usePricing();
+  const { pricingTiers, updateCountry, getPrice } = usePricing();
 
-  // Helper function to get price for plan comparison modal
-  function getPrice(planId) {
-    return getBasePrice(planId);
-  }
+  // Ref for modal scroll functionality
+  const recommendationCardRef = useRef(null);
+
+  // Auto-scroll to modal and lock background scroll
+  useEffect(() => {
+    if (!showRecommendation) return;
+
+    // Lock background scroll while modal is open (mobile friendly)
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    // Scroll modal card into view after it mounts
+    const id = window.setTimeout(() => {
+      recommendationCardRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 50);
+
+    return () => {
+      window.clearTimeout(id);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [showRecommendation]);
 
   async function handleStage1Submit(event) {
     event.preventDefault();
@@ -422,16 +442,20 @@ export default function RequestAISaaSBriefPage() {
                 {/* Optional secondary card (visual balance / premium feel) */}
                 <div className="rounded-2xl border border-white/10 bg-zinc-950/20 backdrop-blur-sm p-5">
                   <div className="text-xs text-zinc-400 uppercase tracking-widest mb-2">
-                    You’ll get
+                    You'll get
                   </div>
                   <div className="space-y-2 text-sm text-zinc-200">
                     <div className="flex items-start gap-2">
                       <CheckCircle className="w-4 h-4 text-emerald-400 mt-0.5" />
-                      <span>A clear plan recommendation</span>
+                      <span>Instant plan recommendation</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="w-4 h-4 text-emerald-400 mt-0.5" />
-                      <span>Exact pricing for your country</span>
+                      <span>Build starts immediately after payment</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-emerald-400 mt-0.5" />
+                      <span>Contact when ready for demo</span>
                     </div>
                   </div>
                 </div>
@@ -748,8 +772,11 @@ export default function RequestAISaaSBriefPage() {
 
                   {/* Plan Recommendation Modal */}
                   {showRecommendation && planRecommendation && (
-                    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-                      <div className={`${CARD_STYLES.base} p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto`}>
+                    <div className="fixed inset-0 bg-black/50 flex items-start sm:items-center justify-center p-4 sm:p-6 z-50">
+                      <div
+                        ref={recommendationCardRef}
+                        className={`${CARD_STYLES.base} p-5 sm:p-6 max-w-2xl w-full max-h-[85vh] sm:max-h-[90vh] overflow-y-auto`}
+                      >
                         <div className="flex items-center gap-3 mb-4">
                           <div className={`${PAGE_HEADER_ICON_CLASS} ${ICON_BG_COLORS.emerald}`}>
                             <TrendingUp
@@ -773,19 +800,30 @@ export default function RequestAISaaSBriefPage() {
                         )}
 
                         <div className={`${CARD_STYLES.base} p-6 mb-6 border-emerald-400/30 bg-emerald-400/10`}>
-                          <div className="flex items-center justify-between mb-4">
+                          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
                             <div>
                               <h3 className="text-xl font-bold text-white mb-1">
                                 {planRecommendation.planName}
                               </h3>
-                              <p className="text-2xl font-bold text-emerald-300">
-                                {planRecommendation.price}
-                                <span className="text-sm text-zinc-400 ml-2">
+
+                              <div className="flex flex-wrap items-end gap-x-3 gap-y-1">
+                                <p className="text-2xl font-bold text-emerald-300">
+                                  {planRecommendation.price}
+                                </p>
+
+                                <span className="text-sm text-zinc-400">
                                   (First month: $10)
                                 </span>
-                              </p>
+
+                                {/* Mobile pill so it never gets cut off */}
+                                <span className="sm:hidden inline-flex items-center rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-xs text-zinc-200">
+                                  Complexity: <span className="ml-1 font-semibold text-white">{planRecommendation.score}/10</span>
+                                </span>
+                              </div>
                             </div>
-                            <div className="text-right">
+
+                            {/* Desktop / tablet view */}
+                            <div className="hidden sm:block text-right">
                               <div className="text-sm text-zinc-400">Complexity Score</div>
                               <div className="text-2xl font-bold text-white">
                                 {planRecommendation.score}/10
@@ -907,7 +945,7 @@ export default function RequestAISaaSBriefPage() {
                     }`}
                 >
                   <div className="text-center mb-6">
-                    {tier.highlight && (
+                    {tier.highlight && tier.name !== "Growth Engine" && (
                       <div className="inline-flex items-center gap-2 bg-emerald-400/20 text-emerald-300 text-xs font-medium px-3 py-1 rounded-full mb-3">
                         <CheckCircle className="w-3 h-3" />
                         RECOMMENDED
