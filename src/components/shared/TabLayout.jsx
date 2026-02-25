@@ -171,13 +171,18 @@ export function StickyFolderCard({
 }) {
   const rangeStart = index / total;
   const rangeEnd = (index + 1) / total;
+  const isFirstSection = index === 0;
+  const isLastSection = index === total - 1;
 
-  const scale = useTransform(progress, [rangeStart, rangeEnd], [0.985, 1]);
-  const opacity = useTransform(
+  const scaleProgress = useTransform(progress, [rangeStart, rangeEnd], [0.985, 1]);
+  const opacityProgress = useTransform(
     progress,
     [rangeStart - 0.05, rangeStart, rangeEnd],
     [0, 1, 1]
   );
+
+  const scale = isFirstSection || isLastSection ? 1 : scaleProgress;
+  const opacity = isFirstSection || isLastSection ? 1 : opacityProgress;
 
   const viewportHeight = `calc(100vh - ${
     TAB_LAYOUT_CONSTANTS.NAV_OFFSET +
@@ -237,15 +242,14 @@ export function StickyFolderCard({
 export function ScrollDeckLayout({ sections, topOffset = 120 }) {
   const isDesktop = useMediaQuery("(min-width: 768px)"); // md breakpoint
 
+  // Keep hook order stable across mobile/desktop renders
+  const { containerRef, scrollYProgress } = useScrollProgress();
+  const ids = sections.map((s) => s.id);
+  const activeId = useActiveSectionFromProgress(scrollYProgress, ids, sections.length);
+
   if (!isDesktop) {
     return <MobileScrollLayout sections={sections} />;
   }
-
-  // ✅ Desktop: your current deck
-  const { containerRef, scrollYProgress } = useScrollProgress();
-
-  const ids = sections.map((s) => s.id);
-  const activeId = useActiveSectionFromProgress(scrollYProgress, ids, sections.length);
 
   return (
     <BackgroundPattern>

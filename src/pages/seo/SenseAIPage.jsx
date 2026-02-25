@@ -109,8 +109,8 @@ const sections = [
     </div>
   )},
   { id: "senseai-shift", tab: SENSEAI_SECTION_LABELS.SHIFT, content: (
-    <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
-      <div className="max-w-3xl mx-auto text-center">
+    <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 h-full flex items-center">
+      <div className="max-w-3xl mx-auto text-center w-full">
         <span className="text-xs font-medium text-senseai uppercase tracking-widest mb-4 block">
           {SENSEAI_SECTION_LABELS.SHIFT}
         </span>
