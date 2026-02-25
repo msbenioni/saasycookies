@@ -21,8 +21,8 @@ body {
 html { 
     scroll-behavior: smooth; 
 }
-section[id] { 
-    scroll-margin-top: 110px; /* match navbar */ 
+section[id], div[id] { 
+    scroll-margin-top: 96px; /* match NAV_OFFSET */ 
 }
 
 code {

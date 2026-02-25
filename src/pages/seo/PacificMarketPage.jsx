@@ -4,33 +4,23 @@ import {
   Heart, Compass, BarChart3, Handshake
 } from "lucide-react";
 import { PRODUCT_LOGOS } from "../../constants/productLogos";
-import { ScrollDeckLayout } from "../../components/shared/ScrollDeckLayout";
+import { ScrollDeckLayout, PACIFIC_SECTION_LABELS } from "../../components/shared/TabLayout";
 
 const visionPoints = [
   {
     icon: Users,
-    title: "Creator Visibility",
-    desc: "Give Pacific creators the spotlight they deserve with dedicated storefronts and discovery tools.",
+    title: "Find Pacific First",
+    desc: "Show up in the right places with creator profiles, collections, and smart discovery built for the Pacific.",
   },
   {
     icon: Store,
-    title: "Local Commerce",
-    desc: "A marketplace designed for how Pacific businesses actually operate, not how Silicon Valley thinks they should.",
-  },
-  {
-    icon: Wifi,
-    title: "Digital Access",
-    desc: "Built for real-world connectivity. Works on slow networks, mobile-first, offline-capable.",
-  },
-  {
-    icon: BarChart3,
-    title: "Growth Analytics",
-    desc: "Simple, actionable insights that help small businesses understand their audience and grow.",
+    title: "Share Beyond Borders",
+    desc: "Simple storefronts that match how you actually operate—without complicated tools or expensive overhead.",
   },
 ];
 
 const sections = [
-  { id: "pacific-hero", tab: "Pacific Market", content: (
+  { id: "pacific-hero", tab: PACIFIC_SECTION_LABELS.HERO, scrollable: false, content: (
     <div className="relative min-h-[80vh] flex items-center">
       <div
         className="absolute inset-0 animate-glow-pulse"
@@ -57,8 +47,12 @@ const sections = [
             </h1>
 
             <p className="text-lg md:text-xl text-zinc-400 leading-relaxed max-w-xl mb-10">
-              A community marketplace connecting Pacific Island creators,
-              businesses, and cultural voices to a global audience.
+              Pacific Market connects you with creators, makers, and small businesses
+              across the Pacific—so your support flows directly into communities,
+              not just platforms.
+            </p>
+            <p className="text-zinc-300 text-base mt-4 max-w-xl">
+              When you buy Pacific, you uplift families, culture, and stories that deserve to be seen.
             </p>
           </div>
 
@@ -76,26 +70,28 @@ const sections = [
       </div>
     </div>
   )},
-  { id: "pacific-gap", tab: "The Gap", content: (
+  { id: "pacific-gap", tab: PACIFIC_SECTION_LABELS.GAP, content: (
     <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <div>
           <span className="text-xs font-medium text-pacific uppercase tracking-widest mb-4 block">
-            The Gap
+            {PACIFIC_SECTION_LABELS.GAP}
           </span>
           <h2 className="font-heading text-4xl md:text-5xl font-bold tracking-tight mb-6">
-            Invisible to the world.
+            The Pacific has always created.
+            <br />
+            <span className="text-pacific">The world just hasn't always seen it.</span>
           </h2>
-          <p className="text-zinc-200 text-lg leading-relaxed mb-6">
-            Pacific Island creators and small businesses are some of the most
-            resourceful, creative people on the planet. But they&apos;re invisible
-            online. Global marketplaces weren&apos;t built for them. The tools are
-            too complex, the fees too high, and the audience too far away.
-          </p>
+
           <p className="text-zinc-200 text-lg leading-relaxed">
-            The Pacific region generates incredible art, food, fashion, and
-            services&mdash;but lacks the digital infrastructure to share it
-            with the world.
+            Across the Pacific, creativity is woven into daily life—food, fashion, carving,
+            storytelling, entrepreneurship. But global platforms were never designed
+            with Pacific realities in mind.
+          </p>
+
+          <p className="text-zinc-200 text-lg leading-relaxed mt-6">
+            That makes it harder for supporters like you to find and uplift Pacific businesses in one place.
+            Not because the talent isn't there—because the infrastructure hasn't been.
           </p>
         </div>
         <div className="relative">
@@ -110,19 +106,24 @@ const sections = [
       </div>
     </div>
   )},
-  { id: "pacific-vision", tab: "The Vision", content: (
+  { id: "pacific-vision", tab: PACIFIC_SECTION_LABELS.VISION, content: (
     <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
       <div className="max-w-3xl mx-auto text-center mb-16">
         <span className="text-xs font-medium text-pacific uppercase tracking-widest mb-4 block">
-          The Vision
+          {PACIFIC_SECTION_LABELS.VISION}
         </span>
         <h2 className="font-heading text-4xl md:text-5xl font-bold tracking-tight mb-6">
           A marketplace <span className="text-pacific">built for the Pacific.</span>
         </h2>
         <p className="text-zinc-300 text-lg leading-relaxed">
-          Pacific Market isn&apos;t another Etsy clone. It&apos;s a platform
-          designed from the ground up for Pacific communities, with features
-          that respect their culture, connectivity, and commerce patterns.
+          Pacific Market is a digital village square.
+          A place where culture stays intact, commerce stays fair,
+          and discovery feels intentional.
+        </p>
+
+        <p className="text-zinc-300 text-lg leading-relaxed mt-6">
+          Here, supporting Pacific creators isn&apos;t an afterthought.
+          It&apos;s the foundation.
         </p>
       </div>
 
@@ -132,7 +133,7 @@ const sections = [
           return (
             <div
               key={vp.title}
-              data-testid={`vision-${vp.title.toLowerCase().replace(/\s/g, "-")}`}
+              data-testid={`vision-${vp.title?.toLowerCase().replace(/\s/g, "-") || ""}`}
               className="group relative overflow-hidden bg-zinc-900/85 border border-white/10 hover:border-pacific/20 transition-all duration-500 rounded-xl p-8"
             >
               <div className="w-10 h-10 rounded-lg bg-pacific/10 flex items-center justify-center mb-5">
@@ -146,7 +147,7 @@ const sections = [
       </div>
     </div>
   )},
-  { id: "pacific-tech", tab: "Tech as Enabler", content: (
+  { id: "pacific-tech", tab: PACIFIC_SECTION_LABELS.IMPACT, content: (
     <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <div className="order-2 lg:order-1">
@@ -173,33 +174,40 @@ const sections = [
         </div>
         <div className="order-1 lg:order-2">
           <span className="text-xs font-medium text-pacific uppercase tracking-widest mb-4 block">
-            Tech as Enabler
+            {PACIFIC_SECTION_LABELS.IMPACT}
           </span>
           <h2 className="font-heading text-4xl md:text-5xl font-bold tracking-tight mb-6">
-            Technology that serves people.
+            Every action creates ripple effects.
           </h2>
-          <p className="text-zinc-200 text-lg leading-relaxed mb-6">
-            We&apos;re building Pacific Market with modern web technology that
-            works everywhere. Mobile-first design, offline capabilities, and
-            simple tools that don&apos;t require a computer science degree.
-          </p>
           <p className="text-zinc-200 text-lg leading-relaxed">
-            The platform handles the complexity so creators can focus on what
-            they do best: making amazing things.
+            Every visit increases visibility.
+            Every purchase circulates income locally.
+            Every share strengthens cultural continuity.
+          </p>
+          <p className="text-zinc-200 text-lg leading-relaxed mt-6">
+            You&apos;re not just buying a product.
+            You&apos;re participating in a movement toward digital equity for the Pacific.
           </p>
         </div>
       </div>
     </div>
   )},
-  { id: "pacific-cta", tab: "Get Started", content: (
-    <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+  { id: "pacific-cta", tab: PACIFIC_SECTION_LABELS.CTA, content: (
+    <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 h-full flex items-center justify-center">
       <div className="text-center">
+        <span className="text-xs font-medium text-pacific uppercase tracking-widest mb-4 block">
+          {PACIFIC_SECTION_LABELS.CTA}
+        </span>
         <h2 className="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-4">
           Join the Pacific movement
         </h2>
         <p className="text-zinc-200 text-lg mb-10 max-w-xl mx-auto">
-          Whether you&apos;re a creator, a business, or someone who believes in
-          equitable commerce&mdash;Pacific Market needs you.
+          Explore Pacific creators. Share their stories.
+          Choose platforms that reflect your values.
+          Stand with communities building their own digital future.
+        </p>
+        <p className="text-zinc-400 text-sm mt-4">
+          Built for Pacific communities.
         </p>
         <a
           href="https://www.pacificmarket.co.nz"

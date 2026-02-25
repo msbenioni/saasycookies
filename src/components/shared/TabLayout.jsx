@@ -4,45 +4,92 @@ import { useScroll, useTransform } from "framer-motion";
 
 // Constants for shared tab layout
 export const TAB_LAYOUT_CONSTANTS = {
-  NAV_OFFSET: 88, // py-4 = 16px top + bottom, but header is fixed so we need full height
+  NAV_OFFSET: 96, // Updated to match scroll-margin-top for consistent behavior
   STACK_PX: 30,
   TAB_CLEARANCE_PX: 26,
   FOOTER_HEIGHT: 80, // py-2 = 8px top + bottom, but fixed footer
   FOOTER_GAP_PX: 10,
 };
 
-// Hook for active section tracking
-export function useActiveSection(sectionIds, options = {}) {
+// Shared section labels for consistency
+export const PACIFIC_SECTION_LABELS = {
+  HERO: "Discover Pacific",
+  GAP: "Why It Matters",
+  VISION: "A Better Way",
+  IMPACT: "Your Impact",
+  CTA: "Stand With Us",
+};
+
+export const SENSEAI_SECTION_LABELS = {
+  HERO: "Think Clearly",
+  PROBLEM: "Why It's Hard",
+  SHIFT: "A Better Way",
+  USECASES: "In Practice",
+  CTA: "Begin",
+};
+
+// Hook for active section tracking (deterministic scroll-based)
+export function useActiveSection(sectionIds, navOffset = TAB_LAYOUT_CONSTANTS.NAV_OFFSET) {
   const [activeId, setActiveId] = useState(sectionIds?.[0] ?? "");
+  const activeIdRef = useRef(activeId);
+  const rafRef = useRef(null);
+
+  useEffect(() => {
+    activeIdRef.current = activeId;
+  }, [activeId]);
 
   useEffect(() => {
     if (!sectionIds?.length) return;
 
-    const {
-      root = null,
-      // This makes "active" switch when a section crosses around the upper-middle of the viewport
-      rootMargin = "-35% 0px -55% 0px",
-      threshold = 0.01,
-    } = options;
+    const getClosestToNavOffset = () => {
+      let bestId = sectionIds[0];
+      let bestDistance = Number.POSITIVE_INFINITY;
 
-    const observer = new IntersectionObserver((entries) => {
-      // pick the entry that is intersecting and most visible
-      const visible = entries
-        .filter((e) => e.isIntersecting)
-        .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0));
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (!el) continue;
 
-      if (visible[0]?.target?.id) {
-        setActiveId(visible[0].target.id);
+        const rect = el.getBoundingClientRect();
+
+        // Distance from section top to the "active line" (navOffset)
+        const distance = Math.abs(rect.top - navOffset);
+
+        // Prefer sections whose top is at/above the nav line slightly
+        // so it feels natural when scrolling down AND up.
+        const bias = rect.top <= navOffset ? 0 : 8;
+        const score = distance + bias;
+
+        if (score < bestDistance) {
+          bestDistance = score;
+          bestId = id;
+        }
       }
-    }, { root, rootMargin, threshold });
 
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
+      if (bestId && bestId !== activeIdRef.current) {
+        setActiveId(bestId);
+      }
+    };
 
-    return () => observer.disconnect();
-  }, [sectionIds, options]);
+    const onScroll = () => {
+      if (rafRef.current) return;
+      rafRef.current = requestAnimationFrame(() => {
+        rafRef.current = null;
+        getClosestToNavOffset();
+      });
+    };
+
+    // Run once on mount
+    getClosestToNavOffset();
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [sectionIds.join("|"), navOffset]);
 
   return activeId;
 }
@@ -120,6 +167,7 @@ export function StickyFolderCard({
   progress,
   footerHeight,
   children,
+  scrollable = true,
 }) {
   const rangeStart = index / total;
   const rangeEnd = (index + 1) / total;
@@ -142,6 +190,7 @@ export function StickyFolderCard({
 
   return (
     <div
+      id={id}
       className="sticky top-0 w-full"
       style={{
         top: TAB_LAYOUT_CONSTANTS.NAV_OFFSET,
@@ -164,18 +213,56 @@ export function StickyFolderCard({
       {/* Content layer */}
       <div className="relative h-full flex items-center justify-center">
         <motion.section
-          id={id}
           style={{ scale, opacity }}
-          className="relative w-[min(1100px,92vw)] rounded-2xl border border-white/10 bg-[#0b1020]/92 backdrop-blur-md shadow-[0_18px_55px_rgba(0,0,0,0.45)] overflow-hidden"
+          className="relative w-[min(1100px,92vw)] mx-auto h-[calc(100vh-96px-80px-10px)] flex flex-col justify-center py-12 px-6 md:px-10 rounded-[32px] bg-gradient-to-br from-zinc-900 via-zinc-800/95 to-zinc-900/95 border border-white/10 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] backdrop-blur-md overflow-hidden"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{
+            duration: 0.6,
+            ease: [0.16, 1, 0.3, 1],
+          }}
         >
-          <div className="absolute top-0 left-0 right-0 h-px bg-white/10" />
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/5 via-transparent to-cyan-400/5 rounded-[32px]" />
 
-          <div className="px-6 py-10 md:px-10">{children}</div>
+          <div className={`relative z-10 flex-1 ${scrollable ? 'overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-transparent' : ''}`}>{children}</div>
 
           <div className="h-[2px] w-full bg-gradient-to-r from-emerald-400/30 via-cyan-400/10 to-transparent" />
         </motion.section>
       </div>
     </div>
+  );
+}
+
+// Shared scroll deck layout component
+export function ScrollDeckLayout({ sections, topOffset = 120 }) {
+  const { containerRef, scrollYProgress } = useScrollProgress();
+  const activeId = useActiveSection(
+    sections.map((s) => s.id),
+    TAB_LAYOUT_CONSTANTS.NAV_OFFSET
+  );
+
+  return (
+    <BackgroundPattern>
+      <SideTabRail items={sections} activeId={activeId} topOffset={topOffset} />
+
+      <div className="relative" ref={containerRef}>
+        <div className="flex flex-col">
+          {sections.map((section, i) => (
+            <StickyFolderCard
+              key={section.id}
+              id={section.id}
+              index={i}
+              total={sections.length}
+              progress={scrollYProgress}
+              footerHeight={TAB_LAYOUT_CONSTANTS.FOOTER_HEIGHT}
+              scrollable={section.scrollable !== false}
+            >
+              {section.content}
+            </StickyFolderCard>
+          ))}
+        </div>
+      </div>
+    </BackgroundPattern>
   );
 }
 

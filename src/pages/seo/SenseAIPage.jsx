@@ -4,33 +4,33 @@ import {
   TrendingUp, MessageSquare, Sparkles, Heart
 } from "lucide-react";
 import { PRODUCT_LOGOS } from "../../constants/productLogos";
-import { ScrollDeckLayout } from "../../components/shared/ScrollDeckLayout";
+import { ScrollDeckLayout, SENSEAI_SECTION_LABELS } from "../../components/shared/TabLayout";
 
 const useCases = [
   {
     icon: BookOpen,
     title: "Daily Reflection",
-    desc: "Capture your thoughts and let AI surface patterns you'd never notice on your own.",
+    desc: "Turn scattered thoughts into grounded insight you can carry forward.",
   },
   {
     icon: Lightbulb,
     title: "Creative Thinking",
-    desc: "Use guided prompts to unlock ideas, solve problems, and think through decisions.",
+    desc: "Use prompts that unlock ideas, break mental loops, and move decisions forward.",
   },
   {
     icon: TrendingUp,
     title: "Goal Tracking",
-    desc: "Set intentions, track progress, and get AI insights on your personal growth journey.",
+    desc: "Stay consistent with gentle structure—and see patterns in what's helping or holding you back.",
   },
   {
     icon: Shield,
-    title: "Mental Wellness",
-    desc: "Private, secure journaling with AI that helps you process emotions constructively.",
+    title: "Emotional Processing",
+    desc: "A private space to process feelings safely, with support that guides—not judges.",
   },
 ];
 
 const sections = [
-  { id: "senseai-hero", tab: "SenseAI", content: (
+  { id: "senseai-hero", tab: SENSEAI_SECTION_LABELS.HERO, scrollable: false, content: (
     <div className="relative min-h-[80vh] flex items-center">
       <div
         className="absolute inset-0 animate-glow-pulse"
@@ -57,9 +57,9 @@ const sections = [
             </h1>
 
             <p className="text-lg md:text-xl text-zinc-400 leading-relaxed max-w-xl mb-10">
-              Most journals are just blank pages. SenseAI is an AI-powered
-              companion that helps you reflect deeper, think clearer, and grow
-              faster.
+              SenseAI helps you slow down and listen to your own thinking.
+              Write freely. Then receive thoughtful prompts and reflections
+              that help you grow with intention.
             </p>
           </div>
 
@@ -77,22 +77,23 @@ const sections = [
       </div>
     </div>
   )},
-  { id: "senseai-problem", tab: "The Problem", content: (
+  { id: "senseai-problem", tab: SENSEAI_SECTION_LABELS.PROBLEM, content: (
     <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <div>
           <span className="text-xs font-medium text-senseai uppercase tracking-widest mb-4 block">
-            The Problem
+            {SENSEAI_SECTION_LABELS.PROBLEM}
           </span>
           <h2 className="font-heading text-4xl md:text-5xl font-bold tracking-tight mb-6">
             We lost the art of thinking.
           </h2>
           <p className="text-zinc-200 text-lg leading-relaxed">
-            In a world of endless scrolling and instant answers, deep thinking
-            has become a lost skill. We consume more than we create. We react
-            more than we reflect. Journaling was supposed to help, but most
-            people quit within a week because staring at a blank page feels
-            pointless.
+            Modern life moves fast.
+            Most days, your thoughts never get the space they deserve.
+          </p>
+          <p className="text-zinc-200 text-lg leading-relaxed mt-6">
+            A blank page doesn&apos;t guide you.
+            And growth rarely happens by accident.
           </p>
         </div>
         <div className="relative">
@@ -107,19 +108,19 @@ const sections = [
       </div>
     </div>
   )},
-  { id: "senseai-shift", tab: "The Shift", content: (
+  { id: "senseai-shift", tab: SENSEAI_SECTION_LABELS.SHIFT, content: (
     <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
       <div className="max-w-3xl mx-auto text-center">
         <span className="text-xs font-medium text-senseai uppercase tracking-widest mb-4 block">
-          The Shift
+          {SENSEAI_SECTION_LABELS.SHIFT}
         </span>
         <h2 className="font-heading text-4xl md:text-5xl font-bold tracking-tight mb-6">
           What if your journal <span className="text-senseai">talked back?</span>
         </h2>
         <p className="text-zinc-200 text-lg leading-relaxed mb-8">
-          SenseAI doesn&apos;t just store your words. It understands them. It
-          asks follow-up questions, surfaces patterns across weeks and months,
-          and helps you see your life from angles you&apos;d never consider alone.
+          SenseAI responds with curiosity, not judgment.
+          It highlights patterns, asks deeper questions,
+          and helps you notice how you&apos;re evolving over time.
         </p>
         <div className="flex items-center justify-center gap-4">
           <div className="flex items-center gap-2 text-zinc-300/80 text-sm">
@@ -140,13 +141,13 @@ const sections = [
       </div>
     </div>
   )},
-  { id: "senseai-usecases", tab: "Use Cases", content: (
+  { id: "senseai-usecases", tab: SENSEAI_SECTION_LABELS.USECASES, content: (
     <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
-      <span className="text-xs font-medium text-zinc-400 uppercase tracking-widest mb-4 block">
-        Use Cases
+      <span className="text-xs font-medium text-senseai uppercase tracking-widest mb-4 block">
+        {SENSEAI_SECTION_LABELS.USECASES}
       </span>
       <h2 className="font-heading text-4xl md:text-5xl font-bold tracking-tight mb-16">
-        Built for how you actually think
+        How it supports you daily
       </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -169,15 +170,21 @@ const sections = [
       </div>
     </div>
   )},
-  { id: "senseai-cta", tab: "Get Started", content: (
-    <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+  { id: "senseai-cta", tab: SENSEAI_SECTION_LABELS.CTA, content: (
+    <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 h-full flex items-center justify-center">
       <div className="text-center">
+        <span className="text-xs font-medium text-senseai uppercase tracking-widest mb-4 block">
+          {SENSEAI_SECTION_LABELS.CTA}
+        </span>
         <h2 className="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-4">
           Start journaling smarter
         </h2>
         <p className="text-zinc-200 text-lg mb-10 max-w-xl mx-auto">
-          SenseAI is the journaling tool for people who think deeply. Try it and
-          discover what your mind has been trying to tell you.
+          Start with one honest entry.
+          Let clarity build from there.
+        </p>
+        <p className="text-zinc-400 text-sm mt-4">
+          Built for thoughtful humans.
         </p>
         <a
           href="https://www.senseai.app"
