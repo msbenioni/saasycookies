@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Check, X, ArrowRight, AlertTriangle, CheckCircle, Sparkles, ChevronRight } from "lucide-react";
+import { Check, X, ArrowRight, AlertTriangle, CheckCircle, Sparkles, ChevronRight, CreditCard } from "lucide-react";
 import {
   SECTION_LABEL_STYLES,
   SECTION_TITLE_STYLES,
@@ -9,6 +9,7 @@ import {
 } from "../constants/formStyles";
 import { usePricing } from "../hooks/usePricing";
 import { ScrollDeckLayout } from "../components/shared/TabLayout";
+import { PRODUCT_LOGOS } from "../constants/productLogos";
 
 /**
  * Pricing Page (ScrollDeckLayout-compatible)
@@ -18,9 +19,9 @@ import { ScrollDeckLayout } from "../components/shared/TabLayout";
  */
 
 const PRICING_SECTION_LABELS = {
-  HERO: "Pricing",
+  HERO: "What We Do",
   FIT: "Fit Check",
-  PLANS: "Plans",
+  PLANS: "Pricing Plans",
   START: "Start for $10",
   HOW: "How It Works",
   WHY: "Why Not DIY",
@@ -208,63 +209,63 @@ export default function PricingPage() {
       tab: PRICING_SECTION_LABELS.HERO,
       scrollable: false,
       content: (
-        <section className="relative min-h-[78vh] flex items-center overflow-hidden">
+        <section className="relative min-h-screen flex items-center overflow-hidden">
+          {/* Background / ambient (optional) */}
           <div
-            className="absolute inset-0 opacity-40"
+            className="absolute inset-0 pointer-events-none"
             style={{
               background:
-                "radial-gradient(circle at 20% 25%, rgba(6,182,212,0.14) 0%, transparent 55%), radial-gradient(circle at 80% 35%, rgba(16,185,129,0.14) 0%, transparent 60%)",
+                "radial-gradient(circle at 35% 30%, rgba(16,185,129,0.14) 0%, transparent 55%)",
             }}
           />
-          <div className="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-24 w-full py-10">
-            <span className={SECTION_LABEL_STYLES.primary}>Pricing</span>
 
-            <h1 className={`${SECTION_TITLE_STYLES.main} mt-4 max-w-5xl`}>
-              <span className="text-white font-light">Managed</span>{" "}
-              <span className="text-emerald-400 font-extrabold">Website + Funnel Infrastructure</span>{" "}
-              <span className="text-white font-light">for Founders.</span>
-            </h1>
+          <div className="relative w-full px-6 md:px-12 lg:px-24 py-24">
+            <div className="max-w-[1400px] mx-auto">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                {/* LEFT: Text (always visible, full width on mobile) */}
+                <div className="lg:col-span-7">
+                  <div className="max-w-[70ch]">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-medium mb-8">
+                      <CreditCard className="w-3 h-3" strokeWidth={1.5} />
+                      {PRICING_SECTION_LABELS.HERO}
+                    </div>
 
-            <p className={`${SECTION_DESCRIPTION_STYLES} max-w-3xl mt-6`}>
-              We build, launch, and manage the system behind your business: website, funnels, payments, automation, hosting, and support.
-            </p>
+                    <h1 className="font-heading text-5xl md:text-7xl font-extrabold tracking-tight leading-[0.95] max-w-[20ch]">
+                      Managed
+                      <br />
+                      <span className="text-emerald-400">Website + Funnel Infrastructure</span>
+                      <br />
+                      for Founders.
+                    </h1>
 
-            <div className="mt-6 space-y-2">
-              <p className="text-zinc-300">
-                Most projects go live in <span className="text-white font-semibold">~2 weeks</span>.{" "}
-                <span className="text-white font-semibold">$10</span> to start.{" "}
-                <span className="text-white font-semibold">12-month</span> partnership.
-              </p>
-              <p className="text-zinc-400 text-sm">
-                Choose a plan, submit a brief, and we’ll confirm the best fit before you pay.
-              </p>
+                    <p className="mt-6 text-lg md:text-xl text-zinc-200 leading-relaxed max-w-[52ch]">
+                      We build, launch, and manage the system behind your business:
+                      website, funnels, payments, automation, hosting, and support.
+                    </p>
+                  </div>
+                </div>
+
+                {/* RIGHT: Image (hidden on mobile, ALWAYS visible on desktop) */}
+                <div className="hidden lg:block lg:col-span-5">
+                  <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-white/[0.02]">
+                    {/* subtle scrim so it matches your dark theme */}
+                    <div
+                      className="absolute inset-0 pointer-events-none"
+                      style={{
+                        background:
+                          "linear-gradient(180deg, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.35) 100%)",
+                      }}
+                    />
+
+                    <img
+                      src="/pricing_hero.png"
+                      alt="SaaSy Cookies pricing hero"
+                      className="w-full h-[520px] object-cover object-[85%_center]"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
-
-            <div className="mt-10 flex flex-wrap gap-4">
-              <a
-                href="#pricing-plans"
-                className="inline-flex items-center gap-2 rounded-md bg-emerald-400 text-black font-semibold px-7 py-3 hover:bg-emerald-300 transition"
-              >
-                View Plans
-                <ArrowRight className="w-4 h-4" strokeWidth={2} />
-              </a>
-
-              <Link
-                to="/services/ai-saas"
-                className="inline-flex items-center gap-2 rounded-md bg-zinc-900 text-white border border-zinc-700 hover:bg-zinc-800 hover:border-zinc-600 font-semibold px-7 py-3 transition"
-              >
-                Request A Quote
-                <ArrowRight className="w-4 h-4" strokeWidth={2} />
-              </Link>
-            </div>
-
-            <p className="text-zinc-400 text-sm mt-6 max-w-3xl">
-              Need a custom platform, marketplace, or AI tool?{" "}
-              <Link to="/services/ai-saas" className="text-cyan-300 hover:text-cyan-200 transition">
-                Submit a Custom Build Brief
-              </Link>
-              .
-            </p>
           </div>
         </section>
       ),
@@ -278,7 +279,7 @@ export default function PricingPage() {
           <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
             <div className="flex items-center gap-3 mb-4">
               <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
-              <span className={SECTION_LABEL_STYLES.primary}>{PRICING_SECTION_LABELS.FIT}</span>
+              <span className={SECTION_LABEL_STYLES.emerald}>{PRICING_SECTION_LABELS.FIT}</span>
             </div>
 
             <h2 className={SECTION_TITLE_STYLES.main}>
@@ -316,7 +317,7 @@ export default function PricingPage() {
           <div className="max-w-8xl mx-auto px-6 md:px-12 lg:px-24">
             <div className="flex items-center gap-3 mb-4">
               <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
-              <span className={SECTION_LABEL_STYLES.primary}>{PRICING_SECTION_LABELS.PLANS}</span>
+              <span className={SECTION_LABEL_STYLES.emerald}>{PRICING_SECTION_LABELS.PLANS}</span>
             </div>
 
             <div className="mt-10 mx-auto w-full max-w-[1480px]">
@@ -353,7 +354,7 @@ export default function PricingPage() {
           <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
             <div className="flex items-center gap-3 mb-4">
               <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
-              <span className={SECTION_LABEL_STYLES.primary}>{PRICING_SECTION_LABELS.START}</span>
+              <span className={SECTION_LABEL_STYLES.emerald}>{PRICING_SECTION_LABELS.START}</span>
             </div>
 
             <h2 className={SECTION_TITLE_STYLES.main}>
@@ -393,7 +394,7 @@ export default function PricingPage() {
           <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
             <div className="flex items-center gap-3 mb-4">
               <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
-              <span className={SECTION_LABEL_STYLES.primary}>{PRICING_SECTION_LABELS.HOW}</span>
+              <span className={SECTION_LABEL_STYLES.emerald}>{PRICING_SECTION_LABELS.HOW}</span>
             </div>
 
             <h2 className={SECTION_TITLE_STYLES.main}>
@@ -423,7 +424,7 @@ export default function PricingPage() {
           <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
             <div className="flex items-center gap-3 mb-4">
               <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
-              <span className={SECTION_LABEL_STYLES.primary}>{PRICING_SECTION_LABELS.WHY}</span>
+              <span className={SECTION_LABEL_STYLES.emerald}>{PRICING_SECTION_LABELS.WHY}</span>
             </div>
 
 
@@ -521,7 +522,7 @@ export default function PricingPage() {
           <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
             <div className="flex items-center gap-3 mb-4">
               <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
-              <span className={SECTION_LABEL_STYLES.primary}>{PRICING_SECTION_LABELS.FAQ}</span>
+              <span className={SECTION_LABEL_STYLES.emerald}>{PRICING_SECTION_LABELS.FAQ}</span>
             </div>
 
             <h2 className={SECTION_TITLE_STYLES.main}>

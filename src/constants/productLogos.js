@@ -37,6 +37,25 @@ export const PRODUCT_LOGOS = {
       FOOTER: 'w-6 h-6 object-contain rounded-md',
       FLOATING: 'w-24 h-24 md:w-32 md:h-32 object-contain opacity-20 animate-float rounded-2xl'
     }
+  },
+  SAASY_COOKIES: {
+    src: '/saasy_cookies_logo.png',
+    alt: 'SaaSy Cookies Logo',
+    sizes: {
+      NAV: 'w-8 h-8',
+      HERO: 'w-16 h-16 md:w-20 md:h-20',
+      CARD: 'w-12 h-12',
+      FOOTER: 'w-6 h-6',
+      FLOATING: 'w-24 h-24 md:w-32 md:h-32'
+    },
+    classes: {
+      BASE: 'object-contain',
+      NAV: 'w-8 h-8 object-contain opacity-80 hover:opacity-100 transition-opacity rounded-lg',
+      HERO: 'w-16 h-16 md:w-20 md:h-20 object-contain animate-float-slow rounded-xl',
+      CARD: 'w-12 h-12 object-contain group-hover:scale-110 transition-transform rounded-lg',
+      FOOTER: 'w-6 h-6 object-contain rounded-md',
+      FLOATING: 'w-24 h-24 md:w-32 md:h-32 object-contain opacity-20 animate-float rounded-2xl'
+    }
   }
 };
 

@@ -101,7 +101,7 @@ const sections = [
             <img
               src="/senseai_art_of_thinking.png"
               alt="Person thinking deeply"
-              className="w-full h-64 object-cover rounded-xl opacity-70"
+              className="w-full h-auto object-contain rounded-xl opacity-70"
             />
           </div>
         </div>
