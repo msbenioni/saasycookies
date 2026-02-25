@@ -2,6 +2,22 @@ import { motion } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import { useScroll, useTransform } from "framer-motion";
 
+// Media query hook for responsive behavior
+export function useMediaQuery(query) {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia(query);
+    const onChange = () => setMatches(mq.matches);
+
+    onChange();
+    mq.addEventListener?.("change", onChange);
+    return () => mq.removeEventListener?.("change", onChange);
+  }, [query]);
+
+  return matches;
+}
+
 // Constants for shared tab layout
 export const TAB_LAYOUT_CONSTANTS = {
   NAV_OFFSET: 96, // Updated to match scroll-margin-top for consistent behavior
@@ -57,11 +73,32 @@ export function useActiveSectionFromProgress(scrollYProgress, sectionIds, total)
   return activeId;
 }
 
+// Mobile scroll layout component
+export function MobileScrollLayout({ sections }) {
+  return (
+    <BackgroundPattern>
+      {/* Normal vertical scroll */}
+      <div className="mx-auto w-[min(1100px,92vw)] py-6 flex flex-col gap-6">
+        {sections.map((s) => (
+          <div
+            key={s.id}
+            id={s.id}
+            className="rounded-2xl border border-white/10 bg-[#0b1020]/92 backdrop-blur-md shadow-[0_18px_55px_rgba(0,0,0,0.45)] overflow-hidden"
+          >
+            <div className="px-5 py-6">{s.content}</div>
+            <div className="h-[2px] w-full bg-gradient-to-r from-emerald-400/30 via-cyan-400/10 to-transparent" />
+          </div>
+        ))}
+      </div>
+    </BackgroundPattern>
+  );
+}
+
 // Fixed left sidebar tab rail
 export function SideTabRail({ items, activeId, topOffset = 120 }) {
   return (
     <div
-      className="fixed left-6 z-50 flex flex-col gap-3"
+      className="hidden md:fixed md:left-6 md:z-50 md:flex md:flex-col md:gap-3"
       style={{ top: topOffset }}
     >
       {items.map((item) => {
@@ -198,6 +235,13 @@ export function StickyFolderCard({
 
 // Shared scroll deck layout component
 export function ScrollDeckLayout({ sections, topOffset = 120 }) {
+  const isDesktop = useMediaQuery("(min-width: 768px)"); // md breakpoint
+
+  if (!isDesktop) {
+    return <MobileScrollLayout sections={sections} />;
+  }
+
+  // ✅ Desktop: your current deck
   const { containerRef, scrollYProgress } = useScrollProgress();
 
   const ids = sections.map((s) => s.id);
