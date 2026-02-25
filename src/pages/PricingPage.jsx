@@ -331,7 +331,7 @@ export default function PricingPage() {
               <div className="mt-8 text-center">
                 <Link
                   to="/services/ai-saas"
-                  className="inline-flex items-center gap-2 rounded-xl bg-emerald-400 text-black hover:bg-emerald-300 px-8 py-4 font-semibold transition text-lg"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-400 text-black hover:bg-emerald-300 px-7 py-3 font-semibold transition text-lg"
                 >
                   Submit Project Brief
                   <ArrowRight className="w-5 h-5" strokeWidth={2} />
@@ -370,16 +370,19 @@ export default function PricingPage() {
               <p className="text-zinc-400 text-sm mt-4">
                 No checkout surprises — we confirm plan + scope first.
               </p>
+            </div>
 
-              <div className="mt-8 flex flex-wrap gap-4">
-                <Link
-                  to="/services/ai-saas"
-                  className="inline-flex items-center gap-2 rounded-md bg-emerald-400 text-black font-semibold px-7 py-3 hover:bg-emerald-300 transition"
-                >
-                  Submit Project Brief
-                  <ArrowRight className="w-4 h-4" strokeWidth={2} />
-                </Link>
-              </div>
+            <div className="mt-8 text-center">
+              <Link
+                to="/services/ai-saas"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-400 text-black hover:bg-emerald-300 px-7 py-3 font-semibold transition"
+              >
+                Submit Project Brief
+                <ArrowRight className="w-4 h-4" strokeWidth={2} />
+              </Link>
+              <p className="text-xs text-zinc-400 mt-3">
+                We confirm plan + scope before billing.
+              </p>
             </div>
           </div>
         </section>
@@ -500,7 +503,7 @@ export default function PricingPage() {
             <div className="mt-8 text-center">
               <Link
                 to="/services/ai-saas"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-400 text-black font-semibold px-7 py-3 hover:bg-emerald-300 transition"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-400 text-black hover:bg-emerald-300 px-7 py-3 font-semibold transition"
               >
                 Submit Project Brief
                 <ArrowRight className="w-4 h-4" strokeWidth={2} />
@@ -585,7 +588,7 @@ export default function PricingPage() {
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link
                 to="/services/ai-saas"
-                className="inline-flex items-center justify-center gap-2 rounded-md bg-emerald-400 text-black font-semibold px-7 py-3 hover:bg-emerald-300 transition"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-400 text-black hover:bg-emerald-300 px-7 py-3 font-semibold transition"
               >
                 Submit Project Brief
                 <ArrowRight className="w-4 h-4" strokeWidth={2} />
