@@ -25,6 +25,7 @@ import PricingPage from "./pages/PricingPage";
 import CheckoutSuccessPage from "./pages/CheckoutSuccessPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ScrollToTop from "./components/ScrollToTop";
+import ScrollToTopOnMount from "./components/ScrollToTopOnMount";
 import { useAnalytics } from "./hooks/useAnalytics";
 import { site } from "./config/site";
 
@@ -44,6 +45,7 @@ function AppContent() {
 
   return (
     <>
+      <ScrollToTopOnMount />
       <SEO />
       <Routes>
         <Route element={<MainLayout />}>

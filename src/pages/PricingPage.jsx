@@ -242,7 +242,7 @@ export default function PricingPage() {
 
             <div className="mt-10 flex flex-wrap gap-4">
               <a
-                href="#plans"
+                href="#pricing-plans"
                 className="inline-flex items-center gap-2 rounded-md bg-emerald-400 text-black font-semibold px-7 py-3 hover:bg-emerald-300 transition"
               >
                 View Plans
@@ -253,7 +253,7 @@ export default function PricingPage() {
                 to="/services/ai-saas"
                 className="inline-flex items-center gap-2 rounded-md bg-zinc-900 text-white border border-zinc-700 hover:bg-zinc-800 hover:border-zinc-600 font-semibold px-7 py-3 transition"
               >
-                Custom AI / SaaS Build
+                Request A Quote
                 <ArrowRight className="w-4 h-4" strokeWidth={2} />
               </Link>
             </div>
@@ -329,7 +329,7 @@ export default function PricingPage() {
               {/* Single CTA for all plans */}
               <div className="mt-8 text-center">
                 <Link
-                  to="/start"
+                  to="/services/ai-saas"
                   className="inline-flex items-center gap-2 rounded-xl bg-emerald-400 text-black hover:bg-emerald-300 px-8 py-4 font-semibold transition text-lg"
                 >
                   Submit Project Brief
@@ -372,7 +372,7 @@ export default function PricingPage() {
 
               <div className="mt-8 flex flex-wrap gap-4">
                 <Link
-                  to="/start"
+                  to="/services/ai-saas"
                   className="inline-flex items-center gap-2 rounded-md bg-emerald-400 text-black font-semibold px-7 py-3 hover:bg-emerald-300 transition"
                 >
                   Submit Project Brief
@@ -498,7 +498,7 @@ export default function PricingPage() {
 
             <div className="mt-8 text-center">
               <Link
-                to="/start"
+                to="/services/ai-saas"
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-400 text-black font-semibold px-7 py-3 hover:bg-emerald-300 transition"
               >
                 Submit Project Brief
@@ -583,7 +583,7 @@ export default function PricingPage() {
 
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link
-                to="/start"
+                to="/services/ai-saas"
                 className="inline-flex items-center justify-center gap-2 rounded-md bg-emerald-400 text-black font-semibold px-7 py-3 hover:bg-emerald-300 transition"
               >
                 Submit Project Brief
