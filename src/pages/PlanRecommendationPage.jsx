@@ -273,13 +273,6 @@ export default function PlanRecommendationPage() {
             Want to discuss custom requirements or need clarification on scope? We're here to help.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link
-              to="/contact"
-              className="inline-flex items-center justify-center gap-2 rounded-md border border-zinc-700 text-white font-semibold px-7 py-3 hover:bg-zinc-800 transition"
-            >
-              Book a Strategy Call
-              <ArrowRight className="w-4 h-4" strokeWidth={2} />
-            </Link>
             <button
               onClick={() => navigate('/services/ai-saas')}
               className="inline-flex items-center justify-center gap-2 rounded-md bg-emerald-400 text-black font-semibold px-7 py-3 hover:bg-emerald-300 transition"
