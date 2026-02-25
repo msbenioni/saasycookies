@@ -113,7 +113,7 @@ export default function MainLayout() {
             className="flex items-center gap-2.5 group"
           >
             <img 
-              src="/SAASY_logo_transparent.png" 
+              src="/SAASY_logo_transparent.webp" 
               alt="SaaSy Cookies Logo" 
               className={LOGO_CLASSES.NAVIGATION}
             />
@@ -306,7 +306,7 @@ export default function MainLayout() {
         <div className="max-w-7xl mx-auto px-6 h-full py-2 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-zinc-500 text-sm">
             <img 
-              src="/SAASY_logo_transparent.png" 
+              src="/SAASY_logo_transparent.webp" 
               alt="SaaSy Cookies Logo" 
               className={LOGO_CLASSES.FOOTER}
             />

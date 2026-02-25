@@ -258,9 +258,10 @@ export default function PricingPage() {
                     />
 
                     <img
-                      src="/pricing_hero.png"
+                      src="/pricing_hero.webp"
                       alt="SaaSy Cookies pricing hero"
                       className="w-full h-[520px] object-cover object-[85%_center]"
+                      loading="lazy"
                     />
                   </div>
                 </div>

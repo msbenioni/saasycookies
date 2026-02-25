@@ -1,5 +1,6 @@
 import { clientIntakeAPI } from "./supabaseClient";
 import { currencyFromCountry } from "./currencyMapping";
+import { logger } from './logger';
 
 // Create Stripe checkout session
 export async function createStripeCheckoutSession(planId, clientIntakeId, successUrl, cancelUrl, country = 'OTHER') {
@@ -28,7 +29,7 @@ export async function createStripeCheckoutSession(planId, clientIntakeId, succes
     const session = await response.json();
     return session;
   } catch (error) {
-    console.error('Stripe checkout error:', error);
+    logger.error('Stripe checkout error:', error);
     throw error;
   }
 }
@@ -55,7 +56,7 @@ export async function updateClientIntakeWithPayment(clientIntakeId, paymentData)
     
     return data;
   } catch (error) {
-    console.error('Error updating client intake with payment:', error);
+    logger.error('Error updating client intake with payment:', error);
     throw error;
   }
 }
@@ -84,7 +85,7 @@ export async function acceptPlanAndSubscribe(planId, country = 'OTHER') {
       sessionId: session.id,
     };
   } catch (error) {
-    console.error('Error accepting plan and subscribing:', error);
+    logger.error('Error accepting plan and subscribing:', error);
     throw error;
   }
 }

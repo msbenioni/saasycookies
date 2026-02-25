@@ -1,10 +1,12 @@
+import { logger } from './logger';
+
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 export const sendContactEmail = async (formData) => {
   try {
     // In development, simulate success without actually sending email
     if (isDevelopment) {
-      console.log('Development mode: Simulating contact email send', formData);
+      logger.log('Development mode: Simulating contact email send', formData);
       // Simulate network delay
       await new Promise(resolve => setTimeout(resolve, 1000));
       return { success: true, data: { id: 'dev-simulated' } };
@@ -29,7 +31,7 @@ export const sendContactEmail = async (formData) => {
 
     return result;
   } catch (error) {
-    console.error('Email service error:', error);
+    logger.error('Email service error:', error);
     throw error;
   }
 };
@@ -38,7 +40,7 @@ export const sendProjectBriefEmail = async (formData) => {
   try {
     // In development, simulate success without actually sending email
     if (isDevelopment) {
-      console.log('Development mode: Simulating project brief email send', formData);
+      logger.log('Development mode: Simulating project brief email send', formData);
       // Simulate network delay
       await new Promise(resolve => setTimeout(resolve, 1000));
       return { success: true, data: { id: 'dev-simulated' } };
@@ -63,7 +65,7 @@ export const sendProjectBriefEmail = async (formData) => {
 
     return result;
   } catch (error) {
-    console.error('Email service error:', error);
+    logger.error('Email service error:', error);
     throw error;
   }
 };
@@ -73,7 +75,7 @@ export const sendUserConfirmationEmail = async (formData) => {
     // In development, simulate success without actually sending email
     // TEMPORARILY DISABLED FOR TESTING - Change back to: if (isDevelopment) {
     if (false) {
-      console.log('Development mode: Simulating user confirmation email send', formData);
+      logger.log('Development mode: Simulating user confirmation email send', formData);
       // Simulate network delay
       await new Promise(resolve => setTimeout(resolve, 1000));
       return { success: true, data: { id: 'dev-simulated' } };
@@ -98,7 +100,7 @@ export const sendUserConfirmationEmail = async (formData) => {
 
     return result;
   } catch (error) {
-    console.error('Email service error:', error);
+    logger.error('Email service error:', error);
     throw error;
   }
 };
@@ -108,7 +110,7 @@ export const sendWelcomeEmail = async (formData) => {
     // In development, simulate success without actually sending email
     // TEMPORARILY DISABLED FOR TESTING - Change back to: if (isDevelopment) {
     if (false) {
-      console.log('Development mode: Simulating welcome email send', formData);
+      logger.log('Development mode: Simulating welcome email send', formData);
       // Simulate network delay
       await new Promise(resolve => setTimeout(resolve, 1000));
       return { success: true, data: { id: 'dev-simulated' } };
@@ -133,7 +135,7 @@ export const sendWelcomeEmail = async (formData) => {
 
     return result;
   } catch (error) {
-    console.error('Email service error:', error);
+    logger.error('Email service error:', error);
     throw error;
   }
 };

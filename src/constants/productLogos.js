@@ -1,7 +1,7 @@
 // Product Logo Constants
 export const PRODUCT_LOGOS = {
   SENSEAI: {
-    src: '/senseai_logo.png',
+    src: '/senseai_logo.webp',
     alt: 'SenseAI Logo',
     sizes: {
       NAV: 'w-8 h-8',
@@ -20,7 +20,7 @@ export const PRODUCT_LOGOS = {
     }
   },
   PACIFIC_MARKET: {
-    src: '/pacific_market_logo.png',
+    src: '/pacific_market_logo.webp',
     alt: 'Pacific Market Logo',
     sizes: {
       NAV: 'w-8 h-8',
@@ -39,7 +39,7 @@ export const PRODUCT_LOGOS = {
     }
   },
   SAASY_COOKIES: {
-    src: '/saasy_cookies_logo.png',
+    src: '/saasy_cookies_logo.webp',
     alt: 'SaaSy Cookies Logo',
     sizes: {
       NAV: 'w-8 h-8',

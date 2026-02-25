@@ -1,9 +1,22 @@
-const { Resend } = require('resend');
-
+const { Resend } = require("resend");
 const apiKey = process.env.RESEND_API_KEY;
 
+// Development-only logger
+const isDevelopment = process.env.NODE_ENV === 'development';
+const logger = {
+  log: (...args) => {
+    if (isDevelopment) console.log(...args);
+  },
+  error: (...args) => {
+    if (isDevelopment) console.error(...args);
+  },
+  warn: (...args) => {
+    if (isDevelopment) console.warn(...args);
+  }
+};
+
 if (!apiKey) {
-  console.error('RESEND_API_KEY not found in environment variables');
+  logger.error('RESEND_API_KEY not found in environment variables');
 }
 
 const resend = new Resend(apiKey);
@@ -356,7 +369,7 @@ exports.handler = async (event, context) => {
       try {
         planRecommendation = formData.planRecommendation ? JSON.parse(formData.planRecommendation) : null;
       } catch (error) {
-        console.warn('Failed to parse planRecommendation:', error);
+        logger.warn('Failed to parse planRecommendation:', error);
         planRecommendation = null;
       }
       
@@ -535,7 +548,7 @@ exports.handler = async (event, context) => {
       try {
         planRecommendation = formData.planRecommendation ? JSON.parse(formData.planRecommendation) : null;
       } catch (error) {
-        console.warn('Failed to parse planRecommendation:', error);
+        logger.warn('Failed to parse planRecommendation:', error);
         planRecommendation = null;
       }
       
@@ -590,7 +603,7 @@ exports.handler = async (event, context) => {
       try {
         planRecommendation = formData.planRecommendation ? JSON.parse(formData.planRecommendation) : null;
       } catch (error) {
-        console.warn('Failed to parse planRecommendation:', error);
+        logger.warn('Failed to parse planRecommendation:', error);
         planRecommendation = null;
       }
       
@@ -661,7 +674,7 @@ exports.handler = async (event, context) => {
     const { data, error } = await resend.emails.send(emailConfig);
 
     if (error) {
-      console.error('Resend API error:', error.message);
+      logger.error('Resend API error:', error.message);
       return {
         statusCode: 500,
         body: JSON.stringify({ 
@@ -678,7 +691,7 @@ exports.handler = async (event, context) => {
     };
 
   } catch (error) {
-    console.error('Function error:', error);
+    logger.error('Function error:', error);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: 'Failed to send email' }),

@@ -2,6 +2,17 @@ const Stripe = require("stripe");
 const { createClient } = require("@supabase/supabase-js");
 const { PRICE_IDS } = require("./_shared/stripePrices");
 
+// Development-only logger
+const isDevelopment = process.env.NODE_ENV === 'development';
+const logger = {
+  log: (...args) => {
+    if (isDevelopment) console.log(...args);
+  },
+  error: (...args) => {
+    if (isDevelopment) console.error(...args);
+  }
+};
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
 
@@ -23,7 +34,7 @@ exports.handler = async (event) => {
       process.env.STRIPE_WEBHOOK_SECRET
     );
   } catch (error) {
-    console.error("Webhook signature verification failed", error.message);
+    logger.error("Webhook signature verification failed", error.message);
     return { statusCode: 400, body: `Webhook Error: ${error.message}` };
   }
 
@@ -47,19 +58,19 @@ exports.handler = async (event) => {
               .single();
 
             if (existing?.stripe_subscription_id) {
-              console.log(`Subscription already exists for intake ${intakeId}: ${existing.stripe_subscription_id}`);
+              logger.log(`Subscription already exists for intake ${intakeId}: ${existing.stripe_subscription_id}`);
               break;
             }
 
             if (existing?.build_fee_session_id === session.id) {
-              console.log(`Session already processed: ${session.id}`);
+              logger.log(`Session already processed: ${session.id}`);
               break;
             }
 
             // Get plan price ID from session metadata
             const planPriceId = session.metadata?.plan_price_id;
             if (!planPriceId) {
-              console.error("Missing plan_price_id in session metadata for intake:", intakeId);
+              logger.error("Missing plan_price_id in session metadata for intake:", intakeId);
               break;
             }
 
@@ -104,10 +115,10 @@ exports.handler = async (event) => {
               })
               .eq('id', intakeId);
 
-            console.log(`Created subscription ${subscription.id} for intake ${intakeId}`);
+            logger.log(`Created subscription ${subscription.id} for intake ${intakeId}`);
 
           } catch (error) {
-            console.error('Error creating subscription after build fee:', error);
+            logger.error('Error creating subscription after build fee:', error);
             // Don't fail the webhook, but log the error
           }
         }
@@ -144,7 +155,7 @@ exports.handler = async (event) => {
 
         // Handle build fee payment completion
         if (intakeId && invoiceType === 'build_fee') {
-          console.log('Build fee paid for intake:', intakeId);
+          logger.log('Build fee paid for intake:', intakeId);
           // Build fee payment is handled in checkout.session.completed webhook
           break;
         }
@@ -222,7 +233,7 @@ exports.handler = async (event) => {
 
     return { statusCode: 200, body: JSON.stringify({ received: true }) };
   } catch (error) {
-    console.error("stripe-webhook handler error", error);
+    logger.error("stripe-webhook handler error", error);
     return { statusCode: 500, body: "Webhook handler failed" };
   }
 };

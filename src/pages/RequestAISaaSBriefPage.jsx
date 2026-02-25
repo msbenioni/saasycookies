@@ -14,6 +14,7 @@ import { recommendPlan, generateBuildPrompt } from "../utils/planRecommendation"
 import { clientIntakeAPI } from "../utils/supabaseClient";
 import { acceptPlanAndSubscribe } from "../utils/stripeService";
 import { usePricing } from "../hooks/usePricing";
+import { logger } from "../utils/logger";
 import { 
   formatPriceForCountry, 
   getCurrencyForCountry
@@ -239,11 +240,11 @@ export default function RequestAISaaSBriefPage() {
         throw new Error("Failed to create client intake record.");
       }
       
-      console.log("Client intake saved for checkout:", clientIntake.id);
+      logger.log("Client intake saved for checkout:", clientIntake.id);
 
       // Send email notification to admin (non-blocking)
       sendProjectBriefEmail(payload).catch(error => {
-        console.warn('Admin email notification failed (non-critical):', error);
+        logger.warn('Admin email notification failed (non-critical):', error);
       });
 
       // Proceed to Stripe checkout payment completion
@@ -258,7 +259,7 @@ export default function RequestAISaaSBriefPage() {
       // Redirect to Stripe's hosted checkout
       window.location.href = checkoutSession.checkoutUrl;
     } catch (error) {
-      console.error("Error preparing checkout:", error);
+      logger.error("Error preparing checkout:", error);
       setError(error.message || "There was an error preparing your checkout. Please try again.");
       setProcessing(false);
     }
@@ -303,7 +304,7 @@ export default function RequestAISaaSBriefPage() {
 
       // Send email notification to admin (non-blocking)
       sendProjectBriefEmail(payload).catch(error => {
-        console.warn('Admin email notification failed (non-critical):', error);
+        logger.warn('Admin email notification failed (non-critical):', error);
       });
 
       // Store intake ID and selected plan for checkout
@@ -330,7 +331,7 @@ export default function RequestAISaaSBriefPage() {
       // Redirect to Stripe's hosted checkout
       window.location.href = checkoutSession.checkoutUrl;
     } catch (error) {
-      console.error("Error preparing checkout for selected plan:", error);
+      logger.error("Error preparing checkout for selected plan:", error);
       setError("There was an error preparing your checkout. Please try again.");
       setProcessingPlan(null);
     }

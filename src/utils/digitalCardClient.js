@@ -1,4 +1,5 @@
-import { supabase } from './supabaseClient';
+import { supabase } from './supabase';
+import { logger } from './logger';
 
 export const digitalCardAPI = {
   // Create a new digital card (draft state)
@@ -18,7 +19,7 @@ export const digitalCardAPI = {
       if (error) throw error;
       return data;
     } catch (error) {
-      console.error('Error creating digital card:', error);
+      logger.error('Error creating digital card:', error);
       throw error;
     }
   },
@@ -35,7 +36,7 @@ export const digitalCardAPI = {
       if (error && error.code !== 'PGRST116') throw error;
       return data;
     } catch (error) {
-      console.error('Error fetching card by slug:', error);
+      logger.error('Error fetching card by slug:', error);
       throw error;
     }
   },
@@ -52,7 +53,7 @@ export const digitalCardAPI = {
       if (error) throw error;
       return data;
     } catch (error) {
-      console.error('Error fetching card by token:', error);
+      logger.error('Error fetching card by token:', error);
       throw error;
     }
   },
@@ -73,7 +74,7 @@ export const digitalCardAPI = {
       if (error) throw error;
       return data;
     } catch (error) {
-      console.error('Error updating card by token:', error);
+      logger.error('Error updating card by token:', error);
       throw error;
     }
   },
@@ -97,7 +98,7 @@ export const digitalCardAPI = {
       if (error) throw error;
       return data;
     } catch (error) {
-      console.error('Error starting free trial:', error);
+      logger.error('Error starting free trial:', error);
       throw error;
     }
   },
@@ -119,7 +120,7 @@ export const digitalCardAPI = {
       if (error) throw error;
       return data;
     } catch (error) {
-      console.error('Error activating subscription:', error);
+      logger.error('Error activating subscription:', error);
       throw error;
     }
   },
@@ -140,7 +141,7 @@ export const digitalCardAPI = {
       if (error) throw error;
       return data;
     } catch (error) {
-      console.error('Error cancelling subscription:', error);
+      logger.error('Error cancelling subscription:', error);
       throw error;
     }
   },
@@ -157,7 +158,7 @@ export const digitalCardAPI = {
       if (error) throw error;
       return data;
     } catch (error) {
-      console.error('Error fetching card status:', error);
+      logger.error('Error fetching card status:', error);
       throw error;
     }
   },
@@ -180,7 +181,7 @@ export const digitalCardAPI = {
       if (error) throw error;
       return data;
     } catch (error) {
-      console.error('Error updating Stripe info:', error);
+      logger.error('Error updating Stripe info:', error);
       throw error;
     }
   }

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { CheckCircle, ArrowRight, Calendar, CreditCard, Mail, Phone } from "lucide-react";
 import { SECTION_LABEL_STYLES, SECTION_TITLE_STYLES, SECTION_DESCRIPTION_STYLES } from "../constants/formStyles";
 import { clientIntakeAPI } from "../utils/supabaseClient";
+import { logger } from "../utils/logger";
 
 export default function SubscriptionSuccessPage() {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ export default function SubscriptionSuccessPage() {
         }
         
       } catch (error) {
-        console.error('Error loading intake data:', error);
+        logger.error('Error loading intake data:', error);
         setError('Unable to load your subscription details. Please contact support.');
       } finally {
         setLoading(false);

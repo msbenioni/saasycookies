@@ -16,6 +16,8 @@ const useCases = [
     icon: Lightbulb,
     title: "Creative Thinking",
     desc: "Use prompts that unlock ideas, break mental loops, and move decisions forward.",
+    ogImage: "/og-image.webp",
+    src: '/saasy_cookies_logo.webp',
   },
   {
     icon: TrendingUp,
@@ -99,9 +101,10 @@ const sections = [
         <div className="relative">
           <div className="rounded-2xl overflow-hidden border border-white/10 bg-zinc-900/85 p-8">
             <img
-              src="/senseai_art_of_thinking.png"
+              src="/senseai_art_of_thinking.webp"
               alt="Person thinking deeply"
               className="w-full h-auto object-contain rounded-xl opacity-70"
+              loading="lazy"
             />
           </div>
         </div>

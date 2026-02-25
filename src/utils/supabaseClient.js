@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { logger } from './logger';
 
 // Supabase configuration
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
@@ -24,15 +25,10 @@ export const clientIntakeAPI = {
       
       const missingFields = requiredFields.filter(field => !intakeData[field]);
       if (missingFields.length > 0) {
-        console.error('Missing required fields:', missingFields);
         throw new Error(`Missing required fields: ${missingFields.join(', ')}`);
       }
 
-      console.log('Creating client intake with data:', {
-        ...intakeData,
-        planRecommendation: intakeData.planRecommendation ? 'present' : 'missing'
-      });
-
+      
       // Whitelist of allowed columns (future-proofing)
       const ALLOWED_COLUMNS = [
         "full_name",
@@ -142,8 +138,8 @@ export const clientIntakeAPI = {
         .single();
 
       if (error) {
-        console.error('Supabase error creating client intake:', error);
-        console.error('Error details:', {
+        logger.error('Supabase error creating client intake:', error);
+        logger.error('Error details:', {
           message: error.message,
           details: error.details,
           hint: error.hint,
@@ -153,13 +149,13 @@ export const clientIntakeAPI = {
       }
 
       if (!data?.id) {
-        console.error('Insert succeeded but no ID was returned');
+        logger.error('Insert succeeded but no ID was returned');
         throw new Error("Insert succeeded but no ID was returned. Check .select() on insert.");
       }
 
       return data;
     } catch (error) {
-      console.error('Client intake creation failed:', error);
+      logger.error('Client intake creation failed:', error);
       throw error;
     }
   },
@@ -181,7 +177,7 @@ export const clientIntakeAPI = {
       if (error) throw error;
       return data;
     } catch (error) {
-      console.error('Error updating client intake status:', error);
+      logger.error('Error updating client intake status:', error);
       throw error;
     }
   },
@@ -203,13 +199,13 @@ export const clientIntakeAPI = {
         .single();
 
       if (error) {
-        console.error('Error updating Stripe info:', error);
+        logger.error('Error updating Stripe info:', error);
         throw error;
       }
 
       return data;
     } catch (error) {
-      console.error('Stripe info update failed:', error);
+      logger.error('Stripe info update failed:', error);
       throw error;
     }
   },
@@ -224,13 +220,13 @@ export const clientIntakeAPI = {
         .single();
 
       if (error) {
-        console.error('Error fetching client intake:', error);
+        logger.error('Error fetching client intake:', error);
         throw error;
       }
 
       return data;
     } catch (error) {
-      console.error('Client intake fetch failed:', error);
+      logger.error('Client intake fetch failed:', error);
       throw error;
     }
   },
@@ -260,13 +256,13 @@ export const clientIntakeAPI = {
       const { data, error } = await query;
 
       if (error) {
-        console.error('Error fetching client intakes:', error);
+        logger.error('Error fetching client intakes:', error);
         throw error;
       }
 
       return data;
     } catch (error) {
-      console.error('Client intakes fetch failed:', error);
+      logger.error('Client intakes fetch failed:', error);
       throw error;
     }
   },
@@ -279,7 +275,7 @@ export const clientIntakeAPI = {
         .select('status, recommended_plan, created_at, complexity_score');
 
       if (error) {
-        console.error('Error fetching statistics:', error);
+        logger.error('Error fetching statistics:', error);
         throw error;
       }
 
@@ -304,7 +300,7 @@ export const clientIntakeAPI = {
 
       return stats;
     } catch (error) {
-      console.error('Statistics fetch failed:', error);
+      logger.error('Statistics fetch failed:', error);
       throw error;
     }
   }

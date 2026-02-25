@@ -32,7 +32,7 @@ export const site = {
   seo: {
     defaultTitle: "SaaSy Cookies - Revenue-Ready Digital Infrastructure",
     defaultDescription: "We build websites, funnels, automation, and AI systems for founders. No DIY tools, just clean systems that grow with you.",
-    ogImage: "/og-image.png",
+    ogImage: "/og-image.webp",
     url: "https://saasycookies.com",
   },
   analytics: {
@@ -62,7 +62,7 @@ export const schema = {
     "@type": "Organization",
     name: site.brand.name,
     url: site.seo.url,
-    logo: `${site.seo.url}/logo.png`,
+    logo: `${site.seo.url}/logo.webp`,
     description: site.brand.tagline,
     contactPoint: {
       "@type": "ContactPoint",

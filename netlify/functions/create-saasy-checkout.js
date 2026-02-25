@@ -1,6 +1,14 @@
 const Stripe = require("stripe");
 const { createClient } = require("@supabase/supabase-js");
 
+// Development-only logger
+const isDevelopment = process.env.NODE_ENV === 'development';
+const logger = {
+  error: (...args) => {
+    if (isDevelopment) console.error(...args);
+  }
+};
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
 
@@ -19,7 +27,7 @@ exports.handler = async (event) => {
 
   const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
   if (missingVars.length > 0) {
-    console.error('Missing environment variables:', missingVars);
+    logger.error('Missing environment variables:', missingVars);
     return { 
       statusCode: 500, 
       body: JSON.stringify({ 
@@ -48,7 +56,7 @@ exports.handler = async (event) => {
       .single();
 
     if (intakeError || !intake) {
-      console.error('Error fetching client intake:', intakeError);
+      logger.error('Error fetching client intake:', intakeError);
       return {
         statusCode: 404,
         body: JSON.stringify({ error: "Client intake not found" })
@@ -139,7 +147,7 @@ exports.handler = async (event) => {
       }),
     };
   } catch (error) {
-    console.error('Error creating checkout session:', error);
+    logger.error('Error creating checkout session:', error);
     return {
       statusCode: 500,
       body: JSON.stringify({
