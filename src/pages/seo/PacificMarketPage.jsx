@@ -194,19 +194,19 @@ const sections = [
   )},
   { id: "pacific-cta", tab: PACIFIC_SECTION_LABELS.CTA, content: (
     <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 h-full flex items-center justify-center">
-      <div className="text-center">
+      <div className="max-w-4xl mx-auto text-center w-full">
         <span className="text-xs font-medium text-pacific uppercase tracking-widest mb-4 block">
           {PACIFIC_SECTION_LABELS.CTA}
         </span>
-        <h2 className="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-4">
+        <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
           Join the Pacific movement
         </h2>
-        <p className="text-zinc-200 text-lg mb-10 max-w-xl mx-auto">
+        <p className="text-zinc-300 text-lg mb-8 font-medium max-w-xl mx-auto">
           Explore Pacific creators. Share their stories.
           Choose platforms that reflect your values.
           Stand with communities building their own digital future.
         </p>
-        <p className="text-zinc-400 text-sm mt-4">
+        <p className="text-zinc-400 text-sm mb-6">
           Built for Pacific communities.
         </p>
         <a
@@ -214,7 +214,7 @@ const sections = [
           target="_blank"
           rel="noopener noreferrer"
           data-testid="pacific-cta-button"
-          className="inline-flex items-center gap-2 bg-pacific text-black font-semibold px-8 py-3 rounded-md transition-all duration-300 hover:bg-pacific/80 hover:scale-[1.02]"
+          className="inline-flex items-center justify-center gap-2 rounded-md bg-pacific text-black font-semibold px-7 py-3 hover:bg-pacific/80 transition"
         >
           <Globe className="w-4 h-4" strokeWidth={1.5} />
           Explore Pacific Market

@@ -172,18 +172,18 @@ const sections = [
   )},
   { id: "senseai-cta", tab: SENSEAI_SECTION_LABELS.CTA, content: (
     <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 h-full flex items-center justify-center">
-      <div className="text-center">
+      <div className="max-w-4xl mx-auto text-center w-full">
         <span className="text-xs font-medium text-senseai uppercase tracking-widest mb-4 block">
           {SENSEAI_SECTION_LABELS.CTA}
         </span>
-        <h2 className="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-4">
+        <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
           Start journaling smarter
         </h2>
-        <p className="text-zinc-200 text-lg mb-10 max-w-xl mx-auto">
+        <p className="text-zinc-300 text-lg mb-8 font-medium max-w-xl mx-auto">
           Start with one honest entry.
           Let clarity build from there.
         </p>
-        <p className="text-zinc-400 text-sm mt-4">
+        <p className="text-zinc-400 text-sm mb-6">
           Built for thoughtful humans.
         </p>
         <a
@@ -191,7 +191,7 @@ const sections = [
           target="_blank"
           rel="noopener noreferrer"
           data-testid="senseai-cta-button"
-          className="inline-flex items-center gap-2 bg-senseai text-black font-semibold px-8 py-3 rounded-md transition-all duration-300 hover:bg-senseai/80 hover:scale-[1.02]"
+          className="inline-flex items-center justify-center gap-2 rounded-md bg-senseai text-black font-semibold px-7 py-3 hover:bg-senseai/80 transition"
         >
           <Brain className="w-4 h-4" strokeWidth={1.5} />
           Explore SenseAI
