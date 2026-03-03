@@ -20,7 +20,7 @@ export const PRODUCT_LOGOS = {
     }
   },
   PACIFIC_MARKET: {
-    src: '/pacific_market_logo.webp',
+    src: '/pacific_market_logo.png',
     alt: 'Pacific Market Logo',
     sizes: {
       NAV: 'w-8 h-8',

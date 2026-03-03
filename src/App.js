@@ -5,6 +5,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import ErrorBoundary from "./components/ErrorBoundary";
 import SEO from "./components/SEO";
 import { Toaster } from "./components/Toast";
+import PasswordProtection from "./components/PasswordProtection";
 import MainLayout from "./layouts/MainLayout";
 import HomePage from "./pages/HomePage";
 import SenseAIPage from "./pages/seo/SenseAIPage";
@@ -52,11 +53,31 @@ function AppContent() {
           <Route path="/" element={<HomePage />} />
           <Route path="/senseai" element={<SenseAIPage />} />
           <Route path="/pacificmarket" element={<PacificMarketPage />} />
-          <Route path="/tools/invoice-generator" element={<InvoicePage />} />
-          <Route path="/tools/qr-generator" element={<QRCodePage />} />
-          <Route path="/tools/digital-card" element={<DigitalCardPage />} />
-          <Route path="/tools/digital-card/success" element={<DigitalCardSuccessPage />} />
-          <Route path="/tools/digital-card/cancel" element={<DigitalCardCancelPage />} />
+          <Route path="/tools/invoice-generator" element={
+            <PasswordProtection>
+              <InvoicePage />
+            </PasswordProtection>
+          } />
+          <Route path="/tools/qr-generator" element={
+            <PasswordProtection>
+              <QRCodePage />
+            </PasswordProtection>
+          } />
+          <Route path="/tools/digital-card" element={
+            <PasswordProtection>
+              <DigitalCardPage />
+            </PasswordProtection>
+          } />
+          <Route path="/tools/digital-card/success" element={
+            <PasswordProtection>
+              <DigitalCardSuccessPage />
+            </PasswordProtection>
+          } />
+          <Route path="/tools/digital-card/cancel" element={
+            <PasswordProtection>
+              <DigitalCardCancelPage />
+            </PasswordProtection>
+          } />
           <Route path="/card/:slug" element={<DigitalCardPublicPage />} />
           <Route path="/edit/:token" element={<DigitalCardEditPage />} />
           <Route path="/services/ai-saas" element={<RequestAISaaSBriefPage />} />

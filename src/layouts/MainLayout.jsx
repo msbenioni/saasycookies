@@ -8,17 +8,11 @@ const navigationStructure = {
   main: [
     { to: "/", label: "Home" },
     { label: "Products", hasDropdown: true },
-    { label: "Tools", hasDropdown: true },
     { label: "Services", hasDropdown: true },
   ],
   products: [
     { to: "/senseai", label: "SenseAI", icon: Brain, color: "text-senseai", hasLogo: true, logoKey: "SENSEAI" },
     { to: "/pacificmarket", label: "Pacific Market", icon: Globe, color: "text-pacific", hasLogo: true, logoKey: "PACIFIC_MARKET" },
-  ],
-  tools: [
-    { to: "/tools/digital-card", label: "Digital Business Card", icon: CreditCard, color: "text-cyan-400" },
-    { to: "/tools/invoice-generator", label: "Invoice Generator", icon: FileText, color: "text-purple-500" },
-    { to: "/tools/qr-generator", label: "QR Code Generator", icon: QrCode, color: "text-pink-500" },
   ],
   services: [
     { to: "/pricing", label: "Pricing", icon: DollarSign, color: "text-emerald-300" },
@@ -218,32 +212,6 @@ export default function MainLayout() {
                     ) : (
                       <Icon className={`w-4 h-4 ${active ? item.color : item.color}`} strokeWidth={1.5} />
                     )}
-                    <span className={item.color}>{item.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-            
-            <div className="space-y-1">
-              <div className="px-4 py-2 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Tools</div>
-              {navigationStructure.tools.map((item) => {
-                const Icon = item.icon;
-                const active = location.pathname === item.to;
-                return (
-                  <button
-                    key={item.to}
-                    onClick={() => {
-                      handleNavigation(item.to);
-                      setMobileOpen(false);
-                    }}
-                    data-testid={`mobile-nav-${item.label.toLowerCase().replace(/\s/g, "-")}`}
-                    className={`w-full flex items-center gap-2.5 px-4 py-3 rounded-lg text-sm font-medium transition-all ${
-                      active
-                        ? "bg-white/10 text-white"
-                        : "text-zinc-400 hover:text-white hover:bg-white/5"
-                    }`}
-                  >
-                    <Icon className={`w-4 h-4 ${active ? item.color : item.color}`} strokeWidth={1.5} />
                     <span className={item.color}>{item.label}</span>
                   </button>
                 );

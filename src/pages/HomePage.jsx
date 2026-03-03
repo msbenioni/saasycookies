@@ -13,7 +13,6 @@ const HOME_SECTION_LABELS = {
   PATH: "Choose Your Path",
   DIFFERENCE: "Systems vs Pages",
   PRODUCTS: "Proof We Build",
-  UTILITIES: "Free Tools",
   INFRASTRUCTURE: "Infrastructure First",
   COMPARISON: "DIY vs Done-For-You",
   CTA: "Start Here",
@@ -238,105 +237,6 @@ const sections = [
               <div className="h-1 bg-gradient-to-r from-pacific/50 via-pacific/20 to-transparent" />
             </Link>
           </div>
-        </div>
-      </section>
-    ),
-  },
-  {
-    id: "home-business-utilities",
-    tab: HOME_SECTION_LABELS.UTILITIES,
-    content: (
-      <section data-testid="tools-section" className="py-10 md:py-14 relative">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
-            <span className={SECTION_LABEL_STYLES.primary}>{HOME_SECTION_LABELS.UTILITIES}</span>
-          </div>
-          <h2 data-testid="tools-title" className={SECTION_TITLE_STYLES.main}>
-            <span className="text-cyan-400 font-extrabold">Practical Tools.</span>{" "}
-            <span className="text-white font-light">Built for Real Work</span>.
-          </h2>
-          <p className={SECTION_DESCRIPTION_STYLES}>
-            Free and premium tools that remove friction for founders — fast, simple, and designed to look professional.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-            <Link to="/tools/digital-card" data-testid="tool-digital-card" className={`${CARD_STYLES.base} hover:ring-indigo-400/40 flex flex-col h-full group`}>
-              <div className={`${CARD_STYLES.padding} flex flex-col h-full`}>
-                <div className="flex-1">
-                  <div className={CARD_STYLES.contentLayout}>
-                    <div className="w-12 h-12 rounded-xl bg-indigo-400/10 border border-indigo-400/20 flex items-center justify-center shrink-0">
-                      <CreditCard className="w-6 h-6 text-indigo-300" strokeWidth={1.5} />
-                    </div>
-
-                    <div className="flex-1">
-                      <h3 className={SECTION_TITLE_STYLES.card}>Digital Business Card</h3>
-                      <p className="text-zinc-200/80 text-sm leading-relaxed">
-                        Create a shareable digital profile with contact-save, QR code, and instant updates — perfect for events and referrals.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="pt-6 mt-auto">
-                  <span className="inline-flex items-center gap-1.5 text-indigo-300 text-sm font-medium group-hover:gap-2.5 transition-all">
-                    Create Yours <ChevronRight className="w-3.5 h-3.5" strokeWidth={2} />
-                  </span>
-                </div>
-              </div>
-            </Link>
-
-            <Link to="/tools/invoice-generator" data-testid="tool-invoice-card" className={`${CARD_STYLES.base} hover:ring-violet-400/40 flex flex-col h-full group`}>
-              <div className={`${CARD_STYLES.padding} flex flex-col h-full`}>
-                <div className="flex-1">
-                  <div className={CARD_STYLES.contentLayout}>
-                    <div className={CARD_STYLES.iconContainer}>
-                      <FileText className="w-6 h-6 text-brand-primary" strokeWidth={1.5} />
-                    </div>
-
-                    <div className="flex-1">
-                      <h3 className={SECTION_TITLE_STYLES.card}>Invoice Generator</h3>
-                      <p className="text-zinc-200/80 text-sm leading-relaxed">
-                        Generate clean invoices in minutes — line items, taxes, branding, and instant PDF download.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="pt-6 mt-auto">
-                  <span className="inline-flex items-center gap-1.5 text-brand-primary text-sm font-medium group-hover:gap-2.5 transition-all">
-                    Generate an Invoice <ChevronRight className="w-3.5 h-3.5" strokeWidth={2} />
-                  </span>
-                </div>
-              </div>
-            </Link>
-
-            <Link to="/tools/qr-generator" data-testid="tool-qr-card" className={`${CARD_STYLES.base} hover:ring-pink-400/40 flex flex-col h-full group`}>
-              <div className={`${CARD_STYLES.padding} flex flex-col h-full`}>
-                <div className="flex-1">
-                  <div className={CARD_STYLES.contentLayout}>
-                    <div className="w-12 h-12 rounded-xl bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center shrink-0">
-                      <QrCode className="w-6 h-6 text-brand-accent" strokeWidth={1.5} />
-                    </div>
-
-                    <div className="flex-1">
-                      <h3 className={SECTION_TITLE_STYLES.card}>QR Code Generator</h3>
-                      <p className="text-zinc-200/80 text-sm leading-relaxed">
-                        Create QR codes for links, text, or contact details — download as high-quality PNG in any size.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="pt-6 mt-auto">
-                  <span className="inline-flex items-center gap-1.5 text-brand-accent text-sm font-medium group-hover:gap-2.5 transition-all">
-                    Create a QR Code <ChevronRight className="w-3.5 h-3.5" strokeWidth={2} />
-                  </span>
-                </div>
-              </div>
-            </Link>
-          </div>
-          <p className="text-zinc-400 text-sm mt-6">Infrastructure should be accessible — not locked behind agencies or expensive stacks.</p>
         </div>
       </section>
     ),
