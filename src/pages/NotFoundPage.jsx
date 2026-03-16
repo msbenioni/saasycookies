@@ -39,7 +39,7 @@ export default function NotFoundPage() {
           </p>
           <div className="flex flex-col gap-2 text-sm">
             <Link to="/pricing" className="text-emerald-400 hover:text-emerald-300 transition-colors">
-              → Pricing Plans
+              → Website Price Plans
             </Link>
             <Link to="/services/ai-saas" className="text-emerald-400 hover:text-emerald-300 transition-colors">
               → AI & SaaS Services

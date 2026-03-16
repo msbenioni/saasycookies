@@ -22,9 +22,14 @@ import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
 import RequestAISaaSBriefPage from "./pages/RequestAISaaSBriefPage";
 import ProjectBriefThankYouPage from "./pages/ProjectBriefThankYouPage";
-import PricingPage from "./pages/PricingPage";
+import ServicesPage from "./pages/ServicesPage";
+import BuildWebsitePage from "./pages/BuildWebsitePage";
+import AuditBusinessPage from "./pages/AuditBusinessPage";
 import CheckoutSuccessPage from "./pages/CheckoutSuccessPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import FAQPage from "./pages/FAQPage";
+import AuditStartPage from "./pages/AuditStartPage";
+import AuditSummaryPage from "./pages/AuditSummaryPage";
 import ScrollToTop from "./components/ScrollToTop";
 import ScrollToTopOnMount from "./components/ScrollToTopOnMount";
 import { useAnalytics } from "./hooks/useAnalytics";
@@ -81,7 +86,13 @@ function AppContent() {
           <Route path="/card/:slug" element={<DigitalCardPublicPage />} />
           <Route path="/edit/:token" element={<DigitalCardEditPage />} />
           <Route path="/services/ai-saas" element={<RequestAISaaSBriefPage />} />
-          <Route path="/pricing" element={<PricingPage />} />
+          <Route path="/services/audit/start" element={<AuditStartPage />} />
+          <Route path="/services/audit/:sessionId" element={<AuditStartPage />} />
+          <Route path="/services/audit/summary" element={<AuditSummaryPage />} />
+          <Route path="/services/build-website" element={<BuildWebsitePage />} />
+          <Route path="/services/audit-business" element={<AuditBusinessPage />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/faq" element={<FAQPage />} />
           <Route path="/checkout-success" element={<CheckoutSuccessPage />} />
           <Route path="/project-brief-thank-you" element={<ProjectBriefThankYouPage />} />
           <Route path="/contact" element={<ContactPage />} />

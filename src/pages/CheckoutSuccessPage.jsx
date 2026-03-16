@@ -132,7 +132,7 @@ export default function CheckoutSuccessPage() {
               onClick={() => navigate("/pricing")}
               className="inline-flex items-center justify-center gap-2 border border-zinc-700 text-white font-semibold px-6 py-3 rounded-lg hover:bg-zinc-800 transition"
             >
-              View Pricing Plans
+              View Website Price Plans
             </button>
           </div>
 

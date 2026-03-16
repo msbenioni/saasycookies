@@ -46,6 +46,26 @@ exports.handler = async (event) => {
         const plan = session.metadata?.plan;
         const action = session.metadata?.action;
         const createSubscriptionAfter = session.metadata?.create_subscription_after;
+        const auditRequestId = session.metadata?.audit_request_id;
+
+        if (auditRequestId && action === "audit_fee") {
+          const paidAt = new Date();
+          const dueAt = new Date(paidAt.getTime() + 30 * 24 * 60 * 60 * 1000);
+
+          await supabase
+            .from("audit_requests")
+            .update({
+              status: "paid",
+              audit_paid_at: paidAt.toISOString(),
+              audit_due_at: dueAt.toISOString(),
+              stripe_checkout_session_id: session.id,
+              stripe_payment_intent_id: session.payment_intent,
+              updated_at: new Date().toISOString(),
+            })
+            .eq("id", auditRequestId);
+
+          break;
+        }
 
         // Handle build fee payment - create subscription with 30-day trial
         if (intakeId && action === 'build_fee_payment' && createSubscriptionAfter === 'true') {
@@ -89,7 +109,6 @@ exports.handler = async (event) => {
               }
             };
 
-            // No discounts currently available
 
             // Create the subscription with idempotency key
             const subscription = await stripe.subscriptions.create(subscriptionData, {

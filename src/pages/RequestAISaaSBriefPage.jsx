@@ -390,7 +390,7 @@ export default function RequestAISaaSBriefPage() {
             <p className="text-sm text-zinc-400 mt-3 ml-[52px]">
               For subscription website plans, see{" "}
               <Link to="/pricing" className="text-emerald-300 hover:text-emerald-200 transition">
-                Pricing Plans
+                Website Price Plans
               </Link>
               .
             </p>
@@ -698,15 +698,15 @@ export default function RequestAISaaSBriefPage() {
                     </div>
                   </section>
 
-                  {/* Pricing Acknowledgement */}
+                  {/* Website Price Acknowledgement */}
                   <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 md:p-7 space-y-6">
-                    <h2 className={SECTION_TITLE_CLASS}>Pricing acknowledgement</h2>
+                    <h2 className={SECTION_TITLE_CLASS}>Website price acknowledgement</h2>
                     <div className="space-y-3">
                       <label className={CHECKBOX_LABEL_CLASS}>
                         <input
                           type="checkbox"
                           name="pricingAcknowledgement"
-                          value="Reviewed pricing page"
+                          value="Reviewed website price plans"
                           required
                           className={
                             CHECKBOX_INPUT_CLASS +

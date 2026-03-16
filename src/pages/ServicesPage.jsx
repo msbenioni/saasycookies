@@ -1,31 +1,34 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Check, X, ArrowRight, AlertTriangle, CheckCircle, Sparkles, ChevronRight, CreditCard } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Check, X, ArrowRight, AlertTriangle, CheckCircle, Sparkles, CreditCard, ShieldCheck, ClipboardCheck, FileText } from "lucide-react";
 import {
   SECTION_LABEL_STYLES,
   SECTION_TITLE_STYLES,
   CARD_STYLES,
-  SECTION_DESCRIPTION_STYLES
+  SECTION_DESCRIPTION_STYLES,
+  FORM_GRID_CLASS,
+  PAGE_BACKGROUND_STYLES,
+  PAGE_HEADER_DESC_CLASS,
+  PAGE_HEADER_ICON_CLASS,
+  PAGE_HEADER_TITLE_CLASS,
+  SECTION_TITLE_CLASS,
+  TEXT_COLORS,
+  BG_COLORS,
 } from "../constants/formStyles";
 import { usePricing } from "../hooks/usePricing";
 import { ScrollDeckLayout } from "../components/shared/TabLayout";
 import { PRODUCT_LOGOS } from "../constants/productLogos";
-
-/**
- * Pricing Page (ScrollDeckLayout-compatible)
- * - Customer-focused copy (tight, outcome-led)
- * - All CTAs go to brief first (no direct checkout)
- * - $79 plan marked as "Most Popular" and visually elevated
- */
+import { createAuditCheckout } from "../utils/auditService";
+import CallToAction from "../components/shared/CallToAction";
 
 const PRICING_SECTION_LABELS = {
   HERO: "What We Do",
   FIT: "Fit Check",
-  PLANS: "Pricing Plans",
+  PLANS: "Build Me A Website",
+  AUDIT: "Audit My Business",
   START: "Start for $10",
   HOW: "How It Works",
   WHY: "Why Not DIY",
-  FAQ: "FAQs",
   CTA: "Submit Brief",
 };
 
@@ -64,36 +67,7 @@ const fitChecks = [
   "You value clarity, structure, and long-term growth",
 ];
 
-const faqItems = [
-  {
-    q: "What is the 30-Day Build Phase?",
-    a: "We build and launch within the first 30 days (most projects ~2 weeks). Your monthly plan begins after launch — this keeps things fair and ensures you receive a working system before ongoing billing.",
-  },
-  {
-    q: "What happens if I cancel early?",
-    a: "We operate as a 12-month partnership. If you cancel early, the remaining months on the agreement are due.",
-  },
-  {
-    q: "Can I upgrade tiers?",
-    a: "Yes — you can upgrade anytime. We apply a pro-rata adjustment.",
-  },
-  {
-    q: "What’s included in ‘Payment lifecycle management’?",
-    a: "Stripe setup, checkout optimization, subscriptions, webhooks, and a basic CRM handoff (Authority plan).",
-  },
-  {
-    q: "Is copywriting included?",
-    a: "Light refinement is included. Full copywriting is available as an add-on.",
-  },
-  {
-    q: "What are the scope limits?",
-    a: "Starter: up to 5 pages. Growth: up to 10 pages + 1 funnel. Authority: up to 15 pages + 3 funnels. Extra scope is quoted.",
-  },
-  {
-    q: "What’s not included?",
-    a: "Rebrands, major redesigns, custom apps, or large-scale integrations — these are scoped separately.",
-  },
-];
+const faqItems = [];
 
 function getTierSlug(tier) {
   // Prefer tier.slug if you add it in usePricing(); fallback to name parsing.
@@ -199,9 +173,63 @@ function TierCardV2({ tier, onOpenModal }) {
   );
 }
 
-export default function PricingPage() {
+export default function ServicesPage() {
   const { pricingTiers } = usePricing();
+  const location = useLocation();
   const [selectedTier, setSelectedTier] = useState(null);
+  const [auditForm, setAuditForm] = useState({
+    fullName: "",
+    email: "",
+    companyName: "",
+  });
+  const [auditProcessing, setAuditProcessing] = useState(false);
+  const [auditError, setAuditError] = useState("");
+
+  // Handle hash navigation to tabs
+  useEffect(() => {
+    const hash = location.hash.slice(1); // remove #
+    if (hash) {
+      const section = sections.find((s) => s.id === hash);
+      if (section) {
+        const index = sections.indexOf(section);
+        setTimeout(() => {
+          const containerEl = document.querySelector('[data-scroll-container]');
+          if (containerEl) {
+            const scrollTarget = containerEl.scrollHeight / sections.length * index;
+            containerEl.scrollTo({
+              top: scrollTarget,
+              behavior: 'smooth',
+            });
+          }
+        }, 300);
+      }
+    }
+  }, [location.hash]);
+
+  const updateAuditField = (field, value) => {
+    setAuditForm((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const canStartAudit = Boolean(auditForm.fullName && auditForm.email && auditForm.companyName);
+
+  const startAudit = async () => {
+    setAuditProcessing(true);
+    setAuditError("");
+
+    try {
+      const payload = {
+        fullName: auditForm.fullName,
+        email: auditForm.email,
+        companyName: auditForm.companyName,
+        source: "pricing-page",
+      };
+      const { checkoutUrl } = await createAuditCheckout(payload);
+      window.location.href = checkoutUrl;
+    } catch (checkoutError) {
+      setAuditError(checkoutError.message || "Unable to start the audit checkout.");
+      setAuditProcessing(false);
+    }
+  };
 
   const sections = [
     {
@@ -311,7 +339,7 @@ export default function PricingPage() {
     },
 
     {
-      id: "pricing-plans",
+      id: "plans",
       tab: PRICING_SECTION_LABELS.PLANS,
       content: (
         <section className="py-10 md:py-14 bg-white/[0.02]">
@@ -344,6 +372,138 @@ export default function PricingPage() {
             </div>
           </div>
         </section>
+      ),
+    },
+
+    {
+      id: "audit",
+      tab: PRICING_SECTION_LABELS.AUDIT,
+      scrollable: false,
+      content: (
+        <div className={PAGE_BACKGROUND_STYLES.quote.container}>
+          <div
+            className={PAGE_BACKGROUND_STYLES.quote.gradientOverlay}
+            style={{ background: PAGE_BACKGROUND_STYLES.quote.gradientStyle }}
+          />
+          <div className={PAGE_BACKGROUND_STYLES.quote.noiseOverlay} />
+
+          <div className="relative z-10">
+            <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-10 py-12 md:py-16">
+              <header className="mb-10 md:mb-12">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className={`${PAGE_HEADER_ICON_CLASS} bg-emerald-500/15`}>
+                    <ShieldCheck className={`w-5 h-5 ${TEXT_COLORS.emerald}`} strokeWidth={1.5} />
+                  </div>
+                  <h1 className={PAGE_HEADER_TITLE_CLASS}>Audit My Business</h1>
+                </div>
+
+                <p className={`${PAGE_HEADER_DESC_CLASS} max-w-3xl`}>
+                  Pay the $10 audit fee to start. You'll complete a guided onboarding wizard that maps your tools,
+                  scores risk, and generates a clear infrastructure plan. No downloads—everything is done online.
+                </p>
+              </header>
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
+                <aside className="lg:col-span-5 space-y-4">
+                  <div className={`${CARD_STYLES.base} p-6 border-emerald-400/20`}>
+                    <div className="flex items-center gap-3 mb-4">
+                      <ClipboardCheck className="w-5 h-5 text-emerald-300" />
+                      <h2 className="text-white font-semibold">What you get</h2>
+                    </div>
+                    <ul className="space-y-3 text-sm text-zinc-200">
+                      <li className="flex items-start gap-2">
+                        <FileText className="w-4 h-4 text-emerald-300 mt-0.5" />
+                        Full system mapping + cost baseline
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <ShieldCheck className="w-4 h-4 text-emerald-300 mt-0.5" />
+                        Risk scoring + architecture recommendations
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <ClipboardCheck className="w-4 h-4 text-emerald-300 mt-0.5" />
+                        Guided wizard with autosave and resume links
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="rounded-2xl border border-white/10 bg-zinc-950/30 p-6">
+                    <h3 className={SECTION_TITLE_CLASS}>Process</h3>
+                    <ol className="mt-4 space-y-3 text-sm text-zinc-300">
+                      <li>1. Pay the $10 audit fee to start the wizard.</li>
+                      <li>2. Complete the guided steps (autosave + resume links).</li>
+                      <li>3. We score your data and deliver a summary plan.</li>
+                    </ol>
+                  </div>
+                </aside>
+
+                <main className="lg:col-span-7">
+                  <div className={`${CARD_STYLES.base} p-8 md:p-10`}>
+                    <h2 className="text-2xl font-semibold text-white mb-4">Start your audit</h2>
+                    <p className="text-zinc-300 mb-6">
+                      The $10 audit fee confirms commitment and unlocks the guided onboarding wizard.
+                    </p>
+
+                    {auditError ? (
+                      <div className="mb-5 rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-200">
+                        {auditError}
+                      </div>
+                    ) : null}
+
+                    <div className={FORM_GRID_CLASS}>
+                      <div>
+                        <label className="block text-sm text-zinc-300 mb-2">Full name</label>
+                        <input
+                          value={auditForm.fullName}
+                          onChange={(event) => updateAuditField("fullName", event.target.value)}
+                          className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white"
+                          placeholder="Your name"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm text-zinc-300 mb-2">Email</label>
+                        <input
+                          type="email"
+                          value={auditForm.email}
+                          onChange={(event) => updateAuditField("email", event.target.value)}
+                          className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white"
+                          placeholder="you@email.com"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm text-zinc-300 mb-2">Company</label>
+                        <input
+                          value={auditForm.companyName}
+                          onChange={(event) => updateAuditField("companyName", event.target.value)}
+                          className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white"
+                          placeholder="Business name"
+                        />
+                      </div>
+                    </div>
+
+                    <div className={FORM_GRID_CLASS}>
+                      <button
+                        type="button"
+                        onClick={startAudit}
+                        disabled={auditProcessing || !canStartAudit}
+                        className={`inline-flex items-center justify-center gap-2 rounded-xl ${BG_COLORS.emerald} text-black font-semibold px-6 py-3 hover:opacity-90 transition disabled:opacity-60`}
+                      >
+                        {auditProcessing ? "Redirecting..." : "Pay Audit Fee ($10)"}
+                        <ArrowRight className="w-4 h-4" strokeWidth={2} />
+                      </button>
+                      <div className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 text-white px-6 py-3 text-sm">
+                        Pay to start the wizard
+                      </div>
+                    </div>
+
+                    <p className="mt-6 text-xs text-zinc-500">
+                      After payment, you'll be taken to the audit start page to complete the onboarding steps.
+                    </p>
+                  </div>
+                </main>
+              </div>
+            </div>
+          </div>
+        </div>
       ),
     },
 
@@ -519,85 +679,23 @@ export default function PricingPage() {
     },
 
     {
-      id: "pricing-faq",
-      tab: PRICING_SECTION_LABELS.FAQ,
-      content: (
-        <section className="py-10 md:py-14 bg-white/[0.02]">
-          <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="h-px flex-1 max-w-[40px] bg-zinc-700" />
-              <span className={SECTION_LABEL_STYLES.emerald}>{PRICING_SECTION_LABELS.FAQ}</span>
-            </div>
-
-            <h2 className={SECTION_TITLE_STYLES.main}>
-              <span className="text-cyan-400 font-extrabold">FAQs</span>{" "}
-              <span className="text-white font-light">(quick answers)</span>
-            </h2>
-
-            <p className={`${SECTION_DESCRIPTION_STYLES} max-w-3xl mt-4`}>
-              Short, direct answers — if something is unusual, we'll confirm it during scoping.
-            </p>
-
-            <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-4">
-              {faqItems.map((item) => (
-                <details
-                  key={item.q}
-                  className="group rounded-2xl border border-white/10 bg-zinc-950/20 hover:bg-zinc-950/30 transition p-5"
-                >
-                  <summary className="cursor-pointer list-none flex items-start justify-between gap-4">
-                    <div>
-                      <h3 className="font-semibold text-white">{item.q}</h3>
-                    </div>
-                    <div className="shrink-0 mt-1 text-zinc-400 group-open:rotate-180 transition">
-                      <ChevronRight className="w-5 h-5 rotate-90" />
-                    </div>
-                  </summary>
-
-                  <div className="mt-3 text-sm text-zinc-300 leading-relaxed">
-                    {item.a}
-                  </div>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
-      ),
-    },
-
-    {
-      id: "pricing-cta",
+      id: "cta",
       tab: PRICING_SECTION_LABELS.CTA,
+      scrollable: false,
       content: (
-        <section className="py-10 md:py-14 h-full flex items-center">
-          <div className="max-w-4xl mx-auto px-6 md:px-12 text-center w-full">
-            <h2 className={SECTION_TITLE_STYLES.small}>
-              Stop managing your website. Start running your business.
-            </h2>
-
-            <p className="text-zinc-300 text-lg mt-4 mb-8">
-              Submit a brief — we’ll confirm the best plan and next steps.
-            </p>
-
-            <p className="text-zinc-400 text-sm mb-8">
-              Need something beyond these plans?{" "}
-              <Link to="/services/ai-saas" className="text-cyan-300 hover:text-cyan-200 transition">
-                Submit a Custom Build Brief
-              </Link>
-              .
-            </p>
-
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link
-                to="/services/ai-saas"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-400 text-black hover:bg-emerald-300 px-7 py-3 font-semibold transition"
-              >
-                Submit Project Brief
-                <ArrowRight className="w-4 h-4" strokeWidth={2} />
-              </Link>
-
-            </div>
-          </div>
-        </section>
+        <CallToAction
+          badge={PRICING_SECTION_LABELS.CTA}
+          headline={
+            <>
+              Stop managing your website.
+              <br />
+              <span className="text-emerald-400">Start running your business.</span>
+            </>
+          }
+          subheadline="Submit a brief — we'll confirm the best plan and next steps."
+          customBriefLink="/services/ai-saas"
+          customBriefText="Submit a Custom Build Brief"
+        />
       ),
     },
   ];
@@ -676,7 +774,9 @@ export default function PricingPage() {
 
   return (
     <>
-      <ScrollDeckLayout sections={sections} />
+      <div data-scroll-container>
+        <ScrollDeckLayout sections={sections} />
+      </div>
       <InclusionsModal />
     </>
   );

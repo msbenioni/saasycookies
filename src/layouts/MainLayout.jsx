@@ -15,7 +15,15 @@ const navigationStructure = {
     { to: "/pacificmarket", label: "Pacific Market", icon: Globe, color: "text-pacific", hasLogo: true, logoKey: "PACIFIC_MARKET" },
   ],
   services: [
-    { to: "/pricing", label: "Pricing", icon: DollarSign, color: "text-emerald-300" },
+    { to: "/services/audit-business", label: "Audit My Business", icon: FileText, color: "text-emerald-300" },
+    { to: "/services/build-website", label: "Build Me A Website", icon: FileText, color: "text-emerald-300" },
+  ],
+  footer: [
+    { to: "/services", label: "Services" },
+    { to: "/faq", label: "FAQ" },
+    { to: "/contact", label: "Contact" },
+    { to: "/privacy", label: "Privacy" },
+    { to: "/terms", label: "Terms" },
   ],
 };
 
@@ -281,27 +289,15 @@ export default function MainLayout() {
             <span>&copy; {new Date().getFullYear()} SaaSy Cookies. All rights reserved.</span>
           </div>
           <div className="flex items-center gap-6">
-            <button
-              onClick={() => handleNavigation("/contact")}
-              data-testid="footer-contact"
-              className="text-sm text-zinc-500 hover:text-white transition-colors"
-            >
-              Contact
-            </button>
-            <button
-              onClick={() => handleNavigation("/privacy")}
-              data-testid="footer-privacy"
-              className="text-sm text-zinc-500 hover:text-white transition-colors"
-            >
-              Privacy
-            </button>
-            <button
-              onClick={() => handleNavigation("/terms")}
-              data-testid="footer-terms"
-              className="text-sm text-zinc-500 hover:text-white transition-colors"
-            >
-              Terms
-            </button>
+            {navigationStructure.footer.map((item) => (
+              <button
+                key={item.to}
+                onClick={() => handleNavigation(item.to)}
+                className="text-sm text-zinc-500 hover:text-white transition-colors"
+              >
+                {item.label}
+              </button>
+            ))}
           </div>
         </div>
       </footer>
